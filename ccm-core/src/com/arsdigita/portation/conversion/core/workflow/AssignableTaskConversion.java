@@ -28,8 +28,8 @@ import com.arsdigita.portation.modules.core.workflow.AssignableTask;
 import com.arsdigita.portation.modules.core.workflow.Task;
 import com.arsdigita.portation.modules.core.workflow.TaskAssignment;
 import com.arsdigita.portation.modules.core.workflow.TaskComment;
+import com.arsdigita.portation.modules.core.workflow.TaskDependency;
 import com.arsdigita.portation.modules.core.workflow.Workflow;
-
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -59,9 +59,9 @@ public class AssignableTaskConversion {
                 .arsdigita.workflow.simple.UserTask.getAllObjectUserTasks();
         System.err.println("done.");
 
-        System.err.printf("\tConverting assignable tasks and task assignments...\n");
+        System.err.printf("\tConverting assignable tasks, task dependencies " +
+                "and task assignments...\n");
         createAssignableTasksAndSetAssociations(trunkUserTasks);
-        setTaskRingDependencies(trunkUserTasks);
         System.err.printf("\tSorting task assignments...\n");
         sortAssignableTaskMap();
 
@@ -79,10 +79,12 @@ public class AssignableTaskConversion {
      */
     private static void createAssignableTasksAndSetAssociations(List<com.arsdigita
             .workflow.simple.UserTask> trunkUserTasks) {
-        int pTasks = 0, pAssignments = 0;
+        int pTasks = 0, pAssignments = 0, pDependencies = 0;
 
         for (com.arsdigita.workflow.simple.UserTask trunkUserTask :
                 trunkUserTasks) {
+
+            // TASK STUFF
 
             // create assignableTask
             AssignableTask assignableTask = new AssignableTask(trunkUserTask);
@@ -101,6 +103,10 @@ public class AssignableTaskConversion {
                 }
             } catch (Exception ignored) {}
 
+            // taskDependencies
+            pDependencies += createTaskDependencies(assignableTask,
+                    trunkUserTask.getDependencies());
+
             // set taskComments
             Iterator commentsIt = trunkUserTask.getComments();
             while (commentsIt.hasNext()) {
@@ -115,6 +121,8 @@ public class AssignableTaskConversion {
                 assignableTask.addComment(taskComment);
             }
 
+
+            // ASSIGNABLETASK STUFF
 
             // set lockingUser and notificationSender
             if (trunkUserTask.getLockedUser() != null) {
@@ -138,11 +146,57 @@ public class AssignableTaskConversion {
                     groupCollection);
 
             pTasks++;
+
+
+            /*System.err.printf("\t\tTasks: %d, " +
+                                  "Dependencies: %d, " +
+                                  "Assignments: %d\n",
+                                  pTasks, pDependencies, pAssignments);*/
         }
 
         System.err.printf("\t\tCreated %d assignable tasks and\n" +
+                          "\t\tCreated %d task dependencies and\n" +
                           "\t\tcreated %d task assignments.\n",
-                          pTasks, pAssignments);
+                          pTasks, pDependencies, pAssignments);
+    }
+
+    /**
+     * Method for recreating the
+     * ng-{@link com.arsdigita.portation.modules.core.workflow.Task}s ring-like
+     * dependencies between dependentTask and dependsOn. Because all
+     * ng-{@link com.arsdigita.portation.modules.core.workflow.Task}s have
+     * already been created, it is possible e.g. to find the dependsOn-{@code
+     * Tasks} and bind them for association.
+     *
+     * @param assignableTask The {@link AssignableTask}
+     * @param dependencyIt An iterator representing all dependencies of the
+     *                     given assignableTask
+     */
+    private static long createTaskDependencies(AssignableTask assignableTask,
+                                               Iterator dependencyIt) {
+
+        int processed = 0;
+
+        while (dependencyIt.hasNext()) {
+            AssignableTask dependency = NgCoreCollection
+                        .assignableTasks
+                        .get(((com.arsdigita.workflow.simple
+                                .Task) dependencyIt.next())
+                                .getID()
+                                .longValue());
+
+            if (assignableTask != null && dependency != null) {
+                TaskDependency taskDependency =
+                        new TaskDependency(assignableTask, dependency);
+
+                // set opposed associations
+                assignableTask.addBlockingTask(taskDependency);
+                dependency.addBlockedTask(taskDependency);
+
+                processed++;
+            }
+        }
+        return processed;
     }
 
     /**
@@ -185,43 +239,6 @@ public class AssignableTaskConversion {
     }
 
     /**
-     * Method for recreating the
-     * ng-{@link com.arsdigita.portation.modules.core.workflow.Task}s ring-like
-     * dependencies between dependentTask and dependsOn. Because all
-     * ng-{@link com.arsdigita.portation.modules.core.workflow.Task}s have
-     * already been created, it is possible e.g. to find the dependsOn-{@code
-     * Tasks} and bind them for association.
-     *
-     * @param trunkUserTasks List of all
-     *                       {@link com.arsdigita.workflow.simple.UserTask}s
-     *                       from this old trunk-system.
-     */
-    private static void setTaskRingDependencies(List<com.arsdigita.workflow
-            .simple.UserTask> trunkUserTasks) {
-
-        for (com.arsdigita.workflow.simple.UserTask trunkUserTask :
-                trunkUserTasks) {
-            AssignableTask assignableTask = NgCoreCollection
-                    .assignableTasks
-                    .get(trunkUserTask.getID().longValue());
-
-            Iterator it = trunkUserTask.getDependencies();
-            while (it.hasNext()) {
-                AssignableTask dependency = NgCoreCollection
-                        .assignableTasks
-                        .get(((com.arsdigita.workflow.simple
-                                .Task) it.next()).getID().longValue());
-
-                if (assignableTask != null && dependency != null) {
-                    // set dependencies and opposed
-                    assignableTask.addDependsOn(dependency);
-                    dependency.addDependentTask(assignableTask);
-                }
-            }
-        }
-    }
-
-    /**
      * Sorts values of assignable-task-map to ensure that the dependencies will
      * be listed before their dependant tasks in the export file.
      *
@@ -258,16 +275,17 @@ public class AssignableTaskConversion {
      */
     private static void addDependencies(ArrayList<AssignableTask> sortedList,
                                         AssignableTask assignableTask) {
-        List<Task> dependencies = assignableTask.getDependsOn();
+        List<TaskDependency> dependencies = assignableTask.getBlockingTasks();
 
         if (!dependencies.isEmpty()) {
-            for (Task dependsOnTask : dependencies) {
-                AssignableTask dependency = (AssignableTask) dependsOnTask;
-                if (dependency != null) {
-                    addDependencies(sortedList, dependency);
+            for (TaskDependency dependency : dependencies) {
+                AssignableTask blockingTask = (AssignableTask) dependency
+                        .getBlockingTask();
+                if (blockingTask != null) {
+                    addDependencies(sortedList, blockingTask);
 
-                    if (!sortedList.contains(dependency))
-                        sortedList.add(dependency);
+                    if (!sortedList.contains(blockingTask))
+                        sortedList.add(blockingTask);
                 }
             }
         }

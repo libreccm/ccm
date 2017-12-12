@@ -32,6 +32,7 @@ import com.arsdigita.portation.modules.core.workflow.AssignableTask;
 import com.arsdigita.portation.modules.core.workflow.Task;
 import com.arsdigita.portation.modules.core.workflow.TaskAssignment;
 import com.arsdigita.portation.modules.core.workflow.TaskComment;
+import com.arsdigita.portation.modules.core.workflow.TaskDependency;
 import com.arsdigita.portation.modules.core.workflow.Workflow;
 
 import java.util.ArrayList;
@@ -62,6 +63,7 @@ public class NgCoreCollection {
     public static Map<Long, TaskComment> taskComments = new HashMap<>();
     public static Map<Long, Task> tasks = new HashMap<>();
     public static Map<Long, AssignableTask> assignableTasks = new HashMap<>();
+    public static Map<Long, TaskDependency> taskDependencies = new HashMap<>();
     public static Map<Long, TaskAssignment> taskAssignments = new HashMap<>();
 
     public static Map<Long, Permission> permissions = new HashMap<>();

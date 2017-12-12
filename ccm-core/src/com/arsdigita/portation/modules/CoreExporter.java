@@ -51,6 +51,7 @@ public class CoreExporter extends AbstractExporter {
         exportWorkflows();
         exportTaskComments();
         exportAssignableTasks();
+        exportTaskDependencies();
         exportTaskAssignments();
     }
 
@@ -168,6 +169,17 @@ public class CoreExporter extends AbstractExporter {
                 Format.XML, pathName, "assignableTasks", indentation);
         assignableTaskMarshaller.exportList(
                 NgCoreCollection.sortedAssignableTasks);
+        System.out.printf("\tdone.\n");
+    }
+
+    private static void exportTaskDependencies() {
+        System.out.printf("\tExporting task dependencies...");
+        TaskDependencyMarshaller taskDependencyMarshaller = new
+                TaskDependencyMarshaller();
+        taskDependencyMarshaller.prepare(
+                Format.XML, pathName, "taskDependencies", indentation);
+        taskDependencyMarshaller.exportList(
+                new ArrayList<>(NgCoreCollection.taskDependencies.values()));
         System.out.printf("\tdone.\n");
     }
 

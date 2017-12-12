@@ -100,7 +100,8 @@ public class GroupConversion {
 
             if (group != null && member != null) {
                 // create groupMemeberships
-                GroupMembership groupMembership = new GroupMembership(group, member);
+                GroupMembership groupMembership = new GroupMembership(group,
+                        member);
 
                 // set opposed associations
                 group.addMembership(groupMembership);

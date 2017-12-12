@@ -49,9 +49,9 @@ public class Task {
     @JsonIdentityReference(alwaysAsId = true)
     private Workflow workflow;
     @JsonIgnore
-    private List<Task> dependentTasks;
-    @JsonIdentityReference(alwaysAsId = true)
-    private List<Task> dependsOn;
+    private List<TaskDependency> blockedTasks;
+    @JsonIgnore
+    private List<TaskDependency> blockingTasks;
     @JsonIdentityReference(alwaysAsId = true)
     private List<TaskComment> comments;
 
@@ -70,8 +70,8 @@ public class Task {
 
         //this.workflow
 
-        this.dependentTasks = new ArrayList<>();
-        this.dependsOn = new ArrayList<>();
+        this.blockedTasks = new ArrayList<>();
+        this.blockingTasks = new ArrayList<>();
         this.comments = new ArrayList<>();
 
         NgCoreCollection.tasks.put(this.getTaskId(), this);
@@ -133,37 +133,36 @@ public class Task {
         this.workflow = workflow;
     }
 
-    public List<Task> getDependentTasks() {
-        return dependentTasks;
+    public List<TaskDependency> getBlockedTasks() {
+        return blockedTasks;
     }
 
-    public void setDependentTasks(final List<Task> dependentTasks) {
-        this.dependentTasks = dependentTasks;
+    public void setBlockedTasks(final List<TaskDependency> blockedTasks) {
+        this.blockedTasks = blockedTasks;
     }
 
-    public void addDependentTask(final Task task) {
-        dependentTasks.add(task);
+    public void addBlockedTask(final TaskDependency blockedTask) {
+        this.blockedTasks.add(blockedTask);
     }
 
-    public void removeDependentTask(final Task task) {
-        dependentTasks.remove(task);
+    public void removeBlockedTask(final TaskDependency blockedTask) {
+        this.blockedTasks.remove(blockedTask);
     }
 
-    public List<Task> getDependsOn() {
-        return dependsOn;
+    public List<TaskDependency> getBlockingTasks() {
+        return blockingTasks;
     }
 
-    public void setDependsOn(final List<Task> dependsOn) {
-        this.dependsOn = dependsOn;
+    public void setBlockingTasks(final List<TaskDependency> blockingTasks) {
+        this.blockingTasks = blockingTasks;
     }
 
-    public void addDependsOn(final Task task) {
-        dependsOn.add(task);
+    public void addBlockingTask(final TaskDependency blockingTask) {
+        this.blockingTasks.add(blockingTask);
     }
 
-
-    public void removeDependsOn(final Task task) {
-        dependsOn.remove(task);
+    public void removeBlockingTask(final TaskDependency blockingTask) {
+        this.blockingTasks.remove(blockingTask);
     }
 
     public List<TaskComment> getComments() {
