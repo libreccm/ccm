@@ -18,8 +18,24 @@
  */
 package com.arsdigita.cms.ui.category;
 
-import com.arsdigita.bebop.*;
-import com.arsdigita.bebop.event.*;
+import com.arsdigita.bebop.ActionLink;
+import com.arsdigita.bebop.Form;
+import com.arsdigita.bebop.FormProcessException;
+import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.List;
+import com.arsdigita.bebop.Page;
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.ParameterSingleSelectionModel;
+import com.arsdigita.bebop.SimpleContainer;
+import com.arsdigita.bebop.SingleSelectionModel;
+import com.arsdigita.bebop.Tree;
+import com.arsdigita.bebop.event.ActionEvent;
+import com.arsdigita.bebop.event.ActionListener;
+import com.arsdigita.bebop.event.ChangeEvent;
+import com.arsdigita.bebop.event.ChangeListener;
+import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.categorization.CategorizedCollection;
@@ -38,8 +54,12 @@ import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.toolbox.ui.ActionGroup;
 import com.arsdigita.toolbox.ui.Section;
 import com.arsdigita.xml.Element;
+
 import java.math.BigDecimal;
+
 import org.apache.log4j.Logger;
+
+import static com.arsdigita.web.Web.*;
 
 /**
  * A split pane for the Category Administration UI.
@@ -50,9 +70,10 @@ import org.apache.log4j.Logger;
 public final class CategoryAdminPane extends BaseAdminPane {
 
     public static final String CONTEXT_SELECTED = "sel_context";
-    private static final String DEFAULT_USE_CONTEXT =
-                                CategoryUseContextModelBuilder.DEFAULT_USE_CONTEXT;
-    private static final Logger s_log = Logger.getLogger(CategoryAdminPane.class);
+    private static final String DEFAULT_USE_CONTEXT
+                                = CategoryUseContextModelBuilder.DEFAULT_USE_CONTEXT;
+    private static final Logger s_log = Logger
+        .getLogger(CategoryAdminPane.class);
     private final SingleSelectionModel m_contextModel;
     private final Tree m_categoryTree;
     private final SingleSelectionModel m_model;
@@ -62,16 +83,18 @@ public final class CategoryAdminPane extends BaseAdminPane {
     public CategoryAdminPane() {
         super();
 
-        m_contextModel = new UseContextSelectionModel(new StringParameter(CONTEXT_SELECTED));
+        m_contextModel = new UseContextSelectionModel(new StringParameter(
+            CONTEXT_SELECTED));
 
         /* Left column */
-        /* Use context section */
+ /* Use context section */
         List list = new List(new CategoryUseContextModelBuilder());
         list.setSelectionModel(m_contextModel);
         list.addChangeListener(new ContextSelectionListener());
 
         /* Category tree section */
-        m_categoryTree = new BaseTree(new CategoryTreeModelBuilder(m_contextModel));
+        m_categoryTree = new BaseTree(new CategoryTreeModelBuilder(
+            m_contextModel));
         m_categoryTree.addChangeListener(new SelectionListener());
         m_model = m_categoryTree.getSelectionModel();
 
@@ -87,7 +110,7 @@ public final class CategoryAdminPane extends BaseAdminPane {
 
         if (CMS.getConfig().getAllowCategoryCreateUseContext()) {
             ActionLink addContextAction = new ActionLink(new Label(gz(
-                    "cms.ui.category.add_use_context")));
+                "cms.ui.category.add_use_context")));
             Form addContextForm = new AddUseContextForm(m_contextModel);
             getBody().add(addContextForm);
             getBody().connect(addContextAction, addContextForm);
@@ -115,8 +138,9 @@ public final class CategoryAdminPane extends BaseAdminPane {
         setEdit(gz("cms.ui.category.edit"),
                 new CategoryEditForm(m_parent, m_category));
 
-        setDelete(new DeleteLink(new Label(gz("cms.ui.category.delete"))), new DeleteForm(
-                new SimpleContainer()));
+        setDelete(new DeleteLink(new Label(gz("cms.ui.category.delete"))),
+                  new DeleteForm(
+                      new SimpleContainer()));
 
         setIntroPane(new Label(gz("cms.ui.category.intro")));
         setItemPane(new CategoryItemPane(m_model,
@@ -129,7 +153,6 @@ public final class CategoryAdminPane extends BaseAdminPane {
         //m_contextList = new List(new ContextListModelBuilder());
         //m_contextList.adChangeListener(new ContextListSelectionListener());
         //m_contextModel = m_contextList.getSelectionModel();
-
     }
 
     @Override
@@ -156,8 +179,8 @@ public final class CategoryAdminPane extends BaseAdminPane {
 
             Category cat = m_category.getCategory(state);
             String context = getUseContext(state);
-            boolean isDefaultContext =
-                    (context == null) || DEFAULT_USE_CONTEXT.equals(context);
+            boolean isDefaultContext = (context == null) || DEFAULT_USE_CONTEXT
+                .equals(context);
 
             if (cat.isRoot() || !cat.getChildren().isEmpty()) {
                 m_alternativeLabel.generateXML(state, parent);
@@ -175,15 +198,15 @@ public final class CategoryAdminPane extends BaseAdminPane {
             prompt.add(new Label(gz("cms.ui.category.delete_prompt")));
             Label catLabel = new Label();
             catLabel.addPrintListener(new PrintListener() {
+
                 public void prepare(PrintEvent pe) {
                     Label label = (Label) pe.getTarget();
-                    Category cat =
-                             m_category.getCategory(pe.getPageState());
+                    Category cat = m_category.getCategory(pe.getPageState());
                     CategoryCollection descendants = cat.getDescendants();
                     final long nDescendants = descendants.size() - 1;
                     descendants.close();
-                    CategorizedCollection descObjects =
-                                          cat.getDescendantObjects();
+                    CategorizedCollection descObjects = cat
+                        .getDescendantObjects();
                     final long nDescObjects = descObjects.size();
                     descObjects.close();
                     StringBuffer sb = new StringBuffer(" ");
@@ -197,7 +220,8 @@ public final class CategoryAdminPane extends BaseAdminPane {
                         sb.append(" descendant object(s). ");
                     }
                     if (nDescendants > 0 || nDescObjects > 0) {
-                        sb.append("Descendants will be orphaned, if this category is removed.");
+                        sb.append(
+                            "Descendants will be orphaned, if this category is removed.");
                     }
                     label.setLabel(sb.toString());
                 }
@@ -207,24 +231,26 @@ public final class CategoryAdminPane extends BaseAdminPane {
         }
 
         public final void process(final FormSectionEvent e)
-                throws FormProcessException {
+            throws FormProcessException {
             final PageState state = e.getPageState();
             final Category category = m_category.getCategory(state);
             if (category == null) {
                 return;
             }
 
-            PermissionService.assertPermission(new PermissionDescriptor(PrivilegeDescriptor.DELETE,
-                                                                        category,
-                                                                        Kernel.getContext().
+            PermissionService.assertPermission(new PermissionDescriptor(
+                PrivilegeDescriptor.DELETE,
+                category,
+                Kernel.getContext().
                     getParty()));
 
             if (category.isRoot()) {
-                Category root =
-                         Category.getRootForObject(CMS.getContext().getContentSection(),
-                                                   getUseContext(state));
+                Category root = Category.getRootForObject(CMS.getContext()
+                    .getContentSection(),
+                                                          getUseContext(state));
                 if (category.equals(root)) {
-                    Category.clearRootForObject(CMS.getContext().getContentSection(),
+                    Category.clearRootForObject(CMS.getContext()
+                        .getContentSection(),
                                                 getUseContext(state));
                 }
                 m_contextModel.setSelectedKey(state, DEFAULT_USE_CONTEXT);
@@ -268,9 +294,10 @@ public final class CategoryAdminPane extends BaseAdminPane {
             final PageState state = e.getPageState();
 
             if (!m_model.isSelected(state)) {
-                final Category root =
-                               Category.getRootForObject(CMS.getContext().getContentSection(),
-                                                         getUseContext(state));
+                final Category root = Category.getRootForObject(CMS.getContext()
+                    .getContentSection(),
+                                                                getUseContext(
+                                                                    state));
                 if (root != null) {
                     m_model.setSelectedKey(state, root.getID());
                 }
@@ -306,16 +333,17 @@ public final class CategoryAdminPane extends BaseAdminPane {
     public class ContextSelectionListener implements ChangeListener {
 
         public final void stateChanged(final ChangeEvent e) {
-            s_log.debug("Selection state changed; I may change " + "the body's visible pane");
+            s_log.debug("Selection state changed; I may change "
+                        + "the body's visible pane");
 
             final PageState state = e.getPageState();
 
             getBody().reset(state);
 
             if (m_contextModel.isSelected(state)) {
-                final Category root =
-                               Category.getRootForObject(CMS.getContext().getContentSection(),
-                                                         getUseContext(state));
+                final Category root = Category
+                    .getRootForObject(CMS.getContext().getContentSection(),
+                                      getUseContext(state));
 
                 if (root != null) {
                     m_model.setSelectedKey(state, root.getID());
@@ -324,11 +352,13 @@ public final class CategoryAdminPane extends BaseAdminPane {
 
             }
             if (m_model.isSelected(state)) {
-                s_log.debug("The selection model is selected; displaying " + "the item pane");
+                s_log.debug("The selection model is selected; displaying "
+                            + "the item pane");
 
                 getBody().push(state, getItemPane());
             }
         }
 
     }
+
 }
