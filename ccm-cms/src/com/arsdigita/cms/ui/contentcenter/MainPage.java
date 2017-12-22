@@ -55,8 +55,7 @@ import org.apache.log4j.Logger;
  *
  * @author Jack Chung (flattop@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
- * @author Peter Boy (pboy@barkhof.uni-bremen.de)
- * @version $Id: MainPage.java pboy $
+ * @author Peter Boy (pboy@uni-bremen.de)
  */
 public class MainPage extends CMSApplicationPage implements ActionListener {
 

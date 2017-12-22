@@ -72,7 +72,6 @@ import com.arsdigita.web.Web;
  * reused in every row of the table.
  *
  * @author <a href="mailto:mbryzek@arsdigita.com">Michael Bryzek</a>
- * @version $Id: ContentSectionContainer.java 287 2005-02-22 00:29:02Z sskracic$
  */
 public class ContentSectionContainer extends CMSContainer {
 

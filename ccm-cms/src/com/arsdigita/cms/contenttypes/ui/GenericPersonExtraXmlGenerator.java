@@ -32,7 +32,6 @@ import com.arsdigita.xml.Element;
 /**
  *
  * @author Jens Pelzetter
- * @version $Id$
  */
 public class GenericPersonExtraXmlGenerator implements ExtraXMLGenerator {
 

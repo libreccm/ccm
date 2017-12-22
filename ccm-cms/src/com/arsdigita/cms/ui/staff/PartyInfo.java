@@ -51,7 +51,6 @@ import java.math.BigDecimal;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @author Michael Bryzek (mbryzek@arsdigita.com)
- * @version $Id: PartyInfo.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class PartyInfo extends SimpleContainer {
 

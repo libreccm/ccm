@@ -48,7 +48,6 @@ public class IdSearchTab extends LayoutPanel {
         filterform = new Form("IdSearchForm");
         formHeader = new Label("Item-id:");
         textField = new TextField("IdFeld");
-//        textField.setHint("An ID has 4 digits");
         textField.addValidationListener(new NotNullValidationListener());
 
         filterform.add(textField);

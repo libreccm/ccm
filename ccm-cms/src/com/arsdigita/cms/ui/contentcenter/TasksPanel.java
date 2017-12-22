@@ -83,7 +83,6 @@ import com.arsdigita.xml.Element;
 
 /**
  *
- * @version $Id: TasksPanel.java 1280 2006-07-27 09:12:09Z cgyg9330 $
  */
 public class TasksPanel extends CMSContainer {
 

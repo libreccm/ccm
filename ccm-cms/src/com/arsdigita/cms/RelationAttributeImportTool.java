@@ -61,7 +61,6 @@ import org.xml.sax.helpers.DefaultHandler;
  * an description element containing a description of the entry.
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
- * @version $Id$
  */
 public class RelationAttributeImportTool {
 

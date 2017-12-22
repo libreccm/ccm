@@ -72,7 +72,6 @@ import org.apache.log4j.Logger;
  * @author Xixi D'Moon &lt;xdmoon@redhat.com&gt;
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @author Peter Boy (pboy@barkhof.uni-bremen.de)
- * @version $Id: ContentSectionPage.java 2224 2011-08-01 07:45:23Z pboy $
  */
 public class MainPage extends CMSApplicationPage implements ActionListener {
 
