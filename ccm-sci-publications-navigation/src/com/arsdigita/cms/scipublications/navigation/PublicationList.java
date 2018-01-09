@@ -318,7 +318,8 @@ public class PublicationList extends AbstractComponent {
                 yearFilter = null;
             }
 //            final String 
-            authorsFilter = request.getParameter("authorsStr");
+//            authorsFilter = request.getParameter("authorsStr");
+            authorsFilter = Globalization.decodeParameter(request, "authorsStr");
             if ((titleFilter != null && !titleFilter.trim().isEmpty())
                     || yearFilter != null
                     || (authorsFilter != null && !authorsFilter.trim().isEmpty())) {
