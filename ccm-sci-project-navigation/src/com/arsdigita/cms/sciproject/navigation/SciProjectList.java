@@ -1,6 +1,5 @@
 package com.arsdigita.cms.sciproject.navigation;
 
-import com.arsdigita.globalization.Globalization;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.navigation.Navigation;
 import com.arsdigita.navigation.ui.AbstractComponent;
@@ -8,6 +7,7 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.xml.Element;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -103,11 +103,22 @@ public class SciProjectList extends AbstractComponent {
         final BigDecimal researchFieldFilter;
         try {
 //            final String titleFilter = request.getParameter("title");
-            titleFilter = Globalization.decodeParameter(request,
-                                                        "title");
+//            titleFilter = Globalization.decodeParameter(request,
+//                                                        "title");
+            if (request.getParameter("title") == null) {
+                titleFilter = null;
+            } else {
+                try {
+                    titleFilter = new String(request
+                        .getParameter("title")
+                        .getBytes("UTF-8"));
+                } catch (UnsupportedEncodingException ex) {
+                    throw new UncheckedWrapperException(ex);
+                }
+            }
 //            final BigDecimal categoryFilter;
-            if (request.getParameter("researchfield") == null 
-                || request.getParameter("researchfield").isEmpty()) {
+            if (request.getParameter("researchfield") == null
+                    || request.getParameter("researchfield").isEmpty()) {
                 researchFieldFilter = null;
             } else if (request.getParameter("researchfield").matches("\\d*")) {
                 researchFieldFilter

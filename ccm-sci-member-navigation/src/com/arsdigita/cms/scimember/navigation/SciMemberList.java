@@ -7,6 +7,7 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.xml.Element;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -113,8 +114,19 @@ public class SciMemberList extends AbstractComponent {
 
 //            final String surnameFilter = request.getParameter("surname");
 //            final String 
-            surnameFilter = Globalization.decodeParameter(request,
-                                                          "surname");
+//            surnameFilter = Globalization.decodeParameter(request,
+//                                                          "surname");
+            if (request.getParameter("surname") == null) {
+                surnameFilter = null;
+            } else {
+                try {
+                    surnameFilter = new String(request
+                        .getParameter("surname")
+                        .getBytes("UTF-8"));
+                } catch (UnsupportedEncodingException ex) {
+                    throw new UncheckedWrapperException(ex);
+                }
+            }
 
             if (surnameFilter != null && !surnameFilter.trim().isEmpty()) {
                 whereBuffer

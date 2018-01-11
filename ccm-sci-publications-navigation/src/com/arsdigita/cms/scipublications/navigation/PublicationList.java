@@ -18,6 +18,7 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.xml.Element;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -305,8 +306,19 @@ public class PublicationList extends AbstractComponent {
         final String orderByParam;
         try {
 //            final String 
-            titleFilter = Globalization.decodeParameter(request,
-                                                        "title");
+//            titleFilter = Globalization.decodeParameter(request,
+//                                                        "title");
+            if (request.getParameter("title") == null) {
+                titleFilter = null;
+            } else {
+                try {
+                    titleFilter = new String(request
+                        .getParameter("title")
+                        .getBytes("UTF-8"));
+                } catch (UnsupportedEncodingException ex) {
+                    throw new UncheckedWrapperException(ex);
+                }
+            }
 //            final String titleFilter = request.getParameter("title");
 //            final Integer yearFilter;
             if (request.getParameter("yearOfPublication") == null) {
@@ -319,7 +331,19 @@ public class PublicationList extends AbstractComponent {
             }
 //            final String 
 //            authorsFilter = request.getParameter("authorsStr");
-            authorsFilter = Globalization.decodeParameter(request, "authorsStr");
+//            authorsFilter = Globalization.decodeParameter(request, "authorsStr");
+            if (request.getParameter("authorsStr") == null) {
+                authorsFilter = null;
+            } else {
+                try {
+                    authorsFilter = new String(request
+                        .getParameter("authorsStr")
+                        .getBytes("UTF-8"));
+                } catch (UnsupportedEncodingException ex) {
+                    throw new UncheckedWrapperException(ex);
+                }
+            }
+
             if ((titleFilter != null && !titleFilter.trim().isEmpty())
                     || yearFilter != null
                     || (authorsFilter != null && !authorsFilter.trim().isEmpty())) {

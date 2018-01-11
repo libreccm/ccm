@@ -55,13 +55,13 @@ public class Globalization {
      * The default encoding for parameterts, as specified by the
      * servlet spec
      */
-    public static final String DEFAULT_PARAM_ENCODING = "UTF-8";
+    public static final String DEFAULT_PARAM_ENCODING = "ISO-8859-1";
 
     /**
      * The default encoding for request/response body data, as specified by the
      * servlet spec
      */
-    public static final String DEFAULT_ENCODING = "UTF-8";
+    public static final String DEFAULT_ENCODING = "ISO-8859-1";
 
     private static Map s_localeToCharsetMap;
     
