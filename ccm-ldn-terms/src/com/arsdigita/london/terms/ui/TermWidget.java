@@ -128,8 +128,10 @@ public class TermWidget extends Widget {
             values = (BigDecimal[]) valueObj;
             selAncestorsValues = null;
         } else {
-            throw new IllegalArgumentException(
-                "Value of TermWidget is not of type BigDecimal[] or BigDecimal[][]");
+//            throw new IllegalArgumentException(
+//                "Value of TermWidget is not of type BigDecimal[] or BigDecimal[][]");
+            values = null;
+            selAncestorsValues = null;
         }
 
         //BigDecimal[] values = (BigDecimal[]) getValue(state);

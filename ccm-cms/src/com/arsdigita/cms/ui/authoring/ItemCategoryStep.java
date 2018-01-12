@@ -29,7 +29,6 @@ import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.Resettable;
 import com.arsdigita.web.RedirectSignal;
 
-
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
@@ -41,12 +40,12 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
- * 
- * 
+ *
+ *
  */
-public class ItemCategoryStep extends SimpleContainer 
-    implements Resettable{
-    
+public class ItemCategoryStep extends SimpleContainer
+    implements Resettable {
+
     private static final Logger s_log = Logger.getLogger(ItemCategoryStep.class);
 
     private ItemCategorySummary m_summary;
@@ -57,7 +56,7 @@ public class ItemCategoryStep extends SimpleContainer
     private BigDecimalParameter m_root;
     private StringParameter m_mode;
 
-    public ItemCategoryStep(ItemSelectionModel itemModel, 
+    public ItemCategoryStep(ItemSelectionModel itemModel,
                             AuthoringKitWizard parent) {
         super("cms:categoryStep", CMS.CMS_XML_NS);
 
@@ -66,30 +65,33 @@ public class ItemCategoryStep extends SimpleContainer
 
         m_summary = new ItemCategorySummary();
         m_summary.registerAction(ItemCategorySummary.ACTION_ADD,
-                new AddActionListener("plain"));
+                                 new AddActionListener("plain"));
         m_summary.registerAction(ItemCategorySummary.ACTION_ADD_JS,
-                new AddActionListener("javascript"));
+                                 new AddActionListener("javascript"));
 
         Class addForm = ContentSection.getConfig().getCategoryAuthoringAddForm();
-        m_add = (SimpleComponent)
-            Classes.newInstance(addForm,
-                                new Class[] { BigDecimalParameter.class,
-                                              StringParameter.class },
-                                new Object[] { m_root, m_mode });
+        m_add = (SimpleComponent) Classes.newInstance(addForm,
+                                                      new Class[]{
+                                                          BigDecimalParameter.class,
+                                                          StringParameter.class},
+                                                      new Object[]{m_root,
+                                                                   m_mode});
         m_add.addCompletionListener(new ResetListener());
 
-        Class extensionClass = ContentSection.getConfig().getCategoryAuthoringExtension();
-        ItemCategoryExtension extension = (ItemCategoryExtension)
-            Classes.newInstance(extensionClass);
-        
+        Class extensionClass = ContentSection.getConfig()
+            .getCategoryAuthoringExtension();
+        ItemCategoryExtension extension = (ItemCategoryExtension) Classes
+            .newInstance(extensionClass);
+
         m_extensionSummaries = extension.getSummary();
         m_extensionForms = extension.getForm();
         int nSummaries = m_extensionSummaries.length;
-        int nForms= m_extensionForms.length;
-        Assert.isTrue(nSummaries==nForms, "invalid CategoryStep extension");
+        int nForms = m_extensionForms.length;
+        Assert.isTrue(nSummaries == nForms, "invalid CategoryStep extension");
         m_extensionsCount = nForms;
-        for (int i=0;i<m_extensionsCount;i++) {
-            m_extensionSummaries[i].addCompletionListener(new ExtensionListener(i));
+        for (int i = 0; i < m_extensionsCount; i++) {
+            m_extensionSummaries[i].addCompletionListener(new ExtensionListener(
+                i));
             m_extensionForms[i].addCompletionListener(new ResetListener());
             add(m_extensionSummaries[i]);
             add(m_extensionForms[i]);
@@ -101,10 +103,10 @@ public class ItemCategoryStep extends SimpleContainer
     @Override
     public void register(Page p) {
         super.register(p);
-        
+
         p.setVisibleDefault(m_add, false);
-        for (int i=0;i<m_extensionsCount;i++) {
-            p.setVisibleDefault(m_extensionForms[i], false);    
+        for (int i = 0; i < m_extensionsCount; i++) {
+            p.setVisibleDefault(m_extensionForms[i], false);
         }
         p.addGlobalStateParam(m_root);
         p.addGlobalStateParam(m_mode);
@@ -114,16 +116,17 @@ public class ItemCategoryStep extends SimpleContainer
     public void reset(PageState state) {
         state.setValue(m_root, null);
         state.setValue(m_mode, null);
-        
+
         m_summary.setVisible(state, true);
         m_add.setVisible(state, false);
-        for (int i=0;i<m_extensionsCount;i++) {
+        for (int i = 0; i < m_extensionsCount; i++) {
             m_extensionSummaries[i].setVisible(state, true);
             m_extensionForms[i].setVisible(state, false);
         }
     }
 
     private class AddActionListener implements ActionListener {
+
         private String m_mode;
 
         public AddActionListener(String mode) {
@@ -133,7 +136,7 @@ public class ItemCategoryStep extends SimpleContainer
         @Override
         public void actionPerformed(ActionEvent e) {
             PageState state = e.getPageState();
-            
+
             state.setValue(m_root,
                            new BigDecimal(state.getControlEventValue()));
 
@@ -142,37 +145,44 @@ public class ItemCategoryStep extends SimpleContainer
 
             m_summary.setVisible(state, false);
             m_add.setVisible(state, true);
-            for (int i=0;i<m_extensionsCount;i++) {
+            for (int i = 0; i < m_extensionsCount; i++) {
                 m_extensionSummaries[i].setVisible(state, false);
                 m_extensionForms[i].setVisible(state, false);
             }
         }
+
     }
 
     private class ResetListener implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
             PageState state = e.getPageState();
             reset(state);
             throw new RedirectSignal(state.toURL(), true);
         }
+
     }
 
     private class ExtensionListener implements ActionListener {
+
         int extensionIndex;
+
         public ExtensionListener(int i) {
             extensionIndex = i;
         }
+
         @Override
         public void actionPerformed(ActionEvent e) {
             PageState state = e.getPageState();
             m_summary.setVisible(state, false);
             m_add.setVisible(state, false);
-            for (int i=0;i<m_extensionsCount;i++) {
+            for (int i = 0; i < m_extensionsCount; i++) {
                 m_extensionSummaries[i].setVisible(state, false);
             }
             m_extensionForms[extensionIndex].setVisible(state, true);
         }
+
     }
 
 }
