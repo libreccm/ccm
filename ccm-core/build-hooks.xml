@@ -53,8 +53,8 @@
           unless="this.deploy.dir" />
     <!-- deploy the log4j configuration file into the web applications
          document root tree                                                 -->
-    <copy todir="${this.deploy.dir}/WEB-INF"
-          file="${src.dir}/log4j2.xml"/>
+    <!--copy todir="${this.deploy.dir}/WEB-INF"
+          file="${src.dir}/log4j2.xml"/-->
     <!-- project.xml moved to bundle cfg directory where it replaces
          former application.cfg                                            -->
     <xslt style="${ccm.tools.xsl.dir}/build-version.xsl" 
