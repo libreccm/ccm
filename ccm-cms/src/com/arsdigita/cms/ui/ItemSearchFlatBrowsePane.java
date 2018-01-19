@@ -52,14 +52,20 @@ import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.globalization.Globalization;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.toolbox.ui.LayoutPanel;
 import com.arsdigita.util.LockableImpl;
+import com.arsdigita.util.UncheckedWrapperException;
+
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -75,7 +81,8 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
     private final Table resultsTable;
     private final Paginator paginator;
     private final StringParameter queryParam;
-    private final QueryFieldsRequestLocal queryFields = new QueryFieldsRequestLocal();
+    private final QueryFieldsRequestLocal queryFields
+                                              = new QueryFieldsRequestLocal();
     //private final List<String> queryFields = new ArrayList<String>();
     //private final Submit submit;
     private final static CMSConfig CMS_CONFIG = CMSConfig.getInstanceOf();
@@ -103,8 +110,10 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
         mainPanel.setLeft(new FilterForm());
 
         resultsTable = new ResultsTable();
-        paginator = new Paginator((PaginationModelBuilder) resultsTable.getModelBuilder(),
-                                  CMS_CONFIG.getItemSearchFlatBrowsePanePageSize());
+        paginator = new Paginator((PaginationModelBuilder) resultsTable
+            .getModelBuilder(),
+                                  CMS_CONFIG
+                                      .getItemSearchFlatBrowsePanePageSize());
         //mainPanel.add(paginator);
         final BoxPanel body = new BoxPanel(BoxPanel.VERTICAL);
         body.add(paginator);
@@ -160,21 +169,25 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
 
         public ResultsTable() {
             super();
-            setEmptyView(new Label(GlobalizationUtil.globalize("cms.ui.item_search.flat.no_items")));
+            setEmptyView(new Label(GlobalizationUtil.globalize(
+                "cms.ui.item_search.flat.no_items")));
             setClassAttr("dataTable");
 
             final TableColumnModel columnModel = getColumnModel();
             columnModel.add(new TableColumn(0,
                                             GlobalizationUtil.globalize(
-                                                "cms.ui.item_search.flat.title").localize(),
+                                                "cms.ui.item_search.flat.title")
+                                                .localize(),
                                             TABLE_COL_TITLE));
             columnModel.add(new TableColumn(1,
                                             GlobalizationUtil.globalize(
-                                                "cms.ui.item_search.flat.place").localize(),
+                                                "cms.ui.item_search.flat.place")
+                                                .localize(),
                                             TABLE_COL_PLACE));
             columnModel.add(new TableColumn(2,
                                             GlobalizationUtil.globalize(
-                                                "cms.ui.item_search.flat.type").localize(),
+                                                "cms.ui.item_search.flat.type")
+                                                .localize(),
                                             TABLE_COL_TYPE));
 
             setModelBuilder(new ResultsTableModelBuilder());
@@ -184,8 +197,9 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
 
     }
 
-    private class ResultsTableModelBuilder extends LockableImpl implements TableModelBuilder,
-                                                                           PaginationModelBuilder {
+    private class ResultsTableModelBuilder extends LockableImpl implements
+        TableModelBuilder,
+        PaginationModelBuilder {
 
         //private DataCollection collection;
         private final RequestLocal collection = new RequestLocal();
@@ -197,10 +211,12 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
                 query(state);
             }
 
-            ((DataCollection) collection.get(state)).setRange(paginator.getFirst(state), paginator.
+            ((DataCollection) collection.get(state)).setRange(paginator
+                .getFirst(state), paginator.
                                                               getLast(state) + 1);
 
-            return new ResultsTableModel(table, state, (DataCollection) collection.get(state));
+            return new ResultsTableModel(table, state,
+                                         (DataCollection) collection.get(state));
         }
 
         public int getTotalSize(final Paginator paginator, final PageState state) {
@@ -218,16 +234,20 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
 
         private void query(final PageState state) {
             final Session session = SessionManager.getSession();
-            final BigDecimal typeId = (BigDecimal) state.getValue(new BigDecimalParameter(
-                ItemSearch.SINGLE_TYPE_PARAM));
+            final BigDecimal typeId = (BigDecimal) state.getValue(
+                new BigDecimalParameter(
+                    ItemSearch.SINGLE_TYPE_PARAM));
             if (typeId == null) {
-                collection.set(state, session.retrieve(ContentPage.BASE_DATA_OBJECT_TYPE));
+                collection.set(state, session.retrieve(
+                               ContentPage.BASE_DATA_OBJECT_TYPE));
             } else {
                 final ContentType type = new ContentType(typeId);
                 collection.set(state, session.retrieve(type.getClassName()));
             }
-            ((DataCollection) collection.get(state)).addFilter("version = 'draft'");
-            ((DataCollection) collection.get(state)).addFilter("section is not null");
+            ((DataCollection) collection.get(state)).addFilter(
+                "version = 'draft'");
+            ((DataCollection) collection.get(state)).addFilter(
+                "section is not null");
 
             final String query = (String) state.getValue(queryParam);
             if ((query != null) && !query.isEmpty()) {
@@ -237,11 +257,13 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
                     ContentPage.TITLE, query));
                 for (String field : queryFields.getQueryFields()) {
                     buffer.append(String.
-                        format(" or (lower(%s) like lower('%%%s%%'))", field, query));
+                        format(" or (lower(%s) like lower('%%%s%%'))", field,
+                               query));
                 }
                 buffer.append(')');
 
-                ((DataCollection) collection.get(state)).addFilter(buffer.toString());
+                ((DataCollection) collection.get(state)).addFilter(buffer
+                    .toString());
 
 //                ((DataCollection) collection.get(state)).addFilter(String.format(
 //                        "((lower(%s) like lower('%%%s%%')) or (lower(%s) like lower('%%%s%%')))",
@@ -249,7 +271,8 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
 //                        ContentPage.TITLE, query));
             }
 
-            ((DataCollection) collection.get(state)).addOrder("title asc, name asc");
+            ((DataCollection) collection.get(state)).addOrder(
+                "title asc, name asc");
         }
 
     }
@@ -276,8 +299,9 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
             boolean ret;
 
             if ((collection != null) && collection.next()) {
-                currentItem = (ContentItem) DomainObjectFactory.newInstance(collection.
-                    getDataObject());
+                currentItem = (ContentItem) DomainObjectFactory.newInstance(
+                    collection.
+                        getDataObject());
                 ret = true;
             } else {
                 ret = false;
@@ -337,7 +361,8 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
 
     }
 
-    private class TitleCellRenderer extends LockableImpl implements TableCellRenderer {
+    private class TitleCellRenderer extends LockableImpl implements
+        TableCellRenderer {
 
         public Component getComponent(final Table table,
                                       final PageState state,
@@ -353,29 +378,35 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
 
             final Link link = new Link(value.toString(), "");
 
-            final String widget = (String) state.getValue(new StringParameter(WIDGET_PARAM));
-            final String searchWidget = (String) state.getValue(new StringParameter(
-                SEARCHWIDGET_PARAM));
+            final String widget = (String) state.getValue(new StringParameter(
+                WIDGET_PARAM));
+            final String searchWidget = (String) state.getValue(
+                new StringParameter(
+                    SEARCHWIDGET_PARAM));
 
             final ContentPage page = new ContentPage((BigDecimal) key);
 
-            final boolean useURL = "true".equals(state.getValue(new StringParameter(
-                ItemSearchPopup.URL_PARAM)));
+            final boolean useURL = "true".equals(state.getValue(
+                new StringParameter(
+                    ItemSearchPopup.URL_PARAM)));
 
             final String targetValue;
             if (useURL) {
-                targetValue = ItemSearchPopup.getItemURL(state.getRequest(), page.getOID());
+                targetValue = ItemSearchPopup.getItemURL(state.getRequest(),
+                                                         page.getOID());
             } else {
                 targetValue = key.toString();
             }
 
             final StringBuffer buffer = new StringBuffer(30);
-            buffer.append(String.format("window.opener.document.%s.value=\"%s\"; ", widget,
-                                        targetValue));
+            buffer.append(String.format(
+                "window.opener.document.%s.value=\"%s\"; ", widget,
+                targetValue));
             if (searchWidget != null) {
-                buffer.append(String.format("window.opener.document.%s.value=\"%s\"; ",
-                                            searchWidget,
-                                            page.getTitle().replace("\"", "\\\"")));
+                buffer.append(String.format(
+                    "window.opener.document.%s.value=\"%s\"; ",
+                    searchWidget,
+                    page.getTitle().replace("\"", "\\\"")));
             }
 
             buffer.append("self.close(); return false;");
@@ -399,19 +430,23 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
 //    protected Submit getSubmit() {
 //        return submit;
 //    }
-    private class FilterForm extends Form implements FormInitListener, FormProcessListener {
+    private class FilterForm extends Form implements FormInitListener,
+                                                     FormProcessListener {
 
         private final Submit submit;
 
         public FilterForm() {
             super("ItemSearchFlatBrowsePane");
 
-            add(new Label(GlobalizationUtil.globalize("cms.ui.item_search.flat.filter")));
-            final TextField filter = new TextField(new StringParameter(QUERY_PARAM));
+            add(new Label(GlobalizationUtil.globalize(
+                "cms.ui.item_search.flat.filter")));
+            final TextField filter = new TextField(new StringParameter(
+                QUERY_PARAM));
             add(filter);
 
             submit = new Submit(FILTER_SUBMIT,
-                                GlobalizationUtil.globalize("cms.ui.item_search.flat.filter.submit"));
+                                GlobalizationUtil.globalize(
+                                    "cms.ui.item_search.flat.filter.submit"));
             add(submit);
 
             addInitListener(this);
@@ -424,19 +459,31 @@ public class ItemSearchFlatBrowsePane extends SimpleContainer {
 
             final String query = (String) data.get(QUERY_PARAM);
             if ((query == null) || query.isEmpty()) {
+                final String value;
+                try {
+                    value = new String(state.getRequest().getParameter(
+                        ItemSearchPopup.QUERY).getBytes("UTF-8"));
+                } catch (UnsupportedEncodingException ex) {
+                    throw new UncheckedWrapperException(ex);
+                }
                 data.setParameter(QUERY_PARAM,
-                                  new ParameterData(queryParam, state.getValue(new StringParameter(
-                                                            ItemSearchPopup.QUERY))));
-                state.setValue(queryParam, data.getParameter(QUERY_PARAM).getValue());
+                                  new ParameterData(queryParam, value));
+//                data.setParameter(QUERY_PARAM,
+//                                  new ParameterData(queryParam, state.getValue(new StringParameter(
+//                                                            ItemSearchPopup.QUERY))));
+                state.setValue(queryParam, data.getParameter(QUERY_PARAM)
+                               .getValue());
             }
         }
 
-        public void process(final FormSectionEvent fse) throws FormProcessException {
+        public void process(final FormSectionEvent fse) throws
+            FormProcessException {
             final FormData data = fse.getFormData();
             final PageState state = fse.getPageState();
 
             state.setValue(queryParam, data.get(QUERY_PARAM));
-            state.setValue(new StringParameter(ItemSearchPopup.QUERY), data.get(QUERY_PARAM));
+            state.setValue(new StringParameter(ItemSearchPopup.QUERY), data.get(
+                           QUERY_PARAM));
         }
 
     }
