@@ -7,13 +7,6 @@
   <display-name>CCM</display-name>
   <description>Content and Collaboration Management</description>
 
-  <!-- path and filename of the log4j user accessible config file
-       WEB-INF/conf/log4j.properties is the built-in default value -->
-  <context-param>
-    <param-name>log4j-conf-file</param-name>
-    <param-value>WEB-INF/conf/log4j.properties</param-value>
-  </context-param>
-
 
   <!-- Require secure connection by redirect to host-port part
        of parameter waf.web.secure_server               
