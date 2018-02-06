@@ -116,6 +116,7 @@
 
         <xsl:for-each select="$available-languages/language">
             <xsl:sort select="./@locale" />
+
             <xsl:apply-templates select="$language-layout-tree">
                 <xsl:with-param name="class"
                                 select="if (./@locale = $lang)
@@ -132,6 +133,12 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:with-param>
+                <xsl:with-param name="selected-language"
+                                tunnel="yes"
+                                select="$lang" />
+                <xsl:with-param name="current-language"
+                                tunnel="yes"
+                                select="./@locale" />
                 <xsl:with-param name="language-name"
                                 tunnel="yes"
                                 select="foundry:get-static-text('', concat('language/', ./@locale))"/>
@@ -151,6 +158,28 @@
         <xsl:param name="language-name" tunnel="yes"/>
 
         <xsl:value-of select="$language-name"/>
+    </xsl:template>
+
+    <xsl:template match="if-selected-language">
+        <xsl:param name="current-language" 
+                   tunnel="yes" />
+        <xsl:param name="selected-language" 
+                   tunnel="yes" />
+
+       <xsl:if test="$current-language = $selected-language">
+            <xsl:apply-templates />
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template match="if-not-selected-language">
+        <xsl:param name="current-language" 
+                   tunnel="yes" />
+        <xsl:param name="selected-language" 
+                   tunnel="yes" />
+
+        <xsl:if test="$current-language != $selected-language">
+            <xsl:apply-templates />
+        </xsl:if>
     </xsl:template>
 
 </xsl:stylesheet>
