@@ -232,7 +232,7 @@
         <xsl:copy-of select="$current-layout-node/@*[starts-with(name(), 'data-')]"/>
     </xsl:template>
     
-    <xsl:template name="foundry:copy-data-attributes">
+    <xsl:template name="foundry:copy-aria-attributes">
         <xsl:param name="current-layout-node" select="current()"/>
 
         <xsl:copy-of select="$current-layout-node/@*[starts-with(name(), 'aria-')]"/>
