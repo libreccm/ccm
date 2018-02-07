@@ -231,6 +231,12 @@
 
         <xsl:copy-of select="$current-layout-node/@*[starts-with(name(), 'data-')]"/>
     </xsl:template>
+    
+    <xsl:template name="foundry:copy-data-attributes">
+        <xsl:param name="current-layout-node" select="current()"/>
+
+        <xsl:copy-of select="$current-layout-node/@*[starts-with(name(), 'aria-')]"/>
+    </xsl:template>
 
     <foundry:doc section="devel" type="function">
         <foundry:doc-desc>
@@ -557,22 +563,31 @@
         <xsl:param name="title" select="''"/>
 
         <xsl:call-template name="foundry:set-id-and-class">
-            <xsl:with-param name="current-layout-node" select="$current-layout-node"/>
+            <xsl:with-param name="current-layout-node" 
+                            select="$current-layout-node"/>
             <xsl:with-param name="id" select="$id"/>
             <xsl:with-param name="class" select="$class"/>
         </xsl:call-template>
 
+        <xsl:call-template name="foundry:copy-aria-attributes">
+            <xsl:with-param name="current-layout-node" 
+                            select="$current-layout-node"/>
+        </xsl:call-template>
+
         <xsl:call-template name="foundry:copy-data-attributes">
-            <xsl:with-param name="current-layout-node" select="$current-layout-node"/>
+            <xsl:with-param name="current-layout-node" 
+                            select="$current-layout-node"/>
         </xsl:call-template>
 
         <xsl:call-template name="foundry:process-title-attribute">
-            <xsl:with-param name="current-layout-node" select="$current-layout-node"/>
+            <xsl:with-param name="current-layout-node" 
+                            select="$current-layout-node"/>
             <xsl:with-param name="title" select="$title"/>
         </xsl:call-template>
 
         <xsl:call-template name="foundry:copy-attributes">
-            <xsl:with-param name="current-layout-node" select="$current-layout-node"/>
+            <xsl:with-param name="current-layout-node" 
+                            select="$current-layout-node"/>
             <xsl:with-param name="attributes" select="$copy-attributes"/>
         </xsl:call-template>
     </xsl:template>
