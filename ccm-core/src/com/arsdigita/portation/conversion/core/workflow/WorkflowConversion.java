@@ -19,6 +19,7 @@
 package com.arsdigita.portation.conversion.core.workflow;
 
 import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.portation.AbstractConversion;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.categorization.Category;
 import com.arsdigita.portation.modules.core.core.CcmObject;
@@ -39,26 +40,32 @@ import java.util.Map;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
  * @version created on 27.6.16
  */
-public class WorkflowConversion {
+public class WorkflowConversion extends AbstractConversion {
+    private static WorkflowConversion instance;
+
+    static {
+        instance = new WorkflowConversion();
+    }
 
     /**
      * Retrieves all trunk-{@link com.arsdigita.workflow.simple.Workflow}s from
      * the persistent storage and collects them in a list. Then calls for
      * creating the equivalent ng-{@link Workflow}s.
      */
-    public static void convertAll() {
-        System.err.printf("\tFetching workflows from database...");
+    @Override
+    public void convertAll() {
+        System.out.print("\tFetching workflows from database...");
         List<com.arsdigita.workflow.simple.Workflow> trunkWorkflows =
                 com.arsdigita.workflow.simple.Workflow.getAllObjectWorkflows();
-        System.err.println("done.");
+        System.out.println("done.");
 
-        System.err.printf("\tConverting workflows...\n");
+        System.out.print("\tConverting workflows...\n");
         createWorkflowAndSetAssociations(trunkWorkflows);
         setTemplateAssociations(trunkWorkflows);
-        System.err.printf("\tSorting workflows...\n");
+        System.out.print("\tSorting workflows...\n");
         sortWorkflowMap();
 
-        System.err.println("\tdone.\n");
+        System.out.println("\tdone.\n");
     }
 
     /**
@@ -69,7 +76,7 @@ public class WorkflowConversion {
      *                       {@link com.arsdigita.workflow.simple.Workflow}s
      *                       from this old trunk-system.
      */
-    private static void createWorkflowAndSetAssociations(
+    private void createWorkflowAndSetAssociations(
             List<com.arsdigita.workflow.simple.Workflow> trunkWorkflows) {
         int processed = 0;
 
@@ -90,7 +97,7 @@ public class WorkflowConversion {
             processed++;
         }
 
-        System.err.printf("\t\tCreated %d workflows.\n", processed);
+        System.out.printf("\t\tCreated %d workflows.\n", processed);
     }
 
     /**
@@ -101,7 +108,7 @@ public class WorkflowConversion {
      *                       {@link com.arsdigita.workflow.simple.Workflow}s
      *                       from this old trunk-system.
      */
-    private static void setTemplateAssociations(
+    private void setTemplateAssociations(
             List<com.arsdigita.workflow.simple.Workflow> trunkWorkflows) {
         int processed = 0;
 
@@ -123,7 +130,7 @@ public class WorkflowConversion {
             } else
                 processed++;
         }
-        System.err.printf("\t\tFound %d templates.\n", processed);
+        System.out.printf("\t\tFound %d templates.\n", processed);
     }
 
     /**
@@ -134,7 +141,7 @@ public class WorkflowConversion {
      * Runs once over the unsorted list and iterates over each their templates
      * to add them to the sorted list.
      */
-    private static void sortWorkflowMap() {
+    private void sortWorkflowMap() {
         ArrayList<Workflow> sortedList = new ArrayList<>();
 
         int runs = 0;
@@ -150,7 +157,7 @@ public class WorkflowConversion {
         }
         NgCoreCollection.sortedWorkflows = sortedList;
 
-        System.err.printf("\t\tSorted workflows in %d runs.\n", runs);
+        System.out.printf("\t\tSorted workflows in %d runs.\n", runs);
     }
 
     /**
@@ -160,7 +167,7 @@ public class WorkflowConversion {
      * @param sortedList List of already sorted workflows
      * @param workflow Current workflow
      */
-    private static void addTemplate(ArrayList<Workflow> sortedList, Workflow
+    private void addTemplate(ArrayList<Workflow> sortedList, Workflow
             workflow) {
         Workflow template = workflow.getTemplate();
 
@@ -170,5 +177,14 @@ public class WorkflowConversion {
             if (!sortedList.contains(template))
                 sortedList.add(template);
         }
+    }
+
+    /**
+     * Getter for the instance of the singleton.
+     *
+     * @return instance of this singleton
+     */
+    public static WorkflowConversion getInstance() {
+        return instance;
     }
 }

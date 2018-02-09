@@ -24,10 +24,21 @@ package com.arsdigita.portation;
  */
 public abstract class AbstractExporter {
 
+    protected static Format format;
     protected static String pathName;
-    protected static boolean indentation = false;
+    protected static boolean indentation;
 
-    public static void setPath(String path) {
+    public static void setFormat(final Format aFormat) {
+        format = aFormat;
+    }
+
+    public static void setPath(final String path) {
         pathName = path;
     }
+
+    public static void setIndentation(final boolean ind) {
+        indentation = ind;
+    }
+
+    public abstract void startMarshaller();
 }

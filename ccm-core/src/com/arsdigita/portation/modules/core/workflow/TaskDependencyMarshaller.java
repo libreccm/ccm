@@ -7,7 +7,7 @@
  * version 2.1 of the License, or (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * but WITHerr ANY WARRANTY; witherr even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
@@ -19,6 +19,10 @@
 package com.arsdigita.portation.modules.core.workflow;
 
 import com.arsdigita.portation.AbstractMarshaller;
+import com.arsdigita.portation.Format;
+import com.arsdigita.portation.conversion.NgCoreCollection;
+
+import java.util.ArrayList;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
@@ -26,4 +30,39 @@ import com.arsdigita.portation.AbstractMarshaller;
  */
 public class TaskDependencyMarshaller extends
         AbstractMarshaller<TaskDependency> {
+    private static TaskDependencyMarshaller instance;
+
+    static {
+        instance = new TaskDependencyMarshaller();
+    }
+
+    /**
+     * Getter for the instance of this singleton.
+     *
+     * @return instance of the singleton
+     */
+    public static TaskDependencyMarshaller getInstance() {
+        return instance;
+    }
+
+    /**
+     * Passes the parameters for the file to which the {@link TaskDependency}-
+     * objects will be exported to down to its corresponding
+     * {@link AbstractMarshaller<TaskDependency>} and then requests this
+     * {@link AbstractMarshaller<TaskDependency>} to start the export of all
+     * its {@link TaskDependency}s.
+     *
+     * @param format The format of the file to which will be exported to
+     * @param pathName The name for the file
+     * @param indentation Whether to use indentation in the file
+     */
+    @Override
+    public void marshallAll(final Format format,
+                            final String pathName,
+                            final boolean indentation) {
+        System.out.print("\tExporting task dependencies...");
+        prepare(format, pathName, "taskDependencies", indentation);
+        exportList(new ArrayList<>(NgCoreCollection.taskDependencies.values()));
+        System.out.print("\tdone.\n");
+    }
 }

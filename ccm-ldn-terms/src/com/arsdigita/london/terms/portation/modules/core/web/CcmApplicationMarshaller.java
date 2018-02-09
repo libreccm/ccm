@@ -18,11 +18,48 @@
  */
 package com.arsdigita.london.terms.portation.modules.core.web;
 
+import com.arsdigita.london.terms.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.AbstractMarshaller;
+import com.arsdigita.portation.Format;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 8/3/17
  */
 public class CcmApplicationMarshaller extends AbstractMarshaller<CcmApplication> {
+    private static CcmApplicationMarshaller instance;
+
+    static {
+        instance = new CcmApplicationMarshaller();
+    }
+
+    /**
+     * Getter for the instance of this singleton.
+     *
+     * @return instance of the singleton
+     */
+    public static CcmApplicationMarshaller getInstance() {
+        return instance;
+    }
+
+    /**
+     * Passes the parameters for the file to which the {@link CcmApplication}-
+     * objects will be exported to down to its corresponding
+     * {@link AbstractMarshaller<CcmApplication>} and then requests this
+     * {@link AbstractMarshaller<CcmApplication>} to start the export of all
+     * its {@link CcmApplication}s.
+     *
+     * @param format The format of the file to which will be exported to
+     * @param pathName The name for the file
+     * @param indentation Whether to use indentation in the file
+     */
+    @Override
+    public void marshallAll(final Format format,
+                            final String pathName,
+                            final boolean indentation) {
+        System.out.print("\tExporting ccmApplications...");
+        prepare(format, pathName, "ccmApplications", indentation);
+        exportList(NgCoreCollection.sortedCcmApplications);
+        System.out.print("\tdone.\n");
+    }
 }

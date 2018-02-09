@@ -23,6 +23,7 @@ import com.arsdigita.london.terms.portation.conversion.NgCoreCollection;
 import com.arsdigita.london.terms.portation.modules.core.core.Resource;
 import com.arsdigita.london.terms.portation.modules.core.core.ResourceType;
 import com.arsdigita.london.terms.portation.modules.core.web.CcmApplication;
+import com.arsdigita.portation.AbstractConversion;
 import com.arsdigita.web.Application;
 
 import java.util.ArrayList;
@@ -36,28 +37,35 @@ import java.util.List;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 8/2/17
  */
-public class CcmApplicationConversion {
+public class CcmApplicationConversion extends AbstractConversion {
+    private static CcmApplicationConversion instance;
+
+    static {
+        instance = new CcmApplicationConversion();
+    }
+
     /**
      * Retrieves all trunk-{@link com.arsdigita.kernel.ResourceType}s from
      * the persistent storage and collects them in a list. Then calls for
      * creating the equivalent ng-{@link ResourceType}s focusing on keeping all
      * the associations in tact.
      */
-    public static void convertAll() {
-        System.err.printf("\tFetching ccm applications from database...");
+    @Override
+    public void convertAll() {
+        System.out.print("\tFetching ccm applications from database...");
         List<Application> trunkApplications = Application
                 .getAllApplicationObjects();
-        System.err.println("done.");
+        System.out.println("done.");
 
-        System.err.printf("\tConverting ccm applications...\n");
+        System.out.print("\tConverting ccm applications...\n");
         // create ccm applications
         createCcmApplicationsAndSetAssociations(trunkApplications);
         setRingAssociations(trunkApplications);
 
-        System.err.printf("\tSorting ccm applications...\n");
+        System.out.print("\tSorting ccm applications...\n");
         sortCcmApplications();
 
-        System.err.println("\tdone.\n");
+        System.out.println("\tdone.\n");
     }
 
     /**
@@ -67,7 +75,7 @@ public class CcmApplicationConversion {
      * @param trunkApplications List of all {@link Application}s
      *                          from this old trunk-system.
      */
-    private static void createCcmApplicationsAndSetAssociations(
+    private void createCcmApplicationsAndSetAssociations(
             List<Application> trunkApplications) {
         int processed = 0;
 
@@ -86,11 +94,9 @@ public class CcmApplicationConversion {
                 ccmApplication.setResourceType(resourceType);
             }
 
-            //System.err.println(String.format(
-            //        "ccm application id: %d", ccmApplication.getObjectId()));
             processed++;
         }
-        System.err.printf("\t\tCreated %d ccm applications.\n", processed);
+        System.out.printf("\t\tCreated %d ccm applications.\n", processed);
     }
 
     /**
@@ -101,14 +107,14 @@ public class CcmApplicationConversion {
      * @param trunkApplications List of all {@link Application} from the old
      *                          trunk-system.
      */
-    private static void setRingAssociations(List<Application> trunkApplications) {
+    private void setRingAssociations(List<Application> trunkApplications) {
         for (Application trunkApplication : trunkApplications) {
             CcmApplication ccmApplication = NgCoreCollection
                     .ccmApplications
                     .get(trunkApplication.getID().longValue());
 
             // set parent Resource and opposed association
-            CcmApplication parentResource = null;
+            CcmApplication parentResource;
 
             Application trunkParent = trunkApplication
                     .getParentApplication();
@@ -130,7 +136,7 @@ public class CcmApplicationConversion {
      * Runs once over the unsorted list and iterates over each their parents
      * to add them to the sorted list.
      */
-    private static void sortCcmApplications() {
+    private void sortCcmApplications() {
         ArrayList<CcmApplication> sortedList = new ArrayList<>();
 
         int runs = 0;
@@ -145,7 +151,7 @@ public class CcmApplicationConversion {
         }
         NgCoreCollection.sortedCcmApplications = sortedList;
 
-        System.err.printf("\t\tSorted ccm applications in %d runs.\n", runs);
+        System.out.printf("\t\tSorted ccm applications in %d runs.\n", runs);
     }
 
     /**
@@ -155,7 +161,7 @@ public class CcmApplicationConversion {
      * @param sortedList List of already sorted assignable tasks
      * @param ccmApplication Current assignable task
      */
-    private static void addResourceParent(ArrayList<CcmApplication> sortedList,
+    private void addResourceParent(ArrayList<CcmApplication> sortedList,
                                           CcmApplication ccmApplication) {
         CcmApplication resourceParent = (CcmApplication) ccmApplication
                 .getParent();
@@ -166,5 +172,14 @@ public class CcmApplicationConversion {
             if (!sortedList.contains(resourceParent))
                 sortedList.add(resourceParent);
         }
+    }
+
+    /**
+     * Getter for the instance of the singleton.
+     *
+     * @return instance of this singleton
+     */
+    public static CcmApplicationConversion getInstance() {
+        return instance;
     }
 }

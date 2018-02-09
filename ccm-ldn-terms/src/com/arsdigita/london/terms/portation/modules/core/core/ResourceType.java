@@ -29,7 +29,7 @@ import java.util.Locale;
 /**
  * This class is a port of the old {@code ResourceType} entity.
  *
- * @deprecated The real purpose of this class is not clear. Also the
+ * /@deprecated The real purpose of this class is not clear. Also the
  * informations provided by the entities of this class are all quite static or
  * can be interfered from the classes itself. In modern Java most if not all the
  * informations provided by the entities of this class would be expressed as

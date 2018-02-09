@@ -48,19 +48,28 @@ public class CoreConverter extends AbstractConverter {
     }
 
     /**
+     * Getter for the instance of the singleton.
+     *
+     * @return instance of this singleton
+     */
+    public static CoreConverter getInstance() {
+        return instance;
+    }
+
+    /**
      * Method, to start all the different converter classes in a specific
      * order, so that dependencies can only be set, where the objects have
      * already been created.
      */
     @Override
-    public void startConversionToNg() {
-        UserConversion.convertAll();
-        GroupConversion.convertAll();
-        RoleConversion.convertAll();
+    public void startConversion() {
+        UserConversion.getInstance().convertAll();
+        GroupConversion.getInstance().convertAll();
+        RoleConversion.getInstance().convertAll();
 
-        CategoryConversion.convertAll();
+        CategoryConversion.getInstance().convertAll();
 
-        PermissionConversion.convertAll();
+        PermissionConversion.getInstance().convertAll();
         // Verify permissions
         for (Permission permission : NgCoreCollection.permissions.values()) {
             if (permission.getGrantee() == null) {
@@ -70,17 +79,8 @@ public class CoreConverter extends AbstractConverter {
             }
         }
 
-        WorkflowConversion.convertAll();
-        TaskCommentConversion.convertAll();
-        AssignableTaskConversion.convertAll();
-    }
-
-    /**
-     * Getter for the instance of the singleton.
-     *
-     * @return instance of this singleton
-     */
-    public static CoreConverter getInstance() {
-        return instance;
+        WorkflowConversion.getInstance().convertAll();
+        TaskCommentConversion.getInstance().convertAll();
+        AssignableTaskConversion.getInstance().convertAll();
     }
 }

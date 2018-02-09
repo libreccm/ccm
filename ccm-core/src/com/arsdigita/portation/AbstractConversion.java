@@ -19,18 +19,18 @@
 package com.arsdigita.portation;
 
 /**
- * Abstract super class for conversion from trunk objects to ng object. The
- * class demands the implementation of the following method of the
- * appropriate converters.
+ * Abstract class for converting all trunk objects of a certain class into
+ * objects of their corresponding ng classes.
  *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
- * @version created the 7/28/17
+ * @version created the 2/7/18
  */
-public abstract class AbstractConverter {
+public abstract class AbstractConversion {
+
     /**
-     * Method, to start all the different converter classes in a specific
-     * order, so that dependencies can only be set, where the objects have
-     * already been created.
+     * Retrieves all trunk objects of a certain class from the persistent
+     * storage and collects them in a list. Then calls for creating the
+     * equivalent ng objects focusing on keeping all the associations in tact.
      */
-    public abstract void startConversion();
+    public abstract void convertAll();
 }

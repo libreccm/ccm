@@ -21,11 +21,11 @@ package com.arsdigita.portation.conversion.core.workflow;
 
 import com.arsdigita.kernel.GroupCollection;
 import com.arsdigita.kernel.RoleCollection;
+import com.arsdigita.portation.AbstractConversion;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.security.Role;
 import com.arsdigita.portation.modules.core.security.User;
 import com.arsdigita.portation.modules.core.workflow.AssignableTask;
-import com.arsdigita.portation.modules.core.workflow.Task;
 import com.arsdigita.portation.modules.core.workflow.TaskAssignment;
 import com.arsdigita.portation.modules.core.workflow.TaskComment;
 import com.arsdigita.portation.modules.core.workflow.TaskDependency;
@@ -44,8 +44,12 @@ import java.util.List;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
  * @version created on 29.6.16
  */
-public class AssignableTaskConversion {
+public class AssignableTaskConversion extends AbstractConversion {
+    private static AssignableTaskConversion instance;
 
+    static {
+        instance = new AssignableTaskConversion();
+    }
     /**
      * Retrieves all trunk-{@link com.arsdigita.workflow.simple.UserTask}s from
      * the persistent storage and collects them in a list. Then calls for
@@ -53,19 +57,20 @@ public class AssignableTaskConversion {
      * associations in tact. The ring dependencies of class {@code Task} have
      * to be recreated once all ng-{@link AssignableTask}s have been created.
      */
-    public static void convertAll() {
-        System.err.printf("\tFetching assignable tasks from database...");
+    @Override
+    public void convertAll() {
+        System.out.print("\tFetching assignable tasks from database...");
         List<com.arsdigita.workflow.simple.UserTask> trunkUserTasks = com
                 .arsdigita.workflow.simple.UserTask.getAllObjectUserTasks();
-        System.err.println("done.");
+        System.out.println("done.");
 
-        System.err.printf("\tConverting assignable tasks, task dependencies " +
+        System.out.print("\tConverting assignable tasks, task dependencies " +
                 "and task assignments...\n");
         createAssignableTasksAndSetAssociations(trunkUserTasks);
-        System.err.printf("\tSorting task assignments...\n");
+        System.out.print("\tSorting task assignments...\n");
         sortAssignableTaskMap();
 
-        System.err.println("\tdone.\n");
+        System.out.println("\tdone.\n");
 
     }
 
@@ -77,7 +82,7 @@ public class AssignableTaskConversion {
      *                       {@link com.arsdigita.workflow.simple.UserTask}s
      *                       from this old trunk-system.
      */
-    private static void createAssignableTasksAndSetAssociations(List<com.arsdigita
+    private void createAssignableTasksAndSetAssociations(List<com.arsdigita
             .workflow.simple.UserTask> trunkUserTasks) {
         int pTasks = 0, pAssignments = 0, pDependencies = 0;
 
@@ -148,13 +153,13 @@ public class AssignableTaskConversion {
             pTasks++;
 
 
-            /*System.err.printf("\t\tTasks: %d, " +
+            /*System.out.printf("\t\tTasks: %d, " +
                                   "Dependencies: %d, " +
                                   "Assignments: %d\n",
                                   pTasks, pDependencies, pAssignments);*/
         }
 
-        System.err.printf("\t\tCreated %d assignable tasks and\n" +
+        System.out.printf("\t\tCreated %d assignable tasks and\n" +
                           "\t\tCreated %d task dependencies and\n" +
                           "\t\tcreated %d task assignments.\n",
                           pTasks, pDependencies, pAssignments);
@@ -172,7 +177,7 @@ public class AssignableTaskConversion {
      * @param dependencyIt An iterator representing all dependencies of the
      *                     given assignableTask
      */
-    private static long createTaskDependencies(AssignableTask assignableTask,
+    private long createTaskDependencies(AssignableTask assignableTask,
                                                Iterator dependencyIt) {
 
         int processed = 0;
@@ -211,7 +216,7 @@ public class AssignableTaskConversion {
      *                        {@link com.arsdigita.kernel.Role}s belonging to
      *                        the assignableTask
      */
-    private static long  createTaskAssignments(AssignableTask assignableTask,
+    private long  createTaskAssignments(AssignableTask assignableTask,
                                               GroupCollection groupCollection) {
         int processed = 0;
 
@@ -245,7 +250,7 @@ public class AssignableTaskConversion {
      * Runs once over the unsorted map and iterates over each their dependencies
      * to add them to the sorted list.
      */
-    private static void sortAssignableTaskMap() {
+    private void sortAssignableTaskMap() {
         ArrayList<AssignableTask> sortedList = new ArrayList<>();
 
         int runs = 0;
@@ -262,7 +267,7 @@ public class AssignableTaskConversion {
         }
         NgCoreCollection.sortedAssignableTasks = sortedList;
 
-        System.err.printf("\t\tSorted assignable tasks in %d runs.\n", runs);
+        System.out.printf("\t\tSorted assignable tasks in %d runs.\n", runs);
     }
 
     /**
@@ -273,7 +278,7 @@ public class AssignableTaskConversion {
      * @param sortedList List of already sorted tasks
      * @param assignableTask Current assignable task
      */
-    private static void addDependencies(ArrayList<AssignableTask> sortedList,
+    private void addDependencies(ArrayList<AssignableTask> sortedList,
                                         AssignableTask assignableTask) {
         List<TaskDependency> dependencies = assignableTask.getBlockingTasks();
 
@@ -289,5 +294,14 @@ public class AssignableTaskConversion {
                 }
             }
         }
+    }
+
+    /**
+     * Getter for the instance of the singleton.
+     *
+     * @return instance of this singleton
+     */
+    public static AssignableTaskConversion getInstance() {
+        return instance;
     }
 }

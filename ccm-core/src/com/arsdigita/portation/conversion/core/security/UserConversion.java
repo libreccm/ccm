@@ -18,6 +18,7 @@
  */
 package com.arsdigita.portation.conversion.core.security;
 
+import com.arsdigita.portation.AbstractConversion;
 import com.arsdigita.portation.modules.core.security.User;
 
 import java.util.List;
@@ -30,20 +31,26 @@ import java.util.List;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
  * @version created on 4.7.16
  */
-public class UserConversion {
+public class UserConversion extends AbstractConversion {
+    private static UserConversion instance;
+
+    static {
+        instance = new UserConversion();
+    }
 
     /**
      * Retrieves all trunk-{@link com.arsdigita.kernel.User}s from the
      * persistent storage and collects them in a list. Then calls for
      * creating the equivalent ng-{@link User}s.
      */
-    public static void convertAll() {
-        System.err.printf("\tFetching users from database...");
+    @Override
+    public void convertAll() {
+        System.out.print("\tFetching users from database...");
         List<com.arsdigita.kernel.User> trunkUsers = com.arsdigita.kernel
                 .User.getAllObjectUsers();
-        System.err.println("done.");
+        System.out.println("done.");
 
-        System.err.printf("\tConverting users...\n");
+        System.out.print("\tConverting users...\n");
         // create users
         int processed = 0;
         for (com.arsdigita.kernel.User trunkUser : trunkUsers) {
@@ -51,6 +58,15 @@ public class UserConversion {
             processed++;
         }
         System.out.printf("\t\tCreated %d users.\n", processed);
-        System.err.println("\tdone.\n");
+        System.out.println("\tdone.\n");
+    }
+
+    /**
+     * Getter for the instance of the singleton.
+     *
+     * @return instance of this singleton
+     */
+    public static UserConversion getInstance() {
+        return instance;
     }
 }

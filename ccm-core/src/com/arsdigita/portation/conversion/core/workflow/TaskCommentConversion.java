@@ -18,6 +18,7 @@
  */
 package com.arsdigita.portation.conversion.core.workflow;
 
+import com.arsdigita.portation.AbstractConversion;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.security.User;
 import com.arsdigita.portation.modules.core.workflow.TaskComment;
@@ -33,7 +34,12 @@ import java.util.List;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 9/27/17
  */
-public class TaskCommentConversion {
+public class TaskCommentConversion extends AbstractConversion {
+    private static TaskCommentConversion instance;
+
+    static {
+        instance = new TaskCommentConversion();
+    }
 
     /**
      * Retrieves all trunk-{@link com.arsdigita.workflow.simple.TaskComment}s
@@ -41,15 +47,16 @@ public class TaskCommentConversion {
      * creating the equivalent ng-{@link TaskComment}s focusing on keeping
      * all the associations in tact.
      */
-    public static void convertAll() {
-        System.err.printf("\tFetching task comments from database...");
+    @Override
+    public void convertAll() {
+        System.out.print("\tFetching task comments from database...");
         List<com.arsdigita.workflow.simple.TaskComment> trunkTaskComments = com
                 .arsdigita.workflow.simple.TaskComment.getAllTaskComments();
-        System.err.println("done.");
+        System.out.println("done.");
 
-        System.err.printf("\tConverting task comments...\n");
+        System.out.print("\tConverting task comments...\n");
         createTaskCommentsAndSetAssociations(trunkTaskComments);
-        System.err.println("\tdone.\n");
+        System.out.println("\tdone.\n");
 
     }
 
@@ -61,7 +68,7 @@ public class TaskCommentConversion {
      *                       {@link com.arsdigita.workflow.simple.TaskComment}s
      *                       from this old trunk-system.
      */
-    private static void createTaskCommentsAndSetAssociations(
+    private void createTaskCommentsAndSetAssociations(
             List<com.arsdigita.workflow.simple.TaskComment> trunkTaskComments) {
         int processed = 0;
 
@@ -82,6 +89,15 @@ public class TaskCommentConversion {
             processed++;
         }
 
-        System.err.printf("\t\tCreated %d task comments.\n", processed);
+        System.out.printf("\t\tCreated %d task comments.\n", processed);
+    }
+
+    /**
+     * Getter for the instance of the singleton.
+     *
+     * @return instance of this singleton
+     */
+    public static TaskCommentConversion getInstance() {
+        return instance;
     }
 }

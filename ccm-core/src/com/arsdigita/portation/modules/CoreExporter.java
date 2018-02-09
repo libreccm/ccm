@@ -36,161 +36,52 @@ import java.util.ArrayList;
  * @version created on 25.07.2016
  */
 public class CoreExporter extends AbstractExporter {
-    public static void startExport() {
-        exportUsers();
-        exportGroups();
-        exportGroupMemberships();
-        exportRoles();
-        exportRoleMemberships();
 
-        exportCategories();
-        exportCategorizations();
+    private static CoreExporter instance;
 
-        exportPermissions();
-
-        exportWorkflows();
-        exportTaskComments();
-        exportAssignableTasks();
-        exportTaskDependencies();
-        exportTaskAssignments();
+    static {
+        instance = new CoreExporter();
     }
 
-
-    private static void exportUsers() {
-        System.out.printf("\tExporting users...");
-        UserMarshaller userMarshaller = new UserMarshaller();
-        userMarshaller.prepare(
-                Format.XML, pathName, "users", indentation);
-        userMarshaller.exportList(
-                new ArrayList<>(NgCoreCollection.users.values()));
-        System.out.printf("\t\tdone.\n");
+    /**
+     * Getter for the instance of the singleton.
+     *
+     * @return instance of this singleton
+     */
+    public static CoreExporter getInstance() {
+        return instance;
     }
 
-    private static void exportGroups() {
-        System.out.printf("\tExporting groups...");
-        GroupMarshaller groupMarshaller = new GroupMarshaller();
-        groupMarshaller.prepare(
-                Format.XML, pathName, "groups", indentation);
-        groupMarshaller.exportList(
-                new ArrayList<>(NgCoreCollection.groups.values()));
-        System.out.printf("\t\tdone.\n");
-    }
+    @Override
+    public void startMarshaller() {
+        UserMarshaller.getInstance().
+                marshallAll(format, pathName, indentation);
+        GroupMarshaller.getInstance().
+                marshallAll(format, pathName, indentation);
+        GroupMembershipMarshaller.getInstance().
+                marshallAll(format, pathName, indentation);
+        RoleMarshaller.getInstance().
+                marshallAll(format, pathName, indentation);
+        RoleMembershipMarshaller.getInstance().
+                marshallAll(format, pathName, indentation);
 
-    private static void exportGroupMemberships() {
-        System.out.printf("\tExporting group memberships...");
-        GroupMembershipMarshaller groupMembershipMarshaller = new
-                GroupMembershipMarshaller();
-        groupMembershipMarshaller.prepare(
-                Format.XML, pathName, "groupMemberships", indentation);
-        groupMembershipMarshaller.exportList(
-                new ArrayList<>(NgCoreCollection.groupMemberships.values()));
-        System.out.printf("\tdone.\n");
-    }
+        CategoryMarshaller.getInstance().
+                marshallAll(format, pathName, indentation);
+        CategorizationMarshaller.getInstance().
+                marshallAll(format, pathName, indentation);
 
-    private static void exportRoles() {
-        System.out.printf("\tExporting roles...");
-        RoleMarshaller roleMarshaller = new RoleMarshaller();
-        roleMarshaller.prepare(
-                Format.XML, pathName, "roles", indentation);
-        roleMarshaller.exportList(
-                new ArrayList<>(NgCoreCollection.roles.values()));
-        System.out.printf("\t\tdone.\n");
-    }
+        PermissionMarshaller.getInstance().
+                marshallAll(format, pathName, indentation);
 
-    private static void exportRoleMemberships() {
-        System.out.printf("\tExporting role memberships...");
-        RoleMembershipMarshaller roleMembershipMarshaller = new
-                RoleMembershipMarshaller();
-        roleMembershipMarshaller.prepare(
-                Format.XML, pathName, "roleMemberships", indentation);
-        roleMembershipMarshaller.exportList(
-                new ArrayList<>(NgCoreCollection.roleMemberships.values()));
-        System.out.printf("\tdone.\n");
-    }
-
-    private static void exportCategories() {
-        System.out.printf("\tExporting categories...");
-        CategoryMarshaller categoryMarshaller = new CategoryMarshaller();
-        categoryMarshaller.prepare(
-                Format.XML, pathName, "categories", indentation);
-        categoryMarshaller.exportList(
-                NgCoreCollection.sortedCategories);
-        System.out.printf("\t\tdone.\n");
-    }
-
-    private static void exportCategorizations() {
-        System.out.printf("\tExporting categorizations...");
-        CategorizationMarshaller categorizationMarshaller = new
-                CategorizationMarshaller();
-        categorizationMarshaller.prepare(
-                Format.XML, pathName, "categorizations", indentation);
-        categorizationMarshaller.exportList(
-                new ArrayList<>(NgCoreCollection.categorizations.values()));
-        System.out.printf("\tdone.\n");
-    }
-
-    private static void exportPermissions() {
-        System.out.printf("\tExporting permissions...");
-        PermissionMarshaller permissionMarshaller = new
-                PermissionMarshaller();
-        permissionMarshaller.prepare(
-                Format.XML, pathName, "permissions", indentation);
-        permissionMarshaller.exportList(
-                new ArrayList<>(NgCoreCollection.permissions.values()));
-        System.out.printf("\tdone.\n");
-    }
-
-    private static void exportWorkflows() {
-        System.out.printf("\tExporting workflows...");
-        WorkflowMarshaller workflowMarshaller = new WorkflowMarshaller();
-        workflowMarshaller.prepare(
-                Format.XML, pathName, "workflows", indentation);
-        workflowMarshaller.exportList(
-                NgCoreCollection.sortedWorkflows);
-        System.out.printf("\t\tdone.\n");
-    }
-
-    private static void exportTaskComments() {
-        System.out.printf("\tExporting task comments...");
-        TaskCommentMarshaller taskCommentMarshaller = new
-                TaskCommentMarshaller();
-        taskCommentMarshaller.prepare(
-                Format.XML, pathName, "taskComments", indentation);
-        taskCommentMarshaller.exportList(
-                new ArrayList<>(NgCoreCollection.taskComments.values()));
-        System.out.printf("\tdone.\n");
-    }
-
-    private static void exportAssignableTasks() {
-        System.out.printf("\tExporting assignable tasks...");
-        AssignableTaskMarshaller assignableTaskMarshaller = new
-                AssignableTaskMarshaller();
-        assignableTaskMarshaller.prepare(
-                Format.XML, pathName, "assignableTasks", indentation);
-        assignableTaskMarshaller.exportList(
-                NgCoreCollection.sortedAssignableTasks);
-        System.out.printf("\tdone.\n");
-    }
-
-    private static void exportTaskDependencies() {
-        System.out.printf("\tExporting task dependencies...");
-        TaskDependencyMarshaller taskDependencyMarshaller = new
-                TaskDependencyMarshaller();
-        taskDependencyMarshaller.prepare(
-                Format.XML, pathName, "taskDependencies", indentation);
-        taskDependencyMarshaller.exportList(
-                new ArrayList<>(NgCoreCollection.taskDependencies.values()));
-        System.out.printf("\tdone.\n");
-    }
-
-    private static void exportTaskAssignments() {
-        System.out.printf("\tExporting task assignments...");
-        TaskAssignmentMarshaller taskAssignmentMarshaller = new
-                TaskAssignmentMarshaller();
-        taskAssignmentMarshaller.prepare(
-                Format.XML, pathName, "taskAssignments", indentation);
-        taskAssignmentMarshaller.exportList(
-                new ArrayList<>(NgCoreCollection.taskAssignments.values()));
-        System.out.printf("\tdone.\n");
+        WorkflowMarshaller.getInstance().
+                marshallAll(format, pathName, indentation);
+        TaskCommentMarshaller.getInstance().
+                marshallAll(format, pathName, indentation);
+        AssignableTaskMarshaller.getInstance().
+                marshallAll(format, pathName, indentation);
+        TaskDependencyMarshaller.getInstance().
+                marshallAll(format, pathName, indentation);
+        TaskAssignmentMarshaller.getInstance().
+                marshallAll(format, pathName, indentation);
     }
 }

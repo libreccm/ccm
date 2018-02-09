@@ -19,10 +19,47 @@
 package com.arsdigita.portation.modules.core.workflow;
 
 import com.arsdigita.portation.AbstractMarshaller;
+import com.arsdigita.portation.Format;
+import com.arsdigita.portation.conversion.NgCoreCollection;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
 public class WorkflowMarshaller extends AbstractMarshaller<Workflow> {
+    private static WorkflowMarshaller instance;
+
+    static {
+        instance = new WorkflowMarshaller();
+    }
+
+    /**
+     * Getter for the instance of this singleton.
+     *
+     * @return instance of the singleton
+     */
+    public static WorkflowMarshaller getInstance() {
+        return instance;
+    }
+
+    /**
+     * Passes the parameters for the file to which the {@link Workflow}-objects
+     * will be exported to down to its corresponding
+     * {@link AbstractMarshaller<Workflow>} and then requests this
+     * {@link AbstractMarshaller<Workflow>} to start the export of all its
+     * {@link Workflow}s.
+     *
+     * @param format The format of the file to which will be exported to
+     * @param pathName The name for the file
+     * @param indentation Whether to use indentation in the file
+     */
+    @Override
+    public void marshallAll(final Format format,
+                            final String pathName,
+                            final boolean indentation) {
+        System.out.print("\tExporting workflows...");
+        prepare(format, pathName, "workflows", indentation);
+        exportList(NgCoreCollection.sortedWorkflows);
+        System.out.print("\t\tdone.\n");
+    }
 }

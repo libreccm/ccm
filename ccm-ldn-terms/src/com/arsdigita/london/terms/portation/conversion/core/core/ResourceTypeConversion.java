@@ -19,6 +19,7 @@
 package com.arsdigita.london.terms.portation.conversion.core.core;
 
 import com.arsdigita.london.terms.portation.modules.core.core.ResourceType;
+import com.arsdigita.portation.AbstractConversion;
 
 import java.util.List;
 
@@ -30,20 +31,27 @@ import java.util.List;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 8/2/17
  */
-public class ResourceTypeConversion {
+public class ResourceTypeConversion extends AbstractConversion {
+    private static ResourceTypeConversion instance;
+
+    static {
+        instance = new ResourceTypeConversion();
+    }
+
     /**
      * Retrieves all trunk-{@link com.arsdigita.kernel.ResourceType}s from
      * the persistent storage and collects them in a list. Then calls for
      * creating the equivalent ng-{@link ResourceType}s focusing on keeping all
      * the associations in tact.
      */
-    public static void convertAll() {
-        System.err.printf("\tFetching resource types from database...");
+    @Override
+    public void convertAll() {
+        System.out.print("\tFetching resource types from database...");
         List<com.arsdigita.kernel.ResourceType> trunkResourceTypes = com
                 .arsdigita.kernel.ResourceType.getAllObjectResourceTypes();
-        System.err.println("done.");
+        System.out.println("done.");
 
-        System.err.printf("\tConverting domains...\n");
+        System.out.print("\tConverting domains...\n");
         // create resource types
         int processed = 0;
         for (com.arsdigita.kernel.ResourceType trunkResourceType :
@@ -52,6 +60,15 @@ public class ResourceTypeConversion {
             processed++;
         }
         System.out.printf("\t\tCreated %d resource types.\n", processed);
-        System.err.println("\tdone.\n");
+        System.out.println("\tdone.\n");
+    }
+
+    /**
+     * Getter for the instance of the singleton.
+     *
+     * @return instance of this singleton
+     */
+    public static ResourceTypeConversion getInstance() {
+        return instance;
     }
 }

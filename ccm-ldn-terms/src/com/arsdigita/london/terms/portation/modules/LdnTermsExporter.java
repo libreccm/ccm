@@ -25,6 +25,7 @@ import com.arsdigita.london.terms.portation.modules.core.categorization.DomainMa
 import com.arsdigita.london.terms.portation.modules.core.web.CcmApplicationMarshaller;
 import com.arsdigita.portation.AbstractExporter;
 import com.arsdigita.portation.Format;
+import com.arsdigita.portation.modules.CoreExporter;
 
 import java.util.ArrayList;
 
@@ -40,53 +41,30 @@ import java.util.ArrayList;
  */
 public class LdnTermsExporter extends AbstractExporter {
 
-    public static void startExport() {
-        exportResourceTypes();
-        exportCcmApplications();
-        exportDomains();
-        exportDomainOwnerships();
+    private static LdnTermsExporter instance;
+
+    static {
+        instance = new LdnTermsExporter();
     }
 
-    private static void exportResourceTypes() {
-        System.out.printf("\tExporting resource types...");
-        ResourceTypeMarshaller resourceTypeMarshaller = new
-                ResourceTypeMarshaller();
-        resourceTypeMarshaller.prepare(
-                Format.XML, pathName, "resourceTypes", indentation);
-        resourceTypeMarshaller.exportList(
-                new ArrayList<>(NgCoreCollection.resourceTypes.values()));
-        System.out.printf("\tdone.\n");
+    /**
+     * Getter for the instance of the singleton.
+     *
+     * @return instance of this singleton
+     */
+    public static LdnTermsExporter getInstance() {
+        return instance;
     }
 
-    private static void exportCcmApplications() {
-        System.out.printf("\tExporting ccm applications...");
-        CcmApplicationMarshaller ccmApplicationMarshaller = new
-                CcmApplicationMarshaller();
-        ccmApplicationMarshaller.prepare(
-                Format.XML, pathName, "ccmApplications", indentation);
-        ccmApplicationMarshaller.exportList(
-                NgCoreCollection.sortedCcmApplications);
-        System.out.printf("\tdone.\n");
-    }
-
-    private static void exportDomains() {
-        System.out.printf("\tExporting domains...");
-        DomainMarshaller domainMarshaller = new DomainMarshaller();
-        domainMarshaller.prepare(
-                Format.XML, pathName, "domains", indentation);
-        domainMarshaller.exportList(
-                new ArrayList<>(NgCoreCollection.domains.values()));
-        System.out.printf("\t\tdone.\n");
-    }
-
-    private static void exportDomainOwnerships() {
-        System.out.printf("\tExporting domain ownerships...");
-        DomainOwnershipMarshaller domainOwnershipMarshaller = new
-                DomainOwnershipMarshaller();
-        domainOwnershipMarshaller.prepare(
-                Format.XML, pathName, "domainOwnerships", indentation);
-        domainOwnershipMarshaller.exportList(
-                new ArrayList<>(NgCoreCollection.domainOwnerships.values()));
-        System.out.printf("\tdone.\n");
+    @Override
+    public void startMarshaller() {
+        ResourceTypeMarshaller.getInstance().
+                marshallAll(format, pathName, indentation);
+        CcmApplicationMarshaller.getInstance().
+                marshallAll(format, pathName, indentation);
+        DomainMarshaller.getInstance().
+                marshallAll(format, pathName, indentation);
+        DomainOwnershipMarshaller.getInstance().
+                marshallAll(format, pathName, indentation);
     }
 }

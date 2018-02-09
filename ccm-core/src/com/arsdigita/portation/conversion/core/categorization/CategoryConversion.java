@@ -20,6 +20,7 @@ package com.arsdigita.portation.conversion.core.categorization;
 
 import com.arsdigita.categorization.CategorizedCollection;
 import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.portation.AbstractConversion;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.categorization.Categorization;
 import com.arsdigita.portation.modules.core.categorization.Category;
@@ -37,7 +38,12 @@ import java.util.List;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
  * @version created on 29.6.16
  */
-public class CategoryConversion {
+public class CategoryConversion extends AbstractConversion {
+    private static CategoryConversion instance;
+
+    static {
+        instance = new CategoryConversion();
+    }
 
     /**
      * Retrieves all trunk-{@link com.arsdigita.categorization.Category}s from
@@ -45,19 +51,20 @@ public class CategoryConversion {
      * creating the equivalent ng-{@link Category}s focusing on keeping all the
      * associations in tact.
      */
-    public static void convertAll() {
-        System.err.printf("\tFetching categories from database...");
+    @Override
+    public void convertAll() {
+        System.out.print("\tFetching categories from database...");
         List<com.arsdigita.categorization.Category> trunkCategories = com
                 .arsdigita.categorization.Category.getAllObjectCategories();
-        System.err.println("done.");
+        System.out.println("done.");
 
-        System.err.printf("\tConverting categories and categorizations...\n");
+        System.out.print("\tConverting categories and categorizations...\n");
         createCategoryAndCategorizations(trunkCategories);
         setRingAssociations(trunkCategories);
-        System.err.printf("\tSorting categories...\n");
+        System.out.print("\tSorting categories...\n");
         sortCategoryMap();
 
-        System.err.println("\tdone.\n");
+        System.out.println("\tdone.\n");
     }
 
     /**
@@ -68,7 +75,7 @@ public class CategoryConversion {
      *                        {@link com.arsdigita.categorization.Category}s
      *                        from this old trunk-system.
      */
-    private static void createCategoryAndCategorizations(
+    private void createCategoryAndCategorizations(
             List<com.arsdigita.categorization.Category> trunkCategories) {
         int processedCategories = 0, processedCategorizations = 0;
 
@@ -88,7 +95,7 @@ public class CategoryConversion {
 
             processedCategories++;
         }
-        System.err.printf("\t\tCreated %d categories and\n" +
+        System.out.printf("\t\tCreated %d categories and\n" +
                           "\t\tcreated %d categorizations.\n",
                           processedCategories, processedCategorizations);
     }
@@ -104,7 +111,7 @@ public class CategoryConversion {
      *
      * @return Number of how many {@link Categorization}s have been processed.
      */
-    private static long createCategorizations(Category category,
+    private long createCategorizations(Category category,
                                               CategorizedCollection
                                                       categorizedObjects) {
         int processed = 0;
@@ -140,7 +147,7 @@ public class CategoryConversion {
      *                        {@link com.arsdigita.categorization.Category}s
      *                        from this old trunk-system.
      */
-    private static void setRingAssociations(
+    private void setRingAssociations(
             List<com.arsdigita.categorization.Category> trunkCategories) {
         for (com.arsdigita.categorization.Category
                 trunkCategory : trunkCategories) {
@@ -176,7 +183,7 @@ public class CategoryConversion {
      * Runs once over the unsorted map and iterates over each their parents
      * to add them to the sorted list.
      */
-    private static void sortCategoryMap() {
+    private void sortCategoryMap() {
         ArrayList<Category> sortedList = new ArrayList<>();
 
         int runs = 0;
@@ -190,7 +197,7 @@ public class CategoryConversion {
         }
         NgCoreCollection.sortedCategories = sortedList;
 
-        System.err.printf("\t\tSorted categories in %d runs.\n", runs);
+        System.out.printf("\t\tSorted categories in %d runs.\n", runs);
     }
 
     /**
@@ -200,7 +207,7 @@ public class CategoryConversion {
      * @param sortedList Map of already sorted categories
      * @param category Current category
      */
-    private static void addParent(ArrayList<Category> sortedList, Category
+    private void addParent(ArrayList<Category> sortedList, Category
             category) {
         Category parent = category.getParentCategory();
 
@@ -210,5 +217,14 @@ public class CategoryConversion {
             if (!sortedList.contains(parent))
                 sortedList.add(parent);
         }
+    }
+
+    /**
+     * Getter for the instance of the singleton.
+     *
+     * @return instance of this singleton
+     */
+    public static CategoryConversion getInstance() {
+        return instance;
     }
 }

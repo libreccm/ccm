@@ -20,6 +20,7 @@ package com.arsdigita.portation.conversion.core.security;
 
 
 import com.arsdigita.kernel.PartyCollection;
+import com.arsdigita.portation.AbstractConversion;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.security.Party;
 import com.arsdigita.portation.modules.core.security.Role;
@@ -35,7 +36,12 @@ import java.util.List;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
  * @version created on 4.7.16
  */
-public class RoleConversion {
+public class RoleConversion extends AbstractConversion{
+    private static RoleConversion instance;
+
+    static {
+        instance = new RoleConversion();
+    }
 
     /**
      * Retrieves all trunk-{@link com.arsdigita.kernel.Role}s from the
@@ -43,15 +49,16 @@ public class RoleConversion {
      * creating the equivalent ng-{@link Role}s focusing on keeping all the
      * associations in tact.
      */
-    public static void convertAll() {
-        System.err.printf("\tFetching roles from database...");
+    @Override
+    public void convertAll() {
+        System.out.print("\tFetching roles from database...");
         List<com.arsdigita.kernel.Role> trunkRoles = com.arsdigita.kernel
                 .Role.getAllObjectRoles();
-        System.err.println("done.");
+        System.out.println("done.");
 
-        System.err.printf("\tCreating roles and role memberships...\n");
+        System.out.print("\tCreating roles and role memberships...\n");
         createRolesAndSetAssociations(trunkRoles);
-        System.err.println("\tdone.\n");
+        System.out.println("\tdone.\n");
     }
 
     /**
@@ -61,7 +68,7 @@ public class RoleConversion {
      * @param trunkRoles List of all {@link com.arsdigita.kernel.Role}s from
      *                   this old trunk-system.
      */
-    private static void createRolesAndSetAssociations(
+    private void createRolesAndSetAssociations(
             List<com.arsdigita.kernel.Role> trunkRoles) {
         int pRoles = 0, pMemberships = 0;
 
@@ -90,7 +97,7 @@ public class RoleConversion {
      *                        {@link com.arsdigita.kernel.Party}s belonging to
      *                        the given group
      */
-    private static long createRoleMemberships(Role role, PartyCollection
+    private long createRoleMemberships(Role role, PartyCollection
             partyCollection) {
         int processed = 0;
 
@@ -111,5 +118,14 @@ public class RoleConversion {
         }
 
         return processed;
+    }
+
+    /**
+     * Getter for the instance of the singleton.
+     *
+     * @return instance of this singleton
+     */
+    public static RoleConversion getInstance() {
+        return instance;
     }
 }

@@ -19,6 +19,7 @@
 package com.arsdigita.portation.conversion.core.security;
 
 import com.arsdigita.kernel.RoleCollection;
+import com.arsdigita.portation.AbstractConversion;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.security.*;
@@ -39,8 +40,13 @@ import java.util.stream.Collectors;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
  * @version created on 14.7.16
  */
-public class PermissionConversion {
-    private static int rolesCreated = 0;
+public class PermissionConversion extends AbstractConversion {
+    private static PermissionConversion instance;
+    private int rolesCreated = 0;
+    
+    static {
+        instance = new PermissionConversion();
+    }
 
     /**
      * Retrieves all trunk-{@link com.arsdigita.kernel.permissions.Permission}s
@@ -49,14 +55,15 @@ public class PermissionConversion {
      * the associations in tact. The association to the {@code
      * grantee}-{@link Role} has to be recreated separately.
      */
-    public static void convertAll() {
-        System.err.printf("\tFetching permissions from database...");
+    @Override
+    public void convertAll() {
+        System.out.print("\tFetching permissions from database...");
         List<com.arsdigita.kernel.permissions.Permission> trunkPermissions =
                 com.arsdigita.kernel.permissions.Permission
                         .getAllObjectPermissions();
-        System.err.println("done.");
+        System.out.println("done.");
 
-        System.err.printf("\tConverting permissions...\n");
+        System.out.print("\tConverting permissions...\n");
         createPermissionsAndSetAssociations(trunkPermissions);
 
         try {
@@ -68,7 +75,7 @@ public class PermissionConversion {
             System.exit(-1);
         }
 
-        System.err.println("\tdone.\n");
+        System.out.println("\tdone.\n");
     }
 
     /**
@@ -79,7 +86,7 @@ public class PermissionConversion {
      *                         {@link com.arsdigita.kernel.permissions.Permission}s
      *                         from the old trunk-system
      */
-    private static void createPermissionsAndSetAssociations(final List<com
+    private void createPermissionsAndSetAssociations(final List<com
             .arsdigita.kernel.permissions.Permission> trunkPermissions) {
         int processed = 0, skipped = 0;
 
@@ -95,7 +102,7 @@ public class PermissionConversion {
                     .get("id")).longValue()
                     || -200 == ((BigDecimal) trunkPermission.getPartyOID()
                     .get("id")).longValue()) {
-                /*System.err.println(
+                /*System.out.println(
                         "Skiping because it is a internal permission");*/
                 skipped++;
                 continue;
@@ -125,7 +132,7 @@ public class PermissionConversion {
 
             processed++;
         }
-        System.err.printf("\t\tCreated %d permissions and skipped: %d.\n",
+        System.out.printf("\t\tCreated %d permissions and skipped: %d.\n",
                 processed, skipped);
     }
 
@@ -148,7 +155,7 @@ public class PermissionConversion {
      *                         {@link com.arsdigita.kernel.permissions.Permission}s
      *                         from the old trunk-system
      */
-    private static void setGranteeDependency(final List<com.arsdigita.kernel
+    private void setGranteeDependency(final List<com.arsdigita.kernel
             .permissions.Permission> trunkPermissions) {
         int duplicates = 0;
 
@@ -248,7 +255,7 @@ public class PermissionConversion {
                         trunkPermission.getACSObject().get("id")).longValue());
             }
         }
-        System.err.printf("\t\t(Created %d duplicates and created %d new " +
+        System.out.printf("\t\t(Created %d duplicates and created %d new " +
                         "roles.)\n", duplicates, rolesCreated);
     }
 
@@ -259,7 +266,7 @@ public class PermissionConversion {
      *
      * @return A role for the specified member
      */
-    private static Role getRoleIfExists(Party member) {
+    private Role getRoleIfExists(Party member) {
         // might cause problems cause the
         // task assignments are missing
         String roleName = member.getName() + "_role";
@@ -279,5 +286,14 @@ public class PermissionConversion {
 
         return granteeRole;
 
+    }
+
+    /**
+     * Getter for the instance of the singleton.
+     *
+     * @return instance of this singleton
+     */
+    public static PermissionConversion getInstance() {
+        return instance;
     }
 }

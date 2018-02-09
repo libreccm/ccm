@@ -18,13 +18,10 @@
  */
 package com.arsdigita.portation.cmd;
 
-import com.arsdigita.portation.conversion.CoreConverter;
-import com.arsdigita.portation.modules.CoreExporter;
+import com.arsdigita.portation.AbstractExporter;
+import com.arsdigita.portation.Format;
 import com.arsdigita.util.cmd.Program;
 import org.apache.commons.cli.CommandLine;
-import org.apache.log4j.Logger;
-
-import java.lang.reflect.Method;
 
 /**
  * A Commandline tool for exporting all the objects of specified classes to
@@ -34,9 +31,6 @@ import java.lang.reflect.Method;
  * @version created on 25.05.16
  */
 public class ExportCliTool extends Program {
-
-    private final static Logger logger = Logger.getLogger(ExportCliTool.class);
-
     /**
      * Constructor for the command line tool.
      */
@@ -104,30 +98,16 @@ public class ExportCliTool extends Program {
     /**
      * Method for converting all trunk objects into ng objects at once.
      */
-    @SuppressWarnings("unchecked")
     private void convert() {
         try {
-            System.err.println("Started conversions of systems objects to " +
+            System.out.println("Started conversions of systems objects to " +
                     "ng-objects:");
-
-            // Core conversions
-            CoreConverter.getInstance().startConversionToNg();
-
-            // Lnd-Terms conversions
-            Class cls = Class
-                    .forName("com.arsdigita.london.terms.portation" +
-                            ".conversion.LdnTermsConverter");
-            if (cls != null) {
-                Method startConversionToNg = cls
-                        .getDeclaredMethod("startConversionToNg");
-                startConversionToNg.invoke(cls.newInstance());
-            }
-
-            System.err.println("Finished conversions.");
-            System.out.printf("\n");
+            RootConverter.rootConversionExecution();
+            System.out.println("Finished conversions.");
+            System.out.print("\n");
         } catch (Exception e) {
-            logger.error("ERROR while converting trunk-objects to " +
-                    "ng-objects", e);
+            System.err.printf("ERROR while converting trunk-objects to " +
+                    "ng-objects: %s\n", e);
             e.printStackTrace();
         }
     }
@@ -138,41 +118,30 @@ public class ExportCliTool extends Program {
      *
      * @param args The secondary command line arguments
      */
-    @SuppressWarnings("unchecked")
     private void export(String[] args) {
         if (args.length != 2) {
             printUsage();
             System.exit(-1);
         }
 
-        //final String moduleClass = args[1];
-        //System.err.printf("module-class: %s\n", moduleClass);
+        final Format format = Format.XML;
         final String pathName = args[1];
-        System.err.printf("path for export: %s\n", pathName);
-        CoreExporter.setPath(pathName);
-        System.err.printf("\n");
-
+        final boolean ind = false;
+        System.out.printf("format to export to: %s\n", format.toString());
+        System.out.printf("path to export to: %s\n", pathName);
+        System.out.printf("indentations in files: %b\n", ind);
+        AbstractExporter.setFormat(format);
+        AbstractExporter.setPath(pathName);
+        AbstractExporter.setIndentation(ind);
+        System.out.print("\n");
 
         try {
             System.out.println("Started exporting all ng-objects:");
-
-            // Core
-            CoreExporter.startExport();
-
-            // Ldn-Terms
-            Class cls = Class
-                    .forName("com.arsdigita.london.terms.portation.modules" +
-                             ".LdnTermsExporter");
-            if (cls != null) {
-                Method startExport = cls
-                                .getDeclaredMethod("startExport");
-                startExport.invoke(cls.newInstance());
-            }
-
+            RootExporter.rootExportExecution();
             System.out.println("Finished exports.");
-            System.out.printf("\n");
+            System.out.print("\n");
         } catch (Exception ex) {
-            logger.error("ERROR while exporting", ex);
+            System.err.printf("ERROR while exporting: %s\n", ex);
         }
     }
 
@@ -180,25 +149,25 @@ public class ExportCliTool extends Program {
      * Prints the usage of this command line tool.
      */
     private void printUsage() {
-        System.err.printf(
+        System.out.print(
         "\n" +
-        "\t\t\t    --- ExportCliTool ---\n" +
+        "\t\t\t\t    --- ExportCliTool ---\n" +
         "\n" +
-        "usage:\t<command> <module-class> <path>\n" +
+        "Usage:\t<command>\n" +
         "\n" +
         "Available commands:\n" +
         "\thelp" +
                 "\t\t\t\t\t Shows information on how to use this tool.\n" +
         "\tconvert" +
                 "\t\t\t\t\t Converts all trunk objects to ng objects.\n" +
-        "\texport <module-class> <path>" +
-                "\t\t Exports the chosen module class to a file\n" +
+        "\texport <path>" +
+                "\t\t\t\t Exports the chosen module class to a file\n" +
                 "\t\t\t\t" +
                 "\t\t at the location specified by the given path." +
         "\n" +
         "\n" +
         "Available module-classes for export:\n" +
-        "   \t\t categories        \t\t all categories of the system\n" +
+        /*"   \t\t categories        \t\t all categories of the system\n" +
         "   \t\t categorizations   \t\t all categorizations of the system\n" +
         "   \t\t users             \t\t all users of the system\n" +
         "   \t\t groups            \t\t all groups of the system\n" +
@@ -212,9 +181,8 @@ public class ExportCliTool extends Program {
         "   \t\t permissions       \t\t all permissions of the system\n" +
         "   \n" +
         "   \t\t default:          \t\t all objects of the entire core module" +
+        */"\n" +
         "\n" +
-        "\n" +
-        "" +
         "Do use for exporting java objects of a specified class.\n" +
         "\n"
         );

@@ -18,12 +18,50 @@
  */
 package com.arsdigita.london.terms.portation.modules.core.core;
 
-import com.arsdigita.london.terms.portation.modules.core.core.ResourceType;
+import com.arsdigita.london.terms.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.AbstractMarshaller;
+import com.arsdigita.portation.Format;
+
+import java.util.ArrayList;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 8/3/17
  */
 public class ResourceTypeMarshaller extends AbstractMarshaller<ResourceType> {
+    private static ResourceTypeMarshaller instance;
+
+    static {
+        instance = new ResourceTypeMarshaller();
+    }
+
+    /**
+     * Getter for the instance of this singleton.
+     *
+     * @return instance of the singleton
+     */
+    public static ResourceTypeMarshaller getInstance() {
+        return instance;
+    }
+
+    /**
+     * Passes the parameters for the file to which the {@link ResourceType}-
+     * objects will be exported to down to its corresponding
+     * {@link AbstractMarshaller<ResourceType>} and then requests this
+     * {@link AbstractMarshaller<ResourceType>} to start the export of all
+     * its {@link ResourceType}s.
+     *
+     * @param format The format of the file to which will be exported to
+     * @param pathName The name for the file
+     * @param indentation Whether to use indentation in the file
+     */
+    @Override
+    public void marshallAll(final Format format,
+                            final String pathName,
+                            final boolean indentation) {
+        System.out.print("\tExporting resourceTypes...");
+        prepare(format, pathName, "resourceTypes", indentation);
+        exportList(new ArrayList<>(NgCoreCollection.resourceTypes.values()));
+        System.out.print("\tdone.\n");
+    }
 }

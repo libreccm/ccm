@@ -19,10 +19,49 @@
 package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.portation.AbstractMarshaller;
+import com.arsdigita.portation.Format;
+import com.arsdigita.portation.conversion.NgCoreCollection;
+
+import java.util.ArrayList;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
 public class PermissionMarshaller extends AbstractMarshaller<Permission> {
+    private static PermissionMarshaller instance;
+
+    static {
+        instance = new PermissionMarshaller();
+    }
+
+    /**
+     * Getter for instance of this singleton.
+     *
+     * @return instance of the singleton
+     */
+    public static PermissionMarshaller getInstance() {
+        return instance;
+    }
+
+    /**
+     * Passes the parameters for the file to which the {@link Permission}-
+     * objects will be exported to down to its corresponding
+     * {@link AbstractMarshaller<Permission>} and then requests this
+     * {@link AbstractMarshaller<Permission>} to start the export of all its
+     * {@link Permission}s.
+     *
+     * @param format The format of the file to which will be exported to
+     * @param pathName The name for the file
+     * @param indentation Whether to use indentation in the file
+     */
+    @Override
+    public void marshallAll(final Format format,
+                            final String pathName,
+                            final boolean indentation) {
+        System.out.print("\tExporting permissions...");
+        prepare(format, pathName, "permissions", indentation);
+        exportList(new ArrayList<>(NgCoreCollection.permissions.values()));
+        System.out.print("\tdone.\n");
+    }
 }

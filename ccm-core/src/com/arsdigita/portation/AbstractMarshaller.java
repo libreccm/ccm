@@ -18,17 +18,19 @@
  */
 package com.arsdigita.portation;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
-import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-
-import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -42,97 +44,108 @@ import java.util.List;
  * @version created on 2/10/16
  */
 public abstract class AbstractMarshaller<P extends Portable> {
-
-    private static final Logger log = Logger.getLogger(AbstractMarshaller.class);
-
     private Format format;
-    private String filename;
+    private String pathName;
+    private String fileName;
+    private boolean indentation;
 
-    // XML specifics
-    ObjectMapper xmlMapper;
+    /**
+     * Passes the parameters for the file to which the ng objects shall be
+     * exported to down to its corresponding {@link AbstractMarshaller<P>}
+     * and then requests this {@link AbstractMarshaller<P>} to start the
+     * export of all its ng objects.
+     *
+     * @param format The format of the file to which will be exported to
+     * @param pathName The name for the file
+     * @param indentation Whether to use indentation in the file
+     */
+    public abstract void marshallAll(final Format format,
+                                     final String pathName,
+                                     final boolean indentation);
 
-
-    public void prepare(final Format format, String filename, boolean indentation) {
+    /**
+     * Prepares parameters for the export:
+     *
+     * @param format format of the exported file (e.g. xml)
+     * @param pathName path for the exported files
+     * @param fileName filenames
+     * @param indentation whether to use indentation or not
+     */
+    protected void prepare(final Format format,
+                           final String pathName,
+                           final String fileName,
+                           final boolean indentation) {
         this.format = format;
+        this.pathName = pathName;
+        this.fileName = fileName;
+        this.indentation = indentation;
+    }
 
-        switch (this.format) {
+    /**
+     * Exports list of the same objects.
+     *
+     * @param exportList List of same objects
+     */
+    protected void exportList(final List<P> exportList) {
+        ObjectMapper objectMapper = null;
+        switch (format) {
             case XML:
-                this.filename = filename + ".xml";
-                // for additional configuration
-                JacksonXmlModule module = new JacksonXmlModule();
+                // xml extension to filename
+                fileName += ".xml";
+                // xml mapper configuration
+                final JacksonXmlModule module = new JacksonXmlModule();
                 module.setDefaultUseWrapper(false);
-                xmlMapper = new XmlMapper(module);
-                if (indentation) {
-                    xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
-                }
-                //xmlMapper.registerModule(new JaxbAnnotationModule());
-                xmlMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-                break;
-
-            default:
+                objectMapper = new XmlMapper(module);
                 break;
         }
-    }
 
-    public void prepare(final Format format, String folderPath, String filename, boolean indentation) {
-        File file = new File(folderPath);
-        if (file.exists() || file.mkdirs()) {
-            prepare(format, folderPath + "/" + filename, indentation);
-        }
-    }
-
-    public void exportList(final List<P> exportList) {
-        File file = new File(filename);
         FileWriter fileWriter = null;
-
         try {
+            final Path filePath = Paths.get(pathName, fileName);
+            Files.createFile(filePath);
+
+            final File file = new File(filePath.toString());
             fileWriter = new FileWriter(file);
-        } catch (IOException e) {
-            log.error(String.format("Unable to open a fileWriter for the file" +
-                    " with the name %s.", file.getName()));
+        } catch (FileAlreadyExistsException e) {
+            // destination file already exists
+        } catch (IOException ex) {
+            System.err.printf("ERROR Unable to open a fileWriter for the file" +
+                    " with the name %s.\n %s\n", fileName, ex);
         }
-        if (fileWriter != null) {
+
+        if (objectMapper != null && fileWriter != null) {
+            if (indentation) {
+                objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+            }
+            objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+
+            String line = null;
             for (P object : exportList) {
-                String line = null;
-
-                switch (format) {
-                    case XML:
-                        try {
-                            line = xmlMapper.writeValueAsString(object);
-                            //log.info(line);
-                        } catch (IOException e) {
-                            log.error(String.format(
-                                    "Unable to write objetct of %s as XML " +
-                                    "string with name %s in file %s.",
-                                    object.getClass(),
-                                    object.toString(),
-                                    file.getName()), e);
-                        }
-                        break;
-
-                    default:
-                        break;
+                try {
+                    line = objectMapper.writeValueAsString(object);
+                } catch (JsonProcessingException ex) {
+                    System.err.printf("ERROR Unable to write object of class " +
+                                    "%s as XML string with name %s " +
+                                    "in file %s.\n %s\n", object.getClass(),
+                                    object.toString(), fileName, ex);
                 }
-
                 if (line != null) {
                     try {
                         fileWriter.write(line);
                         fileWriter.write(System.getProperty("line.separator"));
-                    } catch (IOException e) {
-                        log.error(String.format(
-                                "Unable to write to file with the name %s.",
-                                file.getName()));
+                    } catch (IOException ex) {
+                        System.err.printf("ERROR Unable to write to file with" +
+                                " the name %s.\n %s\n", fileName, ex);
                     }
                 }
             }
 
             try {
                 fileWriter.close();
-            } catch (IOException e) {
-                log.error(String.format("Unable to close a fileWriter for the" +
-                        " file with the name %s.", file.getName()));
+            } catch (IOException ex) {
+                System.err.printf("ERROR Unable to close a fileWriter for" +
+                        " a file with the name %s.\n %s\n", fileName, ex);
             }
-
         }
     }
 }

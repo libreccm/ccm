@@ -16,21 +16,40 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.arsdigita.portation;
+package com.arsdigita.portation.cmd;
+
+import com.arsdigita.portation.modules.CoreExporter;
+
+import java.lang.reflect.Method;
 
 /**
- * Abstract super class for conversion from trunk objects to ng object. The
- * class demands the implementation of the following method of the
- * appropriate converters.
+ * Helper class to bundle all export calls.
  *
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
- * @version created the 7/28/17
+ * @version created the 2/7/18
  */
-public abstract class AbstractConverter {
+public class RootExporter {
+
     /**
-     * Method, to start all the different converter classes in a specific
-     * order, so that dependencies can only be set, where the objects have
-     * already been created.
+     * Root method to call all exportation
+     *
+     * @throws Exception if classes outwards of core will not be found
      */
-    public abstract void startConversion();
+    @SuppressWarnings("unchecked")
+    public static void rootExportExecution() throws Exception {
+        // Core
+        CoreExporter.getInstance().startMarshaller();
+
+        // Ldn-Terms
+        Class cls = Class
+                .forName("com.arsdigita.london.terms.portation.modules" +
+                        ".LdnTermsExporter");
+        if (cls != null) {
+            Method startExport = cls
+                    .getDeclaredMethod("startMarshaller");
+            startExport.invoke(cls.newInstance());
+        }
+
+        // ...
+    }
 }

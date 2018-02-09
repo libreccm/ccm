@@ -19,10 +19,49 @@
 package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.portation.AbstractMarshaller;
+import com.arsdigita.portation.Format;
+import com.arsdigita.portation.conversion.NgCoreCollection;
+
+import java.util.ArrayList;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created on 6/15/16
  */
 public class RoleMembershipMarshaller extends AbstractMarshaller<RoleMembership> {
+    private static RoleMembershipMarshaller instance;
+
+    static {
+        instance = new RoleMembershipMarshaller();
+    }
+
+    /**
+     * Getter for the instance of the singleton.
+     *
+     * @return instance of this singleton
+     */
+    public static RoleMembershipMarshaller getInstance() {
+        return instance;
+    }
+
+    /**
+     * Passes the parameters for the file to which the {@link RoleMembership}
+     * -objects will be exported to down to its corresponding
+     * {@link AbstractMarshaller<RoleMembership>} and then requests this
+     * {@link AbstractMarshaller<RoleMembership>} to start the export of all
+     * its {@link RoleMembership}s.
+     *
+     * @param format The format of the file to which will be exported to
+     * @param pathName The name for the file
+     * @param indentation Whether to use indentation in the file
+     */
+    @Override
+    public void marshallAll(final Format format,
+                            final String pathName,
+                            final boolean indentation) {
+        System.out.print("\tExporting role memberships...");
+        prepare(format, pathName, "roleMemberships", indentation);
+        exportList(new ArrayList<>(NgCoreCollection.roleMemberships.values()));
+        System.out.print("\tdone.\n");
+    }
 }

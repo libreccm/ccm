@@ -41,23 +41,23 @@ public class LdnTermsConverter extends AbstractConverter {
     }
 
     /**
-     * Method, to start all the different converter classes in a specific
-     * order, so that dependencies can only be set, where the objects have
-     * already been created.
-     */
-    @Override
-    public void startConversionToNg() {
-        ResourceTypeConversion.convertAll();
-        CcmApplicationConversion.convertAll();
-        DomainConversion.convertAll();
-    }
-
-    /**
      * Getter for the instance of the singleton.
      *
      * @return instance of this singleton
      */
     public static LdnTermsConverter getInstance() {
         return instance;
+    }
+
+    /**
+     * Method, to start all the different converter classes in a specific
+     * order, so that dependencies can only be set, where the objects have
+     * already been created.
+     */
+    @Override
+    public void startConversion() {
+        ResourceTypeConversion.getInstance().convertAll();
+        CcmApplicationConversion.getInstance().convertAll();
+        DomainConversion.getInstance().convertAll();
     }
 }

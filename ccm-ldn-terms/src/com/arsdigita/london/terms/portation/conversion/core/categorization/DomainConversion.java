@@ -26,6 +26,7 @@ import com.arsdigita.london.terms.portation.modules.core.categorization.Domain;
 import com.arsdigita.london.terms.portation.modules.core.categorization.DomainOwnership;
 import com.arsdigita.london.terms.portation.modules.core.web.CcmApplication;
 import com.arsdigita.persistence.DataObject;
+import com.arsdigita.portation.AbstractConversion;
 import com.arsdigita.portation.modules.core.categorization.Category;
 import com.arsdigita.web.Application;
 
@@ -39,7 +40,12 @@ import java.util.List;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 7/27/17
  */
-public class DomainConversion {
+public class DomainConversion extends AbstractConversion {
+    private static DomainConversion instance;
+
+    static {
+        instance = new DomainConversion();
+    }
 
     /**
      * Retrieves all trunk-{@link com.arsdigita.london.terms.Domain}s from
@@ -47,15 +53,16 @@ public class DomainConversion {
      * creating the equivalent ng-{@link Domain}s focusing on keeping all the
      * associations in tact.
      */
-    public static void convertAll() {
-        System.err.printf("\tFetching domains from database...");
+    @Override
+    public void convertAll() {
+        System.out.print("\tFetching domains from database...");
         List<com.arsdigita.london.terms.Domain> trunkDomains = com
                 .arsdigita.london.terms.Domain.getAllObjectDomains();
-        System.err.println("done.");
+        System.out.println("done.");
 
-        System.err.printf("\tConverting domains and domain ownerships...\n");
+        System.out.print("\tConverting domains and domain ownerships...\n");
         createDomainsAndSetAssociations(trunkDomains);
-        System.err.println("\tdone.\n");
+        System.out.println("\tdone.\n");
     }
 
     /**
@@ -65,7 +72,7 @@ public class DomainConversion {
      * @param trunkDomains List of all {@link com.arsdigita.london.terms.Domain}s
      *                     from this old trunk-system.
      */
-    private static void createDomainsAndSetAssociations(
+    private void createDomainsAndSetAssociations(
             List<com.arsdigita.london.terms.Domain> trunkDomains) {
         int processedDomains = 0, processedDomainOwnerships = 0;
 
@@ -91,7 +98,7 @@ public class DomainConversion {
 
             processedDomains++;
         }
-        System.err.printf("\t\tCreated %d domains and\n" +
+        System.out.printf("\t\tCreated %d domains and\n" +
                           "\t\tcreated %d domain ownerships.\n",
                           processedDomains, processedDomainOwnerships);
     }
@@ -107,7 +114,7 @@ public class DomainConversion {
      *
      * @return Number of how many {@link DomainOwnership}s have been processed.
      */
-    private static long createDomainOwnerships(Domain domain,
+    private long createDomainOwnerships(Domain domain,
                                                DomainCollection useContexts) {
         int processed = 0;
 
@@ -142,5 +149,12 @@ public class DomainConversion {
         return processed;
     }
 
-
+    /**
+     * Getter for the instance of the singleton.
+     *
+     * @return instance of this singleton
+     */
+    public static DomainConversion getInstance() {
+        return instance;
+    }
 }

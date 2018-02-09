@@ -19,6 +19,7 @@
 package com.arsdigita.portation.conversion.core.security;
 
 import com.arsdigita.kernel.UserCollection;
+import com.arsdigita.portation.AbstractConversion;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.security.Group;
 import com.arsdigita.portation.modules.core.security.GroupMembership;
@@ -34,7 +35,12 @@ import java.util.List;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
  * @version created on 4.7.16
  */
-public class GroupConversion {
+public class GroupConversion extends AbstractConversion {
+    private static GroupConversion instance;
+    
+    static {
+        instance = new GroupConversion();
+    }
 
     /**
      * Retrieves all trunk-{@link com.arsdigita.kernel.Group}s from the
@@ -43,15 +49,16 @@ public class GroupConversion {
      * trunk-system. Then calls for creating the equivalent ng-{@link Group}s
      * focusing on keeping all the associations in tact.
      */
-    public static void convertAll() {
-        System.err.printf("\tFetching groups from database...");
+    @Override
+    public void convertAll() {
+        System.out.print("\tFetching groups from database...");
         List<com.arsdigita.kernel.Group> trunkGroups = com.arsdigita.kernel
                 .Group.getAllObjectGroups();
-        System.err.println("done.");
+        System.out.println("done.");
 
-        System.err.printf("\tConverting groups and group memberships...\n");
+        System.out.print("\tConverting groups and group memberships...\n");
         createGroupsAndSetAssociations(trunkGroups);
-        System.err.println("\tdone.\n");
+        System.out.println("\tdone.\n");
     }
 
     /**
@@ -61,7 +68,7 @@ public class GroupConversion {
      * @param trunkGroups List of all {@link com.arsdigita.kernel.Group}s
      *                    from this old trunk-system.
      */
-    private static void createGroupsAndSetAssociations(
+    private void createGroupsAndSetAssociations(
             List<com.arsdigita.kernel.Group> trunkGroups) {
         int pGroups = 0, pMemberships = 0;
 
@@ -75,7 +82,7 @@ public class GroupConversion {
 
             pGroups++;
         }
-        System.err.printf("\t\tCreated %d groups and\n" +
+        System.out.printf("\t\tCreated %d groups and\n" +
                           "\t\tcreated %d group memberships.\n",
                           pGroups, pMemberships);
     }
@@ -90,7 +97,7 @@ public class GroupConversion {
      *                       {@link com.arsdigita.kernel.User}s belonging to
      *                       the given group
      */
-    private static long createGroupMemberships(Group group, UserCollection
+    private long createGroupMemberships(Group group, UserCollection
             userCollection) {
         int processed = 0;
 
@@ -115,4 +122,12 @@ public class GroupConversion {
         return processed;
     }
 
+    /**
+     * Getter for the instance of the singleton.
+     *
+     * @return instance of this singleton
+     */
+    public static GroupConversion getInstance() {
+        return instance;
+    }
 }

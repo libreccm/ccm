@@ -18,11 +18,50 @@
  */
 package com.arsdigita.london.terms.portation.modules.core.categorization;
 
+import com.arsdigita.london.terms.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.AbstractMarshaller;
+import com.arsdigita.portation.Format;
+
+import java.util.ArrayList;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 8/10/17
  */
 public class DomainOwnershipMarshaller extends AbstractMarshaller<DomainOwnership>{
+    private static DomainOwnershipMarshaller instance;
+
+    static {
+        instance = new DomainOwnershipMarshaller();
+    }
+
+    /**
+     * Getter for the instance of this singleton.
+     *
+     * @return instance of the singleton
+     */
+    public static DomainOwnershipMarshaller getInstance() {
+        return instance;
+    }
+
+    /**
+     * Passes the parameters for the file to which the {@link DomainOwnership}-
+     * objects will be exported to down to its corresponding
+     * {@link AbstractMarshaller<DomainOwnership>} and then requests this
+     * {@link AbstractMarshaller<DomainOwnership>} to start the export of all
+     * its {@link DomainOwnership}s.
+     *
+     * @param format The format of the file to which will be exported to
+     * @param pathName The name for the file
+     * @param indentation Whether to use indentation in the file
+     */
+    @Override
+    public void marshallAll(final Format format,
+                            final String pathName,
+                            final boolean indentation) {
+        System.out.print("\tExporting domainOwnerships...");
+        prepare(format, pathName, "domainOwnerships", indentation);
+        exportList(new ArrayList<>(NgCoreCollection.domainOwnerships.values()));
+        System.out.print("\tdone.\n");
+    }
 }

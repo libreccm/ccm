@@ -19,10 +19,49 @@
 package com.arsdigita.portation.modules.core.workflow;
 
 import com.arsdigita.portation.AbstractMarshaller;
+import com.arsdigita.portation.Format;
+import com.arsdigita.portation.conversion.NgCoreCollection;
+
+import java.util.ArrayList;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 9/27/17
  */
 public class TaskCommentMarshaller extends AbstractMarshaller<TaskComment> {
+    private static TaskCommentMarshaller instance;
+
+    static {
+        instance = new TaskCommentMarshaller();
+    }
+
+    /**
+     * Getter for the instance of this singleton.
+     *
+     * @return instance of the singleton
+     */
+    public static TaskCommentMarshaller getInstance() {
+        return instance;
+    }
+
+    /**
+     * Passes the parameters for the file to which the {@link TaskComment}-
+     * objects will be exported to down to its corresponding
+     * {@link AbstractMarshaller<TaskComment>} and then requests this
+     * {@link AbstractMarshaller<TaskComment>} to start the export of all its
+     * {@link TaskComment}s.
+     *
+     * @param format The format of the file to which will be exported to
+     * @param pathName The name for the file
+     * @param indentation Whether to use indentation in the file
+     */
+    @Override
+    public void marshallAll(final Format format,
+                            final String pathName,
+                            final boolean indentation) {
+        System.out.print("\tExporting task comments...");
+        prepare(format, pathName, "taskComments", indentation);
+        exportList(new ArrayList<>(NgCoreCollection.taskComments.values()));
+        System.out.print("\tdone.\n");
+    }
 }
