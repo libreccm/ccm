@@ -65,7 +65,8 @@ public abstract class CategoryComponent extends AbstractComponent {
         }
         content.addAttribute("description", description);
         if (CMSConfig.getInstanceOf().getUseLanguageExtension()
-                && !url.startsWith("/redirect/")) {
+                && !url.startsWith("/redirect/")
+                && !url.matches("^/theme/.*/redirect/.*")) {
             if (url.endsWith("/")) {
                 content.addAttribute("url",
                                      String.format("%sindex.%s",
