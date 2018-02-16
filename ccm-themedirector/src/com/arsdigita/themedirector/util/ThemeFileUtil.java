@@ -11,7 +11,7 @@
 * implied. See the License for the specific language governing
 * rights and limitations under the License.
 *
-*/
+ */
 package com.arsdigita.themedirector.util;
 
 import com.arsdigita.themedirector.Theme;
@@ -132,10 +132,11 @@ public class ThemeFileUtil {
             }
         }
 
-        try {
-            Files
-                .newDirectoryStream(root)
-                .forEach(path -> prepareThemeFile(path, eligiblePaths));
+        try (final DirectoryStream<Path> directoryStream
+                                             = Files.newDirectoryStream(root)) {
+
+            directoryStream.forEach(path -> prepareThemeFile(path,
+                                                             eligiblePaths));
         } catch (IOException ex) {
             throw new UncheckedWrapperException(ex);
         }
@@ -147,6 +148,7 @@ public class ThemeFileUtil {
         if (Files.isDirectory(path)) {
             try (final DirectoryStream<Path> directoryStream = Files
                 .newDirectoryStream(path)) {
+
                 directoryStream
                     .forEach(current -> prepareThemeFile(current,
                                                          eligiablePaths));
@@ -210,24 +212,29 @@ public class ThemeFileUtil {
                                             boolean overwriteNewerFiles,
                                             String fileType) {
         if (currentFile.isDirectory()) {
+
             File[] files = currentFile.listFiles(new WhiteListFilenameFilter());
             if (files != null) {
                 for (int i = 0; i < files.length; i++) {
-                    updateDatabaseFiles(files[i], currentTheme,
-                                        serverSpecificPath, themeFiles,
-                                        overwriteNewerFiles, fileType);
+
+                    updateDatabaseFiles(files[i],
+                                        currentTheme,
+                                        serverSpecificPath,
+                                        themeFiles,
+                                        overwriteNewerFiles,
+                                        fileType);
                 }
             }
         } else {
             if (currentFile.exists()) {
+
                 String fullFilePath = currentFile.getAbsolutePath();
                 String filePath = null;
                 int beginIndex = fullFilePath.indexOf(serverSpecificPath);
-                if (beginIndex > -1 && fullFilePath.length()
-                                           > serverSpecificPath.length()) {
-                    filePath = fullFilePath.substring(beginIndex
-                                                          + serverSpecificPath
-                            .length() + 1);
+                if (beginIndex > -1
+                        && fullFilePath.length() > serverSpecificPath.length()) {
+                    filePath = fullFilePath
+                        .substring(beginIndex + serverSpecificPath.length() + 1);
                 } else {
                     filePath = fullFilePath;
                 }
@@ -246,14 +253,14 @@ public class ThemeFileUtil {
                 // Undelete the file if it reappeared
                 if (themeFile != null
                         && themeFile.isDeleted()
-                        && themeFile.getLastModifiedDate()
+                        && themeFile
+                        .getLastModifiedDate()
                         .before(new Date(currentFile.lastModified()))) {
                     themeFile.setDeleted(false);
                     s_log.info("Undeleting the file: " + currentFile);
                 }
-                try {
-                    FileInputStream in = new FileInputStream(currentFile);
-                    ByteArrayOutputStream os = new ByteArrayOutputStream();
+                try (FileInputStream in = new FileInputStream(currentFile);
+                     ByteArrayOutputStream os = new ByteArrayOutputStream()) {
 
                     byte[] buffer = new byte[8];
                     int length = -1;
@@ -275,8 +282,6 @@ public class ThemeFileUtil {
                     // we save to help with stack trace issues and so that
                     // we don't have too many build up.
                     themeFile.save();
-                    in.close();
-                    os.close();
                 } catch (FileNotFoundException fnfe) {
                     s_log.error("Error opening file reader for " + currentFile
                         .getAbsolutePath(), fnfe);
