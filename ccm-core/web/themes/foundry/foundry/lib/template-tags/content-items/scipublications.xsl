@@ -850,7 +850,7 @@
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="content-item-layout//scipublications//series-volumes//volume">
+    <xsl:template match="content-item-layout//scipublications//series-volumes//series-volume">
         <xsl:param name="volumes" tunnel="yes"/>
 
         <xsl:variable name="layout-tree" select="./*"/>
