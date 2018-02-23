@@ -184,17 +184,18 @@
     </xsl:template>
     
     <xsl:template match="public-personal-profile//personal-publications//publications//publication-groups//publication-group//paginator">
+
         <xsl:if test="(number($data-tree/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@pageCount) &gt; 1)
                       or ./@show = 'always'">
             <xsl:apply-templates>
                 <xsl:with-param name="paginator-baseurl"
                                 tunnel="yes">
                     <xsl:choose>
-                        <xsl:when test="contains($data-tree/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@baseUrl, '?')">
-                            <xsl:value-of select="concat($data-tree/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@baseUrl, '&amp;')"/>
+                        <xsl:when test="contains($data-tree/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@baseURL, '?')">
+                            <xsl:value-of select="concat($data-tree/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@baseURL, '&amp;')"/>
                         </xsl:when>
-                        <xsl:when test="not(contains($data-tree/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@baseUrl, '?'))">
-                            <xsl:value-of select="concat($data-tree/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@baseUrl, '?')"/>
+                        <xsl:when test="not(contains($data-tree/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@baseURL, '?'))">
+                            <xsl:value-of select="concat($data-tree/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@baseURL, '?')"/>
                         </xsl:when>
                     </xsl:choose>
                 </xsl:with-param>
@@ -230,11 +231,11 @@
                 <xsl:with-param name="paginator-baseurl"
                                 tunnel="yes">
                     <xsl:choose>
-                        <xsl:when test="contains($data-tree/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@baseUrl, '?')">
-                            <xsl:value-of select="concat($data-tree/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@baseUrl, '&amp;')"/>
+                        <xsl:when test="contains($data-tree/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@baseURL, '?')">
+                            <xsl:value-of select="concat($data-tree/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@baseURL, '&amp;')"/>
                         </xsl:when>
-                        <xsl:when test="not(contains($data-tree/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@baseUrl, '?'))">
-                            <xsl:value-of select="concat($data-tree/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@baseUrl, '?')"/>
+                        <xsl:when test="not(contains($data-tree/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@baseURL, '?'))">
+                            <xsl:value-of select="concat($data-tree/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@baseURL, '?')"/>
                         </xsl:when>
                     </xsl:choose>
                 </xsl:with-param>
@@ -342,7 +343,7 @@
         <xsl:param name="paginator-baseurl" tunnel="yes" select="''"/>
         <xsl:param name="paginator-page-param" tunnel="yes" select="''"/>
         
-        <xsl:if test="($paginator-page-number != '') 
+            <xsl:if test="($paginator-page-number != '') 
                       and (number($paginator-page-number) &lt; number($paginator-page-count))">
             <xsl:apply-templates>
                 <xsl:with-param name="href"
