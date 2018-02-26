@@ -61,8 +61,13 @@ public class GreetingItem extends AbstractComponent {
 
     private static final Logger s_log = Logger.getLogger(GreetingItem.class);
 
+    protected String getElementName() {
+        return "greetingItem";
+    }
+    
     public Element generateXML(HttpServletRequest request,
                                HttpServletResponse response) {
+        
         ContentItem item = (ContentItem) getObject();
         if (null == item || !item.isLive()) {
             return null;
@@ -72,7 +77,7 @@ public class GreetingItem extends AbstractComponent {
             item = item.getLiveVersion();
         }
 
-        Element content = Navigation.newElement("greetingItem");
+        Element content = Navigation.newElement(getElementName());
         Party currentParty = Kernel.getContext().getParty();
         if (currentParty == null) {
             currentParty = Kernel.getPublicUser();
