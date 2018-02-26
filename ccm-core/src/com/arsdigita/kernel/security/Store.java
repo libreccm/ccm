@@ -32,17 +32,19 @@ import org.apache.log4j.Logger;
 /**
  * Provides access to the key store in which the secret is stored.
  *
- * @author  Vadim Nasardinov (vadimn@redhat.com)
- * @since   2003-12-18
+ * @author Vadim Nasardinov (vadimn@redhat.com)
+ * @since 2003-12-18
  * @version $Revision: #7 $ $DateTime: 2004/08/16 18:10:38 $
- **/
+ *
+ */
 final class Store implements KeyStorage {
+
     final static Store INSTANCE = new Store();
 
     private final static Logger s_log = Logger.getLogger(Store.class);
 
     private final static String TYPE = "com.arsdigita.kernel.security.KeyStore";
-    private final static String ID    = "id";
+    private final static String ID = "id";
     private final static String OWNER = "owner";
     private final static String STORE = "store";
 
@@ -51,7 +53,8 @@ final class Store implements KeyStorage {
 
     private byte[] m_secret;
 
-    Store() {}
+    Store() {
+    }
 
     static byte[] newKey() {
         byte[] key = new byte[SecurityConfig.SECRET_KEY_BYTES];
@@ -60,9 +63,8 @@ final class Store implements KeyStorage {
     }
 
     public synchronized void init() {
-        if ( hasBeenInitialized() ) {
-            throw new UncheckedWrapperException
-                ("key store had been initialized");
+        if (hasBeenInitialized()) {
+            throw new UncheckedWrapperException("key store had been initialized");
         }
         init(ID_VALUE, OWNER_VALUE, newKey());
     }
@@ -75,18 +77,24 @@ final class Store implements KeyStorage {
         return result;
     }
 
-
     /**
      * This method is exposed as package-scoped solely for the purpose of
      * white-box unit-testing.
      *
      * @throws NullPointerException if any of the parameters is null.
-     **/
+     *
+     */
     void init(BigInteger id, String owner, byte[] store) {
-        if ( id == null ) { throw new NullPointerException("id"); }
-        if ( owner == null ) { throw new NullPointerException("owner"); }
-        if ( store == null ) { throw new NullPointerException("store"); }
-        if ( store.length < 1 ) {
+        if (id == null) {
+            throw new NullPointerException("id");
+        }
+        if (owner == null) {
+            throw new NullPointerException("owner");
+        }
+        if (store == null) {
+            throw new NullPointerException("store");
+        }
+        if (store.length < 1) {
             throw new IllegalArgumentException("empty store");
         }
 
@@ -98,23 +106,26 @@ final class Store implements KeyStorage {
     }
 
     /**
-     * 
+     *
      */
     synchronized byte[] loadSecret() {
-        if ( m_secret != null ) { return m_secret; }
-
-        DataObject dobj = SessionManager.getSession().retrieve
-            (new OID(TYPE, ID_VALUE));
-        m_secret = (byte[]) dobj.get(STORE);
-        if ( m_secret == null ) {
-            throw new IllegalStateException
-                ("the store is null");
+        if (m_secret != null) {
+            return m_secret;
         }
-        if ( m_secret.length != SecurityConfig.SECRET_KEY_BYTES * 2 - 1 ) {
-            throw new IllegalArgumentException
-                ("wrong length. expected=" + SecurityConfig.SECRET_KEY_BYTES +
-                 ", but got " + m_secret.length);
+
+        DataObject dobj = SessionManager.getSession().retrieve(new OID(TYPE,
+                                                                       ID_VALUE));
+        m_secret = (byte[]) dobj.get(STORE);
+        if (m_secret == null) {
+            throw new IllegalStateException("the store is null");
+        }
+        if (m_secret.length != SecurityConfig.SECRET_KEY_BYTES * 2 - 1
+            && m_secret.length != SecurityConfig.SECRET_KEY_BYTES) {
+            throw new IllegalArgumentException("wrong length. expected="
+                                               + SecurityConfig.SECRET_KEY_BYTES
+                                               + ", but got " + m_secret.length);
         }
         return m_secret;
     }
+
 }
