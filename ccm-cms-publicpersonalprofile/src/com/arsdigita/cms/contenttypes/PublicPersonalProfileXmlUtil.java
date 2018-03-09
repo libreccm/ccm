@@ -85,8 +85,18 @@ public class PublicPersonalProfileXmlUtil {
                                                      "http://ccm.redhat.com/navigation");
         navRoot.addAttribute("id", "categoryMenu");
 
-        final Element navList = navRoot.newChildElement("nav:category",
-                                                        "http://ccm.redhat.com/navigation");
+        final Element navHierarchyRoot = root
+            .newChildElement("nav:categoryHierarchy",
+                             "http://ccm.redhat.com/navigation");
+        navHierarchyRoot
+            .addAttribute("bebop:classname",
+                          "com.arsdigita.navigation.ui.category.Hierarchy",
+                          "http://www.arsdigita.com/bebop/1.0");
+        navHierarchyRoot.addAttribute("id", "categoryNav");
+
+        final Element navList = navRoot
+            .newChildElement("nav:category",
+                             "http://ccm.redhat.com/navigation");
         navList.addAttribute("AbstractTree", "AbstractTree");
         navList.addAttribute("description", "");
         navList.addAttribute("id", "");
@@ -100,8 +110,9 @@ public class PublicPersonalProfileXmlUtil {
                                                   UI.getConfig().getRootPage()));
 
         if (config.getShowHomeNavEntry()) {
-            final Element navHome = navList.newChildElement("nav:category",
-                                                            "http://ccm.redhat.com/navigation");
+            final Element navHome = navList
+                .newChildElement("nav:category",
+                                 "http://ccm.redhat.com/navigation");
             navHome.addAttribute("AbstractTree", "AbstractTree");
             navHome.addAttribute("description", "");
             navHome.addAttribute("id", profile.getID().toString());
@@ -112,13 +123,28 @@ public class PublicPersonalProfileXmlUtil {
             }
             navHome.addAttribute("sortKey", "");
 
+            final Element navHierarchyHome = navHierarchyRoot
+                .newChildElement("nav:category",
+                                 "http://ccm.redhat.com/navigation");
+            navHierarchyHome.addAttribute("AbstractTree", "AbstractTree");
+            navHierarchyHome.addAttribute("description", "");
+            navHierarchyHome.addAttribute("id", profile.getID().toString());
+            if (navPath == null) {
+                navHierarchyHome.addAttribute("isSelected", "true");
+            } else {
+                navHierarchyHome.addAttribute("isSelected", "false");
+            }
+            navHierarchyHome.addAttribute("sortKey", "");
+
             /*String homeLabel = homeLabels.get(GlobalizationHelper.
              getNegotiatedLocale().getLanguage());*/
             final String homeLabel = homeLabels.get(profile.getLanguage());
             if (homeLabel == null) {
                 navHome.addAttribute("title", "Home");
+                navHierarchyHome.addAttribute("title", "Home");
             } else {
                 navHome.addAttribute("title", homeLabel);
+                navHierarchyHome.addAttribute("title", homeLabel);
             }
             if (CMSConfig.getInstanceOf().getUseLanguageExtension()) {
                 navHome
@@ -129,11 +155,24 @@ public class PublicPersonalProfileXmlUtil {
                                                 GlobalizationHelper
                                                     .getNegotiatedLocale()
                                                     .getLanguage()));
+                navHierarchyHome
+                    .addAttribute("url",
+                                  String.format("%s/%s/index.%s",
+                                                appUrl,
+                                                profile.getProfileUrl(),
+                                                GlobalizationHelper
+                                                    .getNegotiatedLocale()
+                                                    .getLanguage()));
+
             } else {
                 navHome.addAttribute("url", String.format("%s/%s",
                                                           appUrl,
                                                           profile
                                                               .getProfileUrl()));
+                navHierarchyHome.addAttribute("url", String.format("%s/%s",
+                                                                   appUrl,
+                                                                   profile
+                                                                       .getProfileUrl()));
             }
         }
 
@@ -181,6 +220,7 @@ public class PublicPersonalProfileXmlUtil {
         RelatedLink link;
         String navLinkKey;
         Element navElem;
+        Element navHierarchyElem;
         final List<NavLink> navLinks = new ArrayList<NavLink>();
         while (links.next()) {
             link = (RelatedLink) DomainObjectFactory.newInstance(links.
@@ -218,10 +258,19 @@ public class PublicPersonalProfileXmlUtil {
         Collections.sort(navLinks);
 
         for (NavLink navLink : navLinks) {
+
             navElem = navList.newChildElement("nav:category",
                                               "http://ccm.redhat.com/navigation");
             navElem.addAttribute("AbstractTree", "AbstractTree");
             navElem.addAttribute("description", "");
+
+            navHierarchyElem = navHierarchyRoot
+                .newChildElement("nav:category",
+                                 "http://ccm.redhat.com/navigation");
+            navHierarchyElem.addAttribute("AbstractTree", "AbstractTree");
+            navHierarchyElem.addAttribute("depth", "0");
+            navHierarchyElem.addAttribute("description", "");
+
             //navHome.addAttribute("id", "");
             if ((navPath != null) && navPath.equals(navLink.getKey())) {
                 navElem.addAttribute("isSelected", "true");
@@ -252,13 +301,26 @@ public class PublicPersonalProfileXmlUtil {
                 navElem.addAttribute("isSelected", "false");
             }
             navElem.addAttribute("sortKey", "");
+            navHierarchyElem.addAttribute("sortKey", "");
             if (navLink.getTarget() == null) {
                 navElem.addAttribute("title", navLink.getKey());
+                navHierarchyElem.addAttribute("title", navLink.getKey());
             } else {
                 navElem.addAttribute("title", navLink.getNavItem().getLabel());
+                navHierarchyElem
+                    .addAttribute("title", navLink.getNavItem().getLabel());
             }
             if (CMSConfig.getInstanceOf().getUseLanguageExtension()) {
                 navElem.addAttribute(
+                    "url",
+                    String.format("%s/%s/%s/index.%s",
+                                  appUrl,
+                                  profile.getProfileUrl(),
+                                  navLink.getKey(),
+                                  GlobalizationHelper
+                                      .getNegotiatedLocale()
+                                      .getLanguage()));
+                navHierarchyElem.addAttribute(
                     "url",
                     String.format("%s/%s/%s/index.%s",
                                   appUrl,
@@ -274,9 +336,16 @@ public class PublicPersonalProfileXmlUtil {
                                   appUrl,
                                   profile.getProfileUrl(),
                                   navLink.getKey()));
+                navHierarchyElem.addAttribute(
+                    "url",
+                    String.format("%s/%s/%s",
+                                  appUrl,
+                                  profile.getProfileUrl(),
+                                  navLink.getKey()));
             }
 
             navElem.addAttribute("navItem", navLink.getKey());
+            navHierarchyElem.addAttribute("navItem", navLink.getKey());
 
         }
     }
