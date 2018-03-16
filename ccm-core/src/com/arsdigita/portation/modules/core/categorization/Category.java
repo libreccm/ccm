@@ -22,6 +22,7 @@ import com.arsdigita.categorization.CategoryLocalization;
 import com.arsdigita.categorization.CategoryLocalizationCollection;
 import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.conversion.NgCoreCollection;
+import com.arsdigita.portation.modules.core.categorization.util.CategoryInformation;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -100,12 +101,35 @@ public class Category extends CcmObject implements Portable {
         com.arsdigita.categorization.Category defaultParent = null;
         try {
             defaultParent = trunkCategory.getDefaultParentCategory();
-        } catch (Exception e) {}
+        } catch (Exception ignored) {}
         this.categoryOrder = defaultParent != null
                 ? defaultParent.getNumberOfChildCategories() + 1
                 : 0;
 
         NgCoreCollection.categories.put(this.getObjectId(), this);
+    }
+
+    // specific constructor for subclasses of category
+    // e.g. Folder
+    public Category(final CategoryInformation categoryInformation) {
+        super(categoryInformation.getDisplayName());
+
+        this.uniqueId = categoryInformation.getUniqueId();
+        this.name = categoryInformation.getName();
+
+        this.title = categoryInformation.getTitle();
+        this.description = categoryInformation.getDescription();
+
+        this.enabled = categoryInformation.isEnabled();
+        this.visible = categoryInformation.isVisible();
+        this.abstractCategory = categoryInformation.isAbstractCategory();
+
+        this.objects = new ArrayList<>();
+        this.subCategories = new ArrayList<>();
+
+        //this.parentCategory
+
+        this.categoryOrder = categoryInformation.getCategoryOrder();
     }
 
 

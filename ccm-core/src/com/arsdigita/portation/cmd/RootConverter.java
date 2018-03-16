@@ -38,17 +38,17 @@ public class RootConverter {
     @SuppressWarnings("unchecked")
     public static void rootConversionExecution() throws Exception {
         // Core conversions
-        CoreConverter.getInstance().startConversion();
+        CoreConverter.getInstance().startConversions();
 
         // Lnd-Terms conversions
-        Class cls = Class
+        /*Class cls = Class
                 .forName("com.arsdigita.london.terms.portation" +
                         ".conversion.LdnTermsConverter");
         if (cls != null) {
             Method startConversionToNg = cls
-                    .getDeclaredMethod("startConversion");
+                    .getDeclaredMethod("startConversions");
             startConversionToNg.invoke(cls.newInstance());
-        }
+        }*/
 
         // ...
     }

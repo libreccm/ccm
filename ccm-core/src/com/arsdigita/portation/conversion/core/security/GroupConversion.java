@@ -20,6 +20,7 @@ package com.arsdigita.portation.conversion.core.security;
 
 import com.arsdigita.kernel.UserCollection;
 import com.arsdigita.portation.AbstractConversion;
+import com.arsdigita.portation.cmd.ExportLogger;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.security.Group;
 import com.arsdigita.portation.modules.core.security.GroupMembership;
@@ -51,14 +52,12 @@ public class GroupConversion extends AbstractConversion {
      */
     @Override
     public void convertAll() {
-        System.out.print("\tFetching groups from database...");
+        ExportLogger.fetching("groups");
         List<com.arsdigita.kernel.Group> trunkGroups = com.arsdigita.kernel
                 .Group.getAllObjectGroups();
-        System.out.println("done.");
 
-        System.out.print("\tConverting groups and group memberships...\n");
+        ExportLogger.converting("groups and group memberships");
         createGroupsAndSetAssociations(trunkGroups);
-        System.out.println("\tdone.\n");
     }
 
     /**
@@ -82,9 +81,8 @@ public class GroupConversion extends AbstractConversion {
 
             pGroups++;
         }
-        System.out.printf("\t\tCreated %d groups and\n" +
-                          "\t\tcreated %d group memberships.\n",
-                          pGroups, pMemberships);
+        ExportLogger.created("groups", pGroups);
+        ExportLogger.created("group memberships", pMemberships);
     }
 
     /**
@@ -102,8 +100,9 @@ public class GroupConversion extends AbstractConversion {
         int processed = 0;
 
         while (userCollection.next()) {
-            User member = NgCoreCollection.users.get(userCollection.getUser()
-                    .getID().longValue());
+            User member = NgCoreCollection
+                    .users
+                    .get(userCollection.getUser().getID().longValue());
 
             if (group != null && member != null) {
                 // create groupMemeberships
@@ -116,9 +115,7 @@ public class GroupConversion extends AbstractConversion {
 
                 processed++;
             }
-
         }
-
         return processed;
     }
 

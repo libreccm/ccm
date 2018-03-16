@@ -41,14 +41,14 @@ public class RootExporter {
         CoreExporter.getInstance().startMarshaller();
 
         // Ldn-Terms
-        Class cls = Class
+        /*Class cls = Class
                 .forName("com.arsdigita.london.terms.portation.modules" +
                         ".LdnTermsExporter");
         if (cls != null) {
             Method startExport = cls
                     .getDeclaredMethod("startMarshaller");
             startExport.invoke(cls.newInstance());
-        }
+        }*/
 
         // ...
     }

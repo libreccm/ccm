@@ -224,8 +224,8 @@ public class ContentSection extends Application {
      * @return The name of the content section
      */
     public String getName() {
-        //return (String) get(NAME);
-        return getTitle();
+        return (String) get(NAME);
+        //return getTitle();
     }
 
     /**

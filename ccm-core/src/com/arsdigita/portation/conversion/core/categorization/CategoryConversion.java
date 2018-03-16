@@ -21,6 +21,7 @@ package com.arsdigita.portation.conversion.core.categorization;
 import com.arsdigita.categorization.CategorizedCollection;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.portation.AbstractConversion;
+import com.arsdigita.portation.cmd.ExportLogger;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.categorization.Categorization;
 import com.arsdigita.portation.modules.core.categorization.Category;
@@ -53,18 +54,16 @@ public class CategoryConversion extends AbstractConversion {
      */
     @Override
     public void convertAll() {
-        System.out.print("\tFetching categories from database...");
+        ExportLogger.fetching("categories");
         List<com.arsdigita.categorization.Category> trunkCategories = com
                 .arsdigita.categorization.Category.getAllObjectCategories();
-        System.out.println("done.");
 
-        System.out.print("\tConverting categories and categorizations...\n");
+        ExportLogger.converting("categories and categorizations");
         createCategoryAndCategorizations(trunkCategories);
         setRingAssociations(trunkCategories);
-        System.out.print("\tSorting categories...\n");
-        sortCategoryMap();
 
-        System.out.println("\tdone.\n");
+        ExportLogger.sorting("categories");
+        sortCategoryMap();
     }
 
     /**
@@ -95,9 +94,10 @@ public class CategoryConversion extends AbstractConversion {
 
             processedCategories++;
         }
-        System.out.printf("\t\tCreated %d categories and\n" +
-                          "\t\tcreated %d categorizations.\n",
-                          processedCategories, processedCategorizations);
+        ExportLogger.created("categories",
+                                      processedCategories);
+        ExportLogger.created("categorizations",
+                                      processedCategorizations);
     }
 
     /**
@@ -112,8 +112,8 @@ public class CategoryConversion extends AbstractConversion {
      * @return Number of how many {@link Categorization}s have been processed.
      */
     private long createCategorizations(Category category,
-                                              CategorizedCollection
-                                                      categorizedObjects) {
+                                       CategorizedCollection
+                                               categorizedObjects) {
         int processed = 0;
 
         while (categorizedObjects.next()) {
@@ -197,7 +197,7 @@ public class CategoryConversion extends AbstractConversion {
         }
         NgCoreCollection.sortedCategories = sortedList;
 
-        System.out.printf("\t\tSorted categories in %d runs.\n", runs);
+        ExportLogger.ranSort("categories", runs);
     }
 
     /**

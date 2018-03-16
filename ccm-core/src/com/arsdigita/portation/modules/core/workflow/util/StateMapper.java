@@ -28,8 +28,7 @@ import com.arsdigita.workflow.simple.Workflow;
  * @version created on 11/21/16
  */
 public class StateMapper {
-
-    public static WorkflowState mapWorkflowState(int processState) {
+    public static WorkflowState mapWorkflowState(final int processState) {
         switch (processState) {
             case Workflow.STARTED:
                 return WorkflowState.STARTED;

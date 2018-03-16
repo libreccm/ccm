@@ -20,6 +20,7 @@ package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Format;
+import com.arsdigita.portation.cmd.ExportLogger;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 
 import java.util.ArrayList;
@@ -59,9 +60,8 @@ public class GroupMarshaller extends AbstractMarshaller<Group> {
     public void marshallAll(final Format format,
                             final String pathName,
                             final boolean indentation) {
-        System.out.print("\tExporting groups...");
+        ExportLogger.exporting("groups");
         prepare(format, pathName, "groups", indentation);
         exportList(new ArrayList<>(NgCoreCollection.groups.values()));
-        System.out.print("\t\tdone.\n");
     }
 }

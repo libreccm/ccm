@@ -20,6 +20,7 @@ package com.arsdigita.portation.modules.core.workflow;
 
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Format;
+import com.arsdigita.portation.cmd.ExportLogger;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 
 /**
@@ -57,9 +58,8 @@ public class AssignableTaskMarshaller extends AbstractMarshaller<AssignableTask>
     public void marshallAll(final Format format,
                             final String pathName,
                             final boolean indentation) {
-        System.out.print("\tExporting assignable tasks...");
+        ExportLogger.exporting("assignable tasks");
         prepare(format, pathName, "assignableTasks", indentation);
         exportList(NgCoreCollection.sortedAssignableTasks);
-        System.out.print("\tdone.\n");
     }
 }

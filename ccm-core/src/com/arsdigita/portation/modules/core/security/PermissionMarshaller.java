@@ -20,6 +20,7 @@ package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Format;
+import com.arsdigita.portation.cmd.ExportLogger;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 
 import java.util.ArrayList;
@@ -59,9 +60,8 @@ public class PermissionMarshaller extends AbstractMarshaller<Permission> {
     public void marshallAll(final Format format,
                             final String pathName,
                             final boolean indentation) {
-        System.out.print("\tExporting permissions...");
+        ExportLogger.exporting("permissions");
         prepare(format, pathName, "permissions", indentation);
         exportList(new ArrayList<>(NgCoreCollection.permissions.values()));
-        System.out.print("\tdone.\n");
     }
 }

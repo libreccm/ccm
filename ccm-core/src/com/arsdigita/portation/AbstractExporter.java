@@ -40,5 +40,8 @@ public abstract class AbstractExporter {
         indentation = ind;
     }
 
+    /**
+     * Method to start all the different marshaller classes.
+     */
     public abstract void startMarshaller();
 }

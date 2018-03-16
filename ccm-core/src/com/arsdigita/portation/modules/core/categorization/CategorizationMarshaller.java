@@ -20,6 +20,7 @@ package com.arsdigita.portation.modules.core.categorization;
 
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Format;
+import com.arsdigita.portation.cmd.ExportLogger;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 
 import java.util.ArrayList;
@@ -59,9 +60,8 @@ public class CategorizationMarshaller extends AbstractMarshaller<Categorization>
     public void marshallAll(final Format format,
                             final String pathName,
                             final boolean indentation) {
-        System.out.print("\tExporting categorizations...");
+        ExportLogger.exporting("categorizations");
         prepare(format, pathName, "categorizations", indentation);
         exportList(new ArrayList<>(NgCoreCollection.categorizations.values()));
-        System.out.print("\tdone.\n");
     }
 }

@@ -20,16 +20,14 @@ package com.arsdigita.portation.conversion.core.workflow;
 
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.portation.AbstractConversion;
+import com.arsdigita.portation.cmd.ExportLogger;
 import com.arsdigita.portation.conversion.NgCoreCollection;
-import com.arsdigita.portation.modules.core.categorization.Category;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.workflow.Workflow;
 import com.arsdigita.workflow.simple.WorkflowTemplate;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Class for converting all
@@ -54,18 +52,16 @@ public class WorkflowConversion extends AbstractConversion {
      */
     @Override
     public void convertAll() {
-        System.out.print("\tFetching workflows from database...");
+        ExportLogger.fetching("workflows");
         List<com.arsdigita.workflow.simple.Workflow> trunkWorkflows =
                 com.arsdigita.workflow.simple.Workflow.getAllObjectWorkflows();
-        System.out.println("done.");
 
-        System.out.print("\tConverting workflows...\n");
+        ExportLogger.converting("workflows");
         createWorkflowAndSetAssociations(trunkWorkflows);
         setTemplateAssociations(trunkWorkflows);
-        System.out.print("\tSorting workflows...\n");
-        sortWorkflowMap();
 
-        System.out.println("\tdone.\n");
+        ExportLogger.sorting("workflows");
+        sortWorkflowMap();
     }
 
     /**
@@ -96,8 +92,7 @@ public class WorkflowConversion extends AbstractConversion {
 
             processed++;
         }
-
-        System.out.printf("\t\tCreated %d workflows.\n", processed);
+        ExportLogger.created("workflows", processed);
     }
 
     /**
@@ -130,7 +125,7 @@ public class WorkflowConversion extends AbstractConversion {
             } else
                 processed++;
         }
-        System.out.printf("\t\tFound %d templates.\n", processed);
+        ExportLogger.found("templates", processed);
     }
 
     /**
@@ -157,7 +152,7 @@ public class WorkflowConversion extends AbstractConversion {
         }
         NgCoreCollection.sortedWorkflows = sortedList;
 
-        System.out.printf("\t\tSorted workflows in %d runs.\n", runs);
+        ExportLogger.ranSort("workflows", runs);
     }
 
     /**

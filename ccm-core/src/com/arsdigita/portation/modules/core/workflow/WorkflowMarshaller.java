@@ -20,6 +20,7 @@ package com.arsdigita.portation.modules.core.workflow;
 
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Format;
+import com.arsdigita.portation.cmd.ExportLogger;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 
 /**
@@ -57,9 +58,8 @@ public class WorkflowMarshaller extends AbstractMarshaller<Workflow> {
     public void marshallAll(final Format format,
                             final String pathName,
                             final boolean indentation) {
-        System.out.print("\tExporting workflows...");
+        ExportLogger.exporting("workflows");
         prepare(format, pathName, "workflows", indentation);
         exportList(NgCoreCollection.sortedWorkflows);
-        System.out.print("\t\tdone.\n");
     }
 }

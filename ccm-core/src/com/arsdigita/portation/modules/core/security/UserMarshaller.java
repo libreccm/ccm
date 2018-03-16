@@ -20,6 +20,7 @@ package com.arsdigita.portation.modules.core.security;
 
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Format;
+import com.arsdigita.portation.cmd.ExportLogger;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 
 import java.util.ArrayList;
@@ -58,9 +59,8 @@ public class UserMarshaller extends AbstractMarshaller<User> {
     public void marshallAll(final Format format,
                             final String pathName,
                             final boolean indentation) {
-        System.out.print("\tExporting users...");
+        ExportLogger.exporting("users");
         prepare(format, pathName, "users", indentation);
         exportList(new ArrayList<>(NgCoreCollection.users.values()));
-        System.out.print("\t\tdone.\n");
     }
 }

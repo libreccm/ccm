@@ -22,6 +22,7 @@ import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.categorization.Categorization;
 import com.arsdigita.portation.modules.core.categorization.Category;
+import com.arsdigita.portation.modules.core.categorization.util.CategoryInformation;
 import com.arsdigita.portation.modules.core.security.Permission;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -75,11 +76,11 @@ public class CcmObject {
     }
 
     // specific constructor for ldn-terms' domain
-    public CcmObject(String domainKey) {
+    public CcmObject(final String displayName) {
         this.objectId = ACSObject.generateID().longValue();
 
         this.uuid = UUID.randomUUID().toString();
-        this.displayName = domainKey + "_DName";
+        this.displayName = displayName;
 
         this.permissions = new ArrayList<>();
         this.categories = new ArrayList<>();

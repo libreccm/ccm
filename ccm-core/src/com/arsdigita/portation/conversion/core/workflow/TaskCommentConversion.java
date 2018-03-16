@@ -19,6 +19,7 @@
 package com.arsdigita.portation.conversion.core.workflow;
 
 import com.arsdigita.portation.AbstractConversion;
+import com.arsdigita.portation.cmd.ExportLogger;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.security.User;
 import com.arsdigita.portation.modules.core.workflow.TaskComment;
@@ -49,15 +50,12 @@ public class TaskCommentConversion extends AbstractConversion {
      */
     @Override
     public void convertAll() {
-        System.out.print("\tFetching task comments from database...");
+        ExportLogger.fetching("task comments");
         List<com.arsdigita.workflow.simple.TaskComment> trunkTaskComments = com
                 .arsdigita.workflow.simple.TaskComment.getAllTaskComments();
-        System.out.println("done.");
 
-        System.out.print("\tConverting task comments...\n");
+        ExportLogger.converting("task comments");
         createTaskCommentsAndSetAssociations(trunkTaskComments);
-        System.out.println("\tdone.\n");
-
     }
 
     /**
@@ -89,7 +87,7 @@ public class TaskCommentConversion extends AbstractConversion {
             processed++;
         }
 
-        System.out.printf("\t\tCreated %d task comments.\n", processed);
+        ExportLogger.created("task comments", processed);
     }
 
     /**

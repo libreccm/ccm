@@ -32,5 +32,5 @@ public abstract class AbstractConverter {
      * order, so that dependencies can only be set, where the objects have
      * already been created.
      */
-    public abstract void startConversion();
+    public abstract void startConversions();
 }

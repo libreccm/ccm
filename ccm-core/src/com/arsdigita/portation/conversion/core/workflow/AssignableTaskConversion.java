@@ -22,6 +22,7 @@ package com.arsdigita.portation.conversion.core.workflow;
 import com.arsdigita.kernel.GroupCollection;
 import com.arsdigita.kernel.RoleCollection;
 import com.arsdigita.portation.AbstractConversion;
+import com.arsdigita.portation.cmd.ExportLogger;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.security.Role;
 import com.arsdigita.portation.modules.core.security.User;
@@ -59,19 +60,15 @@ public class AssignableTaskConversion extends AbstractConversion {
      */
     @Override
     public void convertAll() {
-        System.out.print("\tFetching assignable tasks from database...");
+        ExportLogger.fetching("assignable tasks");
         List<com.arsdigita.workflow.simple.UserTask> trunkUserTasks = com
                 .arsdigita.workflow.simple.UserTask.getAllObjectUserTasks();
-        System.out.println("done.");
 
-        System.out.print("\tConverting assignable tasks, task dependencies " +
-                "and task assignments...\n");
+        ExportLogger.converting("assignable tasks");
         createAssignableTasksAndSetAssociations(trunkUserTasks);
-        System.out.print("\tSorting task assignments...\n");
+
+        ExportLogger.sorting("assignable tasks");
         sortAssignableTaskMap();
-
-        System.out.println("\tdone.\n");
-
     }
 
     /**
@@ -99,8 +96,9 @@ public class AssignableTaskConversion extends AbstractConversion {
             try {
                 userTaskWorkflow = trunkUserTask.getWorkflow();
                 if (userTaskWorkflow != null) {
-                    Workflow workflow = NgCoreCollection.workflows.get(
-                            userTaskWorkflow.getID().longValue());
+                    Workflow workflow = NgCoreCollection
+                            .workflows
+                            .get(userTaskWorkflow.getID().longValue());
                     if (workflow != null) {
                         assignableTask.setWorkflow(workflow);
                         workflow.addTask(assignableTask);
@@ -119,8 +117,9 @@ public class AssignableTaskConversion extends AbstractConversion {
                         .arsdigita.workflow.simple.TaskComment) commentsIt.next();
 
                 TaskComment taskComment = new TaskComment(trunkTaskComment);
-                User author = NgCoreCollection.users.get(
-                        trunkTaskComment.getUser().getID().longValue());
+                User author = NgCoreCollection
+                        .users
+                        .get(trunkTaskComment.getUser().getID().longValue());
                 taskComment.setAuthor(author);
 
                 assignableTask.addComment(taskComment);
@@ -131,15 +130,17 @@ public class AssignableTaskConversion extends AbstractConversion {
 
             // set lockingUser and notificationSender
             if (trunkUserTask.getLockedUser() != null) {
-                User lockingUser = NgCoreCollection.users.get(trunkUserTask
-                        .getLockedUser()
-                        .getID().longValue());
+                User lockingUser = NgCoreCollection
+                        .users
+                        .get(trunkUserTask.getLockedUser().getID().longValue());
                 if (lockingUser != null)
                     assignableTask.setLockingUser(lockingUser);
             }
             if (trunkUserTask.getNotificationSender() != null) {
-                User notificationSender = NgCoreCollection.users.get(trunkUserTask
-                        .getNotificationSender().getID().longValue());
+                User notificationSender = NgCoreCollection
+                        .users
+                        .get(trunkUserTask.getNotificationSender().getID()
+                                .longValue());
                 if (notificationSender != null)
                     assignableTask.setNotificationSender(notificationSender);
             }
@@ -159,10 +160,9 @@ public class AssignableTaskConversion extends AbstractConversion {
                                   pTasks, pDependencies, pAssignments);*/
         }
 
-        System.out.printf("\t\tCreated %d assignable tasks and\n" +
-                          "\t\tCreated %d task dependencies and\n" +
-                          "\t\tcreated %d task assignments.\n",
-                          pTasks, pDependencies, pAssignments);
+        ExportLogger.created("assignable tasks", pTasks);
+        ExportLogger.created("task dependencies", pDependencies);
+        ExportLogger.created("task assignments", pAssignments);
     }
 
     /**
@@ -186,9 +186,7 @@ public class AssignableTaskConversion extends AbstractConversion {
             AssignableTask dependency = NgCoreCollection
                         .assignableTasks
                         .get(((com.arsdigita.workflow.simple
-                                .Task) dependencyIt.next())
-                                .getID()
-                                .longValue());
+                                .Task) dependencyIt.next()).getID().longValue());
 
             if (assignableTask != null && dependency != null) {
                 TaskDependency taskDependency =
@@ -223,8 +221,9 @@ public class AssignableTaskConversion extends AbstractConversion {
         while (groupCollection.next()) {
             RoleCollection roleCollection = groupCollection.getGroup().getRoles();
             while (roleCollection.next()) {
-                Role role = NgCoreCollection.roles.get(roleCollection.getRole()
-                        .getID().longValue());
+                Role role = NgCoreCollection
+                        .roles
+                        .get(roleCollection.getRole().getID().longValue());
 
                 if (assignableTask != null && role != null) {
                     // create taskAssignments
@@ -239,7 +238,6 @@ public class AssignableTaskConversion extends AbstractConversion {
                 }
             }
         }
-
         return processed;
     }
 
@@ -267,7 +265,7 @@ public class AssignableTaskConversion extends AbstractConversion {
         }
         NgCoreCollection.sortedAssignableTasks = sortedList;
 
-        System.out.printf("\t\tSorted assignable tasks in %d runs.\n", runs);
+        ExportLogger.ranSort("assignable tasts", runs);
     }
 
     /**

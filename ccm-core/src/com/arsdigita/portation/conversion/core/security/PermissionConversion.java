@@ -20,6 +20,7 @@ package com.arsdigita.portation.conversion.core.security;
 
 import com.arsdigita.kernel.RoleCollection;
 import com.arsdigita.portation.AbstractConversion;
+import com.arsdigita.portation.cmd.ExportLogger;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.security.*;
@@ -57,13 +58,12 @@ public class PermissionConversion extends AbstractConversion {
      */
     @Override
     public void convertAll() {
-        System.out.print("\tFetching permissions from database...");
+        ExportLogger.fetching("permissions");
         List<com.arsdigita.kernel.permissions.Permission> trunkPermissions =
                 com.arsdigita.kernel.permissions.Permission
                         .getAllObjectPermissions();
-        System.out.println("done.");
 
-        System.out.print("\tConverting permissions...\n");
+        ExportLogger.converting("permissions");
         createPermissionsAndSetAssociations(trunkPermissions);
 
         try {
@@ -75,7 +75,14 @@ public class PermissionConversion extends AbstractConversion {
             System.exit(-1);
         }
 
-        System.out.println("\tdone.\n");
+        // Verify permissions
+        for (Permission permission : NgCoreCollection.permissions.values()) {
+            if (permission.getGrantee() == null) {
+                System.err.printf("CoreConverter: Grantee for permission %d " +
+                        "is null.%n", permission.getPermissionId());
+                System.exit(-1);
+            }
+        }
     }
 
     /**
@@ -112,8 +119,10 @@ public class PermissionConversion extends AbstractConversion {
             Permission permission = new Permission(trunkPermission);
 
             // set object and opposed associations
-            CcmObject object = NgCoreCollection.ccmObjects.get(((BigDecimal)
-                    trunkPermission.getACSObject().get("id")).longValue());
+            CcmObject object = NgCoreCollection
+                    .ccmObjects
+                    .get(((BigDecimal) trunkPermission.getACSObject().get("id"))
+                            .longValue());
             if (object != null) {
                 permission.setObject(object);
                 object.addPermission(permission);
@@ -123,8 +132,9 @@ public class PermissionConversion extends AbstractConversion {
             com.arsdigita.kernel.User trunkCreationUser = trunkPermission
                     .getCreationUser();
             if (trunkCreationUser != null) {
-                User creationUser = NgCoreCollection.users.get(trunkCreationUser
-                        .getID().longValue());
+                User creationUser = NgCoreCollection
+                        .users
+                        .get(trunkCreationUser.getID().longValue());
 
                 if (creationUser != null)
                     permission.setCreationUser(creationUser);
@@ -132,8 +142,8 @@ public class PermissionConversion extends AbstractConversion {
 
             processed++;
         }
-        System.out.printf("\t\tCreated %d permissions and skipped: %d.\n",
-                processed, skipped);
+        ExportLogger.created("permissions", processed);
+        ExportLogger.skipped("permissions", skipped);
     }
 
     /**
@@ -177,8 +187,8 @@ public class PermissionConversion extends AbstractConversion {
             final String oldId = Permission.genOldId(trunkPermission);
             final long permissionId = PermissionIdMapper.map.get(oldId);
             // get ng permission
-            final Permission permission = NgCoreCollection.permissions.get(
-                    permissionId);
+            final Permission permission = NgCoreCollection
+                    .permissions.get(permissionId);
 
             // get all parties serving as the grantee of this permission
             final BigDecimal trunkGranteeId = (BigDecimal) trunkPermission
@@ -222,8 +232,8 @@ public class PermissionConversion extends AbstractConversion {
                         }
                     }
                     // new Role for this group
-                    final Group member = NgCoreCollection.groups.get
-                            (trunkGranteeGroup.getID().longValue());
+                    final Group member = NgCoreCollection
+                            .groups.get(trunkGranteeGroup.getID().longValue());
                     final Role granteeRole = getRoleIfExists(member);
 
                     // set grantee and opposed association
@@ -235,8 +245,8 @@ public class PermissionConversion extends AbstractConversion {
                     // new Role for this user
                     final com.arsdigita.kernel.User trunkGranteeUser = (com
                             .arsdigita.kernel.User) trunkGranteeParty;
-                    final User member = NgCoreCollection.users.get
-                            (trunkGranteeUser.getID().longValue());
+                    final User member = NgCoreCollection
+                            .users.get(trunkGranteeUser.getID().longValue());
                     final Role granteeRole = getRoleIfExists(member);
 
                     // set grantee and opposed association
@@ -255,8 +265,8 @@ public class PermissionConversion extends AbstractConversion {
                         trunkPermission.getACSObject().get("id")).longValue());
             }
         }
-        System.out.printf("\t\t(Created %d duplicates and created %d new " +
-                        "roles.)\n", duplicates, rolesCreated);
+        ExportLogger.created("dublice Permissions", duplicates);
+        ExportLogger.created("new roles", rolesCreated);
     }
 
     /**
@@ -285,7 +295,6 @@ public class PermissionConversion extends AbstractConversion {
         granteeRole.addMembership(roleMembership);
 
         return granteeRole;
-
     }
 
     /**

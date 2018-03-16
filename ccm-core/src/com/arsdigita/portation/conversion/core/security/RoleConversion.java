@@ -21,6 +21,7 @@ package com.arsdigita.portation.conversion.core.security;
 
 import com.arsdigita.kernel.PartyCollection;
 import com.arsdigita.portation.AbstractConversion;
+import com.arsdigita.portation.cmd.ExportLogger;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.security.Party;
 import com.arsdigita.portation.modules.core.security.Role;
@@ -51,14 +52,12 @@ public class RoleConversion extends AbstractConversion{
      */
     @Override
     public void convertAll() {
-        System.out.print("\tFetching roles from database...");
+        ExportLogger.fetching("roles");
         List<com.arsdigita.kernel.Role> trunkRoles = com.arsdigita.kernel
                 .Role.getAllObjectRoles();
-        System.out.println("done.");
 
-        System.out.print("\tCreating roles and role memberships...\n");
+        ExportLogger.converting("roles and role memberships");
         createRolesAndSetAssociations(trunkRoles);
-        System.out.println("\tdone.\n");
     }
 
     /**
@@ -82,9 +81,8 @@ public class RoleConversion extends AbstractConversion{
 
             pRoles++;
         }
-        System.out.printf("\t\tCreated %d roles and\n" +
-                          "\t\tcreated %d role memberships.\n",
-                          pRoles, pMemberships);
+        ExportLogger.created("roles", pRoles);
+        ExportLogger.created("role memberships", pMemberships);
     }
 
     /**
@@ -102,8 +100,9 @@ public class RoleConversion extends AbstractConversion{
         int processed = 0;
 
         while (partyCollection.next()) {
-            Party member = NgCoreCollection.parties.get(partyCollection.getParty()
-                    .getID().longValue());
+            Party member = NgCoreCollection
+                    .parties
+                    .get(partyCollection.getParty().getID().longValue());
 
             if (role != null && member != null) {
                 // create roleMemberships
@@ -116,7 +115,6 @@ public class RoleConversion extends AbstractConversion{
                 processed++;
             }
         }
-
         return processed;
     }
 

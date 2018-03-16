@@ -20,6 +20,7 @@ package com.arsdigita.portation.modules.core.categorization;
 
 import com.arsdigita.portation.AbstractMarshaller;
 import com.arsdigita.portation.Format;
+import com.arsdigita.portation.cmd.ExportLogger;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 
 /**
@@ -57,9 +58,8 @@ public class CategoryMarshaller extends AbstractMarshaller<Category> {
     public void marshallAll(final Format format,
                             final String pathName,
                             final boolean indentation) {
-        System.out.print("\tExporting categories...");
+        ExportLogger.exporting("categories");
         prepare(format, pathName, "categories", indentation);
         exportList(NgCoreCollection.sortedCategories);
-        System.out.print("\t\tdone.\n");
     }
 }

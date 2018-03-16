@@ -23,7 +23,11 @@ import com.arsdigita.portation.Format;
 import com.arsdigita.portation.conversion.NgCoreCollection;
 import com.arsdigita.portation.modules.core.categorization.CategorizationMarshaller;
 import com.arsdigita.portation.modules.core.categorization.CategoryMarshaller;
+import com.arsdigita.portation.modules.core.categorization.DomainMarshaller;
+import com.arsdigita.portation.modules.core.categorization.DomainOwnershipMarshaller;
+import com.arsdigita.portation.modules.core.core.ResourceTypeMarshaller;
 import com.arsdigita.portation.modules.core.security.*;
+import com.arsdigita.portation.modules.core.web.CcmApplicationMarshaller;
 import com.arsdigita.portation.modules.core.workflow.*;
 
 import java.util.ArrayList;
@@ -82,6 +86,15 @@ public class CoreExporter extends AbstractExporter {
         TaskDependencyMarshaller.getInstance().
                 marshallAll(format, pathName, indentation);
         TaskAssignmentMarshaller.getInstance().
+                marshallAll(format, pathName, indentation);
+
+        ResourceTypeMarshaller.getInstance().
+                marshallAll(format, pathName, indentation);
+        CcmApplicationMarshaller.getInstance().
+                marshallAll(format, pathName, indentation);
+        DomainMarshaller.getInstance().
+                marshallAll(format, pathName, indentation);
+        DomainOwnershipMarshaller.getInstance().
                 marshallAll(format, pathName, indentation);
     }
 }

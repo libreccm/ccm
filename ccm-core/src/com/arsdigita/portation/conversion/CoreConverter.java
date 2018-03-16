@@ -20,10 +20,13 @@ package com.arsdigita.portation.conversion;
 
 import com.arsdigita.portation.AbstractConverter;
 import com.arsdigita.portation.conversion.core.categorization.CategoryConversion;
+import com.arsdigita.portation.conversion.core.categorization.DomainConversion;
+import com.arsdigita.portation.conversion.core.core.ResourceTypeConversion;
 import com.arsdigita.portation.conversion.core.security.GroupConversion;
 import com.arsdigita.portation.conversion.core.security.PermissionConversion;
 import com.arsdigita.portation.conversion.core.security.RoleConversion;
 import com.arsdigita.portation.conversion.core.security.UserConversion;
+import com.arsdigita.portation.conversion.core.web.CcmApplicationConversion;
 import com.arsdigita.portation.conversion.core.workflow.AssignableTaskConversion;
 import com.arsdigita.portation.conversion.core.workflow.TaskCommentConversion;
 import com.arsdigita.portation.conversion.core.workflow.WorkflowConversion;
@@ -62,7 +65,7 @@ public class CoreConverter extends AbstractConverter {
      * already been created.
      */
     @Override
-    public void startConversion() {
+    public void startConversions() {
         UserConversion.getInstance().convertAll();
         GroupConversion.getInstance().convertAll();
         RoleConversion.getInstance().convertAll();
@@ -70,17 +73,13 @@ public class CoreConverter extends AbstractConverter {
         CategoryConversion.getInstance().convertAll();
 
         PermissionConversion.getInstance().convertAll();
-        // Verify permissions
-        for (Permission permission : NgCoreCollection.permissions.values()) {
-            if (permission.getGrantee() == null) {
-                System.err.printf("CoreConverter: Grantee for permission %d " +
-                        "is null.%n", permission.getPermissionId());
-                System.exit(-1);
-            }
-        }
 
         WorkflowConversion.getInstance().convertAll();
         TaskCommentConversion.getInstance().convertAll();
         AssignableTaskConversion.getInstance().convertAll();
+
+        ResourceTypeConversion.getInstance().convertAll();
+        CcmApplicationConversion.getInstance().convertAll();
+        DomainConversion.getInstance().convertAll();
     }
 }

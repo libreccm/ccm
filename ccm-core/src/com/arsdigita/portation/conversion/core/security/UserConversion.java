@@ -19,6 +19,7 @@
 package com.arsdigita.portation.conversion.core.security;
 
 import com.arsdigita.portation.AbstractConversion;
+import com.arsdigita.portation.cmd.ExportLogger;
 import com.arsdigita.portation.modules.core.security.User;
 
 import java.util.List;
@@ -45,20 +46,18 @@ public class UserConversion extends AbstractConversion {
      */
     @Override
     public void convertAll() {
-        System.out.print("\tFetching users from database...");
+        ExportLogger.fetching("users");
         List<com.arsdigita.kernel.User> trunkUsers = com.arsdigita.kernel
                 .User.getAllObjectUsers();
-        System.out.println("done.");
 
-        System.out.print("\tConverting users...\n");
+        ExportLogger.converting("users");
         // create users
         int processed = 0;
         for (com.arsdigita.kernel.User trunkUser : trunkUsers) {
             new User(trunkUser);
             processed++;
         }
-        System.out.printf("\t\tCreated %d users.\n", processed);
-        System.out.println("\tdone.\n");
+        ExportLogger.created("users", processed);
     }
 
     /**
