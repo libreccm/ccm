@@ -100,10 +100,14 @@ public class ThemeDirectorConfig extends AbstractConfig {
         Parameter.REQUIRED,
         "bmp css eot gif jpeg jpg js png svg ttf woff xml xsl");
 
+    /**
+     * Specifies the less file(s) used as entry point(s) for compiling
+     * a managed theme on the fly when publishing. 
+     */
     private final Parameter m_lessFilesParam = new StringArrayParameter(
-        "themedirectory.less_files.compile",
+        "themedirector.less_files_compile",
         Parameter.OPTIONAL,
-        new String[]{"styles/style.less"});
+        new String[]{"styles/main.less"});
 
     /**
      * number of seconds before checking for updated development files. in a
