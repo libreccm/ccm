@@ -19,15 +19,20 @@
 package com.arsdigita.cms.lifecycle;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.Session;
+import com.arsdigita.persistence.SessionManager;
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Definition for a publication lifecycle. Associated with each cycle
@@ -259,5 +264,30 @@ public class LifecycleDefinition extends ACSObject {
      */
     public Lifecycle createFullLifecycle(String listenerClassName) {
         return createFullLifecycle(null, listenerClassName);
+    }
+
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all objects
+     */
+    public static List<LifecycleDefinition> getAllObjects() {
+        List<LifecycleDefinition> objectList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(session.retrieve(
+                LifecycleDefinition.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            LifecycleDefinition object = (LifecycleDefinition) collection
+                    .getDomainObject();
+            if (object != null) {
+                objectList.add(object);
+            }
+        }
+
+        collection.close();
+        return objectList;
     }
 }

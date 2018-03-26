@@ -66,19 +66,19 @@ public class Domain extends CcmObject implements Portable {
 
 
     public Domain(DataObject trunkDomain) {
-        super(trunkDomain.get("key").toString() + "_DName");
+        super((String) trunkDomain.get("key") + "_DName");
 
-        this.domainKey = trunkDomain.get("key").toString();
-        this.uri = trunkDomain.get("url").toString();
+        this.domainKey = (String) trunkDomain.get("key");
+        this.uri = (String) trunkDomain.get("url");
 
         this.title = new LocalizedString();
-        this.title.addValue(Locale.getDefault(),
-                            trunkDomain.get("title").toString());
+        this.title.addValue(Locale.getDefault(), (String) trunkDomain
+                .get("title"));
         this.description = new LocalizedString();
-        this.description.addValue(Locale.getDefault(),
-                                  trunkDomain.get("description").toString());
+        this.description.addValue(Locale.getDefault(), (String) trunkDomain
+                .get("description"));
 
-        this.version = trunkDomain.get("version").toString();
+        this.version = (String) trunkDomain.get("version");
         this.released = (Date) trunkDomain.get("released");
 
         //this.root

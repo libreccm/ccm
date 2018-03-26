@@ -43,13 +43,16 @@ public class PhaseDefinition implements Portable {
         this.label = new LocalizedString();
         this.description = new LocalizedString();
         final Locale locale = Locale.getDefault();
-        this.label.addValue(locale, trunkPhaseDefinition.getLabel());
-        this.description
-                .addValue(locale, trunkPhaseDefinition.getDescription());
+        this.label.addValue(locale,
+                trunkPhaseDefinition.getLabel());
+        this.description.addValue(locale,
+                trunkPhaseDefinition.getDescription());
 
-        this.defaultDelay = trunkPhaseDefinition.getDefaultDelay().longValue();
-        this.defaultDuration = trunkPhaseDefinition.getDefaultDuration()
-                .longValue();
+        this.defaultDelay = trunkPhaseDefinition
+                .getDefaultDelay().longValue();
+        final Integer delay = trunkPhaseDefinition.getDefaultDuration();
+        if (delay != null)
+            this.defaultDuration = delay.longValue();
 
         this.defaultListener = trunkPhaseDefinition.getDefaultListener();
 

@@ -59,11 +59,13 @@ public class CategoryConversion extends AbstractConversion {
                 .arsdigita.categorization.Category.getAllObjectCategories();
 
         ExportLogger.converting("categories and categorizations");
-        createCategoryAndCategorizations(trunkCategories);
+        createCategoriesAndSetAssociations(trunkCategories);
         setRingAssociations(trunkCategories);
 
         ExportLogger.sorting("categories");
         sortCategoryMap();
+
+        ExportLogger.newLine();
     }
 
     /**
@@ -74,7 +76,7 @@ public class CategoryConversion extends AbstractConversion {
      *                        {@link com.arsdigita.categorization.Category}s
      *                        from this old trunk-system.
      */
-    private void createCategoryAndCategorizations(
+    private void createCategoriesAndSetAssociations(
             List<com.arsdigita.categorization.Category> trunkCategories) {
         int processedCategories = 0, processedCategorizations = 0;
 

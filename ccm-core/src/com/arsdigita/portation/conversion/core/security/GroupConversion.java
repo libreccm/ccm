@@ -58,6 +58,8 @@ public class GroupConversion extends AbstractConversion {
 
         ExportLogger.converting("groups and group memberships");
         createGroupsAndSetAssociations(trunkGroups);
+
+        ExportLogger.newLine();
     }
 
     /**

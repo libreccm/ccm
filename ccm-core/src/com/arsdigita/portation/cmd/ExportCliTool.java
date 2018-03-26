@@ -65,7 +65,7 @@ public class ExportCliTool extends Program {
      */
     @Override
     protected void doRun(CommandLine cmdLine) {
-        final String[] args = cmdLine.getArgs();
+        String[] args = cmdLine.getArgs();
 
         if (args.length < 1) {
             printUsage();
@@ -142,6 +142,7 @@ public class ExportCliTool extends Program {
             System.out.print("\n");
         } catch (Exception ex) {
             System.err.printf("ERROR while exporting: %s\n", ex);
+            ex.printStackTrace();
         }
     }
 

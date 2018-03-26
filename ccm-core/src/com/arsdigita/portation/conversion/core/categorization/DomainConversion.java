@@ -62,6 +62,8 @@ public class DomainConversion extends AbstractConversion {
 
         ExportLogger.converting("doamins and domain ownerships");
         createDomainsAndSetAssociations(trunkDomains);
+
+        ExportLogger.newLine();
     }
 
     /**
@@ -76,35 +78,36 @@ public class DomainConversion extends AbstractConversion {
 
         while(trunkDomains.next()) {
             DataObject trunkDomain = trunkDomains.getDataObject();
+            if (trunkDomain != null) {
+                // create domains
+                Domain domain = new Domain(trunkDomain);
 
-            // create domains
-            Domain domain = new Domain(trunkDomain);
 
+                com.arsdigita.categorization.Category trunkModel =
+                        (com.arsdigita.categorization.Category) DomainObjectFactory
+                                .newInstance((DataObject) trunkDomain
+                                        .get("model"));
+                if (trunkModel != null) {
+                    // set root (category) association
+                    Category root = NgCoreCollection
+                            .categories
+                            .get(trunkModel.getID().longValue());
+                    domain.setRoot(root);
 
-            com.arsdigita.categorization.Category trunkModel =
-                    (com.arsdigita.categorization.Category) DomainObjectFactory
-                            .newInstance((DataObject) trunkDomain
-                                    .get("model"));
-            if (trunkModel != null) {
-                // set root (category) association
-                Category root = NgCoreCollection
-                        .categories
-                        .get(trunkModel.getID().longValue());
-                domain.setRoot(root);
+                    // create domain ownerships
+                    DataCollection useContexts = SessionManager
+                            .getSession()
+                            .retrieve("com.arsdigita." +
+                                    "categorization.UseContext");
+                    useContexts.addEqualsFilter(
+                            "rootCategory.id", trunkModel.getID());
 
-                // create domain ownerships
-                DataCollection useContexts = SessionManager
-                        .getSession()
-                        .retrieve("com.arsdigita." +
-                                "categorization.UseContext");
-                useContexts.addEqualsFilter(
-                        "rootCategory.id", trunkModel.getID());
+                    processedDomainOwnerships += createDomainOwnerships(
+                            domain, new DomainCollection(useContexts));
+                }
 
-                processedDomainOwnerships += createDomainOwnerships(
-                        domain, (DomainCollection) useContexts);
+                processedDomains++;
             }
-
-            processedDomains++;
         }
         ExportLogger.created("domains", processedDomains);
         ExportLogger.created("domain ownerships", processedDomainOwnerships);

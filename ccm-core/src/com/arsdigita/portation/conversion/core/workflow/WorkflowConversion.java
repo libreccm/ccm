@@ -62,6 +62,8 @@ public class WorkflowConversion extends AbstractConversion {
 
         ExportLogger.sorting("workflows");
         sortWorkflowMap();
+
+        ExportLogger.newLine();
     }
 
     /**

@@ -58,6 +58,8 @@ public class RoleConversion extends AbstractConversion{
 
         ExportLogger.converting("roles and role memberships");
         createRolesAndSetAssociations(trunkRoles);
+
+        ExportLogger.newLine();
     }
 
     /**

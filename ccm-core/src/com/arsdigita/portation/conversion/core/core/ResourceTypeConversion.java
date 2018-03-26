@@ -60,6 +60,8 @@ public class ResourceTypeConversion extends AbstractConversion {
             processed++;
         }
         ExportLogger.created("resource types", processed);
+
+        ExportLogger.newLine();
     }
 
     /**

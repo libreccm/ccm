@@ -18,12 +18,18 @@
  */
 package com.arsdigita.cms.lifecycle;
 
+import com.arsdigita.categorization.Category;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.Session;
+import com.arsdigita.persistence.SessionManager;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -240,6 +246,31 @@ public class PhaseDefinition extends ACSObject {
      */
     protected void setLifecycleDefinition(LifecycleDefinition lifecycleDefinition) {
         setAssociation(LIFECYCLE_DEFINITION, lifecycleDefinition);
+    }
+
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all objects
+     */
+    public static List<PhaseDefinition> getAllObjects() {
+        List<PhaseDefinition> objectList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(session.retrieve(
+                PhaseDefinition.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            PhaseDefinition object = (PhaseDefinition) collection
+                    .getDomainObject();
+            if (object != null) {
+                objectList.add(object);
+            }
+        }
+
+        collection.close();
+        return objectList;
     }
 
 }

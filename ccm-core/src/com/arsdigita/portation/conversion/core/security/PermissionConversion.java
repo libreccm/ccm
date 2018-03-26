@@ -83,6 +83,8 @@ public class PermissionConversion extends AbstractConversion {
                 System.exit(-1);
             }
         }
+
+        ExportLogger.newLine();
     }
 
     /**

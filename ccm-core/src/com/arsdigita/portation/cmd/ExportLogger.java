@@ -61,6 +61,10 @@ public class ExportLogger {
                 "\t\tSorted %s in %d runs.", className, runs));
     }
 
+    public static void newLine() {
+        System.out.println();
+    }
+
 
 
     public static void exporting(final String className) {

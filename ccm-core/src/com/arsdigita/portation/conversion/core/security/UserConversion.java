@@ -51,13 +51,15 @@ public class UserConversion extends AbstractConversion {
                 .User.getAllObjectUsers();
 
         ExportLogger.converting("users");
-        // create users
         int processed = 0;
         for (com.arsdigita.kernel.User trunkUser : trunkUsers) {
+            // create users
             new User(trunkUser);
             processed++;
         }
         ExportLogger.created("users", processed);
+
+        ExportLogger.newLine();
     }
 
     /**

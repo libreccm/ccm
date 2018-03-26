@@ -19,6 +19,7 @@
 package com.arsdigita.cms.lifecycle;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.DataQuery;
@@ -29,7 +30,9 @@ import com.arsdigita.persistence.SessionManager;
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * This class represents a phase in Publication Lifecycle for a Content Item.
@@ -451,6 +454,32 @@ public class Phase extends ACSObject {
      */
     protected void stop() {
         set(HAS_ENDED, Boolean.TRUE);
+    }
+
+
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all objects
+     */
+    public static List<Phase> getAllObjects() {
+        List<Phase> objectList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(session.retrieve(
+                Phase.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            Phase object = (Phase) collection
+                    .getDomainObject();
+            if (object != null) {
+                objectList.add(object);
+            }
+        }
+
+        collection.close();
+        return objectList;
     }
 
 }

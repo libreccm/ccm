@@ -56,6 +56,8 @@ public class TaskCommentConversion extends AbstractConversion {
 
         ExportLogger.converting("task comments");
         createTaskCommentsAndSetAssociations(trunkTaskComments);
+
+        ExportLogger.newLine();
     }
 
     /**

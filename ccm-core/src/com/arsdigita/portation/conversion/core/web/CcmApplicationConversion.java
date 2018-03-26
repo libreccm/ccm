@@ -63,7 +63,9 @@ public class CcmApplicationConversion extends AbstractConversion {
 
         ExportLogger.sorting("ccm applications");
         sortCcmApplications();
-        }
+
+        ExportLogger.newLine();
+    }
 
     /**
      * Creates the equivalent ng-class of the {@code Application} and restores

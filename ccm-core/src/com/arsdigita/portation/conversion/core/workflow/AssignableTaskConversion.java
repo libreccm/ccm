@@ -69,6 +69,8 @@ public class AssignableTaskConversion extends AbstractConversion {
 
         ExportLogger.sorting("assignable tasks");
         sortAssignableTaskMap();
+
+        ExportLogger.newLine();
     }
 
     /**

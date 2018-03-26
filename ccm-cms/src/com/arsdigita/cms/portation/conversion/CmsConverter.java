@@ -18,6 +18,10 @@
  */
 package com.arsdigita.cms.portation.conversion;
 
+import com.arsdigita.cms.portation.conversion.lifecycle.LifecycleConversion;
+import com.arsdigita.cms.portation.conversion.lifecycle.LifecycleDefinitionConversion;
+import com.arsdigita.cms.portation.conversion.lifecycle.PhaseConversion;
+import com.arsdigita.cms.portation.conversion.lifecycle.PhaseDefinitionConversion;
 import com.arsdigita.portation.AbstractConverter;
 
 /**
@@ -47,6 +51,10 @@ public class CmsConverter extends AbstractConverter {
      */
     @Override
     public void startConversions() {
+        PhaseDefinitionConversion.getInstance().convertAll();
+        LifecycleDefinitionConversion.getInstance().convertAll();
+        LifecycleConversion.getInstance().convertAll();
+        PhaseConversion.getInstance().convertAll();
 
     }
 }
