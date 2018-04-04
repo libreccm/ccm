@@ -43,6 +43,11 @@ public class Lifecycle implements Portable {
     @JsonIgnore
     private List<Phase> phases;
 
+    /**
+     * Constructor for the ng-object.
+     *
+     * @param trunkLifecycle the trunk object
+     */
     public Lifecycle(final com.arsdigita.cms.lifecycle.Lifecycle
                              trunkLifecycle) {
         this.lifecycleId = trunkLifecycle.getID().longValue();

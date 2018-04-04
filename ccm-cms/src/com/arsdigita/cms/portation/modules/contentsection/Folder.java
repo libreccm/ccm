@@ -31,6 +31,11 @@ public class Folder extends Category {
     private ContentSection section;
     private FolderType type;
 
+    /**
+     * Constructor for the ng-object.
+     *
+     * @param trunkFolder the trunk object
+     */
     public Folder(final com.arsdigita.cms.Folder trunkFolder) {
         super(new CategoryInformation(
                 trunkFolder.getDisplayName(),
@@ -43,6 +48,7 @@ public class Folder extends Category {
                 false,
                 0)
         );
+        this.type = FolderType.DOCUMENTS_FOLDER;
 
         //this.section
         //this.type

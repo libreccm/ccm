@@ -38,7 +38,7 @@ import java.util.UUID;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 2/21/18
  */
-public class ContentItem extends CcmObject implements Portable {
+public class ContentItem extends CcmObject {
     private String itemUuid;
     private LocalizedString name;
     private LocalizedString title;

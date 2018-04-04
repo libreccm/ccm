@@ -36,7 +36,7 @@ import java.util.Locale;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 2/21/18
  */
-public class Asset extends CcmObject implements Portable {
+public class Asset extends CcmObject {
     @JsonIgnore
     private List<ItemAttachment<?>> itemAttachments;
     private LocalizedString title;

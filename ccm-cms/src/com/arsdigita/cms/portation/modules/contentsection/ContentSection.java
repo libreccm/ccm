@@ -47,13 +47,18 @@ public class ContentSection extends CcmApplication {
     @JsonIdentityReference(alwaysAsId = true)
     private List<Role> roles;
     private Locale defaultLocale;
-    @JsonIgnore
+    @JsonIdentityReference(alwaysAsId = true)
     private List<ContentType> contentTypes;
     @JsonIdentityReference(alwaysAsId = true)
     private List<LifecycleDefinition> lifecycleDefinitions;
     @JsonIdentityReference(alwaysAsId = true)
     private List<Workflow> workflowTemplates;
 
+    /**
+     * Constructor for the ng-object.
+     *
+     * @param trunkContentSection the trunk object
+     */
     public ContentSection(final com.arsdigita.cms.ContentSection
                                   trunkContentSection) {
         super(trunkContentSection);

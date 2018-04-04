@@ -26,6 +26,7 @@ import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 import com.arsdigita.portation.modules.core.workflow.Workflow;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Locale;
 
@@ -35,7 +36,7 @@ import java.util.Locale;
  */
 public class ContentType extends CcmObject implements Portable {
     private String contentItemClass;
-    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIgnore
     private ContentSection contentSection;
     private LocalizedString label;
     private LocalizedString description;
@@ -47,6 +48,11 @@ public class ContentType extends CcmObject implements Portable {
     @JsonIdentityReference(alwaysAsId = true)
     private Workflow defaultWorkflow;
 
+    /**
+     * Constructor for the ng-object.
+     *
+     * @param trunkContentType the trunk object
+     */
     public ContentType(final com.arsdigita.cms.ContentType trunkContentType) {
         super(trunkContentType);
 

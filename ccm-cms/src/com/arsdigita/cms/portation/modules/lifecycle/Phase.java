@@ -40,6 +40,11 @@ public class Phase implements Portable {
     @JsonIdentityReference(alwaysAsId = true)
     private PhaseDefinition phaseDefinition;
 
+    /**
+     * Constructor for the ng-object.
+     *
+     * @param trunkPhase the trunk object
+     */
     public Phase(final com.arsdigita.cms.lifecycle.Phase trunkPhase) {
         this.phaseId = trunkPhase.getID().longValue();
 

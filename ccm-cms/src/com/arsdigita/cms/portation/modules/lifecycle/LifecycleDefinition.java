@@ -39,6 +39,11 @@ public class LifecycleDefinition implements Portable {
     @JsonIdentityReference(alwaysAsId = true)
     private List<PhaseDefinition> phaseDefinitions;
 
+    /**
+     * Constructor for the ng-object.
+     *
+     * @param trunkLifecycleDefinition the trunk object
+     */
     public LifecycleDefinition(final com.arsdigita.cms.lifecycle
             .LifecycleDefinition trunkLifecycleDefinition) {
         this.definitionId = trunkLifecycleDefinition.getID().longValue();

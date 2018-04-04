@@ -65,7 +65,7 @@ public class Domain extends CcmObject implements Portable {
     private List<DomainOwnership> owners;
 
 
-    public Domain(DataObject trunkDomain) {
+    public Domain(final DataObject trunkDomain) {
         super((String) trunkDomain.get("key") + "_DName");
 
         this.domainKey = (String) trunkDomain.get("key");

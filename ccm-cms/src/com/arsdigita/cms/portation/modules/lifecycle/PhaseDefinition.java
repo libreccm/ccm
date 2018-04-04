@@ -36,6 +36,11 @@ public class PhaseDefinition implements Portable {
     private long defaultDuration;
     private String defaultListener;
 
+    /**
+     * Constructor for the ng-object.
+     *
+     * @param trunkPhaseDefinition the trunk object
+     */
     public PhaseDefinition(final com.arsdigita.cms.lifecycle.PhaseDefinition
                                    trunkPhaseDefinition) {
         this.definitionId = trunkPhaseDefinition.getID().longValue();
