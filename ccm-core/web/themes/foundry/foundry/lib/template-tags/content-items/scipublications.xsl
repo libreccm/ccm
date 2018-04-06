@@ -675,9 +675,9 @@
                 <xsl:with-param name="contentitem-tree"
                                 tunnel="yes"
                                 select="$contentitem-tree/collectedVolume"/>
-		<xsl:with-param name="href"
-				tunnel="yes"
-				select="foundry:generate-contentitem-link($contentitem-tree/collectedVolume/@oid)" />
+                <xsl:with-param name="href"
+                                tunnel="yes"
+                                select="foundry:generate-contentitem-link($contentitem-tree/collectedVolume/@oid)" />
             </xsl:apply-templates>
         </xsl:if>
     </xsl:template>
@@ -769,8 +769,8 @@
                                 tunnel="yes"
                                 select="$contentitem-tree/proceedings"/>
                 <xsl:with-param name="href"
-                		        tunnel="yes"
-                        		select="foundry:generate-contentitem-link($contentitem-tree/proceedings/@oid)" />
+                                tunnel="yes"
+                                select="foundry:generate-contentitem-link($contentitem-tree/proceedings/@oid)" />
             </xsl:apply-templates>
         </xsl:if>
     </xsl:template>
@@ -780,7 +780,7 @@
 
         <xsl:if test="$contentitem-tree/proceedings">
             <xsl:apply-templates />
-       </xsl:if>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="content-item-layout//scipublications//articles">
@@ -834,6 +834,9 @@
                 <xsl:with-param name="contentitem-tree"
                                 tunnel="yes"
                                 select="."/>
+                <xsl:with-param name="href"
+                                tunnel="yes"
+                                select="concat($context-prefix, '/redirect?oid=', ./@oid)"/>
             </xsl:apply-templates>
         </xsl:for-each>
     </xsl:template>
