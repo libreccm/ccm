@@ -732,10 +732,14 @@
         <xsl:value-of select="$contentitem-tree/placeOfConference"/>
     </xsl:template>
 
-    <xsl:template match="content-item-layout//scipublications//date-from-conference">
+    <xsl:template match="content-item-layout//scipublications//date-from-of-conference">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
 
-        <xsl:value-of select="$contentitem-tree/dateFromOfConference"/>
+        <xsl:call-template name="foundry:format-date">
+            <xsl:with-param name="date-elem"
+                            select="$contentitem-tree/dateFromOfConference"/>
+            <xsl:with-param name="date-format" select="./date-format"/>
+        </xsl:call-template>
     </xsl:template>
 
     <xsl:template match="content-item-layout//scipublications//if-date-from-of-conference">
@@ -746,10 +750,14 @@
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="content-item-layout//scipublications//date-to-conference">
+    <xsl:template match="content-item-layout//scipublications//date-to-of-conference">
         <xsl:param name="contentitem-tree" tunnel="yes"/>
 
-        <xsl:value-of select="$contentitem-tree/dateToOfConference"/>
+        <xsl:call-template name="foundry:format-date">
+            <xsl:with-param name="date-elem"
+                            select="$contentitem-tree/dateToOfConference"/>
+            <xsl:with-param name="date-format" select="./date-format"/>
+        </xsl:call-template>
     </xsl:template>
 
     <xsl:template match="content-item-layout//scipublications//if-date-to-of-conference">
