@@ -64,7 +64,11 @@ public class Domain extends CcmObject implements Portable {
     @JsonIgnore
     private List<DomainOwnership> owners;
 
-
+    /**
+     * Constructor for the ng object.
+     *
+     * @param trunkDomain the trunk object
+     */
     public Domain(final DataObject trunkDomain) {
         super((String) trunkDomain.get("key") + "_DName");
 

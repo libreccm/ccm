@@ -18,6 +18,7 @@
  */
 package com.arsdigita.cms.portation.modules.contenttypes;
 
+import com.arsdigita.cms.ItemCollection;
 import com.arsdigita.cms.portation.conversion.NgCmsCollection;
 import com.arsdigita.cms.portation.modules.contentsection.ContentItem;
 import com.arsdigita.portation.Portable;
@@ -25,6 +26,7 @@ import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
@@ -49,29 +51,39 @@ public class Event extends ContentItem implements Portable {
     public Event(final com.arsdigita.cms.contenttypes.Event trunkEvent) {
         super(trunkEvent);
 
-        final Locale locale = Locale.getDefault();
         this.text = new LocalizedString();
-        this.text.addValue(locale, trunkEvent.getTextAsset().getText());
-
         this.startDate = trunkEvent.getStartDate();
         this.endDate = trunkEvent.getEndDate();
-
         this.eventDate = new LocalizedString();
-        this.eventDate.addValue(locale, trunkEvent.getEventDate());
-
         this.location = new LocalizedString();
-        this.location.addValue(locale, trunkEvent.getLocation());
-
         this.mainContributor = new LocalizedString();
-        this.mainContributor.addValue(locale, trunkEvent.getMainContributor());
-
         this.eventType = new LocalizedString();
-        this.eventType.addValue(locale, trunkEvent.getEventType());
-
         this.mapLink = trunkEvent.getMapLink();
-
         this.cost = new LocalizedString();
-        this.cost.addValue(locale, trunkEvent.getCost());
+
+        final ItemCollection languageSets = Objects.requireNonNull(trunkEvent
+                .getContentBundle())
+                .getInstances();
+        while (languageSets.next()) {
+            final Locale language = new Locale(languageSets.getLanguage());
+            final com.arsdigita.cms.contenttypes.Event languageItem =
+                    ((com.arsdigita.cms.contenttypes.Event) languageSets
+                            .getContentItem());
+
+            addName(language, languageItem.getName());
+            addTitle(language, languageItem.getTitle());
+            addDescription(language, languageItem.getDescription());
+
+            this.text.addValue(language, languageItem.getTextAsset().getText());
+
+            this.eventDate.addValue(language, languageItem.getEventDate());
+            this.location.addValue(language, languageItem.getLocation());
+            this.mainContributor.addValue(language, languageItem
+                    .getMainContributor());
+            this.eventType.addValue(language, languageItem.getEventType());
+
+            this.cost.addValue(language, languageItem.getCost());
+        }
 
         NgCmsCollection.events.put(this.getObjectId(), this);
     }

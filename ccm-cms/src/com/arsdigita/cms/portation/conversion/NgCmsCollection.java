@@ -18,6 +18,8 @@
  */
 package com.arsdigita.cms.portation.conversion;
 
+import com.arsdigita.cms.portation.modules.assets.BinaryAsset;
+import com.arsdigita.cms.portation.modules.assets.LegalMetadata;
 import com.arsdigita.cms.portation.modules.contentsection.Asset;
 import com.arsdigita.cms.portation.modules.contentsection.AttachmentList;
 import com.arsdigita.cms.portation.modules.contentsection.ContentItem;
@@ -38,6 +40,8 @@ import java.util.Map;
  */
 public class NgCmsCollection {
     public static Map<Long, Asset> assets = new HashMap<>();
+    public static Map<Long, BinaryAsset> binaryAssets = new HashMap<>();
+    public static Map<Long, LegalMetadata> legalMetadatas = new HashMap<>();
     public static Map<Long, ItemAttachment> itemAttachments = new HashMap<>();
     public static Map<Long, AttachmentList> attachmentLists = new HashMap<>();
     public static Map<Long, ContentItem> contentItems = new HashMap<>();
@@ -51,6 +55,7 @@ public class NgCmsCollection {
     public static Map<Long, LifecycleDefinition> lifecycleDefinitions = new
             HashMap<>();
     public static Map<Long, PhaseDefinition> phaseDefinitions = new HashMap<>();
+
 
     /**
      * Private constructor to prevent the instantiation of this class.

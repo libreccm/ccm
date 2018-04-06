@@ -19,7 +19,7 @@
 package com.arsdigita.cms.portation.modules.contentsection;
 
 import com.arsdigita.cms.portation.conversion.NgCmsCollection;
-import com.arsdigita.portation.Portable;
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -52,12 +52,29 @@ public class Asset extends CcmObject {
         this.itemAttachments = new ArrayList<>();
 
         this.title = new LocalizedString();
-        final Locale locale = Locale.getDefault();
-        title.addValue(locale, (String) trunkAsset.get("name"));
+        final Locale language = new Locale(trunkAsset.getLanguage());
+        this.title.addValue(language, trunkAsset.getName());
 
         NgCmsCollection.assets.put(this.getObjectId(), this);
     }
 
+    /**
+     * Specific constructor for subclass SideNews.
+     *
+     * @param title The title of this asset
+     * @param displayName The display name as the {@link CcmObject}
+     */
+    public Asset(final String title, final String displayName) {
+        super(displayName);
+
+        this.itemAttachments = new ArrayList<>();
+
+        this.title = new LocalizedString();
+        final Locale language = Locale.getDefault();
+        this.title.addValue(language, title);
+
+        NgCmsCollection.assets.put(this.getObjectId(), this);
+    }
 
     public List<ItemAttachment<?>> getItemAttachments() {
         return itemAttachments;
@@ -82,5 +99,9 @@ public class Asset extends CcmObject {
 
     public void setTitle(final LocalizedString title) {
         this.title = title;
+    }
+
+    public void addTitle(final Locale language, final String title) {
+        this.title.addValue(language, title);
     }
 }

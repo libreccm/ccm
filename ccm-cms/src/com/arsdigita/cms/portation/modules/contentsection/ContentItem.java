@@ -21,7 +21,6 @@ package com.arsdigita.cms.portation.modules.contentsection;
 import com.arsdigita.cms.portation.conversion.NgCmsCollection;
 import com.arsdigita.cms.portation.modules.contentsection.util.ContentItemVersionMapper;
 import com.arsdigita.cms.portation.modules.lifecycle.Lifecycle;
-import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 import com.arsdigita.portation.modules.core.workflow.Workflow;
@@ -72,10 +71,7 @@ public class ContentItem extends CcmObject {
         this.name = new LocalizedString();
         this.title = new LocalizedString();
         this.description = new LocalizedString();
-        final Locale locale = trunkContentItem.getLocale().toJavaLocale();
-        name.addValue(locale, trunkContentItem.getDisplayName());
-        title.addValue(locale, trunkContentItem.getName());
-        description.addValue(locale, trunkContentItem.getAdditionalInfo());
+        // localized string-entries will be set in subclasses e.g. Article, News
 
         //this.contentType
         this.version = ContentItemVersionMapper
@@ -113,12 +109,8 @@ public class ContentItem extends CcmObject {
         this.name = name;
     }
 
-    public ContentType getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(final ContentType contentType) {
-        this.contentType = contentType;
+    public void addName(final Locale language, final String name) {
+        this.name.addValue(language, name);
     }
 
     public LocalizedString getTitle() {
@@ -129,12 +121,28 @@ public class ContentItem extends CcmObject {
         this.title = title;
     }
 
+    public void addTitle(final Locale language, final String title) {
+        this.title.addValue(language, title);
+    }
+
     public LocalizedString getDescription() {
         return description;
     }
 
     public void setDescription(final LocalizedString description) {
         this.description = description;
+    }
+
+    public void addDescription(final Locale language, final String description) {
+        this.name.addValue(language, description);
+    }
+
+    public ContentType getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(final ContentType contentType) {
+        this.contentType = contentType;
     }
 
     public ContentItemVersion getVersion() {

@@ -18,6 +18,8 @@
  */
 package com.arsdigita.cms.portation.modules.contenttypes;
 
+import com.arsdigita.cms.ItemCollection;
+import com.arsdigita.cms.contenttypes.NewsItem;
 import com.arsdigita.cms.portation.conversion.NgCmsCollection;
 import com.arsdigita.cms.portation.modules.contentsection.ContentItem;
 import com.arsdigita.portation.Portable;
@@ -25,6 +27,7 @@ import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
@@ -40,16 +43,27 @@ public class News extends ContentItem implements Portable {
      *
      * @param trunkNews the trunk object
      */
-    public News(final com.arsdigita.cms.contenttypes.NewsItem trunkNews) {
+    public News(final NewsItem trunkNews) {
         super(trunkNews);
 
-        final Locale locale = Locale.getDefault();
         this.text = new LocalizedString();
-        this.text.addValue(locale, trunkNews.getTextAsset().getText());
-
         this.releaseDate = trunkNews.getLaunchDate();
-
         this.homepage = trunkNews.isHomepage();
+
+        final ItemCollection languageSets = Objects.requireNonNull(trunkNews
+                .getContentBundle())
+                .getInstances();
+        while (languageSets.next()) {
+            final Locale language = new Locale(languageSets.getLanguage());
+            final NewsItem languageItem = (NewsItem) languageSets
+                    .getContentItem();
+
+            addName(language, languageItem.getName());
+            addTitle(language, languageItem.getTitle());
+            addDescription(language, languageItem.getDescription());
+
+            this.text.addValue(language, languageItem.getTextAsset().getText());
+        }
 
         NgCmsCollection.news.put(this.getObjectId(), this);
     }

@@ -126,7 +126,7 @@ public abstract class BinaryAsset extends Asset {
      *
      * @return the Blob content
      */
-    protected abstract byte[] getContent();
+    public abstract byte[] getContent();
 
     /**
      * All derived classes must implement this method.  This method sets

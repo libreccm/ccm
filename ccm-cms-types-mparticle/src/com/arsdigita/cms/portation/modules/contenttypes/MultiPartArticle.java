@@ -18,6 +18,7 @@
  */
 package com.arsdigita.cms.portation.modules.contenttypes;
 
+import com.arsdigita.cms.ItemCollection;
 import com.arsdigita.cms.portation.conversion.NgCmsCollection;
 import com.arsdigita.cms.portation.modules.contentsection.ContentItem;
 import com.arsdigita.portation.Portable;
@@ -27,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
@@ -46,11 +48,24 @@ public class MultiPartArticle extends ContentItem implements Portable {
             .MultiPartArticle trunkMultiPartArticle) {
         super(trunkMultiPartArticle);
 
-        final Locale locale = Locale.getDefault();
         this.summary = new LocalizedString();
-        this.summary.addValue(locale, trunkMultiPartArticle.getSummary());
-
         this.sections = new ArrayList<>();
+
+        final ItemCollection languageSets = Objects.requireNonNull(
+                trunkMultiPartArticle.getContentBundle())
+                                     .getInstances();
+        while (languageSets.next()) {
+            final Locale language = new Locale(languageSets.getLanguage());
+            final com.arsdigita.cms.contenttypes.MultiPartArticle
+                    languageItem = (com.arsdigita.cms.contenttypes
+                    .MultiPartArticle) languageSets.getContentItem();
+
+            addName(language, languageItem.getName());
+            addTitle(language, languageItem.getTitle());
+            addDescription(language, languageItem.getDescription());
+
+            this.summary.addValue(language, languageItem.getSummary());
+        }
 
         NgCmsCollection.multiPartArticles.put(this.getObjectId(), this);
     }
@@ -69,5 +84,13 @@ public class MultiPartArticle extends ContentItem implements Portable {
 
     public void setSections(final List<MultiPartArticleSection> sections) {
         this.sections = sections;
+    }
+
+    public void addSection(final MultiPartArticleSection section) {
+        this.sections.add(section);
+    }
+
+    public void removeSection(final MultiPartArticleSection section) {
+        this.sections.remove(section);
     }
 }

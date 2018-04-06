@@ -66,7 +66,11 @@ public class Category extends CcmObject implements Portable {
     private Category parentCategory;
     private long categoryOrder;
 
-
+    /**
+     * Constructor for the ng-object.
+     *
+     * @param trunkCategory the trunk object
+     */
     public Category(final com.arsdigita.categorization.Category trunkCategory) {
         super(trunkCategory);
 
@@ -109,8 +113,11 @@ public class Category extends CcmObject implements Portable {
         NgCoreCollection.categories.put(this.getObjectId(), this);
     }
 
-    // specific constructor for subclasses of category
-    // e.g. Folder
+    /**
+     * Specific constructor for subclasses of category e.g. Folder
+     *
+     * @param categoryInformation the trunk object
+     */
     public Category(final CategoryInformation categoryInformation) {
         super(categoryInformation.getDisplayName());
 
