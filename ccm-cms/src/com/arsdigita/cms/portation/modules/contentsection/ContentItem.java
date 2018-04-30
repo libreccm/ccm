@@ -71,7 +71,8 @@ public class ContentItem extends CcmObject {
         this.name = new LocalizedString();
         this.title = new LocalizedString();
         this.description = new LocalizedString();
-        // localized string-entries will be set in subclasses e.g. Article, News
+        // values for localized string-entries will be added in subclasses
+        // e.g. Article, News
 
         //this.contentType
         this.version = ContentItemVersionMapper
@@ -86,9 +87,12 @@ public class ContentItem extends CcmObject {
 
         this.creationDate = trunkContentItem.getCreationDate();
         this.lastModified = trunkContentItem.getLastModifiedDate();
-        this.creationUserName = trunkContentItem.getCreationUser().getName();
+        this.creationUserName = trunkContentItem.getCreationUser() != null
+                ? trunkContentItem.getCreationUser().getName()
+                : "";
         this.lastModifyingUserName = trunkContentItem.getLastModifiedUser()
-                .getName();
+                != null ? trunkContentItem.getLastModifiedUser().getName()
+                        : "";
 
         NgCmsCollection.contentItems.put(this.getObjectId(), this);
     }

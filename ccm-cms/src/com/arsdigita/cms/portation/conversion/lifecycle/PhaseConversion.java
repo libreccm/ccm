@@ -21,7 +21,6 @@ package com.arsdigita.cms.portation.conversion.lifecycle;
 import com.arsdigita.cms.portation.conversion.NgCmsCollection;
 import com.arsdigita.cms.portation.modules.lifecycle.Lifecycle;
 import com.arsdigita.cms.portation.modules.lifecycle.Phase;
-import com.arsdigita.cms.portation.modules.lifecycle.PhaseDefinition;
 import com.arsdigita.portation.AbstractConversion;
 import com.arsdigita.portation.cmd.ExportLogger;
 
@@ -66,34 +65,30 @@ public class PhaseConversion extends AbstractConversion {
     private void createPhasesAndSetAssociations(final List<com.arsdigita.cms
             .lifecycle.Phase> trunkPhases) {
         int processed = 0;
-
         for (com.arsdigita.cms.lifecycle.Phase trunkPhase : trunkPhases) {
             // create phase
             Phase phase = new Phase(trunkPhase);
 
             // set phase definition
-            long phaseDefinitionId = trunkPhase
-                    .getPhaseDefinition()
-                    .getID()
-                    .longValue();
             phase.setPhaseDefinition(NgCmsCollection
                     .phaseDefinitions
-                    .get(phaseDefinitionId));
+                    .get(trunkPhase
+                            .getPhaseDefinition()
+                            .getID()
+                            .longValue()));
 
             // set lifecycle and opposed association
-            long lifecycleId = trunkPhase
-                    .getLifecycle()
-                    .getID()
-                    .longValue();
             Lifecycle lifecycle = NgCmsCollection
                     .lifecycles
-                    .get(lifecycleId);
+                    .get(trunkPhase
+                            .getLifecycle()
+                            .getID()
+                            .longValue());
             phase.setLifecycle(lifecycle);
             lifecycle.addPhase(phase);
 
             processed++;
         }
-
         ExportLogger.created("phases", processed);
     }
 

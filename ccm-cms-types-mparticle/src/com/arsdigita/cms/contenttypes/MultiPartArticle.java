@@ -22,15 +22,19 @@ import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.cms.contenttypes.ui.mparticle.ArticleSectionPanel;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 
+import com.arsdigita.persistence.Session;
+import com.arsdigita.persistence.SessionManager;
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -293,4 +297,28 @@ public class MultiPartArticle extends ContentPage {
         return generators;
     }
 
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all objects
+     */
+    public static List<MultiPartArticle> getAllObjects() {
+        List<MultiPartArticle> objectList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(session.retrieve(
+                MultiPartArticle.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            MultiPartArticle object = (MultiPartArticle) collection
+                    .getDomainObject();
+            if (object != null) {
+                objectList.add(object);
+            }
+        }
+
+        collection.close();
+        return objectList;
+    }
 }

@@ -21,7 +21,6 @@ package com.arsdigita.cms.portation.conversion.lifecycle;
 import com.arsdigita.cms.lifecycle.PhaseDefinitionCollection;
 import com.arsdigita.cms.portation.conversion.NgCmsCollection;
 import com.arsdigita.cms.portation.modules.lifecycle.LifecycleDefinition;
-import com.arsdigita.cms.portation.modules.lifecycle.PhaseDefinition;
 import com.arsdigita.portation.AbstractConversion;
 import com.arsdigita.portation.cmd.ExportLogger;
 
@@ -69,9 +68,9 @@ public class LifecycleDefinitionConversion extends AbstractConversion {
     private void createLifecycleDefinitionsAndSetAssociations(final List<com
             .arsdigita.cms.lifecycle.LifecycleDefinition> trunkLifecycleDefinitions) {
         int processed = 0;
-
         for (com.arsdigita.cms.lifecycle.LifecycleDefinition
                 trunkLifecycleDefinition : trunkLifecycleDefinitions) {
+
             // create lifecycle definition
             LifecycleDefinition lifecycleDefinition = new LifecycleDefinition
                     (trunkLifecycleDefinition);
@@ -79,23 +78,18 @@ public class LifecycleDefinitionConversion extends AbstractConversion {
             // set phase definitions
             PhaseDefinitionCollection phaseDefinitionCollection =
                     trunkLifecycleDefinition.getPhaseDefinitions();
-
             while (phaseDefinitionCollection.next()) {
-                long phaseDefinitionId = phaseDefinitionCollection
-                        .getPhaseDefinition()
-                        .getID()
-                        .longValue();
-
-                PhaseDefinition phaseDefinition = NgCmsCollection
+                lifecycleDefinition.addPhaseDefinition(NgCmsCollection
                         .phaseDefinitions
-                        .get(phaseDefinitionId);
-
-                lifecycleDefinition.addPhaseDefinition(phaseDefinition);
+                        .get(phaseDefinitionCollection
+                                .getPhaseDefinition()
+                                .getID()
+                                .longValue()));
             }
+            phaseDefinitionCollection.close();
 
             processed++;
         }
-
         ExportLogger.created("lifecycle definitions", processed);
     }
 

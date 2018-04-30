@@ -19,7 +19,7 @@
 package com.arsdigita.cms.portation.modules.assets;
 
 import com.arsdigita.cms.ImageAsset;
-import com.arsdigita.cms.portation.convertion.NgCmsCollection;
+import com.arsdigita.cms.portation.conversion.NgCmsImageCollection;
 import com.arsdigita.portation.Portable;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
@@ -46,7 +46,7 @@ public class Image extends BinaryAsset implements Portable {
 
         //this.legalMetaData
 
-        NgCmsCollection.images.put(this.getObjectId(), this);
+        NgCmsImageCollection.images.put(this.getObjectId(), this);
     }
 
     public long getWidth() {

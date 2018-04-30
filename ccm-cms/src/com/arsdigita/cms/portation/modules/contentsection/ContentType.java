@@ -26,7 +26,6 @@ import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 import com.arsdigita.portation.modules.core.workflow.Workflow;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Locale;
 
@@ -36,12 +35,12 @@ import java.util.Locale;
  */
 public class ContentType extends CcmObject implements Portable {
     private String contentItemClass;
-    @JsonIgnore
+    @JsonIdentityReference(alwaysAsId = true)
     private ContentSection contentSection;
     private LocalizedString label;
     private LocalizedString description;
     private String ancestors;
-    private String descendents;
+    private String descendants;
     private ContentTypeMode mode;
     @JsonIdentityReference(alwaysAsId = true)
     private LifecycleDefinition defaultLifecycle;
@@ -67,10 +66,11 @@ public class ContentType extends CcmObject implements Portable {
         description.addValue(locale, trunkContentType.getDescription());
 
         this.ancestors = trunkContentType.getAncestors();
-        this.descendents = trunkContentType.getDescendants();
+        this.descendants = trunkContentType.getDescendants();
 
         this.mode = ContentTypeModeMapper
                 .mapContentTypeMode(trunkContentType.getMode());
+
         //this.defaultLifecycle
         //this.defaultWorkflow
 
@@ -117,12 +117,12 @@ public class ContentType extends CcmObject implements Portable {
         this.ancestors = ancestors;
     }
 
-    public String getDescendents() {
-        return descendents;
+    public String getDescendants() {
+        return descendants;
     }
 
-    public void setDescendents(final String descendents) {
-        this.descendents = descendents;
+    public void setDescendants(final String descendants) {
+        this.descendants = descendants;
     }
 
     public ContentTypeMode getMode() {

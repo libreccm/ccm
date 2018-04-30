@@ -23,6 +23,7 @@ import com.arsdigita.cms.lifecycle.Lifecycle;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.util.SecurityConstants;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainCollectionIterator;
 import com.arsdigita.kernel.ACSObject;
@@ -44,8 +45,10 @@ import com.arsdigita.util.UncheckedWrapperException;
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * This class represents folders for which to organize items in a tree hierarchy.
@@ -855,5 +858,30 @@ public class Folder extends ContentItem {
             throw new IllegalArgumentException("Invalid path syntax. Valid syntax: "
                                                + "[contentsection:]/path/to/folder'");
         }        
+    }
+
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all objects
+     */
+    public static List<Folder> getAllObjects() {
+        List<Folder> objectList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(session.retrieve(
+                Folder.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            Folder object = (Folder) collection
+                    .getDomainObject();
+            if (object != null) {
+                objectList.add(object);
+            }
+        }
+
+        collection.close();
+        return objectList;
     }
 }

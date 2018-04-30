@@ -49,17 +49,23 @@ public class PhaseDefinitionConversion extends AbstractConversion {
                 = com.arsdigita.cms.lifecycle.PhaseDefinition.getAllObjects();
 
         ExportLogger.converting("phase definitions");
+        createPhaseDefinitionsAndSetAssociations(trunkPhaseDefinitions);
+
+        ExportLogger.newLine();
+    }
+
+    private void createPhaseDefinitionsAndSetAssociations(final List<com
+            .arsdigita.cms.lifecycle.PhaseDefinition> trunkPhaseDefinitions) {
         int processed = 0;
         for (com.arsdigita.cms.lifecycle.PhaseDefinition
                 trunkPhaseDefinition : trunkPhaseDefinitions) {
+
             // create phase definitions
             new PhaseDefinition(trunkPhaseDefinition);
 
             processed++;
         }
         ExportLogger.created("phase definitions", processed);
-
-        ExportLogger.newLine();
     }
 
     /**

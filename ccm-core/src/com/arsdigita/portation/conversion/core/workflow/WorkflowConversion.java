@@ -111,17 +111,18 @@ public class WorkflowConversion extends AbstractConversion {
 
         for (com.arsdigita.workflow.simple.Workflow trunkWorkflow :
                 trunkWorkflows) {
-            Workflow workflow = NgCoreCollection
-                    .workflows
-                    .get(trunkWorkflow.getID().longValue());
 
             // set template associations
             WorkflowTemplate trunkWorkflowTemplate = trunkWorkflow
                     .getWorkflowTemplate();
             if (trunkWorkflowTemplate != null) {
+                Workflow workflow = NgCoreCollection
+                        .workflows
+                        .get(trunkWorkflow.getID().longValue());
+
                 Workflow template = NgCoreCollection
-                    .workflows
-                    .get(trunkWorkflowTemplate.getID().longValue());
+                        .workflows
+                        .get(trunkWorkflowTemplate.getID().longValue());
                 workflow.setTemplate(template);
                 template.setAbstractWorkflow(true);
             } else

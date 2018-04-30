@@ -20,7 +20,6 @@ package com.arsdigita.cms.portation.conversion.lifecycle;
 
 import com.arsdigita.cms.portation.conversion.NgCmsCollection;
 import com.arsdigita.cms.portation.modules.lifecycle.Lifecycle;
-import com.arsdigita.cms.portation.modules.lifecycle.LifecycleDefinition;
 import com.arsdigita.portation.AbstractConversion;
 import com.arsdigita.portation.cmd.ExportLogger;
 
@@ -60,30 +59,29 @@ public class LifecycleConversion extends AbstractConversion {
      * Creates the equivalent ng-class of the {@code Lifecycle} and restores
      * the associations to other classes.
      *
-     * @param trunkLifecycles List of all {@link com.arsdigita.cms.lifecycle.Lifecycle}s
+     * @param trunkLifecycles List of all
+     *                        {@link com.arsdigita.cms.lifecycle.Lifecycle}s
      *                        from this old trunk-system.
      */
     private void createLifecyclesAndSetAssociations(final List<com.arsdigita
             .cms.lifecycle.Lifecycle> trunkLifecycles) {
         int processed = 0;
-
         for (com.arsdigita.cms.lifecycle.Lifecycle trunkLifecycle :
                 trunkLifecycles) {
+
             // create lifecycle
             Lifecycle lifecycle = new Lifecycle(trunkLifecycle);
 
             // set lifecycle definition
-            long lifecycleDefinitionId = trunkLifecycle
-                    .getLifecycleDefinition()
-                    .getID()
-                    .longValue();
             lifecycle.setLifecycleDefinition(NgCmsCollection
                     .lifecycleDefinitions
-                    .get(lifecycleDefinitionId));
+                    .get(trunkLifecycle
+                            .getLifecycleDefinition()
+                            .getID()
+                            .longValue()));
 
             processed++;
         }
-
         ExportLogger.created("lifecycles", processed);
     }
 

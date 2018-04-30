@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -75,9 +76,14 @@ public class CcmObject {
         NgCoreCollection.ccmObjects.put(this.objectId, this);
     }
 
-    // specific constructor for ldn-terms' domain and Asset SideNote
+    // specific constructor for ldn-terms' domain
     public CcmObject(final String displayName) {
-        this.objectId = ACSObject.generateID().longValue();
+        this(ACSObject.generateID(), displayName);
+    }
+
+    // specific constructor for sideNote asset and folders
+    public CcmObject(final BigDecimal objectId, final String displayName) {
+        this.objectId = objectId.longValue();
 
         this.uuid = UUID.randomUUID().toString();
         this.displayName = displayName;

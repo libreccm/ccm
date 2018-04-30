@@ -20,8 +20,8 @@ package com.arsdigita.cms.portation.modules.contentsection;
 
 import com.arsdigita.cms.portation.conversion.NgCmsCollection;
 import com.arsdigita.cms.portation.modules.lifecycle.LifecycleDefinition;
-import com.arsdigita.portation.modules.core.web.CcmApplication;
 import com.arsdigita.portation.modules.core.security.Role;
+import com.arsdigita.portation.modules.core.web.CcmApplication;
 import com.arsdigita.portation.modules.core.workflow.Workflow;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -44,10 +44,10 @@ public class ContentSection extends CcmApplication {
     private String itemResolverClass;
     private String templateResolverClass;
     private String xmlGeneratorClass;
-    @JsonIdentityReference(alwaysAsId = true)
-    private List<Role> roles;
     private Locale defaultLocale;
     @JsonIdentityReference(alwaysAsId = true)
+    private List<Role> roles;
+    @JsonIgnore
     private List<ContentType> contentTypes;
     @JsonIdentityReference(alwaysAsId = true)
     private List<LifecycleDefinition> lifecycleDefinitions;
@@ -74,11 +74,11 @@ public class ContentSection extends CcmApplication {
                 .getTemplateResolverClassName();
         this.xmlGeneratorClass = trunkContentSection.getXMLGeneratorClassName();
 
+        this.defaultLocale = (trunkContentSection.getDefaultLocale() != null)
+                ? trunkContentSection.getDefaultLocale().toJavaLocale()
+                : Locale.getDefault();
+
         this.roles = new ArrayList<>();
-
-        this.defaultLocale = trunkContentSection
-                .getDefaultLocale().toJavaLocale();
-
         this.contentTypes = new ArrayList<>();
         this.lifecycleDefinitions = new ArrayList<>();
         this.workflowTemplates = new ArrayList<>();

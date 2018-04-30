@@ -16,6 +16,7 @@ package com.arsdigita.cms.contentassets;
 
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.FileAsset;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.persistence.DataCollection;
@@ -26,8 +27,11 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
-import java.math.BigDecimal;
 import org.apache.log4j.Logger;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a FileAsset uploaded as one of N files attached to a content item
@@ -289,4 +293,28 @@ public class FileAttachment extends FileAsset {
         return s_config;
     }
 
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all objects
+     */
+    public static List<FileAttachment> getAllObjects() {
+        List<FileAttachment> objectList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(session.retrieve(
+                FileAttachment.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            FileAttachment object = (FileAttachment) collection
+                    .getDomainObject();
+            if (object != null) {
+                objectList.add(object);
+            }
+        }
+
+        collection.close();
+        return objectList;
+    }
 }

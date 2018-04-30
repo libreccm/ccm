@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.portation.conversion;
 
-import com.arsdigita.bebop.FormData;
 import com.arsdigita.cms.portation.modules.contenttypes.MultiPartArticle;
 import com.arsdigita.cms.portation.modules.contenttypes.MultiPartArticleSection;
 
@@ -29,7 +28,7 @@ import java.util.Map;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 4/3/18
  */
-public class NgCmsCollection {
+public class NgCmsMPArticleCollection {
     public static Map<Long, MultiPartArticle> multiPartArticles
             = new HashMap<>();
     public static Map<Long, MultiPartArticleSection> multiPartArticleSections
@@ -38,5 +37,5 @@ public class NgCmsCollection {
     /**
      * Private constructor to prevent the instantiation of this class.
      */
-    private NgCmsCollection() {}
+    private NgCmsMPArticleCollection() {}
 }

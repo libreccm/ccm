@@ -18,7 +18,9 @@
  */
 package com.arsdigita.cms;
 
+import com.arsdigita.cms.lifecycle.Lifecycle;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.formbuilder.PersistentForm;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.kernel.ACSObject;
@@ -29,6 +31,7 @@ import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.DataQueryDataCollectionAdapter;
 import com.arsdigita.persistence.FilterFactory;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Web;
@@ -889,4 +892,28 @@ public class ContentType extends ACSObject {
 
     }
 
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all objects
+     */
+    public static List<ContentType> getAllObjects() {
+        List<ContentType> objectList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(session.retrieve(
+                ContentType.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            ContentType object = (ContentType) collection
+                    .getDomainObject();
+            if (object != null) {
+                objectList.add(object);
+            }
+        }
+
+        collection.close();
+        return objectList;
+    }
 }

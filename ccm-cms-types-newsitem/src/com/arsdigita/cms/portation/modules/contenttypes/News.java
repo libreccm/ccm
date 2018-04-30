@@ -18,9 +18,10 @@
  */
 package com.arsdigita.cms.portation.modules.contenttypes;
 
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ItemCollection;
 import com.arsdigita.cms.contenttypes.NewsItem;
-import com.arsdigita.cms.portation.conversion.NgCmsCollection;
+import com.arsdigita.cms.portation.conversion.NgCmsNewsCollection;
 import com.arsdigita.cms.portation.modules.contentsection.ContentItem;
 import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
@@ -50,22 +51,27 @@ public class News extends ContentItem implements Portable {
         this.releaseDate = trunkNews.getLaunchDate();
         this.homepage = trunkNews.isHomepage();
 
-        final ItemCollection languageSets = Objects.requireNonNull(trunkNews
-                .getContentBundle())
-                .getInstances();
-        while (languageSets.next()) {
-            final Locale language = new Locale(languageSets.getLanguage());
-            final NewsItem languageItem = (NewsItem) languageSets
-                    .getContentItem();
+        final ContentBundle languageBundle = trunkNews
+                .getContentBundle();
+        if (languageBundle != null) {
+            final ItemCollection languageSets = languageBundle.getInstances();
+            while (languageSets.next()) {
+                final Locale language = new Locale(languageSets.getLanguage());
+                final NewsItem languageItem = (NewsItem) languageSets
+                        .getContentItem();
 
-            addName(language, languageItem.getName());
-            addTitle(language, languageItem.getTitle());
-            addDescription(language, languageItem.getDescription());
+                addName(language, languageItem.getName());
+                addTitle(language, languageItem.getTitle());
+                addDescription(language, languageItem.getDescription());
 
-            this.text.addValue(language, languageItem.getTextAsset().getText());
+                final String text = languageItem.getTextAsset() != null
+                        ? languageItem.getTextAsset().getText() : "";
+                this.text.addValue(language, text);
+            }
+            languageSets.close();
         }
 
-        NgCmsCollection.news.put(this.getObjectId(), this);
+        NgCmsNewsCollection.news.put(this.getObjectId(), this);
     }
 
     public LocalizedString getText() {

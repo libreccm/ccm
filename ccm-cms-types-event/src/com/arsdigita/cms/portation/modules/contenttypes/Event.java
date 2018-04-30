@@ -18,15 +18,15 @@
  */
 package com.arsdigita.cms.portation.modules.contenttypes;
 
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ItemCollection;
-import com.arsdigita.cms.portation.conversion.NgCmsCollection;
+import com.arsdigita.cms.portation.conversion.NgCmsEventCollection;
 import com.arsdigita.cms.portation.modules.contentsection.ContentItem;
 import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
@@ -61,31 +61,34 @@ public class Event extends ContentItem implements Portable {
         this.mapLink = trunkEvent.getMapLink();
         this.cost = new LocalizedString();
 
-        final ItemCollection languageSets = Objects.requireNonNull(trunkEvent
-                .getContentBundle())
-                .getInstances();
-        while (languageSets.next()) {
-            final Locale language = new Locale(languageSets.getLanguage());
-            final com.arsdigita.cms.contenttypes.Event languageItem =
-                    ((com.arsdigita.cms.contenttypes.Event) languageSets
-                            .getContentItem());
+        final ContentBundle languageBundle = trunkEvent.getContentBundle();
+        if (languageBundle != null) {
+            final ItemCollection languageSets = languageBundle.getInstances();
+            while (languageSets.next()) {
+                final Locale language = new Locale(languageSets.getLanguage());
+                final com.arsdigita.cms.contenttypes.Event languageItem =
+                        ((com.arsdigita.cms.contenttypes.Event) languageSets
+                                .getContentItem());
 
-            addName(language, languageItem.getName());
-            addTitle(language, languageItem.getTitle());
-            addDescription(language, languageItem.getDescription());
+                addName(language, languageItem.getName());
+                addTitle(language, languageItem.getTitle());
+                addDescription(language, languageItem.getDescription());
 
-            this.text.addValue(language, languageItem.getTextAsset().getText());
+                final String text = languageItem.getTextAsset() != null
+                        ? languageItem.getTextAsset().getText() : "";
+                this.text.addValue(language, text);
 
-            this.eventDate.addValue(language, languageItem.getEventDate());
-            this.location.addValue(language, languageItem.getLocation());
-            this.mainContributor.addValue(language, languageItem
-                    .getMainContributor());
-            this.eventType.addValue(language, languageItem.getEventType());
-
-            this.cost.addValue(language, languageItem.getCost());
+                this.eventDate.addValue(language, languageItem.getEventDate());
+                this.location.addValue(language, languageItem.getLocation());
+                this.mainContributor.addValue(language, languageItem
+                        .getMainContributor());
+                this.eventType.addValue(language, languageItem.getEventType());
+                this.cost.addValue(language, languageItem.getCost());
+            }
+            languageSets.close();
         }
 
-        NgCmsCollection.events.put(this.getObjectId(), this);
+        NgCmsEventCollection.events.put(this.getObjectId(), this);
     }
 
     public LocalizedString getText() {

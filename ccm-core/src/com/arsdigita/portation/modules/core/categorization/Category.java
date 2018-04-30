@@ -119,9 +119,10 @@ public class Category extends CcmObject implements Portable {
      * @param categoryInformation the trunk object
      */
     public Category(final CategoryInformation categoryInformation) {
-        super(categoryInformation.getDisplayName());
+        super(categoryInformation.getObjectId(),
+                categoryInformation.getDisplayName());
 
-        this.uniqueId = categoryInformation.getUniqueId();
+        this.uniqueId = categoryInformation.getObjectId().toString();
         this.name = categoryInformation.getName();
 
         this.title = categoryInformation.getTitle();

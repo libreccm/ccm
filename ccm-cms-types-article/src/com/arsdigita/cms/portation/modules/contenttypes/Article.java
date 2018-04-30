@@ -18,14 +18,14 @@
  */
 package com.arsdigita.cms.portation.modules.contenttypes;
 
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ItemCollection;
-import com.arsdigita.cms.portation.conversion.NgCmsCollection;
+import com.arsdigita.cms.portation.conversion.NgCmsArticleCollection;
 import com.arsdigita.cms.portation.modules.contentsection.ContentItem;
 import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
@@ -43,23 +43,29 @@ public class Article extends ContentItem implements Portable {
         super(trunkArticle);
 
         this.text = new LocalizedString();
-        final ItemCollection languageSets = Objects.requireNonNull(trunkArticle
-                .getContentBundle())
-                .getInstances();
-        while (languageSets.next()) {
-            final Locale language = new Locale(languageSets.getLanguage());
-            final com.arsdigita.cms.contenttypes.Article languageItem =
-                    (com.arsdigita.cms.contenttypes.Article) languageSets
-                            .getContentItem();
 
-            addName(language, languageItem.getName());
-            addTitle(language, languageItem.getTitle());
-            addDescription(language, languageItem.getDescription());
+        final ContentBundle languageBundle = trunkArticle.getContentBundle();
+        if (languageBundle != null) {
+            final ItemCollection languageSets = languageBundle.getInstances();
+            while (languageSets.next()) {
+                final Locale language = new Locale(languageSets.getLanguage());
+                final com.arsdigita.cms.contenttypes.Article languageItem =
+                        (com.arsdigita.cms.contenttypes.Article) languageSets
+                                .getContentItem();
 
-            this.text.addValue(language, languageItem.getTextAsset().getText());
+                addName(language, languageItem.getName());
+                addTitle(language, languageItem.getTitle());
+                addDescription(language, languageItem.getDescription());
+
+                final String text = languageItem.getTextAsset() != null
+                        ? languageItem.getTextAsset().getText()
+                        : "";
+                this.text.addValue(language, text);
+            }
+            languageSets.close();
         }
 
-        NgCmsCollection.articles.put(this.getObjectId(), this);
+        NgCmsArticleCollection.articles.put(this.getObjectId(), this);
     }
 
     public LocalizedString getText() {

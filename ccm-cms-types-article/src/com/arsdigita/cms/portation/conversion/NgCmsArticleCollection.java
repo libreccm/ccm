@@ -16,9 +16,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.arsdigita.cms.portation.convertion;
+package com.arsdigita.cms.portation.conversion;
 
-import com.arsdigita.cms.portation.modules.assets.SideNote;
+import com.arsdigita.cms.portation.modules.contenttypes.Article;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,11 +27,11 @@ import java.util.Map;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 4/3/18
  */
-public class NgCmsCollection {
-    public static Map<Long, SideNote> sideNotes = new HashMap<>();
+public class NgCmsArticleCollection {
+    public static Map<Long, Article> articles = new HashMap<>();
 
     /**
      * Private constructor to prevent the instantiation of this class.
      */
-    private NgCmsCollection() {}
+    private NgCmsArticleCollection() {}
 }

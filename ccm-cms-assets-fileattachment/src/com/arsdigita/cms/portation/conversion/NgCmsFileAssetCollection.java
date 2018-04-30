@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package com.arsdigita.cms.portation.convertion;
+package com.arsdigita.cms.portation.conversion;
 
 import com.arsdigita.cms.portation.modules.assets.FileAsset;
 
@@ -27,11 +27,11 @@ import java.util.Map;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 4/3/18
  */
-public class NgCmsCollection {
+public class NgCmsFileAssetCollection {
     public static Map<Long, FileAsset> fileAssets = new HashMap<>();
 
     /**
      * Private constructor to prevent the instantiation of this class.
      */
-    private NgCmsCollection() {}
+    private NgCmsFileAssetCollection() {}
 }

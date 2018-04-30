@@ -18,8 +18,6 @@
  */
 package com.arsdigita.portation.cmd;
 
-import com.arsdigita.portation.conversion.CoreConverter;
-
 import java.lang.reflect.Method;
 
 /**

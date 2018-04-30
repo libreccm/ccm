@@ -31,6 +31,7 @@ import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.lifecycle.LifecycleDefinitionCollection;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.globalization.Locale;
 import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.permissions.PermissionService;
@@ -42,6 +43,7 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.FilterFactory;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -53,6 +55,8 @@ import com.arsdigita.workflow.simple.WorkflowTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 // import org.apache.log4j.Level;
@@ -1337,4 +1341,28 @@ public class ContentSection extends Application {
         return URL.SERVLET_DIR + "/content-section";
     }
 
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all objects
+     */
+    public static List<ContentSection> getAllObjects() {
+        List<ContentSection> objectList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(session.retrieve(
+                ContentSection.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            ContentSection object = (ContentSection) collection
+                    .getDomainObject();
+            if (object != null) {
+                objectList.add(object);
+            }
+        }
+
+        collection.close();
+        return objectList;
+    }
 }

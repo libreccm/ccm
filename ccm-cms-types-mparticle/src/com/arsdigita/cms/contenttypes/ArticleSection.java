@@ -20,12 +20,18 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.*;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.arsdigita.persistence.Session;
+import com.arsdigita.persistence.SessionManager;
 import org.apache.log4j.Logger;
 
 /**
@@ -287,4 +293,29 @@ public class ArticleSection extends ContentPage {
          // where upon setDefaultContentSection will be called..
          return null;
      }
+
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all objects
+     */
+    public static List<ArticleSection> getAllObjects() {
+        List<ArticleSection> objectList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(session.retrieve(
+                ArticleSection.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            ArticleSection object = (ArticleSection) collection
+                    .getDomainObject();
+            if (object != null) {
+                objectList.add(object);
+            }
+        }
+
+        collection.close();
+        return objectList;
+    }
 }

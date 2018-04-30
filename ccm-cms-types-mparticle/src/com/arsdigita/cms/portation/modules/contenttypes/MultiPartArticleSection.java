@@ -18,14 +18,14 @@
  */
 package com.arsdigita.cms.portation.modules.contenttypes;
 
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ItemCollection;
 import com.arsdigita.cms.contenttypes.ArticleSection;
-import com.arsdigita.cms.portation.conversion.NgCmsCollection;
+import com.arsdigita.cms.portation.conversion.NgCmsMPArticleCollection;
 import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
@@ -47,19 +47,22 @@ public class MultiPartArticleSection implements Portable {
         this.pageBreak = trunkMultiPartArticleSection.isPageBreak();
         this.text = new LocalizedString();
 
-        final ItemCollection languageSets = Objects.requireNonNull(
-                trunkMultiPartArticleSection.getContentBundle())
-                                            .getInstances();
-        while (languageSets.next()) {
-            final Locale language = new Locale(languageSets.getLanguage());
-            final ArticleSection languageItem = (ArticleSection) languageSets
-                    .getContentItem();
+        final ContentBundle languageBundle = trunkMultiPartArticleSection
+                .getContentBundle();
+        if (languageBundle != null) {
+            final ItemCollection languageSets = languageBundle.getInstances();
+            while (languageSets.next()) {
+                final Locale language = new Locale(languageSets.getLanguage());
+                final ArticleSection languageItem = (ArticleSection) languageSets
+                        .getContentItem();
 
-            this.title.addValue(language, languageItem.getTitle());
-            this.text.addValue(language, languageItem.getText().getText());
+                this.title.addValue(language, languageItem.getTitle());
+                this.text.addValue(language, languageItem.getText().getText());
+            }
+            languageSets.close();
         }
 
-        NgCmsCollection.multiPartArticleSections.put(this.sectionId, this);
+        NgCmsMPArticleCollection.multiPartArticleSections.put(this.sectionId, this);
     }
 
     public long getSectionId() {

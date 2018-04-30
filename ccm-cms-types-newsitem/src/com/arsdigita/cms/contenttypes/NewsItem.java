@@ -20,14 +20,19 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -173,5 +178,30 @@ public class NewsItem extends GenericArticle {
         newsItems.close();
 
         return newsItem;
+    }
+
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all objects
+     */
+    public static List<NewsItem> getAllObjects() {
+        List<NewsItem> objectList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(session.retrieve(
+                NewsItem.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            NewsItem object = (NewsItem) collection
+                    .getDomainObject();
+            if (object != null) {
+                objectList.add(object);
+            }
+        }
+
+        collection.close();
+        return objectList;
     }
 }

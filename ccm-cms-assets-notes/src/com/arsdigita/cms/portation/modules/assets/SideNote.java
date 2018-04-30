@@ -19,7 +19,7 @@
 package com.arsdigita.cms.portation.modules.assets;
 
 import com.arsdigita.cms.contentassets.Note;
-import com.arsdigita.cms.portation.convertion.NgCmsCollection;
+import com.arsdigita.cms.portation.conversion.NgCmsSideNoteCollection;
 import com.arsdigita.cms.portation.modules.contentsection.Asset;
 import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
@@ -39,14 +39,13 @@ public class SideNote extends Asset implements Portable {
      * @param trunkNote the trunk object
      */
     public SideNote(final Note trunkNote) {
-        super("Title_" + trunkNote.getDisplayName(),
-                            trunkNote.getDisplayName());
+        super(trunkNote.getID(), trunkNote.getDisplayName());
 
         this.text = new LocalizedString();
         final Locale language = Locale.getDefault();
         this.text.addValue(language, trunkNote.getContent());
 
-        NgCmsCollection.sideNotes.put(this.getObjectId(), this);
+        NgCmsSideNoteCollection.sideNotes.put(this.getObjectId(), this);
     }
 
     public LocalizedString getText() {

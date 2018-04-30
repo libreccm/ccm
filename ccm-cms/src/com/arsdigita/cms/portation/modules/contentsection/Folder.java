@@ -18,6 +18,8 @@
  */
 package com.arsdigita.cms.portation.modules.contentsection;
 
+import com.arsdigita.cms.portation.conversion.NgCmsCollection;
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.portation.modules.core.categorization.Category;
 import com.arsdigita.portation.modules.core.categorization.util.CategoryInformation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,26 +34,59 @@ public class Folder extends Category {
     private FolderType type;
 
     /**
-     * Constructor for the ng-object.
+     * Constructor for the ng-object, if old trunk object was retrieved from
+     * systems database storage.
+     *
+     * => use to convert folders
      *
      * @param trunkFolder the trunk object
      */
     public Folder(final com.arsdigita.cms.Folder trunkFolder) {
         super(new CategoryInformation(
+                trunkFolder.getID(),
                 trunkFolder.getDisplayName(),
-                trunkFolder.getID().toString(),
                 trunkFolder.getName(),
                 trunkFolder.getLabel(),
                 trunkFolder.getAdditionalInfo(),
                 true,
                 true,
                 false,
-                0)
-        );
-        this.type = FolderType.DOCUMENTS_FOLDER;
+                0));
 
         //this.section
         //this.type
+
+        NgCmsCollection.folders.put(this.getObjectId(), this);
+    }
+
+    /**
+     * Constructor for the ng-object, if old trunk object did not exist and a
+     * NEW one needed to be created. e.g. a new root folder for a content
+     * section.
+     *
+     * => use to create new folders for a content section with selected a
+     * {@link FolderType}
+     *
+     * @param folderType The type of the new folder
+     * @param sectionName The name of the section
+     */
+    public Folder(final FolderType folderType, final String sectionName) {
+        super(new CategoryInformation(
+                ACSObject.generateID(),
+                folderType + "-" + sectionName,
+                folderType + "-" + sectionName,
+                folderType + "-" + sectionName,
+                "This is the " + folderType + " for the content "
+                        + "section: " + sectionName,
+                true,
+                true,
+                false,
+                0));
+
+        //this.section
+        this.type = folderType;
+
+        NgCmsCollection.folders.put(this.getObjectId(), this);
     }
 
     public ContentSection getSection() {

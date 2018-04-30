@@ -20,6 +20,7 @@ package com.arsdigita.portation.modules.core.categorization.util;
 
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 
+import java.math.BigDecimal;
 import java.util.Locale;
 
 /**
@@ -29,8 +30,8 @@ import java.util.Locale;
  * @version created the 3/2/18
  */
 public class CategoryInformation {
+    private BigDecimal objectId;
     private String displayName;
-    private String uniqueId;
     private String name;
     private LocalizedString title;
     private LocalizedString description;
@@ -39,8 +40,8 @@ public class CategoryInformation {
     private boolean abstractCategory;
     private long categoryOrder;
 
-    public CategoryInformation(final String displayName,
-                               final String uniqueId,
+    public CategoryInformation(final BigDecimal objectId,
+                               final String displayName,
                                final String name,
                                final String title,
                                final String description,
@@ -48,9 +49,9 @@ public class CategoryInformation {
                                final boolean visible,
                                final boolean abstractCategory,
                                final long categoryOrder) {
-        this.displayName = displayName;
+        this.objectId = objectId;
 
-        this.uniqueId = uniqueId;
+        this.displayName = displayName;
         this.name = name;
 
         this.title = new LocalizedString();
@@ -66,12 +67,12 @@ public class CategoryInformation {
         this.categoryOrder = categoryOrder;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public BigDecimal getObjectId() {
+        return objectId;
     }
 
-    public String getUniqueId() {
-        return uniqueId;
+    public String getDisplayName() {
+        return displayName;
     }
 
     public String getName() {

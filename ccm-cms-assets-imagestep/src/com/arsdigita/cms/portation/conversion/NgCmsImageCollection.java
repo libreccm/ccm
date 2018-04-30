@@ -18,7 +18,7 @@
  */
 package com.arsdigita.cms.portation.conversion;
 
-import com.arsdigita.cms.portation.modules.contenttypes.Event;
+import com.arsdigita.cms.portation.modules.assets.Image;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,11 +27,11 @@ import java.util.Map;
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
  * @version created the 4/3/18
  */
-public class NgCmsCollection {
-    public static Map<Long, Event> events = new HashMap<>();
+public class NgCmsImageCollection {
+    public static Map<Long, Image> images = new HashMap<>();
 
     /**
      * Private constructor to prevent the instantiation of this class.
      */
-    private NgCmsCollection() {}
+    private NgCmsImageCollection() {}
 }

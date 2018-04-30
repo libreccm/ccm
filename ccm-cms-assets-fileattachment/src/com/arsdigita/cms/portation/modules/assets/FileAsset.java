@@ -19,7 +19,7 @@
 package com.arsdigita.cms.portation.modules.assets;
 
 import com.arsdigita.cms.contentassets.FileAttachment;
-import com.arsdigita.cms.portation.convertion.NgCmsCollection;
+import com.arsdigita.cms.portation.conversion.NgCmsFileAssetCollection;
 import com.arsdigita.portation.Portable;
 
 /**
@@ -36,6 +36,6 @@ public class FileAsset extends BinaryAsset implements Portable {
     public FileAsset(final FileAttachment trunkFileAsset) {
         super(trunkFileAsset);
 
-        NgCmsCollection.fileAssets.put(this.getObjectId(), this);
+        NgCmsFileAssetCollection.fileAssets.put(this.getObjectId(), this);
     }
 }

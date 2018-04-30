@@ -25,6 +25,7 @@ import com.arsdigita.cms.portation.modules.contentsection.AttachmentList;
 import com.arsdigita.cms.portation.modules.contentsection.ContentItem;
 import com.arsdigita.cms.portation.modules.contentsection.ContentSection;
 import com.arsdigita.cms.portation.modules.contentsection.ContentType;
+import com.arsdigita.cms.portation.modules.contentsection.Folder;
 import com.arsdigita.cms.portation.modules.contentsection.ItemAttachment;
 import com.arsdigita.cms.portation.modules.lifecycle.Lifecycle;
 import com.arsdigita.cms.portation.modules.lifecycle.LifecycleDefinition;
@@ -39,23 +40,23 @@ import java.util.Map;
  * @version created the 2/12/18
  */
 public class NgCmsCollection {
-    public static Map<Long, Asset> assets = new HashMap<>();
-    public static Map<Long, BinaryAsset> binaryAssets = new HashMap<>();
-    public static Map<Long, LegalMetadata> legalMetadatas = new HashMap<>();
-    public static Map<Long, ItemAttachment> itemAttachments = new HashMap<>();
-    public static Map<Long, AttachmentList> attachmentLists = new HashMap<>();
-    public static Map<Long, ContentItem> contentItems = new HashMap<>();
-
-    public static Map<Long, ContentType> contentTypes = new HashMap<>();
-    public static Map<Long, ContentSection> contentSections = new HashMap<>();
-
     public static Map<Long, Phase> phases = new HashMap<>();
-
     public static Map<Long, Lifecycle> lifecycles = new HashMap<>();
-    public static Map<Long, LifecycleDefinition> lifecycleDefinitions = new
-            HashMap<>();
+    public static Map<Long, LifecycleDefinition> lifecycleDefinitions = new HashMap<>();
     public static Map<Long, PhaseDefinition> phaseDefinitions = new HashMap<>();
 
+    public static Map<Long, Folder> folders = new HashMap<>();
+    public static Map<Long, ContentSection> contentSections = new HashMap<>();
+    public static Map<Long, ContentType> contentTypes = new HashMap<>();
+
+    public static Map<Long, ContentItem> contentItems = new HashMap<>();
+
+    public static Map<Long, LegalMetadata> legalMetadatas = new HashMap<>();
+    public static Map<Long, BinaryAsset> binaryAssets = new HashMap<>();
+    public static Map<Long, Asset> assets = new HashMap<>();
+
+    public static Map<Long, AttachmentList> attachmentLists = new HashMap<>();
+    public static Map<Long, ItemAttachment> itemAttachments = new HashMap<>();
 
     /**
      * Private constructor to prevent the instantiation of this class.
