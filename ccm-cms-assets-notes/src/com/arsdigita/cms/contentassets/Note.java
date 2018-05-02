@@ -15,11 +15,15 @@
  */
 package com.arsdigita.cms.contentassets;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.arsdigita.auditing.AuditingObserver;
 import com.arsdigita.auditing.BasicAuditTrail;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ImageAsset;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectInstantiator;
@@ -28,6 +32,7 @@ import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
 
@@ -219,6 +224,31 @@ public class Note extends ACSObject {
             PermissionService.setContext(this, getOwner());
             m_isNew = false;
         }
+    }
+
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all objects
+     */
+    public static List<Note> getAllObjects() {
+        List<Note> objectList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(session.retrieve(
+                Note.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            Note object = (Note) collection
+                    .getDomainObject();
+            if (object != null) {
+                objectList.add(object);
+            }
+        }
+
+        collection.close();
+        return objectList;
     }
 
 }

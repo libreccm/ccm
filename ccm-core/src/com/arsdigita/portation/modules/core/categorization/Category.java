@@ -114,7 +114,7 @@ public class Category extends CcmObject implements Portable {
     }
 
     /**
-     * Specific constructor for subclasses of category e.g. Folder
+     * Specific constructor for subclasses of Category e.g. Folder
      *
      * @param categoryInformation the trunk object
      */

@@ -73,11 +73,11 @@ public class Folder extends Category {
     public Folder(final FolderType folderType, final String sectionName) {
         super(new CategoryInformation(
                 ACSObject.generateID(),
-                folderType + "-" + sectionName,
-                folderType + "-" + sectionName,
-                folderType + "-" + sectionName,
-                "This is the " + folderType + " for the content "
-                        + "section: " + sectionName,
+                sectionName + "-" + folderType,
+                sectionName + "-" + folderType,
+                sectionName + "-" + folderType,
+                String.format("This is the %s for the content section: %s.",
+                        folderType, sectionName),
                 true,
                 true,
                 false,

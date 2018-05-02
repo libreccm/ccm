@@ -23,7 +23,9 @@ import com.arsdigita.cms.portation.modules.contentsection.Asset;
 import com.arsdigita.portation.Portable;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
@@ -36,9 +38,69 @@ public class LegalMetadata extends Asset implements Portable {
     private String creator;
     private List<String> contributors;
 
-    public LegalMetadata() {
-        super(null);
+    /**
+     * Constructor for ng-object.
+     *
+     * Old trunk system did not keep information about an assets legal
+     * metadata, therefore it needs to be created now for all ng-objects
+     * assets.
+     *
+     * @param assetName The name of the asset this legal metadata is created
+     *                  for
+     */
+    public LegalMetadata(final String assetName) {
+        super(assetName + "-LegalMetadata");
+
+        //this.rightsHolder
+        this.rights = new LocalizedString();
+        //this.publisher
+        //this.creator
+        this.contributors = new ArrayList<>();
 
         NgCmsCollection.legalMetadatas.put(this.getObjectId(), this);
+    }
+
+    public String getRightsHolder() {
+        return rightsHolder;
+    }
+
+    public void setRightsHolder(final String rightsHolder) {
+        this.rightsHolder = rightsHolder;
+    }
+
+    public LocalizedString getRights() {
+        return rights;
+    }
+
+    public void setRights(final LocalizedString rights) {
+        this.rights = rights;
+    }
+
+    public void addRights(final Locale language, final String right) {
+        this.rights.addValue(language, right);
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(final String publisher) {
+        this.publisher = publisher;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(final String creator) {
+        this.creator = creator;
+    }
+
+    public List<String> getContributors() {
+        return contributors;
+    }
+
+    public void setContributors(final List<String> contributors) {
+        this.contributors = contributors;
     }
 }

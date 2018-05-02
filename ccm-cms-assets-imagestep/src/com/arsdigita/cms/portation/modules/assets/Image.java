@@ -44,7 +44,7 @@ public class Image extends BinaryAsset implements Portable {
         this.width = trunkImage.getWidth().longValue();
         this.height = trunkImage.getHeight().longValue();
 
-        //this.legalMetaData
+        //this.legalMetadata
 
         NgCmsImageCollection.images.put(this.getObjectId(), this);
     }

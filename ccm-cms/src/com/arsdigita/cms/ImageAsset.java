@@ -19,12 +19,14 @@
 package com.arsdigita.cms;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.mimetypes.ImageMimeType;
 import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.versioning.VersionedACSObject;
 import java.awt.image.BufferedImage;
@@ -35,6 +37,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import javax.imageio.ImageIO;
 import org.apache.log4j.Logger;
 
@@ -130,7 +134,7 @@ public class ImageAsset extends BinaryAsset {
      * @return the Blob content
      */
     @Override
-    protected byte[] getContent() {
+    public byte[] getContent() {
         return (byte[]) get(CONTENT);
     }
 
@@ -327,4 +331,28 @@ public class ImageAsset extends BinaryAsset {
         setHeight(new BigDecimal(image.getHeight()));
     }
 
+    /**
+     * Retrieves all objects of this type stored in the database. Very
+     * necessary for exporting all entities of the current work environment.
+     *
+     * @return List of all objects
+     */
+    public static List<ImageAsset> getAllObjects() {
+        List<ImageAsset> objectList = new ArrayList<>();
+
+        final Session session = SessionManager.getSession();
+        DomainCollection collection = new DomainCollection(session.retrieve(
+                ImageAsset.BASE_DATA_OBJECT_TYPE));
+
+        while (collection.next()) {
+            ImageAsset object = (ImageAsset) collection
+                    .getDomainObject();
+            if (object != null) {
+                objectList.add(object);
+            }
+        }
+
+        collection.close();
+        return objectList;
+    }
 }

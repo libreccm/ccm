@@ -19,6 +19,7 @@
 package com.arsdigita.cms.portation.modules.contentsection;
 
 import com.arsdigita.cms.portation.conversion.NgCmsCollection;
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.portation.modules.core.core.CcmObject;
 import com.arsdigita.portation.modules.core.l10n.LocalizedString;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -52,14 +53,29 @@ public class Asset extends CcmObject {
         this.itemAttachments = new ArrayList<>();
 
         this.title = new LocalizedString();
-        final Locale language = new Locale(trunkAsset.getLanguage());
+        final Locale language = trunkAsset.getLanguage() != null
+                ? new Locale(trunkAsset.getLanguage())
+                : Locale.getDefault();
         this.title.addValue(language, trunkAsset.getName());
 
         NgCmsCollection.assets.put(this.getObjectId(), this);
     }
 
     /**
-     * Specific constructor for subclass SideNews.
+     * Specific constructor for subclass of Asset: LegalMetadata
+     *
+     * Generates new id.
+     *
+     * @param name the display name of this asset
+     */
+    public Asset(final String name) {
+        this(ACSObject.generateID(), name);
+    }
+
+    /**
+     * Specific constructor for subclass of Asset: SideNote.
+     *
+     * Uses given id.
      *
      * @param objectId The id of this asset
      * @param displayName The display name as the {@link CcmObject}

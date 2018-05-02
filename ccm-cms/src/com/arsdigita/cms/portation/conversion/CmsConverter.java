@@ -62,9 +62,11 @@ public class CmsConverter extends AbstractConverter {
         LifecycleConversion.getInstance().convertAll();
         PhaseConversion.getInstance().convertAll();
 
+
         FolderConversion.getInstance().convertAll();
         ContentTypeConversion.getInstance().convertAll();
         ContentSectionConversion.getInstance().convertAll();
+
 
         final Class c = Class.forName("com.arsdigita.cms.portation" +
                 ".conversion.contenttypes.ArticleConversion");
@@ -72,28 +74,24 @@ public class CmsConverter extends AbstractConverter {
             Method startConversionToNg = c.getDeclaredMethod("convertAll");
             startConversionToNg.invoke(c.newInstance());
         }
-
         final Class c1 = Class.forName("com.arsdigita.cms.portation" +
                 ".conversion.contenttypes.EventConversion");
         if (c1 != null) {
             Method startConversionToNg = c1.getDeclaredMethod("convertAll");
             startConversionToNg.invoke(c1.newInstance());
         }
-
         final Class c2 = Class.forName("com.arsdigita.cms.portation" +
                 ".conversion.contenttypes.MultiPartArticleSectionConversion");
         if (c2 != null) {
             Method startConversionToNg = c2.getDeclaredMethod("convertAll");
             startConversionToNg.invoke(c2.newInstance());
         }
-
         final Class c3 = Class.forName("com.arsdigita.cms.portation" +
                 ".conversion.contenttypes.MultiPartArticleConversion");
         if (c3 != null) {
             Method startConversionToNg = c3.getDeclaredMethod("convertAll");
             startConversionToNg.invoke(c3.newInstance());
         }
-
         final Class c4 = Class.forName("com.arsdigita.cms.portation" +
                 ".conversion.contenttypes.NewsConversion");
         if (c4 != null) {
@@ -101,11 +99,24 @@ public class CmsConverter extends AbstractConverter {
             startConversionToNg.invoke(c4.newInstance());
         }
 
+
         final Class c5 = Class.forName("com.arsdigita.cms.portation" +
                 ".conversion.assets.FileAssetConversion");
         if (c5 != null) {
             Method startConversionToNg = c5.getDeclaredMethod("convertAll");
             startConversionToNg.invoke(c5.newInstance());
+        }
+        final Class c6 = Class.forName("com.arsdigita.cms.portation" +
+                ".conversion.assets.ImageConversion");
+        if (c6 != null) {
+            Method startConversionToNg = c6.getDeclaredMethod("convertAll");
+            startConversionToNg.invoke(c6.newInstance());
+        }
+        final Class c7 = Class.forName("com.arsdigita.cms.portation" +
+                ".conversion.assets.SideNoteConversion");
+        if (c7 != null) {
+            Method startConversionToNg = c7.getDeclaredMethod("convertAll");
+            startConversionToNg.invoke(c7.newInstance());
         }
     }
 }

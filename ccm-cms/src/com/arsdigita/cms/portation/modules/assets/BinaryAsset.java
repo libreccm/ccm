@@ -46,7 +46,9 @@ public class BinaryAsset extends Asset {
         super(trunkBinaryAsset);
 
         this.description = new LocalizedString();
-        final Locale language = new Locale(trunkBinaryAsset.getLanguage());
+        final Locale language = trunkBinaryAsset.getLanguage() != null
+                ? new Locale(trunkBinaryAsset.getLanguage())
+                : Locale.getDefault();
         this.description.addValue(language, trunkBinaryAsset.getDescription());
 
         this.fileName = trunkBinaryAsset.getName();

@@ -76,7 +76,7 @@ public class CcmObject {
         NgCoreCollection.ccmObjects.put(this.objectId, this);
     }
 
-    // specific constructor for ldn-terms' domain
+    // specific constructor for ldn-terms' Domain and LegalMetadata
     public CcmObject(final String displayName) {
         this(ACSObject.generateID(), displayName);
     }
