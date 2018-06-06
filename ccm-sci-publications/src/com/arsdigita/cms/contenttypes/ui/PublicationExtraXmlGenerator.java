@@ -32,25 +32,29 @@ import com.arsdigita.cms.contenttypes.SeriesCollection;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.cms.scipublications.imexporter.PublicationFormat;
 import com.arsdigita.cms.scipublications.exporter.SciPublicationsExporters;
+import com.arsdigita.cms.scipublications.importer.report.OrganizationalUnitImportReport;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.xml.Element;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author Jens Pelzetter 
- * @version $Id$
+ * @author Jens Pelzetter
+ * @version $Id: PublicationExtraXmlGenerator.java 4544 2017-01-30 20:34:53Z
+ * jensp $
  */
 public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
 
-    private final static List<ExtraXMLGenerator> EXTENDING_GENERATORS = new ArrayList<ExtraXMLGenerator>();
+    private final static List<ExtraXMLGenerator> EXTENDING_GENERATORS
+                                                 = new ArrayList<ExtraXMLGenerator>();
     private boolean listMode;
 
     public static void addExtendingGenerator(final ExtraXMLGenerator generator) {
         EXTENDING_GENERATORS.add(generator);
     }
-    
+
     @Override
     public void generateXML(final ContentItem item,
                             final Element element,
@@ -58,9 +62,9 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
 //        final long start = System.nanoTime();
         if (!(item instanceof Publication)) {
             throw new IllegalArgumentException(String.format(
-                    "ExtraXMLGenerator '%s' only supports items of type '%s'.",
-                    getClass().getName(),
-                    Publication.class.getName()));
+                "ExtraXMLGenerator '%s' only supports items of type '%s'.",
+                getClass().getName(),
+                Publication.class.getName()));
         }
 
         final Publication publication = (Publication) item;
@@ -75,13 +79,14 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
         if (!listMode) {
             createOrgaUnitsXml(publication, element, state);
 
-            final List<PublicationFormat> formats = SciPublicationsExporters.getInstance().getSupportedFormats();
+            final List<PublicationFormat> formats = SciPublicationsExporters
+                .getInstance().getSupportedFormats();
 
             for (PublicationFormat format : formats) {
                 createExportLink(format, element, (Publication) item, state);
             }
         }
-        
+
         for (ExtraXMLGenerator extending : EXTENDING_GENERATORS) {
             extending.setListMode(listMode);
             extending.generateXML(item, element, state);
@@ -137,18 +142,27 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
     private void createOrgaUnitsXml(final Publication publication,
                                     final Element parent,
                                     final PageState state) {
-        final PublicationGenericOrganizationalsUnitCollection orgaunits =
-                                                              publication.getOrganizationalUnits();
+        final PublicationGenericOrganizationalsUnitCollection orgaunits
+                                                              = publication
+                .getOrganizationalUnits();
         if ((orgaunits == null) || orgaunits.isEmpty()) {
             return;
         }
 
         final Element orgaunitsElem = parent.newChildElement(
-                "organizationalunits");
+            "organizationalunits");
         while (orgaunits.next()) {
-            createOrgaUnitXml(orgaunits.getOrganizationalUnit(GlobalizationHelper.getNegotiatedLocale().getLanguage()),
-                              orgaunitsElem,
-                              state);
+//            createOrgaUnitXml(orgaunits.getOrganizationalUnit(
+//                GlobalizationHelper.getNegotiatedLocale().getLanguage()),
+//                              orgaunitsElem,
+//                              state);
+
+            final GenericOrganizationalUnit orgaUnit = orgaunits
+                .getOrganizationalUnit();
+              final Element orgaUnitElem = orgaunitsElem.newChildElement("organizationalunit");
+              orgaUnitElem.addAttribute("oid", orgaUnit.getOID().toString());
+              final Element titleElem = orgaUnitElem.newChildElement("title");
+              titleElem.setText(orgaUnit.getTitle());
         }
     }
 
@@ -170,7 +184,8 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
 
         final Element seriesElem = parent.newChildElement("series");
         while (series.next()) {
-            createSeriesElemXml(series.getSeries(GlobalizationHelper.getNegotiatedLocale().getLanguage()),
+            createSeriesElemXml(series.getSeries(GlobalizationHelper
+                .getNegotiatedLocale().getLanguage()),
                                 series.getVolumeOfSeries(),
                                 seriesElem,
                                 state);
@@ -184,13 +199,21 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
         if (series == null) {
             return;
         }
-        final XmlGenerator generator = new XmlGenerator(series);
-        generator.setItemElemName("series", "");
-        if (volumeOfSeries != null) {
-            generator.addItemAttribute("volume", volumeOfSeries);
-        }
-        generator.setListMode(listMode);
-        generator.generateXML(state, seriesElem, "");
+        
+        final Element seriesItemElem = seriesElem.newChildElement("series");
+        seriesItemElem.addAttribute("oid", series.getOID().toString());
+        seriesItemElem.addAttribute("volume", volumeOfSeries);
+        
+        final Element titleElem = seriesItemElem.newChildElement("title");
+        titleElem.setText(series.getTitle());
+        
+//        final XmlGenerator generator = new XmlGenerator(series);
+//        generator.setItemElemName("series", "");
+//        if (volumeOfSeries != null) {
+//            generator.addItemAttribute("volume", volumeOfSeries);
+//        }
+//        generator.setListMode(listMode);
+//        generator.generateXML(state, seriesElem, "");
     }
 
     private void createExportLink(final PublicationFormat format,
@@ -198,15 +221,15 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
                                   final Publication publication,
                                   final PageState state) {
         final Element exportLinkElem = parent.newChildElement(
-                "publicationExportLink");
-        final Element formatKeyElem =
-                      exportLinkElem.newChildElement("formatKey");
+            "publicationExportLink");
+        final Element formatKeyElem = exportLinkElem
+            .newChildElement("formatKey");
         formatKeyElem.setText(format.getName().toLowerCase());
         final Element formatNameElem = exportLinkElem.newChildElement(
-                "formatName");
+            "formatName");
         formatNameElem.setText(format.getName());
         final Element publicationIdElem = exportLinkElem.newChildElement(
-                "publicationId");
+            "publicationId");
         publicationIdElem.setText(publication.getID().toString());
     }
 
@@ -235,4 +258,5 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
         }
 
     }
+
 }
