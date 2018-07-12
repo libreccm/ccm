@@ -13,7 +13,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.themedirector.dispatcher;
 
 import com.arsdigita.bebop.page.PageTransformer;
@@ -33,46 +32,50 @@ import org.apache.log4j.Logger;
 
 /**
  * This class pulls out the theme information from the URL so that other
- * sections can correctly allow "previewing".
- * The big difference between this and the InternalPrefixerServlet
- * is that the InternalPrefixerServlet only allows a single "/yyy/"
- * where this file required "/theme/themename/"
+ * sections can correctly allow "previewing". The big difference between this
+ * and the InternalPrefixerServlet is that the InternalPrefixerServlet only
+ * allows a single "/yyy/" where this file required "/theme/themename/"
  */
 public class InternalThemePrefixerServlet extends InternalPrefixerServlet {
 
-    /** Internal logger instance to faciliate debugging. Enable logging output
-     *  by editing /WEB-INF/conf/log4j.properties int the runtime environment
-     *  and set 
-     *  com.arsdigita.themedirector.dispatcher.InternalThemePrefixerServlet=DEBUG 
-     *  by uncommenting or adding the line.                                   */
-    private static final Logger s_log =
-        Logger.getLogger(InternalPrefixerServlet.class);
-
-    /** The web application context Themedirector is executing within. 
-     *  Dynamically determined at runtime.                                   */
-    private static ServletContext s_context;
-    /**  String containing the preview prefix as the servlet is actually
-     *   configured in web.xml (usually "/theme")                            */
-    private String m_prefix;
-    /** This value is placed as an attribute in the request when this is
-     *  actually a request where the user is previewing the theme.
-     *  The value of the attribute is the URL of the theme that is being
-     *  previewed.                                                           */
-    public final static String THEME_PREVIEW_URL = "themePreviewURL";
-
+    /**
+     * Internal logger instance to faciliate debugging. Enable logging output by
+     * editing /WEB-INF/conf/log4j.properties int the runtime environment and
+     * set
+     * com.arsdigita.themedirector.dispatcher.InternalThemePrefixerServlet=DEBUG
+     * by uncommenting or adding the line.
+     */
+    private static final Logger s_log = Logger.getLogger(
+        InternalPrefixerServlet.class);
 
     /**
-     * Standard servlet intialization. Initializes required variables.
-     * 
-     * @throws ServletException 
+     * The web application context Themedirector is executing within.
+     * Dynamically determined at runtime.
+     */
+    private static ServletContext s_context;
+    /**
+     * String containing the preview prefix as the servlet is actually
+     * configured in web.xml (usually "/theme")
+     */
+    private String m_prefix;
+    /**
+     * This value is placed as an attribute in the request when this is actually
+     * a request where the user is previewing the theme. The value of the
+     * attribute is the URL of the theme that is being previewed.
+     */
+    public final static String THEME_PREVIEW_URL = "themePreviewURL";
+
+    /**
+     * Standard Servlet initialization. Initializes required variables.
+     *
+     * @throws ServletException
      */
     @Override
-    public void init()
-                throws ServletException {
-        
+    public void init() throws ServletException {
+
         ServletConfig conf = getServletConfig();
-        m_prefix = (String)conf.getInitParameter("prefix");
-        
+        m_prefix = (String) conf.getInitParameter("prefix");
+
         s_context = getServletContext();
 
         if (s_log.isDebugEnabled()) {
@@ -99,7 +102,7 @@ public class InternalThemePrefixerServlet extends InternalPrefixerServlet {
             if (pathInfo.startsWith("/")) {
                 if (pathInfo.indexOf("/", 1) > -1) {
                     path = pathInfo.substring(pathInfo.indexOf("/", 1));
-                } 
+                }
             } else {
                 path = pathInfo.substring(pathInfo.indexOf("/"));
             }
@@ -128,23 +131,23 @@ public class InternalThemePrefixerServlet extends InternalPrefixerServlet {
         rd.forward(req, resp);
     }
 
-
     /**
-     *  This checks the request to see if this is the preview of 
-     *  a theme and if so, it returns the url of the theme that
-     *  is being previewed.  If this is not a "preview" request
-     *  then this will return null.
+     * This checks the request to see if this is the preview of a theme and if
+     * so, it returns the url of the theme that is being previewed. If this is
+     * not a "preview" request then this will return null.
+     *
      * @param request
-     * @return 
+     *
+     * @return
      */
     public static String getThemePreviewURL(HttpServletRequest request) {
-        return (String)request.getAttribute(THEME_PREVIEW_URL);
+        return (String) request.getAttribute(THEME_PREVIEW_URL);
     }
-    
+
     /**
      * Service method to provide the actual context Themedirector is executing
      * within.
-     * 
+     *
      * @return the ServletContext Themedirector is executing within
      */
     public static ServletContext getThemedirectorContext() {

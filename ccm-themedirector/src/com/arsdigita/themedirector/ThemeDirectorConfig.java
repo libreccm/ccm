@@ -101,20 +101,22 @@ public class ThemeDirectorConfig extends AbstractConfig {
         "bmp css eot gif jpeg jpg js png svg ttf woff xml xsl");
 
     /**
-     * Specifies the less file(s) used as entry point(s) for compiling
-     * a managed theme on the fly when publishing. 
+     * Specifies the less file(s) used as entry point(s) for compiling a managed
+     * theme on the fly when publishing.
      */
     private final Parameter m_lessFilesParam = new StringArrayParameter(
         "themedirector.less_files_compile",
         Parameter.OPTIONAL,
-        new String[]{"styles/main.less"});
+        new String[]{"styles/main.less",
+                     "styles/style.less",
+                     "styles/styles.less"});
 
     /**
      * number of seconds before checking for updated development files. in a
      * multi-jvm installation. (0 means never start)
      */
     private final Parameter m_themeDevFileWatchStartupDelay
-                            = new IntegerParameter(
+                                = new IntegerParameter(
             "themedirector.theme_dev_file_watch_startup_delay",
             Parameter.REQUIRED, new Integer(60 * 2));
 
@@ -131,7 +133,7 @@ public class ThemeDirectorConfig extends AbstractConfig {
      * a multi-jvm installation. (0 means never start)
      */
     private final Parameter m_themePubFileWatchStartupDelay
-                            = new IntegerParameter(
+                                = new IntegerParameter(
             "themedirector.theme_pub_file_watch_startup_delay",
             Parameter.REQUIRED, new Integer(60 * 2));
 
@@ -144,7 +146,8 @@ public class ThemeDirectorConfig extends AbstractConfig {
         Parameter.REQUIRED, new Integer(60 * 60));  // default to once an hour
 
     /**
-     *      */
+     *
+     */
     private Collection m_downloadFileExtensions = null;
 
     /**
@@ -214,9 +217,9 @@ public class ThemeDirectorConfig extends AbstractConfig {
     }
 
     private static final String DEFAULT_THEME_URL = ThemeDirector.DEFAULT_THEME
-                                                    + "." + Theme.URL;
+                                                        + "." + Theme.URL;
     private static final String DEFAULT_THEME_URL_ATTRIBUTE
-                                = "defaultThemeURLAttribute";
+                                    = "defaultThemeURLAttribute";
 
     /**
      * Purpose undocumented.
@@ -317,7 +320,7 @@ public class ThemeDirectorConfig extends AbstractConfig {
     public Integer getThemeDevFileWatchPollDelay() {
         return (Integer) get(m_themeDevFileWatchPollDelay);
     }
-    
+
     public String[] getLessFiles() {
         return (String[]) get(m_lessFilesParam);
     }

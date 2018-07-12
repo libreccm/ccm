@@ -11,8 +11,7 @@
 * implied. See the License for the specific language governing
 * rights and limitations under the License.
 *
-*/
-
+ */
 package com.arsdigita.themedirector.util;
 
 import com.arsdigita.themedirector.Theme;
@@ -32,44 +31,47 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-
 /**
- * Class providing client classes (as FileManager for development and published 
+ * Class providing client classes (as FileManager for development and published
  * themes) with base methods for polling the database to look for new/updated
  * files in the ThemeFile table.
  *
- *  For "published" files, It goes through each Theme and looks at the
- *  last time it was published.  If the last time published > last
- *  time thread was run then it examines those files.  When the thread
- *  runs for the first time, it examines all themes.
+ * For "published" files, It goes through each Theme and looks at the last time
+ * it was published. If the last time published > last time thread was run then
+ * it examines those files. When the thread runs for the first time, it examines
+ * all themes.
  *
- *  For "development" files, it looks at every file in the db and, if
- *  the timestamp is after the timestamp of the file on the file system (or
- *  there is no file on the file system)
- *  then it writes out the new file.  If the timestamp on the file system
- *  is newer, it ignores the file.
+ * For "development" files, it looks at every file in the db and, if the
+ * timestamp is after the timestamp of the file on the file system (or there is
+ * no file on the file system) then it writes out the new file. If the timestamp
+ * on the file system is newer, it ignores the file.
  *
  * @author <a href="mailto:randyg@redhat.com">Randy Graebner</a>
  * @version $Revision: #2 $ $DateTime: 2004/01/30 17:24:49 $
  */
-public abstract class ThemeFileManager extends Thread 
-                                       implements ThemeDirectorConstants {
+public abstract class ThemeFileManager extends Thread
+    implements ThemeDirectorConstants {
 
-    /** Internal logger instance to faciliate debugging. Carries over the 
-     *  logger instance from the client child which actually does the work.   */
+    /**
+     * Internal logger instance to faciliate debugging. Carries over the logger
+     * instance from the client child which actually does the work.
+     */
     private final Logger m_log;
 
     // The code in this class borrows heavily from
     // com.arsdigita.cms.publishToFile.FileManager
-
-    /** Following true if should keep watching file.                          */
+    /**
+     * Following true if should keep watching file.
+     */
     private boolean m_keepWatchingFiles = true;
 
     // Parameters involved in processing the file and their default values.
     // Set to values other than default by calling methods from an initializer.
     private final int m_startupDelay;
     private final int m_pollDelay;
-    /** Full path of the web application's base directory ("document root")   */
+    /**
+     * Full path of the web application's base directory ("document root")
+     */
     private String m_baseDirectory = null;
 
     // the m_ignoreInterrupt allows us to use the "interrupt" command to
@@ -80,14 +82,14 @@ public abstract class ThemeFileManager extends Thread
 
     /**
      * Constructor initializes internal properties.
-     * 
+     *
      * @param log
      * @param startupDelay
      * @param pollDelay
-     * @param baseDirectory 
+     * @param baseDirectory
      */
-    protected ThemeFileManager(Logger log, 
-                               int startupDelay, 
+    protected ThemeFileManager(Logger log,
+                               int startupDelay,
                                int pollDelay,
                                String baseDirectory) {
         m_log = log;
@@ -112,14 +114,13 @@ public abstract class ThemeFileManager extends Thread
         return m_keepWatchingFiles;
     }
 
-
     protected Date getLastRunDate() {
         return m_lastRunDate;
     }
 
     /**
-     * Watch file for entries to process.  The main routine that starts
-     * file processing.
+     * Watch file for entries to process. The main routine that starts file
+     * processing.
      */
     @Override
     public void run() {
@@ -129,50 +130,49 @@ public abstract class ThemeFileManager extends Thread
             sleepSeconds(m_startupDelay);
         }
         m_log.info("Polling file every " + m_pollDelay + "s.");
-        while ( (sleepSeconds(m_pollDelay) || m_ignoreInterrupt)
-                 && m_keepWatchingFiles ) {
-        	 // Get the last run date before we do anything,
-        	 // so we can be sure that we do not miss any themes
-        	 // published while we run. But only store it after
-        	 // we have processed all themes, because it will be
-        	 // used in ThemePublishedFileManager.updateTheme().
-             Date lastRunDate = new Date();
+        while ((sleepSeconds(m_pollDelay) || m_ignoreInterrupt)
+                   && m_keepWatchingFiles) {
+            // Get the last run date before we do anything,
+            // so we can be sure that we do not miss any themes
+            // published while we run. But only store it after
+            // we have processed all themes, because it will be
+            // used in ThemePublishedFileManager.updateTheme().
+            Date lastRunDate = new Date();
 
-             TransactionContext txn =
-                 SessionManager.getSession().getTransactionContext();
+            TransactionContext txn = SessionManager.getSession()
+                .getTransactionContext();
 
-             try {
-                 boolean startedTransaction = false;
-                 if (!txn.inTxn()) {
-                     txn.beginTxn();
-                     startedTransaction = true;
-                 }
-                 ThemeCollection collection = ThemeCollection.getAllThemes();
-                 while (collection.next()) {
-                     updateTheme(collection.getTheme());
-                 }
-                 if (startedTransaction) {
-                     txn.commitTxn();
-                 }
+            try {
+                boolean startedTransaction = false;
+                if (!txn.inTxn()) {
+                    txn.beginTxn();
+                    startedTransaction = true;
+                }
+                ThemeCollection collection = ThemeCollection.getAllThemes();
+                while (collection.next()) {
+                    updateTheme(collection.getTheme());
+                }
+                if (startedTransaction) {
+                    txn.commitTxn();
+                }
 
-                 m_lastRunDate = lastRunDate;
-             } catch (Throwable e) {
-                 m_log.warn("Ignoring uncaught exception", e);
-             } finally {
-                 if ( txn.inTxn() ) {
-                     txn.abortTxn();
-                     m_log.info("Aborting transaction");
-                 }
-             }
+                m_lastRunDate = lastRunDate;
+            } catch (Throwable e) {
+                m_log.warn("Ignoring uncaught exception", e);
+            } finally {
+                if (txn.inTxn()) {
+                    txn.abortTxn();
+                    m_log.info("Aborting transaction");
+                }
+            }
             // we only ignore one interrupt at most
             m_ignoreInterrupt = false;
         }
     }
 
-
     /**
-     *  This allows an outside piece of code to force an automatic update
-     *  instead of making it wait for the thread to wake up.
+     * This allows an outside piece of code to force an automatic update instead
+     * of making it wait for the thread to wake up.
      */
     public void updateAllThemesNow() {
         // this call to interrupt should kill the current "run" that is
@@ -181,24 +181,20 @@ public abstract class ThemeFileManager extends Thread
         interrupt();
     }
 
-
     /**
-     *  This allows an outside piece of code to force an automatic update
-     *  on a single theme instead of making it wait for the thread to wake
-     *  up.
-     * 
+     * This allows an outside piece of code to force an automatic update on a
+     * single theme instead of making it wait for the thread to wake up.
+     *
      * @param theme
      */
     public void updateThemeNow(Theme theme) {
         updateTheme(theme);
     }
 
-
-
     /**
      * This returns the base directory of the web applications ("document root")
      * used to construct the file system location when writing out files.
-     * 
+     *
      * @return Full path of the web application context directory
      */
     protected String getBaseDirectory() {
@@ -216,7 +212,6 @@ public abstract class ThemeFileManager extends Thread
             // ServletContext themeCtx = InternalThemePrefixerServlet
             //                        .getThemedirectorContext();
             // We have to ensure the Servlet is initialized.
-
             // ServletContext themeCtx = Web.getServletContext();
             // m_baseDirectory = themeCtx.getRealPath("/");
             m_baseDirectory = CCMResourceManager.getBaseDirectory().getPath();
@@ -227,17 +222,18 @@ public abstract class ThemeFileManager extends Thread
 
     /**
      * This typically returns something like "getBaseDirectory() + PUB_DIR".
-     * 
-     * @return 
+     *
+     * @return
      */
     protected abstract String getManagerSpecificDirectory();
 
     /**
-     * This allows subclasses to filter the collection as appropriate.
-     * (e.g. only return "live" files or only "draft" files).
-     * 
+     * This allows subclasses to filter the collection as appropriate. (e.g.
+     * only return "live" files or only "draft" files).
+     *
      * @param theme
-     * @return 
+     *
+     * @return
      */
     protected abstract ThemeFileCollection getThemeFilesCollection(Theme theme);
 
@@ -265,13 +261,11 @@ public abstract class ThemeFileManager extends Thread
       have clocks that are close to synchronized (at the very least, they
       must be set for the same time zone).
 
-    */
-
+     */
     /**
-     * This looks at all of the files in the db for the passed in theme
-     * and makes sure that this servers file system has all of the
-     * updated files.
-     * 
+     * This looks at all of the files in the db for the passed in theme and
+     * makes sure that this servers file system has all of the updated files.
+     *
      * @param theme
      */
     protected void updateTheme(Theme theme) {
@@ -285,11 +279,12 @@ public abstract class ThemeFileManager extends Thread
         }
 
         while (files.next()) {
-            File temp = new File(stub + theme.getURL() + "/" +
-                                 files.getFilePath());
+            File temp = new File(stub + theme.getURL() + "/" + files
+                .getFilePath());
             // if the file timestamp in the db is newer than the file
             // on the FS then write it out (or delete).
-            if (new Date(temp.lastModified()).before(files.getLastModifiedDate())) {
+            if (new Date(temp.lastModified())
+                .before(files.getLastModifiedDate())) {
                 if (files.isDeleted()) {
                     if (temp.exists()) {
                         boolean success = temp.delete();
@@ -314,8 +309,8 @@ public abstract class ThemeFileManager extends Thread
                     out.write(content);
                     temp.setLastModified(files.getLastModifiedDate().getTime());
                 } catch (IOException e) {
-                    m_log.error("Error writing file " +
-                                temp.getAbsolutePath(), e);
+                    m_log.error("Error writing file " + temp.getAbsolutePath(),
+                                e);
                 } finally {
                     try {
                         if (out != null) {
@@ -329,20 +324,23 @@ public abstract class ThemeFileManager extends Thread
         }
     }
 
-
-    /***
+    /**
+     * *
      * Sleep for n seconds.
-     * 
+     *
      * @param n
+     *
      * @return 
-     ***/
+     **
+     */
     protected boolean sleepSeconds(long n) {
         try {
             sleep(n * 1000);
             return true;
-        } catch ( InterruptedException e ) {
-            m_log.info( "Waiting was interrupted.");
+        } catch (InterruptedException e) {
+            m_log.info("Waiting was interrupted.");
             return false;
         }
     }
+
 }

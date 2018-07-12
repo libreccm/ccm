@@ -168,7 +168,8 @@ public class ThemeDevelopmentFileManager extends ThemeFileManager {
 
         File themeDir = new File(stub + theme.getURL() + "/");
         if (themeDir.exists()) {
-            ThemeFileUtil.updateDatabaseFiles(themeDir, theme, 
+            ThemeFileUtil.updateDatabaseFiles(themeDir,
+                                              theme, 
                                               themeDir.getAbsolutePath(), 
                                               false,
                                               ThemeFile.DRAFT);

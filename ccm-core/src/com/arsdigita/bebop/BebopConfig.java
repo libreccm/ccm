@@ -38,10 +38,14 @@ import org.apache.log4j.Logger;
  */
 public final class BebopConfig extends AbstractConfig {
 
-    /** A logger instance to assist debugging.                               */
+    /**
+     * A logger instance to assist debugging.
+     */
     private static final Logger s_log = Logger.getLogger(BebopConfig.class);
-    
-    /** Singleton config object.                                             */
+
+    /**
+     * Singleton config object.
+     */
     private static BebopConfig s_config;
 
     /**
@@ -49,6 +53,7 @@ public final class BebopConfig extends AbstractConfig {
      *
      * Singleton pattern, don't instantiate a config object using the
      * constructor directly!
+     *
      * @return
      */
     public static synchronized BebopConfig getInstance() {
@@ -62,64 +67,78 @@ public final class BebopConfig extends AbstractConfig {
 
     // set of configuration parameters
     // /////////////////////////////////////////////////////////////////
-
     /**
-     *                                                                       */
-    private final Parameter m_presenter = new SingletonParameter
-            ("waf.bebop.presentation_manager", Parameter.REQUIRED,
-             new PageTransformer());
-    /**
-     * 
+     *
      */
-    private final Parameter m_page = new ClassParameter
-            ("waf.bebop.base_page", Parameter.REQUIRED, SimplePage.class);
-    /** Pointer to JTidy validation listener config file                     */
-    private final Parameter m_tidy = new StringParameter
-            ("waf.bebop.tidy_config_file", Parameter.REQUIRED,
-             "com/arsdigita/bebop/parameters/tidy.properties");
-    private final Parameter m_fancyErrors = new BooleanParameter
-            ("waf.bebop.fancy_xsl_errors",
-             Parameter.REQUIRED,
-             Boolean.FALSE);
-    /** Double Click Protection, enabled by default for all buttons in a form.*/
-    private final Parameter m_dcpOnButtons = new BooleanParameter
-            ("waf.bebop.dcp_on_buttons", Parameter.REQUIRED, Boolean.TRUE);
-    /** Double Click Protection, disabled by default for all links.           */
-    private final Parameter m_dcpOnLinks = new BooleanParameter
-            ("waf.bebop.dcp_on_links", Parameter.REQUIRED, Boolean.FALSE);
+    private final Parameter m_presenter = new SingletonParameter(
+        "waf.bebop.presentation_manager", Parameter.REQUIRED,
+        new PageTransformer());
     /**
-     * 
+     *
      */
-    private final Parameter m_enableTreeSelect = new BooleanParameter
-            ("waf.bebop.enable_tree_select_attribute",
-             Parameter.REQUIRED,
-             Boolean.FALSE);
-    /** List of supported DHTML editors, first one is default (Xinha) */
+    private final Parameter m_page = new ClassParameter("waf.bebop.base_page",
+                                                        Parameter.REQUIRED,
+                                                        SimplePage.class);
+    /**
+     * Pointer to JTidy validation listener config file
+     */
+    private final Parameter m_tidy = new StringParameter(
+        "waf.bebop.tidy_config_file", Parameter.REQUIRED,
+        "com/arsdigita/bebop/parameters/tidy.properties");
+    private final Parameter m_fancyErrors = new BooleanParameter(
+        "waf.bebop.fancy_xsl_errors",
+        Parameter.REQUIRED,
+        Boolean.FALSE);
+    /**
+     * Double Click Protection, enabled by default for all buttons in a form.
+     */
+    private final Parameter m_dcpOnButtons = new BooleanParameter(
+        "waf.bebop.dcp_on_buttons", Parameter.REQUIRED, Boolean.TRUE);
+    /**
+     * Double Click Protection, disabled by default for all links.
+     */
+    private final Parameter m_dcpOnLinks = new BooleanParameter(
+        "waf.bebop.dcp_on_links", Parameter.REQUIRED, Boolean.FALSE);
+    /**
+     *
+     */
+    private final Parameter m_enableTreeSelect = new BooleanParameter(
+        "waf.bebop.enable_tree_select_attribute",
+        Parameter.REQUIRED,
+        Boolean.FALSE);
+    /**
+     * List of supported DHTML editors, first one is default (Xinha)
+     */
     private final EnumerationParameter m_dhtmlEditor;
-    /** Path to DHTML editor source file, relativ to document root */
+    /**
+     * Path to DHTML editor source file, relativ to document root
+     */
     private final Parameter m_dhtmlEditorSrcFile;
-    /**                                                                       */
-    private final Parameter m_showClassName = new BooleanParameter
-            ("waf.bebop.show_class_name", Parameter.OPTIONAL, Boolean.FALSE);
 
-    /** 
-     * Constructor.
-     * Singelton pattern, don't instantiate a config object using the
-     * constructor directly! Use getConfig() instead.
-     * 
+    private final Parameter m_showClassName = new BooleanParameter(
+        "waf.bebop.show_class_name", Parameter.OPTIONAL, Boolean.FALSE);
+
+    /**
+     * Constructor. Singelton pattern, don't instantiate a config object using
+     * the constructor directly! Use getConfig() instead.
+     *
      */
     public BebopConfig() {
 
-        /** List of supported DHTML editors, first one is default (Xinha) */
+        /**
+         * List of supported DHTML editors, first one is default (Xinha)
+         */
         m_dhtmlEditor = new EnumerationParameter("waf.bebop.dhtml_editor",
-            Parameter.REQUIRED,BebopConstants.BEBOP_XINHAEDITOR);
+                                                 Parameter.REQUIRED,
+                                                 BebopConstants.BEBOP_XINHAEDITOR);
         m_dhtmlEditor.put("Xinha", BebopConstants.BEBOP_XINHAEDITOR);
         m_dhtmlEditor.put("CKeditor", BebopConstants.BEBOP_CKEDITOR);
+        m_dhtmlEditor.put("TinyMCE", BebopConstants.BEBOP_TINYMCE_EDITOR);
 
         // Xinha is now default!
-        m_dhtmlEditorSrcFile = new StringParameter
-            ("waf.bebop.dhtml_editor_src", Parameter.REQUIRED,
-             "/assets/xinha/XinhaLoader.js");
+        m_dhtmlEditorSrcFile = new StringParameter("waf.bebop.dhtml_editor_src",
+                                                   Parameter.REQUIRED,
+                                                   "/assets/xinha/XinhaLoader.js");
 
         register(m_presenter);
         register(m_page);
@@ -130,7 +149,7 @@ public final class BebopConfig extends AbstractConfig {
         register(m_dcpOnButtons);
         register(m_dcpOnLinks);
         register(m_enableTreeSelect);
-	    register(m_showClassName);
+        register(m_showClassName);
 
         loadInfo();
     }
@@ -154,7 +173,7 @@ public final class BebopConfig extends AbstractConfig {
     }
 
     public boolean wantFancyXSLErrors() {
-        return ((Boolean)get(m_fancyErrors)).booleanValue();
+        return ((Boolean) get(m_fancyErrors)).booleanValue();
     }
 
     public final boolean doubleClickProtectionOnButtons() {
@@ -186,4 +205,5 @@ public final class BebopConfig extends AbstractConfig {
     public final boolean showClassName() {
         return ((Boolean) get(m_showClassName)).booleanValue();
     }
+
 }

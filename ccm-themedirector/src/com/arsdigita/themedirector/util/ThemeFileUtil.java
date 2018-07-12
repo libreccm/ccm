@@ -40,6 +40,7 @@ import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * This is a utility class that is able to take a theme and, when necessary,
@@ -146,12 +147,14 @@ public class ThemeFileUtil {
                                          final List<Path> eligiablePaths) {
 
         if (Files.isDirectory(path)) {
-            try (final DirectoryStream<Path> directoryStream = Files
+            try (DirectoryStream<Path> directoryStream = Files
                 .newDirectoryStream(path)) {
 
                 directoryStream
                     .forEach(current -> prepareThemeFile(current,
                                                          eligiablePaths));
+                
+                directoryStream.close();
             } catch (IOException ex) {
                 throw new UncheckedWrapperException(ex);
             }
