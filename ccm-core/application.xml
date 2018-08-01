@@ -3,7 +3,7 @@
   name="ccm-core"
   prettyName="Core"
   version="6.6.6"
-  release="3"
+  release="4"
   shared="true"
   webapp="ROOT"
   buildHooks="build-hooks.xml">

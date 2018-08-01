@@ -1,20 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Change status to DEBUG for more verbose output-->
-<configuration status="WARN">
+<configuration status="INFO">
   <appenders>
     <Console name="Console" target="SYSTEM_OUT">
       <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
     </Console>
 
-    <File name="ErrorLog" fileName="logs/error.log">
+    <File name="FileLog" fileName="/var/log/tomcat7s/trunklcs/libreccm.log">
         <PatternLayout pattern="%d{yyyy-mm-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
-    </File>             
+    </File>
   </appenders>
 
-  <loggers>     
-    <root>
-      <appender-ref ref="Console"/>
-      <appender-ref ref="ErrorLog" level="error"/>
+
+  <loggers>
+
+    <root level="ERROR" additivity="false" >
+      <appenderRef ref="Console"/>
+      <appenderRef ref="FileLog" />
     </root>
+
+
+    <!-- Progress of libreccm container startup process        -->
+    <Logger name="com.arsdigita.web.CCMApplicationContextListener"
+            level="INFO" additivity="false" >
+      <appenderRef ref="Console"/>
+      <appenderRef ref="FileLog" />
+    </Logger>
+
+    <!-- Progress of libreccm main runtime initialization process -->
+    <!--
+    <Logger name="com.arsdigita.runtime.Runtime"
+            level="INFO" additivity="false" > 
+      <appenderRef ref="Console"/>
+      <appenderRef ref="FileLog" />
+    </Logger>
+    -->
+
+    <!-- Set level="DEBUG" to get information about XSLT file resolution -->
+    <Logger name="com.arsdigita.templating.PatternStylesheetResolver"
+            level="DEBUG" additivity="false" >
+      <!-- output just to libreccm specific application log, no system log -->
+      <appenderRef ref="FileLog" />
+    </Logger>
+                                                                                                                                                   43,1          40%
+    <!-- Set level="DEBUG" to get information JSP file dispatcher      -->
+    <Logger name="com.arsdigita.web.ApplicationFileServlet"
+            level="ERROR" additivity="false" >
+      <appenderRef ref="FileLog" />
+    </Logger>
+    <Logger name="com.arsdigita.web.DefaultApplicationFileResolver"
+            level="ERROR" additivity="false" >
+      <appenderRef ref="FileLog" />
+    </Logger>
+
+    <!-- Set level="DEBUG" to collect all queries run by persistence  -->
+    <Logger name="com.arsdigita.web.ApplicationFileServlet"
+            level="ERROR" additivity="false" >
+      <appenderRef ref="FileLog" />
+    </Logger>
+
+    <!-- uncomment / add entries for detailed information per package  -->
+    <!--
+    <Logger name="com.arsdigita.PACKAGE.CLASS"
+            level="DEBUG" additivity="false" >
+      <appenderRef ref="FileLog" />
+    </Logger>
+    -->
+
   </loggers>
+
 </configuration>

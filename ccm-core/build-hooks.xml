@@ -5,8 +5,6 @@
 
   <target name="compile-hook">
     <mkdir dir="${build.src.dir}/com/arsdigita/installer"/>
-    <!-- Old style initializer completely removed.                 -->
-    <!-- <mkdir dir="${build.src.dir}/com/arsdigita/initializer"/> -->
     <mkdir dir="${build.src.dir}/com/redhat/persistence/pdl"/>
     <mkdir dir="${build.src.dir}/com/redhat/persistence/common"/>
     <mkdir dir="${build.src.dir}/com/redhat/persistence/oql"/>
@@ -15,13 +13,6 @@
       outputdirectory="${build.src.dir}/com/arsdigita/installer"
       javacchome="${javacc.home.dir}"
     />
-<!--  Old style initializer completely removed. 
-    <javacc
-      target="${src.dir}/com/arsdigita/initializer/ScriptParser.jj"
-      outputdirectory="${build.src.dir}/com/arsdigita/initializer"
-      javacchome="${javacc.home.dir}"
-    />
--->
     <javacc
       target="${src.dir}/com/redhat/persistence/pdl/PDLParser.jj"
       outputdirectory="${build.src.dir}/com/redhat/persistence/pdl"
@@ -51,10 +42,12 @@
   <target name="deploy-hook">
     <fail message="Property this.deploy.dir not defined." 
           unless="this.deploy.dir" />
-    <!-- deploy the log4j configuration file into the web applications
-         document root tree                                                 -->
-    <!--copy todir="${this.deploy.dir}/WEB-INF"
-          file="${src.dir}/log4j2.xml"/-->
+    <!-- deploy the log4j v2 configuration file into the web applications
+         document root tree                                               -->
+    <mkdir dir="${this.deploy.dir}/WEB-INF/conf"/>
+    <copy todir="${this.deploy.dir}/WEB-INF/conf"
+          file="${src.dir}/log4j2.xml" />
+
     <!-- project.xml moved to bundle cfg directory where it replaces
          former application.cfg                                            -->
     <xslt style="${ccm.tools.xsl.dir}/build-version.xsl" 
