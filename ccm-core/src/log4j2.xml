@@ -6,7 +6,7 @@
       <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
     </Console>
 
-    <File name="FileLog" fileName="/var/log/tomcat7s/trunklcs/libreccm.log">
+    <File name="FileLog" fileName="${sys:catalina.base}/logs/libreccm.log">
         <PatternLayout pattern="%d{yyyy-mm-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
     </File>
   </appenders>
@@ -38,7 +38,7 @@
 
     <!-- Set level="DEBUG" to get information about XSLT file resolution -->
     <Logger name="com.arsdigita.templating.PatternStylesheetResolver"
-            level="DEBUG" additivity="false" >
+            level="ERROR" additivity="false" >
       <!-- output just to libreccm specific application log, no system log -->
       <appenderRef ref="FileLog" />
     </Logger>
@@ -54,10 +54,12 @@
     </Logger>
 
     <!-- Set level="DEBUG" to collect all queries run by persistence  -->
-    <Logger name="com.arsdigita.web.ApplicationFileServlet"
+    <!--
+    <Logger name="com.redhat.persistence.engine.rdbms.RDBMSEngine"
             level="ERROR" additivity="false" >
       <appenderRef ref="FileLog" />
     </Logger>
+    -->
 
     <!-- uncomment / add entries for detailed information per package  -->
     <!--
