@@ -1,11 +1,21 @@
 Information for administrators and developers:
 
-This directory contains Navigation item pages specifically crafted for 
-Libre CMS. They are activated by a customized template.txt file list.
+This directory contains templates for Navigation item pages, used to 
+dynamically create various kind of Navigatin pages.
 
-All filenames must comply to the naming convention lcs-*.jsp.
+A lot of templates are quite generic and may be used by various different
+sites and customers. Thes templages begin with "def-"
 
-These file may be overwritten or ammended by site specific templates stored
-in den bundles subdirectory. In case of additional templates a customised
-template.txt must be provided and activated in the integrations.properties
-configuration file.  
+Some templates start with "min-". They are for the same purpose as the
+correspondig "def-" templates, but provide a minimal content.
+
+Other may be distribution or customer specific. Templates specifically crafted 
+for Libre CMS start with "lcs-". They are activated by a customized 
+template.txt file list.
+
+Customer or site specific templates should follow the same naming convention
+and start with a 3 character abbreviation.
+
+Customer or site specific templates are stored in den bundles subdirectory. 
+In case of additional templates a customised template.txt must be provided and 
+activated in the integrations.properties configuration file.  

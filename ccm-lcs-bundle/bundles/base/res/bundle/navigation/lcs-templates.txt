@@ -5,4 +5,4 @@ LibreCMS Events Page,Events Page ordering events in decending order,/templates/c
 LibreCMS Portal Page,Portal Page for embedding a portal page as navigation leaves page,/templates/ccm-navigation/navigation/def-portal.jsp
 LibreCMS Portal Welcome Page,Portal page meant as site welcome page,/templates/ccm-navigation/navigation/def-portal-welcome.jsp
 LibreCMS Navigation Welcome Page,Site welcome page created by navigation root term,/templates/ccm-navigation/navigation/def-welcome.jsp
-LibreCMS Specializing Items List,Specialising List item page,/templates/ccm-navigation/navigation/def-specializing-list.jsp
+LibreCMS Specializing Items List,Index page of items with a full set of attributes,/templates/ccm-navigation/navigation/def-specializing-list.jsp

@@ -7,7 +7,7 @@
      Other modules are commented out but compiled into an add-on bundle to 
      be used by a site administrator to create a customized installation
      using ccm-hostinit command.
-     Last checked: 2017-06
+     Last checked: 2018-05
      ======================================================================= -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
@@ -16,7 +16,7 @@
                     name="LibreCMS-SL" 
               prettyName="LibreCMS (Slimline Bundle)" 
                  version="2.3.99" 
-                 release="trunk-r5117" 
+                 release="trunk-r5397" 
                   webxml="libre-web.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
