@@ -4,6 +4,16 @@
     xmlns:show="/WEB-INF/bebop-show.tld"
     version="1.2">
 
+<!-- JSP template to create a list of items with a complete set of elements
+     (nav:attribute) instead the usual selection of elements (e.g. title and
+     abstract/summary).
+     It is primarily use for (scientific) publications and proects.
+ 
+    ##Title: A special index page of content items with a complete list of attributes
+    ##Descr: A special index page of content items with a complete list of attributes
+    ##Path : /templates/ccm-navigation/navigation/def-specializing-list.jsp
+-->
+
     <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
     <jsp:directive.page import="com.arsdigita.bebop.parameters.BigDecimalParameter"/>
     <jsp:directive.page import="com.arsdigita.navigation.Navigation"/>
