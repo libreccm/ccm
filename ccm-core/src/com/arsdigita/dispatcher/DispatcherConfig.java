@@ -75,6 +75,8 @@ public final class DispatcherConfig extends AbstractConfig {
 
     /**
      *  Get the URL for static items
+     * 
+     * @Deprecated
      */
     public String getStaticURLPrefix() {
         return (String)get(m_staticURLPrefix);
