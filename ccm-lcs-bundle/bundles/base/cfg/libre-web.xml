@@ -5,8 +5,14 @@
                version="3.0">
     
     <!--- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        librecms requires at minimum Servlet Spec 3.0 / Tomcat 7.0
+        basic web.xml for ccm-core and basic functions. If
+        additional modules provide specific web.xml snippets they must be
+        integrated before CCM is ready to work. Alternatively a
+        complete web.xml file from an installation bundle may be used.
+        
+        ccm-core requires at minimum Servlet Spec 3.0 / Tomcat 7.0
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
 
   <display-name>LibreCMS BASE Site</display-name> 
   <description>Community and Content Management</description>
@@ -18,6 +24,11 @@
     <param-name>log4jConfiguration</param-name>
     <param-value>WEB-INF/conf/log4j2.xml</param-value>
   </context-param>
+
+  <!-- Prevent Session ID in URL (for security reasons!)                     -->
+  <session-config>
+    <tracking-mode>COOKIE</tracking-mode>
+  </session-config>
 
 
   <!-- Require secure connection by redirect to host-port part
