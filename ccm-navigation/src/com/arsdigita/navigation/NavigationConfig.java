@@ -85,10 +85,6 @@ public final class NavigationConfig extends AbstractConfig {
      * back on default? Default: true
      */
     private final Parameter m_inheritTemplates;
-    // Removed, use content-section config directly instead!
-    // ContentSection.getConfig().getDefaultContentSection()
-    // /** The URL of the default content section. Default:  /content/ */
-    // private final Parameter m_defaultContentSectionURL;
     private final Parameter m_relatedItemsContext;
     private final Parameter m_defaultModelClass;
     private final Parameter m_defaultCatRootPath;
@@ -113,19 +109,29 @@ public final class NavigationConfig extends AbstractConfig {
 
     private Category m_defaultCategoryRoot = null;
 
+    /**
+     * The maximum number of items In the object list on an index page.
+     */
+    private final Parameter m_indexPageMaxItems = new StringParameter(
+        "com.arsdigita.navigation.index_page_max_items",
+        Parameter.REQUIRED, new Integer(30) );
+
     // maybe 2 lookups in a single request so prevent double overhead
     private RequestLocal m_allDateOrderCategories = new RequestLocal() {
 
         public Object initialValue(PageState state) {
             return getCurrentDateOrderCategories();
         }
-
     };
 
     private NavigationModel m_defaultModel = null;
 
     private TreeCatProvider m_treeCatProvider = null;
 
+
+    /**
+     * 
+     */
     public NavigationConfig() {
         // not desirable default value (IMHO) but retains existing behaviour
         m_inheritTemplates = new BooleanParameter(
@@ -179,9 +185,6 @@ public final class NavigationConfig extends AbstractConfig {
         register(m_generateItemURL);
         register(m_defaultTemplate);
         register(m_inheritTemplates);
-        // Removed, use content-section config directly instead!
-        // ContentSection.getConfig().getDefaultContentSection()
-        // register(m_defaultContentSectionURL);
         register(m_relatedItemsContext);
         register(m_defaultModelClass);
         register(m_defaultCatRootPath);
@@ -197,6 +200,7 @@ public final class NavigationConfig extends AbstractConfig {
         register(m_dateOrderCategories);
         register(m_topLevelDateOrderCategories);
         register(m_defaultMenuCatProvider);
+        register(m_indexPageMaxItems);
         loadInfo();
 
         // Quasimodo: Begin
@@ -230,11 +234,6 @@ public final class NavigationConfig extends AbstractConfig {
         return ((Boolean) get(m_inheritTemplates)).booleanValue();
     }
 
-    // Removed, use content-section config directly instead!
-    // ContentSection.getConfig().getDefaultContentSection()
-//  public final String getDefaultContentSectionURL() {
-//      return (String)get(m_defaultContentSectionURL);
-//  }
     public final String getRelatedItemsContext() {
         return (String) get(m_relatedItemsContext);
     }
@@ -423,6 +422,16 @@ public final class NavigationConfig extends AbstractConfig {
             }
         }
         return m_treeCatProvider;
+    }
+
+    /**
+     * Retrieve the maximum number of items contained in the object list of an
+     * index page. 
+     *
+     * @return Number of obuect list items.
+     */
+    public final Integer getIndexPageMaxItems() {
+        return ((Integer) get(m_indexPageMaxItems));
     }
 
 }
