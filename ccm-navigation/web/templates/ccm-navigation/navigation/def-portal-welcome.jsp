@@ -7,8 +7,8 @@
      Currently the same as def-portal.jsp, may change in future to
      support special features of a site's start page (home page)      
  
-    ##Title: A Portal Page usable as Index Page in Navigation
-    ##Descr: Portal Page including navigation menu. Portlets must be added separately.
+    ##Title: A Portal Page including navigation bar
+    ##Descr: Portal Page meant as an alternative site welcome page in navigation. Portlets must be added separately.
     ##Path : /templates/ccm-navigation/navigation/def-portal-welcome.jsp
 -->
 

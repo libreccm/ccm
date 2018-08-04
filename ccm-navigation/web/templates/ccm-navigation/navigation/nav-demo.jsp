@@ -1,9 +1,9 @@
 <!--
    Template to generate a sitemap page
 
-   ##Title: Sitemap Page
-   ##Descr: Same as def-sitemap, for backwards compatibility. To be deleted soon.
-   ##Path : /templates/ccm-navigation/navigation/min-default.jsp
+   ##Title: Navigation Demonstration
+   ##Descr: Purpose unknown. To be deleted soon.
+   ##Path : /templates/ccm-navigation/navigation/nav-demo.jsp
 -->
 <jsp:root 
   xmlns:jsp="http://java.sun.com/JSP/Page" 

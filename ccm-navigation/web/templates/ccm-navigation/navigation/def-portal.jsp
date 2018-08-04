@@ -7,8 +7,8 @@
 <!-- JSP template to use a portal page as index page in navigation  
      Currently the same as def-portal-welcome.jsp, may change in future.
  
-    ##Title: A Portal Page usable as Index Page in Navigation
-    ##Descr: A portal page including navigation menu. Portlets must be added separately.
+    ##Title: Portal Page with navigatgion menu
+    ##Descr: A portal page for embedding a portal page as navigation leaves page navigation menu. Portlets must be added separately.
     ##Path : /templates/ccm-navigation/navigation/def-portal.jsp
 -->
 

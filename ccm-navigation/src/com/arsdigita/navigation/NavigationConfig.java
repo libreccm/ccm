@@ -112,7 +112,7 @@ public final class NavigationConfig extends AbstractConfig {
     /**
      * The maximum number of items In the object list on an index page.
      */
-    private final Parameter m_indexPageMaxItems = new StringParameter(
+    private final Parameter m_indexPageMaxItems = new IntegerParameter(
         "com.arsdigita.navigation.index_page_max_items",
         Parameter.REQUIRED, new Integer(30) );
 
