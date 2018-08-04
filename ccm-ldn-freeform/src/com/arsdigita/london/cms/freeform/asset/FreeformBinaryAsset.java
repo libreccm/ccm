@@ -60,8 +60,11 @@ public class FreeformBinaryAsset extends BinaryAsset {
     }
 
     /**
-     * implementation of abstract method 
+     * implementation of abstract method
+     * 
+     * @return 
      **/
+    @Override
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -69,8 +72,12 @@ public class FreeformBinaryAsset extends BinaryAsset {
     /**
      * Basic implementation of abstract method. Use {@link
      * readBytes()} to read binary data.
+     * 
+     * @return 
      **/
-    protected byte[] getContent() {
+    //protected byte[] getContent() {
+    @Override
+    public byte[] getContent() {
         return (byte[]) get(CONTENT);
     }
 
@@ -78,13 +85,17 @@ public class FreeformBinaryAsset extends BinaryAsset {
      * Basic implementation of abstract method. Use {@link
      * writeBytes()} to set binary data.
      **/
+    @Override
     protected void setContent(byte[] content) {
         set(CONTENT, content);
     }
 
     /** 
-     * Not implemented;  required for the interface 
+     * Not implemented;  required by the interface
+     * 
+     * @param f
      **/
+    @Override
     public void writeToFile(File f) {
         // do nothing
     }
