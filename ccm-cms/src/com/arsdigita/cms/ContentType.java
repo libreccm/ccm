@@ -57,9 +57,10 @@ import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * <p>
- * A Content Type defines the characteristics of a content item. Content management resources are
- * registered to a content type, including the {@link com.arsdigita.cms.AuthoringKit Authoring Kit},
- * and {@link com.arsdigita.cms.Template templates}.</p>
+ * A Content Type defines the characteristics of a content item. Content
+ * management resources are registered to a content type, including the
+ * {@link com.arsdigita.cms.AuthoringKit Authoring Kit}, and
+ * {@link com.arsdigita.cms.Template templates}.</p>
  *
  * <p>
  * Each content type is associated with a {@link
@@ -73,19 +74,23 @@ import org.xml.sax.helpers.DefaultHandler;
 public class ContentType extends ACSObject {
 
     /**
-     * Internal logger instance to faciliate debugging. Enable logging output by editing
-     * /WEB-INF/conf/log4j.properties int hte runtime environment and set
-     * com.arsdigita.cms.ui.authoring.NewItemForm=DEBUG by uncommenting or adding the line.
+     * Internal logger instance to faciliate debugging. Enable logging output by
+     * editing /WEB-INF/conf/log4j.properties int hte runtime environment and
+     * set com.arsdigita.cms.ui.authoring.NewItemForm=DEBUG by uncommenting or
+     * adding the line.
      */
     private static final Logger s_log = Logger.getLogger(ContentType.class);
 
-    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.ContentType";
+    public static final String BASE_DATA_OBJECT_TYPE
+                               = "com.arsdigita.cms.ContentType";
     /**
-     * The path content types are expected to store their type definition file (usually
-     * [domainObjectBaseName].xml by convention). Any content item should use this location unless
-     * there are good reasons for a different location.
+     * The path content types are expected to store their type definition file
+     * (usually [domainObjectBaseName].xml by convention). Any content item
+     * should use this location unless there are good reasons for a different
+     * location.
      */
-    public static final String CONTENTTYPE_DEFINITIONFILE_PATH = "/WEB-INF/content-types/";
+    public static final String CONTENTTYPE_DEFINITIONFILE_PATH
+                               = "/WEB-INF/content-types/";
     public static final String OBJECT_TYPE = "associatedObjectType";
     /**
      * The name or title of the content type, e.g. "File Storage Item"
@@ -115,10 +120,12 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Constructor. The contained <code>DataObject</code> is retrieved from the persistent storage
-     * mechanism with an <code>OID</code> specified by <i>oid</i>.
+     * Constructor. The contained <code>DataObject</code> is retrieved from the
+     * persistent storage mechanism with an <code>OID</code> specified by
+     * <i>oid</i>.
      *
-     * @param oid The <code>OID</code> for the retrieved <code>DataObject</code>.
+     * @param oid The <code>OID</code> for the retrieved
+     *            <code>DataObject</code>.
      *
      */
     public ContentType(OID oid) throws DataObjectNotFoundException {
@@ -126,9 +133,9 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Constructor. The contained <code>DataObject</code> is retrieved from the persistent storage
-     * mechanism with an <code>OID</code> specified by <i>id</i> and
-     * <code>ContentType.BASE_DATA_OBJECT_TYPE</code>.
+     * Constructor. The contained <code>DataObject</code> is retrieved from the
+     * persistent storage mechanism with an <code>OID</code> specified by
+     * <i>id</i> and <code>ContentType.BASE_DATA_OBJECT_TYPE</code>.
      *
      * @param id The <code>id</code> for the retrieved <code>DataObject</code>.
      *
@@ -146,8 +153,8 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * @return the base PDL object type for this item. Child classes should override this method to
-     *         return the correct value
+     * @return the base PDL object type for this item. Child classes should
+     *         override this method to return the correct value
      */
     @Override
     public String getBaseDataObjectType() {
@@ -163,9 +170,9 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Returns the object type of the items of this content type. (For example: If I create a
-     * ContentType "foo". Then a I create an item "bar" of type foo. This associated object type is
-     * the same as bar.getObjectType())
+     * Returns the object type of the items of this content type. (For example:
+     * If I create a ContentType "foo". Then a I create an item "bar" of type
+     * foo. This associated object type is the same as bar.getObjectType())
      *
      * @return The data object type representation of this content type
      */
@@ -183,15 +190,17 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Fetches the label for the content type. The label is a globalized notation displayed to the
-     * user to identify the content type. As an example a content type named "Article" (as in
-     * getName()) will be displayed in an english environment as the label "Article", in German as
+     * Fetches the label for the content type. The label is a globalized
+     * notation displayed to the user to identify the content type. As an
+     * example a content type named "Article" (as in getName()) will be
+     * displayed in an english environment as the label "Article", in German as
      * "Artikel", etc.
      *
-     * The label is retrieved from content type's resources. The message uses some convention to
-     * retrieve the message key and resource bundle.
+     * The label is retrieved from content type's resources. The message uses
+     * some convention to retrieve the message key and resource bundle.
      *
-     * Client classes may overwrite the method to provide a label from a different source.
+     * Client classes may overwrite the method to provide a label from a
+     * different source.
      *
      * @return The (globalized) label.
      */
@@ -225,7 +234,8 @@ public class ContentType extends ACSObject {
         // We assume the name of the key in resource bundle is the same as
         // the ObjectType  minus the domain part ("com.arsdigita.")
         // and starting with "cms" and suffix ".type_label" appended
-        String labelKey = objectTypeName.substring(objectTypeName.indexOf("cms"))
+        String labelKey = objectTypeName
+            .substring(objectTypeName.indexOf("cms"))
             .concat(".type_label")
             .toLowerCase();
         if (s_log.isDebugEnabled()) {
@@ -234,7 +244,8 @@ public class ContentType extends ACSObject {
 
         // First try: check, if the resource file really exists, and if it does,
         // use it.
-        if (this.getClass().getClassLoader().getResource(bundleResourcePath) != null) {
+        if (this.getClass().getClassLoader().getResource(bundleResourcePath)
+            != null) {
             s_log.debug("Found resource file, using it.");
             // Property file exists, use it!
             final String bundleName = objectTypeName.concat("Resources");
@@ -243,7 +254,8 @@ public class ContentType extends ACSObject {
         } else {
             s_log.debug("No resource file found, using item's definition file");
             // No property file found, try to use the item's definition file
-            final InputStream defFile = Thread.currentThread().getContextClassLoader()
+            final InputStream defFile = Thread.currentThread()
+                .getContextClassLoader()
                 .getResourceAsStream(typeResourcePath);
 
             if (defFile == null) {
@@ -266,17 +278,20 @@ public class ContentType extends ACSObject {
                 // As a proper example:
                 // /WEB-INF/content-types/com.arsditita.cms.contenttypes.Event.xml
                 try {
-                    final SAXParserFactory parserFactory = SAXParserFactory.newInstance();
+                    final SAXParserFactory parserFactory = SAXParserFactory
+                        .newInstance();
                     final SAXParser parser = parserFactory.newSAXParser();
                     final BundleName bundleName = new BundleName();
                     parser.parse(defFile, bundleName);
 
                     if (bundleName.getName() == null) {
                         // Fallback to the non-globalized identifier (name)
-                        s_log.warn("Failed to translate content type name. No bundle found.");
+                        s_log.warn(
+                            "Failed to translate content type name. No bundle found.");
                         return new GlobalizedMessage(getName());
                     } else {
-                        label = new GlobalizedMessage(labelKey, bundleName.getName());
+                        label = new GlobalizedMessage(labelKey, bundleName
+                                                      .getName());
                     }
                 } catch (ParserConfigurationException ex) {
                     s_log.warn("Failed to translate content type name:", ex);
@@ -337,10 +352,11 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Fetches the name for the content type. The name is a fixed String, which 'names' a content
-     * type and is not localizible. It is stored in the database and a symbolic name for the formal
-     * ID. It may contain any characters but is preferable an english term. Examples are "FAQ item"
-     * or "Article" or "Multipart Article". It has to be unique system-wide.
+     * Fetches the name for the content type. The name is a fixed String, which
+     * 'names' a content type and is not localizible. It is stored in the
+     * database and a symbolic name for the formal ID. It may contain any
+     * characters but is preferable an english term. Examples are "FAQ item" or
+     * "Article" or "Multipart Article". It has to be unique system-wide.
      *
      * @return The name (ie. may be used as a non-localized label)
      */
@@ -353,8 +369,9 @@ public class ContentType extends ACSObject {
      *
      * @see getName() for additional details.
      *
-     * The name is stored in the database. In the database this property is stored under 'label',
-     * when globliation was not an issue. The Method is primarly used in the initial loading step.
+     * The name is stored in the database. In the database this property is
+     * stored under 'label', when globliation was not an issue. The Method is
+     * primarly used in the initial loading step.
      *
      * @param name The name
      */
@@ -400,19 +417,24 @@ public class ContentType extends ACSObject {
 
     /**
      * <p>
-     * An internal content type is one that is not user-defined and maintained internally. A content
-     * type should be made internal under the following two conditions:</p>
+     * An internal content type is one that is not user-defined and maintained
+     * internally. A content type should be made internal under the following
+     * two conditions:</p>
      *
      * <ol>
-     * <li>The object type needs to take advantage of content type services (i.e., versioning,
-     * categorization, lifecycle, workflow) that are already implemented in CMS.</li>
-     * <li>The content type cannot be explicitly registered to a content section.</li>
+     * <li>The object type needs to take advantage of content type services
+     * (i.e., versioning, categorization, lifecycle, workflow) that are already
+     * implemented in CMS.</li>
+     * <li>The content type cannot be explicitly registered to a content
+     * section.</li>
      * </ol>
      *
      * <p>
-     * The {@link com.arsdigita.cms.Template} content type is one such internal content type.</p>
+     * The {@link com.arsdigita.cms.Template} content type is one such internal
+     * content type.</p>
      *
-     * @return Boolean.TRUE if this content type is internal, Boolean.FALSE otherwise.
+     * @return Boolean.TRUE if this content type is internal, Boolean.FALSE
+     *         otherwise.
      */
     public Boolean isInternal() {
         return "I".equalsIgnoreCase((String) get(MODE));
@@ -420,11 +442,13 @@ public class ContentType extends ACSObject {
 
     /**
      * <p>
-     * A hidden content type is one that is not user-defined but not meant to be used directly (p.
-     * ex. GenericArticle). in contrast they provide some basic features for different kind of
-     * content type to be extended from. Also, they are legit perents for UDCTs.
+     * A hidden content type is one that is not user-defined but not meant to be
+     * used directly (p. ex. GenericArticle). in contrast they provide some
+     * basic features for different kind of content type to be extended from.
+     * Also, they are legit perents for UDCTs.
      *
-     * @return Boolean.TRUE if this content type is internal, Boolean.FALSE otherwise.
+     * @return Boolean.TRUE if this content type is internal, Boolean.FALSE
+     *         otherwise.
      */
     public Boolean isHidden() {
         return "H".equalsIgnoreCase((String) get(MODE));
@@ -462,18 +486,19 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Create an authoring kit to this content type. To save this authoring kit, you need to call
-     * <code>save()</code> method on the returned AuthoringKit.
+     * Create an authoring kit to this content type. To save this authoring kit,
+     * you need to call <code>save()</code> method on the returned AuthoringKit.
      */
     public AuthoringKit createAuthoringKit() {
         return createAuthoringKit(null);
     }
 
     /**
-     * Create an authoring kit to this content type. To save this authoring kit, you need to call
-     * <code>save()</code> method on the returned AuthoringKit.
+     * Create an authoring kit to this content type. To save this authoring kit,
+     * you need to call <code>save()</code> method on the returned AuthoringKit.
      *
-     * @param createComponent the create component class associated with the authoring kit
+     * @param createComponent the create component class associated with the
+     *                        authoring kit
      */
     public AuthoringKit createAuthoringKit(String createComponent) {
 
@@ -491,20 +516,22 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Fetch the item creation form id of the Java domain object implementation. applies to
-     * user-defined types
+     * Fetch the item creation form id of the Java domain object implementation.
+     * applies to user-defined types
      *
-     * @return The id of the persistent form used to create an item of this content type
+     * @return The id of the persistent form used to create an item of this
+     *         content type
      */
     public BigDecimal getItemFormID() {
         return (BigDecimal) get(ITEM_FORM_ID);
     }
 
     /**
-     * Sets the item creation form id of the Java domain object implementation. applies to
-     * user-defined types
+     * Sets the item creation form id of the Java domain object implementation.
+     * applies to user-defined types
      *
-     * @param itemFormID The id of the persistent form used to create an item of this content type
+     * @param itemFormID The id of the persistent form used to create an item of
+     *                   this content type
      */
     public void setItemFormID(BigDecimal itemFormID) {
         set(ITEM_FORM_ID, itemFormID);
@@ -513,8 +540,8 @@ public class ContentType extends ACSObject {
     /**
      * Retrieve the persistent form of this content type
      *
-     * @return the persistent form used to create or edit content items of this type (only applies
-     *         to user-defined types)
+     * @return the persistent form used to create or edit content items of this
+     *         type (only applies to user-defined types)
      */
     public PersistentForm getItemForm() throws DataObjectNotFoundException {
 
@@ -692,7 +719,8 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Fetches a collection of all content types, including internal content types.
+     * Fetches a collection of all content types, including internal content
+     * types.
      *
      * @return A collection of all content types
      */
@@ -701,9 +729,11 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Fetches a collection of all content types, including internal content types.
+     * Fetches a collection of all content types, including internal content
+     * types.
      *
-     * @param hidden If false, fetch all content types, ecluding hidden content types
+     * @param hidden If false, fetch all content types, ecluding hidden content
+     *               types
      *
      * @return A collection of all content types
      */
@@ -721,11 +751,15 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * @param internal If false, fetch all content types, excluding internal content types.
-     * @param hidden   If false, fetch all content types, excluding hidden content types.
+     * @param internal If false, fetch all content types, excluding internal
+     *                 content types.
+     * @param hidden   If false, fetch all content types, excluding hidden
+     *                 content types.
      */
-    private static ContentTypeCollection getAllContentTypes(boolean internal, boolean hidden) {
-        DataCollection da = SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
+    private static ContentTypeCollection getAllContentTypes(boolean internal,
+                                                            boolean hidden) {
+        DataCollection da = SessionManager.getSession().retrieve(
+            BASE_DATA_OBJECT_TYPE);
         ContentTypeCollection types = new ContentTypeCollection(da);
 
         if (!internal) {
@@ -739,8 +773,8 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Fetches a collection of content types that have been registered to at least one content
-     * section, excluding internal content types.
+     * Fetches a collection of content types that have been registered to at
+     * least one content section, excluding internal content types.
      *
      * @return A collection of registered content types
      */
@@ -771,9 +805,11 @@ public class ContentType extends ACSObject {
 
         // Or must be a descendant of the requested type
         try {
-            StringTokenizer strTok = new StringTokenizer(ct.getDescendants(), "/");
+            StringTokenizer strTok = new StringTokenizer(ct.getDescendants(),
+                                                         "/");
             while (strTok.hasMoreElements()) {
-                or.addFilter(ff.equals(ContentType.ID, (String) strTok.nextElement()));
+                or.addFilter(ff.equals(ContentType.ID, (String) strTok
+                                       .nextElement()));
             }
         } catch (Exception ex) {
             // WTF? The selected content type does not exist in the table???
@@ -786,7 +822,8 @@ public class ContentType extends ACSObject {
     private static List s_xsl = new ArrayList();
 
     /**
-     * Registers an XSL file against a content type. NB this interface is liable to change.
+     * Registers an XSL file against a content type. NB this interface is liable
+     * to change.
      *
      * @param type the content type
      * @param path the path relative to the server root
@@ -796,7 +833,8 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Unregisters an XSL file against a content type. NB this interface is liable to change.
+     * Unregisters an XSL file against a content type. NB this interface is
+     * liable to change.
      *
      * @param type the content type
      * @param path the path relative to the server root
@@ -893,8 +931,8 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Retrieves all objects of this type stored in the database. Very
-     * necessary for exporting all entities of the current work environment.
+     * Retrieves all objects of this type stored in the database. Very necessary
+     * for exporting all entities of the current work environment.
      *
      * @return List of all objects
      */
@@ -903,11 +941,11 @@ public class ContentType extends ACSObject {
 
         final Session session = SessionManager.getSession();
         DomainCollection collection = new DomainCollection(session.retrieve(
-                ContentType.BASE_DATA_OBJECT_TYPE));
+            ContentType.BASE_DATA_OBJECT_TYPE));
 
         while (collection.next()) {
             ContentType object = (ContentType) collection
-                    .getDomainObject();
+                .getDomainObject();
             if (object != null) {
                 objectList.add(object);
             }
@@ -916,4 +954,5 @@ public class ContentType extends ACSObject {
         collection.close();
         return objectList;
     }
+
 }

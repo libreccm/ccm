@@ -1,0 +1,113 @@
+/*
+ * Copyright (C) 2015 LibreCCM Foundation.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
+package org.libreccm.export.convert;
+
+import org.libreccm.categorization.Categorization;
+import org.libreccm.categorization.Category;
+import org.libreccm.categorization.Domain;
+import org.libreccm.categorization.DomainOwnership;
+
+import org.libreccm.core.CcmObject;
+
+import org.libreccm.core.Resource;
+
+import org.libreccm.core.ResourceType;
+
+import org.libreccm.security.Group;
+import org.libreccm.security.GroupMembership;
+import org.libreccm.security.Party;
+import org.libreccm.security.Permission;
+import org.libreccm.security.Role;
+import org.libreccm.security.RoleMembership;
+import org.libreccm.security.User;
+
+import org.libreccm.web.CcmApplication;
+
+import org.libreccm.workflow.AssignableTask;
+import org.libreccm.workflow.Task;
+import org.libreccm.workflow.TaskAssignment;
+import org.libreccm.workflow.TaskComment;
+import org.libreccm.workflow.TaskDependency;
+import org.libreccm.workflow.Workflow;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Storage class for all ng-objects after conversion. This also helps for an
+ * easier access for the restoration of the dependencies.
+ *
+ * @author <a href="mailto:tosmers@uni-bremen.de">Tobias Osmers</a>
+ * @author <a href="mailto:jens.pelzetter@googlemail.com">jens Pelzetter</a>
+ */
+public class CcmCoreEntities {
+
+    public final static Map<Long, Party> PARTIES = new HashMap<>();
+    public final static Map<Long, User> USERS = new HashMap<>();
+    public final static Map<Long, Group> GROUPS = new HashMap<>();
+    public final static Map<Long, GroupMembership> GROUP_MEMBERSHIPS
+                                                   = new HashMap<>();
+
+    public final static Map<Long, Role> ROLES = new HashMap<>();
+    public final static Map<Long, RoleMembership> ROLE_MEMBERSHIPS
+                                                  = new HashMap<>();
+
+    public final static Map<Long, CcmObject> CCM_OBJECTS = new HashMap<>();
+    public final static Map<Long, Category> CATEGORIES = new HashMap<>();
+    public final static Map<Long, Categorization> CATEGORIZATIONS
+                                                  = new HashMap<>();
+
+    public final static Map<Long, Permission> PERMISSIONS = new HashMap<>();
+
+    public final static Map<Long, Workflow> WORKFLOWS = new HashMap<>();
+    public final static Map<Long, TaskComment> TASK_COMMENTS = new HashMap<>();
+    public final static Map<Long, Task> TASKS = new HashMap<>();
+    public final static Map<Long, AssignableTask> ASSIGNABLE_TASKS
+                                                  = new HashMap<>();
+    public final static Map<Long, TaskDependency> TASK_DEPENDENCIES
+                                                  = new HashMap<>();
+    public final static Map<Long, TaskAssignment> TASK_ASSIGNMENTS
+                                                  = new HashMap<>();
+
+    public final static Map<Long, ResourceType> RESOURCE_TYPES = new HashMap<>();
+    public final static Map<Long, Resource> resources = new HashMap<>();
+    public final static Map<Long, CcmApplication> CCM_APPLICATIONS
+                                                  = new HashMap<>();
+
+    public final static Map<Long, Domain> DOMAINS = new HashMap<>();
+    public final static Map<Long, DomainOwnership> DOMAIN_OWNERSHIPS
+                                                   = new HashMap<>();
+
+    // in case maps need to be sorted for export
+    public static List<Category> SORTED_CATEGORIES = new ArrayList<>();
+    public static List<Workflow> SORTED_WORKFLOWS = new ArrayList<>();
+    public static List<AssignableTask> SORTED_ASSIGNABLE_TASKS
+                                             = new ArrayList<>();
+    public static List<CcmApplication> SORTED_CCM_APPLICATIONS
+                                             = new ArrayList<>();
+
+    /**
+     * Private constructor to prevent the instantiation of this class.
+     */
+    private CcmCoreEntities() {
+    }
+
+}

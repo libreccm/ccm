@@ -1,0 +1,172 @@
+/*
+ * Copyright (C) 2015 LibreCCM Foundation.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
+package org.libreccm.security;
+
+import com.arsdigita.kernel.ACSObject;
+
+import org.libreccm.export.convert.Portable;
+import org.libreccm.export.convert.CcmCoreEntities;
+
+import org.libreccm.l10n.LocalizedString;
+
+import org.libreccm.workflow.TaskAssignment;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.libreccm.export.Exportable;
+import org.libreccm.export.convert.UuidGenerator;
+
+import java.util.*;
+
+/**
+ * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
+ * @version created on 6/15/16
+ */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+                  resolver = RoleIdResolver.class,
+                  property = "name")
+public class Role implements Exportable, Portable {
+
+    private long roleId;
+    private String uuid;
+    private String name;
+    private LocalizedString description;
+    @JsonIgnore
+    private Set<RoleMembership> memberships;
+    @JsonIgnore
+    private List<Permission> permissions;
+    @JsonIgnore
+    private List<TaskAssignment> assignedTasks;
+
+    public Role(final com.arsdigita.kernel.Role trunkRole) {
+        
+        roleId = trunkRole.getID().longValue();
+        uuid = UuidGenerator.getInstance().generateUuid(trunkRole);
+        name = trunkRole.getName();
+
+        memberships  = new HashSet<>();
+
+        permissions = new ArrayList<>();
+        assignedTasks = new ArrayList<>();
+
+        Locale local = Locale.getDefault();
+        description = new LocalizedString();
+        description.addValue(local, trunkRole.getDescription());
+
+        CcmCoreEntities.ROLES.put(roleId, this);
+    }
+
+    public Role(final String name) {
+        roleId = ACSObject.generateID().longValue();
+        this.name = name;
+
+        memberships  = new HashSet<>();
+
+        permissions = new ArrayList<>();
+        assignedTasks = new ArrayList<>();
+
+        description = new LocalizedString();
+
+        CcmCoreEntities.ROLES.put(this.roleId, this);
+    }
+
+
+    public long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(final long roleId) {
+        this.roleId = roleId;
+    }
+    
+    @Override
+    public String getUuid() {
+        return uuid;
+    }
+    
+    @Override
+    public void setUuid(final String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public Set<RoleMembership> getMemberships() {
+        return memberships;
+    }
+
+    public void setMemberships(final Set<RoleMembership> memberships) {
+        this.memberships = memberships;
+    }
+
+    public void addMembership(final RoleMembership membership) {
+        memberships.add(membership);
+    }
+
+    public void removeMembership(final RoleMembership membership) {
+        memberships.remove(membership);
+    }
+
+    public List<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(final List<Permission> permissions) {
+        this.permissions = permissions;
+    }
+
+    public void addPermission(final Permission permission) {
+        permissions.add(permission);
+    }
+
+    public void removePermission(final Permission permission) {
+        permissions.remove(permission);
+    }
+
+    public List<TaskAssignment> getAssignedTasks() {
+        return assignedTasks;
+    }
+
+    public void setAssignedTasks(final List<TaskAssignment> assignedTasks) {
+        this.assignedTasks = assignedTasks;
+    }
+
+    public void addAssignedTask(final TaskAssignment taskAssignment) {
+        assignedTasks.add(taskAssignment);
+    }
+
+    public void removeAssignedTask(final TaskAssignment taskAssignment) {
+        assignedTasks.remove(taskAssignment);
+    }
+
+    public LocalizedString getDescription() {
+        return description;
+    }
+
+    public void setDescription(final LocalizedString description) {
+        this.description = description;
+    }
+}

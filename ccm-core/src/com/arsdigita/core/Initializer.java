@@ -52,7 +52,22 @@ import com.arsdigita.webdevsupport.WebDevSupport;
 import com.arsdigita.workflow.simple.TaskComment;
 
 import org.apache.log4j.Logger;
-
+import org.libreccm.categorization.CategoriesExporter;
+import org.libreccm.categorization.CategorizationsExporter;
+import org.libreccm.core.ResourceTypesExporter;
+import org.libreccm.export.ExportManager;
+import org.libreccm.security.GroupMembershipsExporter;
+import org.libreccm.security.GroupsExporter;
+import org.libreccm.security.PermissionsExporter;
+import org.libreccm.security.RoleMembershipsExporter;
+import org.libreccm.security.RolesExporter;
+import org.libreccm.security.UsersExporter;
+import org.libreccm.workflow.AssignableTasksExporter;
+import org.libreccm.workflow.TaskAssignmentsExporter;
+import org.libreccm.workflow.TaskCommentsExporter;
+import org.libreccm.workflow.TaskDependenciesExporter;
+import org.libreccm.workflow.TasksExporter;
+import org.libreccm.workflow.WorkflowsExporter;
 
 /**
  * CoreInitializer
@@ -75,10 +90,10 @@ public class Initializer extends CompoundInitializer {
         s_log.info("Ading Sub-Initilizers ...");
         add(new com.arsdigita.persistence.Initializer());
 
-        add(new PDLInitializer
-            (new ManifestSource
-             ("ccm-core.pdl.mf",
-              new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
+        add(new PDLInitializer(new ManifestSource("ccm-core.pdl.mf",
+                                                  new NameFilter(DbHelper
+                                                      .getDatabaseSuffix(
+                                                          database), "pdl"))));
 
         add(new com.arsdigita.ui.Initializer());
         add(new com.arsdigita.kernel.Initializer());
@@ -92,123 +107,156 @@ public class Initializer extends CompoundInitializer {
 
     }
 
-    /**
-     * 
-     * @param e
-     */
     @Override
-    public final void init(final DomainInitEvent e) {
-        super.init(e);
+    public final void init(final DomainInitEvent event) {
+        super.init(event);
 
         s_log.debug("Running core init(DomainInitEvent) ...");
 
-        e.getFactory().registerInstantiator
-            (Host.BASE_DATA_OBJECT_TYPE,
-             new DomainObjectInstantiator() {
-                 public DomainObject doNewInstance(DataObject dobj) {
-                     return new Host(dobj);
-                 }
-             });
+        event.getFactory().registerInstantiator(
+            Host.BASE_DATA_OBJECT_TYPE,
+            new DomainObjectInstantiator() {
 
-        e.getFactory().registerInstantiator
-            (ApplicationType.BASE_DATA_OBJECT_TYPE,
-             new DomainObjectInstantiator() {
-                 public DomainObject doNewInstance(DataObject dobj) {
-                     return new ApplicationType(dobj);
-                 }
-             });
+            public DomainObject doNewInstance(final DataObject dobj) {
+                return new Host(dobj);
+            }
 
-        e.getFactory().registerInstantiator
-            (TaskComment.BASE_DATA_OBJECT_TYPE,
-             new DomainObjectInstantiator() {
-                 public DomainObject doNewInstance(final DataObject data) {
-                     return new TaskComment(data);
-                 }
-             });
+        });
+
+        event.getFactory().registerInstantiator(
+            ApplicationType.BASE_DATA_OBJECT_TYPE,
+            new DomainObjectInstantiator() {
+
+            public DomainObject doNewInstance(final DataObject dobj) {
+                return new ApplicationType(dobj);
+            }
+
+        });
+
+        event.getFactory().registerInstantiator(
+            TaskComment.BASE_DATA_OBJECT_TYPE,
+            new DomainObjectInstantiator() {
+
+            public DomainObject doNewInstance(final DataObject data) {
+                return new TaskComment(data);
+            }
+
+        });
 
         /* domain.ReflectionInstantiator instantiator for 
          * dataObject com.arsdigita.webdevsupport.WebDevSupport              */
-        e.getFactory().registerInstantiator
-            (WebDevSupport.BASE_DATA_OBJECT_TYPE,
-             new ACSObjectInstantiator() {
-                 @Override
-                 public DomainObject doNewInstance(final DataObject data) {
-                     return new WebDevSupport(data);
-                 }
-             });
+        event.getFactory().registerInstantiator(
+            WebDevSupport.BASE_DATA_OBJECT_TYPE,
+            new ACSObjectInstantiator() {
 
-        e.getFactory().registerInstantiator
-            (Login.BASE_DATA_OBJECT_TYPE,
-             new ACSObjectInstantiator() {
-                 @Override
-                 public DomainObject doNewInstance(final DataObject data) {
-                     return new Login(data);
-                 }
-             });
+            @Override
+            public DomainObject doNewInstance(final DataObject data) {
+                return new WebDevSupport(data);
+            }
 
-        e.getFactory().registerInstantiator
-            (Admin.BASE_DATA_OBJECT_TYPE,
-             new ACSObjectInstantiator() {
-                 @Override
-                 public DomainObject doNewInstance(final DataObject data) {
-                     return new Admin(data);
-                 }
-             });
+        });
 
-        e.getFactory().registerInstantiator
-            (Permissions.BASE_DATA_OBJECT_TYPE,
-             new ACSObjectInstantiator() {
-                 @Override
-                 public DomainObject doNewInstance(final DataObject data) {
-                     return new Permissions(data);
-                 }
-             });
+        event.getFactory().registerInstantiator(
+            Login.BASE_DATA_OBJECT_TYPE,
+            new ACSObjectInstantiator() {
 
-	    e.getFactory().registerInstantiator
-            (BasicAuditTrail.BASE_DATA_OBJECT_TYPE,
-	         new DomainObjectInstantiator() {
-		       public DomainObject doNewInstance(final DataObject data) {
-		              return new BasicAuditTrail(data);
-	             }
-	         });
+            @Override
+            public DomainObject doNewInstance(final DataObject data) {
+                return new Login(data);
+            }
 
-        e.getFactory().registerInstantiator
-            (MimeType.BASE_DATA_OBJECT_TYPE,
-             new DomainObjectInstantiator() {
-                 public DomainObject doNewInstance(DataObject dataObject) {
-                     return new MimeType(dataObject);
-                 }
-                 @Override
-                 public DomainObjectInstantiator
-                     resolveInstantiator(DataObject obj) {
-                     return this;
-                 }
-             });
+        });
+
+        event.getFactory().registerInstantiator(
+            Admin.BASE_DATA_OBJECT_TYPE,
+            new ACSObjectInstantiator() {
+
+            @Override
+            public DomainObject doNewInstance(
+                final DataObject data) {
+                return new Admin(data);
+            }
+
+        });
+
+        event.getFactory().registerInstantiator(
+            Permissions.BASE_DATA_OBJECT_TYPE,
+            new ACSObjectInstantiator() {
+
+            @Override
+            public DomainObject doNewInstance(final DataObject data) {
+                return new Permissions(data);
+            }
+
+        });
+
+        event.getFactory().registerInstantiator(
+            BasicAuditTrail.BASE_DATA_OBJECT_TYPE,
+            new DomainObjectInstantiator() {
+
+            public DomainObject doNewInstance(final DataObject data) {
+                return new BasicAuditTrail(data);
+            }
+
+        });
+
+        event.getFactory().registerInstantiator(
+            MimeType.BASE_DATA_OBJECT_TYPE,
+            new DomainObjectInstantiator() {
+
+            public DomainObject doNewInstance(final DataObject dataObject) {
+                return new MimeType(
+                    dataObject);
+            }
+
+            @Override
+            public DomainObjectInstantiator
+                resolveInstantiator(final DataObject obj) {
+                return this;
+            }
+
+        });
 
         // register the document converters
         Converter converter = new PDFConverter();
-        ConverterRegistry.registerConverter(converter, 
+        ConverterRegistry.registerConverter(converter,
                                             converter.getMimeTypes());
 
         converter = new ExcelConverter();
-        ConverterRegistry.registerConverter(converter, 
+        ConverterRegistry.registerConverter(converter,
                                             converter.getMimeTypes());
 
         converter = new WordConverter();
-        ConverterRegistry.registerConverter(converter, 
+        ConverterRegistry.registerConverter(converter,
                                             converter.getMimeTypes());
 
         converter = new OOConverter();
-        ConverterRegistry.registerConverter(converter, 
+        ConverterRegistry.registerConverter(converter,
                                             converter.getMimeTypes());
 
         converter = new TextConverter();
-        ConverterRegistry.registerConverter(converter, 
+        ConverterRegistry.registerConverter(converter,
                                             converter.getMimeTypes());
 
         // Initialize the the CharsetEncodingProvider internal data structure
         URLRewriter.addParameterProvider(new CharsetEncodingProvider());
 
+        final ExportManager exportManager = ExportManager.getInstance();
+        exportManager.registerExporter(new CategoriesExporter());
+        exportManager.registerExporter(new CategorizationsExporter());
+        exportManager.registerExporter(new ResourceTypesExporter());
+        exportManager.registerExporter(new GroupMembershipsExporter());
+        exportManager.registerExporter(new GroupsExporter());
+        exportManager.registerExporter(new PermissionsExporter());
+        exportManager.registerExporter(new RoleMembershipsExporter());
+        exportManager.registerExporter(new RolesExporter());
+        exportManager.registerExporter(new UsersExporter());
+        exportManager.registerExporter(new AssignableTasksExporter());
+        exportManager.registerExporter(new TaskAssignmentsExporter());
+        exportManager.registerExporter(new TaskCommentsExporter());
+        exportManager.registerExporter(new TaskDependenciesExporter());
+        exportManager.registerExporter(new TasksExporter());
+        exportManager.registerExporter(new WorkflowsExporter());
 
         // Creates an entry in table web_hosts. Might be considered a loader
         // task (and is already handled there). But configuration may be

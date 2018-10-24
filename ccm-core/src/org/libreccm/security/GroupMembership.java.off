@@ -1,0 +1,93 @@
+/*
+ * Copyright (C) 2015 LibreCCM Foundation.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
+package org.libreccm.security;
+
+import com.arsdigita.kernel.ACSObject;
+
+import org.libreccm.export.convert.Portable;
+import org.libreccm.export.convert.CcmCoreEntities;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import org.libreccm.export.Exportable;
+import org.libreccm.export.convert.UuidGenerator;
+
+/**
+ * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
+ * @version created on 6/15/16
+ */
+@JsonIdentityInfo(generator = GroupMembershipIdGenerator.class,
+                  property = "customMemId")
+public class GroupMembership implements Exportable, Portable {
+
+    private long membershipId;
+    private String uuid;
+    
+    @JsonIdentityReference(alwaysAsId = true)
+    private Group group;
+    @JsonIdentityReference(alwaysAsId = true)
+    private User member;
+
+    public GroupMembership(final Group group, final User member) {
+        
+        this.membershipId = ACSObject.generateID().longValue();
+        uuid = UuidGenerator.getInstance().generateUuid(group.getName(), 
+                                                        member.getName());
+
+        this.group = group;
+        this.member = member;
+
+        CcmCoreEntities.GROUP_MEMBERSHIPS.put(this.membershipId, this);
+    }
+
+
+    public long getMembershipId() {
+        return membershipId;
+    }
+
+    public void setMembershipId(final long membershipId) {
+        this.membershipId = membershipId;
+    }
+    
+    @Override
+    public String getUuid() {
+        return uuid;
+    }
+    
+    @Override
+    public void setUuid(final String uuid) {
+        this.uuid = uuid;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(final Group group) {
+        this.group = group;
+    }
+
+    public User getMember() {
+        return member;
+    }
+
+    public void setMember(final User member) {
+        this.member = member;
+    }
+}

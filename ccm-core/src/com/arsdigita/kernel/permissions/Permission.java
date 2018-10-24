@@ -70,7 +70,7 @@ public class Permission extends DomainObject {
     static final String PARTY_ID = "partyId";
     static final String PRIVILEGE = "privilege";
 
-    static final String BASE_DATA_OBJECT_TYPE =
+    public static final String BASE_DATA_OBJECT_TYPE =
                         "com.arsdigita.kernel.permissions.Permission";
 
     /**

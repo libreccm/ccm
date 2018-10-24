@@ -1,0 +1,90 @@
+/*
+ * Copyright (C) 2015 LibreCCM Foundation.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
+package org.libreccm.export.convert;
+
+
+import org.libreccm.export.convert.categorization.CategoriesConverter;
+import org.libreccm.export.convert.categorization.DomainsConverter;
+
+import org.libreccm.export.convert.core.ResourceTypesConverter;
+
+import org.libreccm.export.convert.security.GroupsConverter;
+import org.libreccm.export.convert.security.PermissionsConverter;
+import org.libreccm.export.convert.security.RolesConverter;
+import org.libreccm.export.convert.security.UsersConverter;
+
+import org.libreccm.export.convert.web.CcmApplicationsConverter;
+
+import org.libreccm.export.convert.workflow.AssignableTasksConverter;
+import org.libreccm.export.convert.workflow.TaskCommentsConverter;
+import org.libreccm.export.convert.workflow.WorkflowsConverter;
+
+import org.libreccm.security.Permission;
+
+
+/**
+ * This core converter class calls all the conversions from trunk-objects
+ * to ng-objects in a specific order to guarantee a correct dependency
+ * recreation in the ng-objects. All the created objects are going to be
+ * stored in maps as <id, object>-pairs in the {@link NgCoreCollection}-class.
+ *
+ * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers</a>
+ * @version created on 6/27/16
+ */
+public class CoreConverter extends AbstractDomainObjectConverter {
+
+    private static CoreConverter instance;
+
+    static {
+        instance = new CoreConverter();
+    }
+
+    /**
+     * Getter for the instance of the singleton.
+     *
+     * @return instance of this singleton
+     */
+    public static CoreConverter getInstance() {
+        return instance;
+    }
+
+    /**
+     * Method, to start all the different converter classes in a specific
+     * order, so that dependencies can only be set, where the objects have
+     * already been created.
+     */
+    @Override
+    public void startConversions() {
+        UsersConverter.getInstance().convertAll();
+        GroupsConverter.getInstance().convertAll();
+        RolesConverter.getInstance().convertAll();
+
+        CategoriesConverter.getInstance().convertAll();
+
+        PermissionsConverter.getInstance().convertAll();
+
+        WorkflowsConverter.getInstance().convertAll();
+        TaskCommentsConverter.getInstance().convertAll();
+        AssignableTasksConverter.getInstance().convertAll();
+
+        ResourceTypesConverter.getInstance().convertAll();
+        CcmApplicationsConverter.getInstance().convertAll();
+        DomainsConverter.getInstance().convertAll();
+    }
+}

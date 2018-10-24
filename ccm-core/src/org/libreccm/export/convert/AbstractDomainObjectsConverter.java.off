@@ -1,0 +1,40 @@
+/*
+ * Copyright (C) 2015 LibreCCM Foundation.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
+package org.libreccm.export.convert;
+
+import com.arsdigita.domain.DomainObject;
+
+/**
+ * Abstract class for converting all trunk objects of a certain class into
+ * objects of their corresponding ng classes.
+ *
+ * @author <a href="mailto:tosmers@uni-bremen.de">Tobias Osmers</a>
+ * @author <a href="mailto:jens.pelzetter@uni-bremen.de">Jens Pelzetter</a>
+ */
+public abstract class AbstractDomainObjectsConverter {
+
+    public abstract String convertsType();
+    
+    /**
+     * Retrieves all trunk objects of a certain class from the persistent
+     * storage and collects them in a list. Then calls for creating the
+     * equivalent ng objects focusing on keeping all the associations in tact.
+     */
+    public abstract void convertAll();
+}

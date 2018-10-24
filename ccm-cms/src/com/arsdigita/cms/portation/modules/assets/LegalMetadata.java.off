@@ -1,0 +1,107 @@
+/*
+ * Copyright (C) 2015 LibreCCM Foundation.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301  USA
+ */
+package com.arsdigita.cms.portation.modules.assets;
+
+import com.arsdigita.cms.portation.conversion.NgCmsCollection;
+import com.arsdigita.cms.portation.modules.contentsection.Asset;
+
+import org.libreccm.export.convert.Portable;
+import org.libreccm.l10n.LocalizedString;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+/**
+ * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
+ * @version created the 4/6/18
+ */
+public class LegalMetadata extends Asset implements Portable {
+    private String rightsHolder;
+    private LocalizedString rights;
+    private String publisher;
+    private String creator;
+    private List<String> contributors;
+
+    /**
+     * Constructor for ng-object.
+     *
+     * Old trunk system did not keep information about an assets legal
+     * metadata, therefore it needs to be created now for all ng-objects
+     * assets.
+     *
+     * @param assetName The name of the asset this legal metadata is created
+     *                  for
+     */
+    public LegalMetadata(final String assetName) {
+        super(assetName + "-LegalMetadata");
+
+        //this.rightsHolder
+        this.rights = new LocalizedString();
+        //this.publisher
+        //this.creator
+        this.contributors = new ArrayList<>();
+
+        NgCmsCollection.legalMetadatas.put(this.getObjectId(), this);
+    }
+
+    public String getRightsHolder() {
+        return rightsHolder;
+    }
+
+    public void setRightsHolder(final String rightsHolder) {
+        this.rightsHolder = rightsHolder;
+    }
+
+    public LocalizedString getRights() {
+        return rights;
+    }
+
+    public void setRights(final LocalizedString rights) {
+        this.rights = rights;
+    }
+
+    public void addRights(final Locale language, final String right) {
+        this.rights.addValue(language, right);
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(final String publisher) {
+        this.publisher = publisher;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(final String creator) {
+        this.creator = creator;
+    }
+
+    public List<String> getContributors() {
+        return contributors;
+    }
+
+    public void setContributors(final List<String> contributors) {
+        this.contributors = contributors;
+    }
+}
