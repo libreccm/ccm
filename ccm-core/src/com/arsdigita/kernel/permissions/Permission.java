@@ -99,7 +99,7 @@ public class Permission extends DomainObject {
      *
      * @see com.arsdigita.domain.DomainObject#DomainObject(DataObject)
      */
-    protected Permission(DataObject data) {
+    public Permission(DataObject data) {
         super(data);
     }
 

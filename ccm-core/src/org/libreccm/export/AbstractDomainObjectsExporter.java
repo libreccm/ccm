@@ -143,7 +143,7 @@ public abstract class AbstractDomainObjectsExporter<T extends DomainObject> {
             final DomainObject domainObject = DomainObjectFactory
                 .newInstance(dataObject);
 
-            if (!(domainObject.getClass().isAssignableFrom(exportsType()))) {
+            if (!(exportsType().isAssignableFrom(domainObject.getClass()))) {
                 throw new ExportException(String.format(
                     "DomainObject is not of type \"%s\" but of type \"%s\".",
                     exportsType().getName(),

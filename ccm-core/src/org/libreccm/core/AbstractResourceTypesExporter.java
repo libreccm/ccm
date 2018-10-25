@@ -37,8 +37,7 @@ public abstract class AbstractResourceTypesExporter<T extends ResourceType>
                                                  final Path targetDir) {
 
         final String uuid = generateUuid(domainObject);
-        final Path targetFilePath = generateTargetFilePath(
-            targetDir, exportsType().getName(), uuid);
+        final Path targetFilePath = generateTargetFilePath(targetDir, uuid);
 
         final JsonFactory jsonFactory = new JsonFactory();
         try (JsonGenerator jsonGenerator = jsonFactory

@@ -4,8 +4,6 @@ import com.arsdigita.kernel.ResourceType;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 
-import java.util.Arrays;
-import java.util.List;
 
 /**
  *
@@ -29,6 +27,7 @@ public class ResourceTypesExporter
         return "org.libreccm.core.ResourceType";
     }
 
+    @Override
     protected void exportResourceTypeProperties(
         final ResourceType resourceType, final JsonGenerator jsonGenerator) {
 

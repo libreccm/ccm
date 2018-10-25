@@ -23,8 +23,6 @@ import java.util.List;
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  * @param <T>
  */
-
-
 public abstract class AbstractTasksExporter<T extends Task>
     extends AbstractDomainObjectsExporter<T> {
 
@@ -37,8 +35,7 @@ public abstract class AbstractTasksExporter<T extends Task>
                                                  final Path targetDir) {
 
         final String uuid = generateUuid(domainObject);
-        final Path targetFilePath = generateTargetFilePath(
-            targetDir, exportsType().getName(), uuid);
+        final Path targetFilePath = generateTargetFilePath(targetDir, uuid);
 
         final JsonFactory jsonFactory = new JsonFactory();
         try (JsonGenerator jsonGenerator = jsonFactory

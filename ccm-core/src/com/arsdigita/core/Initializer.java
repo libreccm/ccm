@@ -23,6 +23,7 @@ import com.arsdigita.db.DbHelper;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.kernel.ACSObjectInstantiator;
+import com.arsdigita.kernel.ResourceType;
 import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.Session;

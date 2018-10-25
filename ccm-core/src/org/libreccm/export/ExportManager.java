@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,7 +32,7 @@ public final class ExportManager {
     private List<AbstractDomainObjectsExporter<?>> exporters;
 
     private ExportManager() {
-        // Nothing
+        exporters = new ArrayList<>();
     }
 
     public static ExportManager getInstance() {
@@ -44,7 +45,7 @@ public final class ExportManager {
             .stream()
             .map(exporter -> exporter.convertsToType())
             .collect(Collectors.toSet());
-        for(final String type : types) {
+        for (final String type : types) {
             try {
                 final Path typeDirPath = targetDirPath.resolve(type);
                 Files.createDirectories(typeDirPath);
@@ -68,9 +69,16 @@ public final class ExportManager {
         final Map<String, List<String>> exportedEntities = new HashMap<>();
         for (final AbstractDomainObjectsExporter< ?> exporter : exporters) {
 
+            System.out.printf("Exporting entities of type \"%s\" and "
+                                  + "converting them to \"%s\"...%n",
+                              exporter.exportsBaseDataObjectType(),
+                              exporter.convertsToType());
             final List<String> uuids = exporter
                 .exportDomainObjects(targetDirPath);
             exportedEntities.put(exporter.convertsToType(), uuids);
+            System.out.printf("Exported %d entities of type \"%s\".%n",
+                              uuids.size(),
+                              exporter.convertsToType());
         }
 
         final Path manifestFilePath = targetDirPath.resolve("ccm-export.json");

@@ -43,8 +43,10 @@ public class AssignableTasksExporter extends AbstractTasksExporter<UserTask> {
         jsonGenerator.writeBooleanField("locked", task.isLocked());
 
         final User lockingUser = task.getLockedUser();
-        final String lockingUserUuid = generateUuid(lockingUser);
-        jsonGenerator.writeStringField("lockingUser", lockingUserUuid);
+        if (lockingUser != null) {
+            final String lockingUserUuid = generateUuid(lockingUser);
+            jsonGenerator.writeStringField("lockingUser", lockingUserUuid);
+        }
 
         final SimpleDateFormat dateFormat = new SimpleDateFormat(
             "yyyy-MM-dd'T'HH:mm:ssZ", Locale.ROOT);
@@ -56,9 +58,12 @@ public class AssignableTasksExporter extends AbstractTasksExporter<UserTask> {
                                        task.getDuration().getDuration());
 
         final Party notificationSender = task.getNotificationSender();
-        final String notificationSenderUuid = generateUuid(notificationSender);
-        jsonGenerator.writeStringField("notificationSender",
-                                       notificationSenderUuid);
+        if (notificationSender != null) {
+            final String notificationSenderUuid = generateUuid(
+                notificationSender);
+            jsonGenerator.writeStringField("notificationSender",
+                                           notificationSenderUuid);
+        }
     }
 
 }

@@ -20,6 +20,8 @@ package com.arsdigita.kernel;
 
 import com.arsdigita.developersupport.DeveloperSupport;
 import com.arsdigita.domain.DomainObject;
+import com.arsdigita.domain.DomainObjectInstantiator;
+import com.arsdigita.kernel.permissions.Permission;
 import com.arsdigita.kernel.permissions.PermissionManager;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.persistence.DataObject;
@@ -120,6 +122,26 @@ public class Initializer extends GenericInitializer {
                      return new Role(dobj);
                  }
              } );
+        
+         evt.getFactory().registerInstantiator(
+            ResourceType.BASE_DATA_OBJECT_TYPE, 
+            new DomainObjectInstantiator() {
+
+            @Override
+            protected DomainObject doNewInstance(final DataObject dataObject) {
+                return new ResourceType(dataObject);
+            }
+        });
+         
+         evt.getFactory().registerInstantiator(
+             Permission.BASE_DATA_OBJECT_TYPE, 
+             new DomainObjectInstantiator() {
+
+            @Override
+            protected DomainObject doNewInstance(final DataObject dataObject) {
+                return new Permission(dataObject);
+            }
+        });
 
         /* Register URLFinders with the URLService */
         // PackageInstance is the only kernel object type for which kernel

@@ -3,6 +3,8 @@ package org.libreccm.categorization;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryLocalization;
 import com.arsdigita.categorization.CategoryLocalizationCollection;
+import com.arsdigita.persistence.DataAssociation;
+import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.util.UncheckedWrapperException;
 
 import com.fasterxml.jackson.core.JsonEncoding;
@@ -19,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import static com.arsdigita.categorization.Category.*;
 
 /**
  *
@@ -42,14 +46,12 @@ public class CategoriesExporter extends AbstractDomainObjectsExporter<Category> 
     }
 
     @Override
-    protected List<String> exportDomainObject(final Category domainObject,
+    protected List<String> exportDomainObject(final Category category,
                                               final Path targetDir) {
 
-        final String uuid = generateUuid(domainObject);
+        final String uuid = generateUuid(category);
 
-        final Path targetFilePath = targetDir
-            .resolve("org.libreccm.categorization.Categorization")
-            .resolve(String.format("%s.json", uuid));
+        final Path targetFilePath = generateTargetFilePath(targetDir, uuid);
         final File targetFile = targetFilePath.toFile();
 
         final JsonFactory jsonFactory = new JsonFactory();
@@ -63,9 +65,9 @@ public class CategoriesExporter extends AbstractDomainObjectsExporter<Category> 
             jsonGenerator.writeStringField("uuid", uuid);
             jsonGenerator.writeStringField("uniqueId", uuid);
 
-            jsonGenerator.writeStringField("name", domainObject.getName());
+            jsonGenerator.writeStringField("name", category.getName());
 
-            final CategoryLocalizationCollection localizations = domainObject
+            final CategoryLocalizationCollection localizations = category
                 .getCategoryLocalizationCollection();
             final Map<Locale, String> titles = new HashMap<>();
             final Map<Locale, String> descriptions = new HashMap<>();
@@ -96,21 +98,22 @@ public class CategoriesExporter extends AbstractDomainObjectsExporter<Category> 
             jsonGenerator.writeEndObject();
 
             jsonGenerator.writeBooleanField("enabled",
-                                            domainObject.isEnabled());
+                                            category.isEnabled());
             jsonGenerator.writeBooleanField("visible",
-                                            domainObject.isVisible());
+                                            category.isVisible());
             jsonGenerator.writeBooleanField("abstractCategory",
-                                            domainObject.isAbstract());
+                                            category.isAbstract());
 
-            jsonGenerator.writeStringField(
-                "parentCategory",
-                generateUuid(domainObject.getDefaultParentCategory()));
-            jsonGenerator.writeNumberField(
-                "categoryOrder",
-                domainObject
-                    .getDefaultParentCategory()
-                    .getSortKey(domainObject)
-                    .longValue());
+            if (hasParentCategory(category)) {
+                jsonGenerator.writeStringField(
+                    "parentCategory",
+                    generateUuid(category.getDefaultParentCategory()));
+                jsonGenerator.writeNumberField(
+                    "categoryOrder",
+                    category
+                        .getDefaultParentCategory()
+                        .getSortKey(category));
+            }
 
             jsonGenerator.writeEndObject();
 
@@ -121,6 +124,18 @@ public class CategoriesExporter extends AbstractDomainObjectsExporter<Category> 
             throw new UncheckedWrapperException(ex);
         }
     }
-    
+
+    private boolean hasParentCategory(final Category category) {
+
+        final DataAssociationCursor cursor = ((DataAssociation) category
+                                              .get(PARENTS)).cursor();
+
+        cursor.addEqualsFilter("link.isDefault", Boolean.TRUE);
+
+        final boolean result = cursor.next();
+        cursor.close();
+
+        return result;
+    }
 
 }

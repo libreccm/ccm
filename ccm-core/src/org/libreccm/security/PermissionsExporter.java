@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -108,7 +107,8 @@ public class PermissionsExporter extends AbstractDomainObjectsExporter<Permissio
 
         final long partyId = ((Number) domainObject
                               .getPartyOID()
-                              .get("id")).longValue();
+                              .get("id"))
+            .longValue();
         if (-204 == partyId || -300 == partyId || -200 == partyId) {
             // Skip internal permissions
             return Collections.emptyList();

@@ -75,7 +75,6 @@ public class RoleMembershipsExporter
             jsonGenerator.writeStringField("role", roleUuid);
             jsonGenerator.writeStringField("member", memberUuid);
             jsonGenerator.writeEndObject();
-            jsonGenerator.writeEndObject();
             
         } catch(IOException ex) {
             throw new UncheckedWrapperException(ex);
