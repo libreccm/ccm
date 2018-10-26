@@ -83,6 +83,8 @@ public class TaskDependenciesExporter
         try (final JsonGenerator jsonGenerator = jsonFactory
             .createGenerator(targetFile, JsonEncoding.UTF8)) {
 
+            setPrettyPrinter(jsonGenerator);
+
             jsonGenerator.writeStartObject();
 
             jsonGenerator.writeNumberField("taskDependencyId",

@@ -11,8 +11,13 @@ import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.core.util.MinimalPrettyPrinter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -86,9 +91,14 @@ public final class ExportManager {
         try (final JsonGenerator manifestGenerator = jsonFactory
             .createGenerator(manifestFilePath.toFile(), JsonEncoding.UTF8)) {
 
-            manifestGenerator.writeStartObject();
+            final DefaultPrettyPrinter prettyPrinter
+                                           = new DefaultPrettyPrinter();
+            prettyPrinter.indentArraysWith(
+                DefaultPrettyPrinter.Lf2SpacesIndenter.instance);
+            manifestGenerator.setPrettyPrinter(prettyPrinter);
 
             manifestGenerator.writeStartObject();
+
             manifestGenerator.writeStringField(
                 "created",
                 LocalDateTime.now(ZoneId.of("UTC")).toString());
@@ -102,7 +112,7 @@ public final class ExportManager {
                 manifestGenerator.writeString(type);
             }
 
-            manifestGenerator.writeEndObject();
+            manifestGenerator.writeEndArray();
 
             manifestGenerator.writeObjectFieldStart("entities");
 
@@ -121,7 +131,6 @@ public final class ExportManager {
 
             manifestGenerator.writeEndObject();
 
-            manifestGenerator.writeEndObject();
         } catch (IOException ex) {
             throw new UncheckedWrapperException(ex);
         }

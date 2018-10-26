@@ -31,15 +31,17 @@ public abstract class AbstractTasksExporter<T extends Task>
         throws IOException;
 
     @Override
-    public final List<String> exportDomainObject(final T domainObject,
+    public final List<String> exportDomainObject(final T task,
                                                  final Path targetDir) {
 
-        final String uuid = generateUuid(domainObject);
+        final String uuid = generateUuid(task);
         final Path targetFilePath = generateTargetFilePath(targetDir, uuid);
 
         final JsonFactory jsonFactory = new JsonFactory();
         try (JsonGenerator jsonGenerator = jsonFactory
             .createGenerator(targetFilePath.toFile(), JsonEncoding.UTF8)) {
+
+            setPrettyPrinter(jsonGenerator);
 
             jsonGenerator.writeStartObject();
 
@@ -50,26 +52,26 @@ public abstract class AbstractTasksExporter<T extends Task>
             jsonGenerator.writeObjectFieldStart("label");
             jsonGenerator.writeStringField(
                 KernelConfig.getConfig().getDefaultLanguage(),
-                domainObject.getLabel());
+                task.getLabel());
             jsonGenerator.writeEndObject();
 
             jsonGenerator.writeObjectFieldStart("description");
             jsonGenerator.writeStringField(
                 KernelConfig.getConfig().getDefaultLanguage(),
-                domainObject.getDescription());
+                task.getDescription());
             jsonGenerator.writeEndObject();
 
-            jsonGenerator.writeBooleanField("active", domainObject.isActive());
+            jsonGenerator.writeBooleanField("active", task.isActive());
 
             jsonGenerator.writeStringField("taskState",
-                                           domainObject.getStateString());
+                                           task.getStateString());
 
-            final Workflow workflow = domainObject.getWorkflow();
+            final Workflow workflow = task.getWorkflow();
             final String workflowUuid = generateUuid(workflow);
             jsonGenerator.writeStringField("workflow", workflowUuid);
 
             jsonGenerator.writeArrayFieldStart("comments");
-            final Iterator<?> comments = domainObject.getComments();
+            final Iterator<?> comments = task.getComments();
             while (comments.hasNext()) {
 
                 final TaskComment comment = (TaskComment) comments.next();
@@ -78,7 +80,7 @@ public abstract class AbstractTasksExporter<T extends Task>
             }
             jsonGenerator.writeEndArray();
 
-            exportTaskProperties(domainObject, jsonGenerator);
+            exportTaskProperties(task, jsonGenerator);
 
             jsonGenerator.writeEndObject();
 

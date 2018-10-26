@@ -3,9 +3,14 @@ package org.libreccm.security;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.Group;
+import com.arsdigita.kernel.Role;
 import com.arsdigita.kernel.RoleCollection;
 import com.arsdigita.kernel.permissions.Permission;
+import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.Session;
+import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.WebConfig;
 
@@ -82,6 +87,8 @@ public class PermissionsExporter extends AbstractDomainObjectsExporter<Permissio
         try (JsonGenerator jsonGenerator = jsonFactory
             .createGenerator(targetFilePath.toFile(), JsonEncoding.UTF8)) {
 
+            setPrettyPrinter(jsonGenerator);
+
             jsonGenerator.writeStartObject();
 
             jsonGenerator.writeNumber(IdSequence.getInstance().nextId());
@@ -124,17 +131,30 @@ public class PermissionsExporter extends AbstractDomainObjectsExporter<Permissio
         if (granteeDomainObj instanceof Group) {
 
             final Group group = (Group) granteeDomainObj;
-            final RoleCollection roles = group.getRoles();
+            final RoleCollection rolesOfGroup = group.getRoles();
 
             final String privilege = domainObject.getPrivilege().getName();
 
-            while (roles.next()) {
+            while (rolesOfGroup.next()) {
 
-                final OID roleOid = roles.getRole().getOID();
+                final OID roleOid = rolesOfGroup.getRole().getOID();
 
                 final String permissionUuid = exportPermission(privilege,
                                                                objectOid,
                                                                roleOid,
+                                                               targetDir);
+                permissionUuids.add(permissionUuid);
+            }
+
+            final Session session = SessionManager.getSession();
+            final DataCollection roles = session
+                .retrieve(Role.BASE_DATA_OBJECT_TYPE);
+            roles.addEqualsFilter("implicitGroup.id", group.getID());
+            if (roles.next()) {
+                final Role role = new Role(roles.getDataObject());
+                final String permissionUuid = exportPermission(privilege,
+                                                               granteeOid,
+                                                               role.getOID(),
                                                                targetDir);
                 permissionUuids.add(permissionUuid);
             }

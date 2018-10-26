@@ -2,6 +2,7 @@ package org.libreccm.workflow;
 
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.KernelConfig;
+import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.workflow.simple.Workflow;
 import com.arsdigita.workflow.simple.WorkflowTemplate;
 
@@ -55,6 +56,8 @@ public class WorkflowsExporter extends AbstractDomainObjectsExporter<Workflow> {
         try (JsonGenerator jsonGenerator = jsonFactory
             .createGenerator(targetFile, JsonEncoding.UTF8)) {
 
+            setPrettyPrinter(jsonGenerator);
+
             jsonGenerator.writeStartObject();
 
             jsonGenerator.writeNumberField("workflowId",
@@ -63,35 +66,35 @@ public class WorkflowsExporter extends AbstractDomainObjectsExporter<Workflow> {
             jsonGenerator.writeBooleanField(
                 "abstractWorkflow",
                 domainObject instanceof WorkflowTemplate);
-            
+
             jsonGenerator.writeObjectFieldStart("name");
             jsonGenerator.writeStringField(
-                KernelConfig.getConfig().getDefaultLanguage(), 
+                KernelConfig.getConfig().getDefaultLanguage(),
                 domainObject.getDisplayName());
             jsonGenerator.writeEndObject();
-            
+
             jsonGenerator.writeObjectFieldStart("description");
             jsonGenerator.writeStringField(
-                KernelConfig.getConfig().getDefaultLanguage(), 
+                KernelConfig.getConfig().getDefaultLanguage(),
                 domainObject.getDescription());
             jsonGenerator.writeEndObject();
-            
-            jsonGenerator.writeStringField("state", 
+
+            jsonGenerator.writeStringField("state",
                                            domainObject.getStateString());
-            
+
             jsonGenerator.writeBooleanField("active", domainObject.isActive());
-            
+
             final ACSObject object = domainObject.getObject();
             final String objectUuid = generateUuid(object);
             jsonGenerator.writeStringField("object", objectUuid);
-            
+
             jsonGenerator.writeEndObject();
 
         } catch (IOException ex) {
-
+            throw new UncheckedWrapperException(ex);
         }
 
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return Arrays.asList(new String[]{uuid});
     }
 
 }

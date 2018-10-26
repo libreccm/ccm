@@ -8,6 +8,9 @@ import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.web.WebConfig;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -120,13 +123,23 @@ public abstract class AbstractDomainObjectsExporter<T extends DomainObject> {
             .resolve(String.format("%s.json", uuid));
     }
 
+    protected void setPrettyPrinter(final JsonGenerator jsonGenerator) {
+
+        final DefaultPrettyPrinter prettyPrinter
+                                       = new DefaultPrettyPrinter();
+        prettyPrinter.indentArraysWith(
+            DefaultPrettyPrinter.Lf2SpacesIndenter.instance);
+        jsonGenerator.setPrettyPrinter(prettyPrinter);
+    }
+
     /**
      * Retrieves all {@link DomainObject}s of the type returned by
      * {@link #exportsBaseDataObjectType()} and calls
      * {@link #exportDomainObject(com.arsdigita.domain.DomainObject, java.nio.file.Path)}
      * for each of them.
-     * 
+     *
      * @param targetDir target directory for the export.
+     *
      * @return The list of uuids of the the exported entites.
      */
     @SuppressWarnings("unchecked")
@@ -143,11 +156,15 @@ public abstract class AbstractDomainObjectsExporter<T extends DomainObject> {
             final DomainObject domainObject = DomainObjectFactory
                 .newInstance(dataObject);
 
-            if (!(exportsType().isAssignableFrom(domainObject.getClass()))) {
-                throw new ExportException(String.format(
-                    "DomainObject is not of type \"%s\" but of type \"%s\".",
-                    exportsType().getName(),
-                    domainObject.getClass().getName()));
+//            if (!(exportsType().isAssignableFrom(domainObject.getClass()))) {
+//                throw new ExportException(String.format(
+//                    "DomainObject is not of type \"%s\" but of type \"%s\".",
+//                    exportsType().getName(),
+//                    domainObject.getClass().getName()));
+//            }
+            if (!exportsType().equals(domainObject.getClass())) {
+                // Is not exact type (sub class?). Skip.
+                continue;
             }
 
             domainObjects.add((T) domainObject);
@@ -155,6 +172,8 @@ public abstract class AbstractDomainObjectsExporter<T extends DomainObject> {
 
         final List<String> uuids = new ArrayList<>();
         for (final T domainObject : domainObjects) {
+            System.out.printf("Exporting domain object %s...%n",
+                              domainObject.getOID().toString());
             final List<String> createdUuids = exportDomainObject(domainObject,
                                                                  targetDir);
             uuids.addAll(createdUuids);

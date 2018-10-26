@@ -58,6 +58,8 @@ public class CategoriesExporter extends AbstractDomainObjectsExporter<Category> 
         try (JsonGenerator jsonGenerator = jsonFactory
             .createGenerator(targetFile, JsonEncoding.UTF8)) {
 
+            setPrettyPrinter(jsonGenerator);
+
             jsonGenerator.writeStartObject();
 
             jsonGenerator.writeNumberField("objectId",

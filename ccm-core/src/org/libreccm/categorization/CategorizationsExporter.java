@@ -90,6 +90,8 @@ public class CategorizationsExporter
         try (JsonGenerator jsonGenerator = jsonFactory
             .createGenerator(targetFile, JsonEncoding.UTF8)) {
 
+            setPrettyPrinter(jsonGenerator);
+
             jsonGenerator.writeStartObject();
 
             jsonGenerator.writeNumberField("categorizationId",

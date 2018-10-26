@@ -51,14 +51,16 @@ public class TaskCommentsExporter
         try (JsonGenerator jsonGenerator = jsonFactory
             .createGenerator(targetFile, JsonEncoding.UTF8)) {
 
+            setPrettyPrinter(jsonGenerator);
+
             jsonGenerator.writeStartObject();
 
             jsonGenerator.writeNumberField(
                 "taskCommentId",
                 IdSequence.getInstance().nextId());
             jsonGenerator.writeStringField("uuid", uuid);
-            
-            jsonGenerator.writeStringField("comment", 
+
+            jsonGenerator.writeStringField("comment",
                                            domainObject.getComment());
 
             jsonGenerator.writeEndObject();

@@ -51,6 +51,8 @@ public class UsersExporter extends AbstractDomainObjectsExporter<com.arsdigita.k
             .createGenerator(targetFilePath.toFile(),
                              JsonEncoding.UTF8)) {
 
+            setPrettyPrinter(jsonGenerator);
+
             jsonGenerator.writeStartObject();
 
             jsonGenerator.writeNumberField("partyId",

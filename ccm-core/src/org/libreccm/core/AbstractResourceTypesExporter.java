@@ -43,6 +43,8 @@ public abstract class AbstractResourceTypesExporter<T extends ResourceType>
         try (JsonGenerator jsonGenerator = jsonFactory
             .createGenerator(targetFilePath.toFile(), JsonEncoding.UTF8)) {
 
+            setPrettyPrinter(jsonGenerator);
+
             jsonGenerator.writeStartObject();
 
             jsonGenerator.writeNumberField("resourceTypeId",
