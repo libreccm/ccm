@@ -19,6 +19,7 @@
 package com.arsdigita.cms.contenttypes;
 
 import org.apache.log4j.Logger;
+import org.libreccm.export.ExportManager;
 
 /**
  * Executes at each system startup and initializes the Article content type.
@@ -41,6 +42,8 @@ public class ArticleInitializer extends ContentTypeInitializer {
      */
      public ArticleInitializer() {
         super("ccm-cms-types-article.pdl.mf", Article.BASE_DATA_OBJECT_TYPE);
+        
+         ExportManager.getInstance().registerExporter(new ArticlesExporter());
     }
 
     /**
