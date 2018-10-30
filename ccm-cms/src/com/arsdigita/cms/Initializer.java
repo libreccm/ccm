@@ -84,6 +84,8 @@ import com.arsdigita.workflow.simple.WorkflowTemplate;
 import com.arsdigita.xml.XML;
 
 import org.apache.log4j.Logger;
+import org.libreccm.export.ExportManager;
+import org.librecms.workflow.CmsTasksExporter;
 
 /**
  * The main CMS initializer, executed recurringly at each system startup.
@@ -246,6 +248,8 @@ public class Initializer extends CompoundInitializer {
                     ContenttypesGlobalizationUtil.globalize("person.authoring.orgas.title"),
                     s_conf.getPersonOrgaUnitsStepSortKey());
         }
+        
+        ExportManager.getInstance().registerExporter(new CmsTasksExporter());
 
         s_log.debug("CMS.Initializer.init(DomainInitEvent) completed");
     }    //  END init(DomainInitEvent e)
