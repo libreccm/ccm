@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,6 +39,11 @@ public class TaskDependenciesExporter
     @Override
     public String convertsToType() {
         return "org.libreccm.workflow.TaskDependency";
+    }
+    
+    @Override
+    protected boolean includeSubTypes() {
+        return true;
     }
 
     @Override

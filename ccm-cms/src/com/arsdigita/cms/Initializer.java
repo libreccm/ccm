@@ -85,6 +85,7 @@ import com.arsdigita.xml.XML;
 
 import org.apache.log4j.Logger;
 import org.libreccm.export.ExportManager;
+import org.librecms.contentsection.AbstractAttachmentListsExporter;
 import org.librecms.workflow.CmsTasksExporter;
 
 /**
@@ -250,6 +251,9 @@ public class Initializer extends CompoundInitializer {
         }
         
         ExportManager.getInstance().registerExporter(new CmsTasksExporter());
+//        ExportManager
+//            .getInstance()
+//            .registerExporter(new AbstractAttachmentListsExporter());
 
         s_log.debug("CMS.Initializer.init(DomainInitEvent) completed");
     }    //  END init(DomainInitEvent e)

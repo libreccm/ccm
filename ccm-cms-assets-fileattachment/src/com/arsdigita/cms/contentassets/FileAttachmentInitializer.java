@@ -25,13 +25,20 @@ import com.arsdigita.search.MetadataProviderRegistry;
 import com.arsdigita.util.StringUtils;
 import com.arsdigita.xml.XML;
 
+import org.libreccm.export.ExportManager;
+import org.librecms.assets.FileAssetsExporter;
+import org.librecms.assets.FileAttachmentListsExporter;
+import org.librecms.assets.FileAttachmentsExporter;
+
 /**
  * Initializer
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: 1.1 $ $Date: 2004/12/15 15:37:51 $
- * @version $Id: FileAttachmentInitializer.java 1262 2006-07-17 08:15:45Z cgyg9330 $
- **/
+ * @version $Id: FileAttachmentInitializer.java 1262 2006-07-17 08:15:45Z
+ * cgyg9330 $
+ *
+ */
 public class FileAttachmentInitializer extends ContentAssetInitializer {
 
     /**
@@ -44,9 +51,9 @@ public class FileAttachmentInitializer extends ContentAssetInitializer {
     /**
      * Initializes content asset by parsing traversal xml file and registering
      * the specified steps in a transient storage which may be modified during
-     * operation and has to be re-initialized each system startup).
-     * Essential part of initializing the systems domain coupling machinery.
-
+     * operation and has to be re-initialized each system startup). Essential
+     * part of initializing the systems domain coupling machinery.
+     *
      * @param evt
      */
     @Override
@@ -75,24 +82,31 @@ public class FileAttachmentInitializer extends ContentAssetInitializer {
          * chris.gilbert@westsussex.gov.uk
          */
         MetadataProviderRegistry.registerAdapter(
-			FileAttachment.BASE_DATA_OBJECT_TYPE,
-			new FileAttachmentMetadataProvider());
-        
+            FileAttachment.BASE_DATA_OBJECT_TYPE,
+            new FileAttachmentMetadataProvider());
+
         XML.parseResource(
             "/WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/"
-             + "FileAttachment-search.xml",
+                + "FileAttachment-search.xml",
             new TraversalHandler());
 
-            final String traversal = getTraversalXML();
-            if(!StringUtils.emptyString(traversal)) {
-                XML.parseResource(traversal, new TraversalHandler());
-            }
+        final String traversal = getTraversalXML();
+        if (!StringUtils.emptyString(traversal)) {
+            XML.parseResource(traversal, new TraversalHandler());
+        }
+        
+        ExportManager.getInstance().registerExporter(new FileAssetsExporter());
+        ExportManager
+            .getInstance()
+            .registerExporter(new FileAttachmentListsExporter());
+        ExportManager
+            .getInstance()
+            .registerExporter(new FileAttachmentsExporter());
     }
 
-
     /**
-     * The base type against which the asset is defined,
-     * typically com.arsdigita.cms.ContentPage
+     * The base type against which the asset is defined, typically
+     * com.arsdigita.cms.ContentPage
      */
     public String getBaseType() {
         return ContentPage.BASE_DATA_OBJECT_TYPE;
@@ -104,12 +118,12 @@ public class FileAttachmentInitializer extends ContentAssetInitializer {
      */
     public String getTraversalXML() {
         return "/WEB-INF/traversal-adapters/com/arsdigita/"
-             + "cms/contentassets/FileAttachment.xml";
+                   + "cms/contentassets/FileAttachment.xml";
     }
 
     /**
-     * The name of the association between the item
-     * and the asset, eg 'fileAttachments'.
+     * The name of the association between the item and the asset, eg
+     * 'fileAttachments'.
      */
     public String getProperty() {
         return "fileAttachments";

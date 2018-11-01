@@ -49,7 +49,7 @@ public abstract class AbstractCcmObjectsExporter<T extends ACSObject>
 
         final String uuid = generateUuid(domainObject);
         final Path targetFilePath = generateTargetFilePath(
-            targetDir, exportsType().getName(), uuid);
+            targetDir, convertsToType(), uuid);
 
         final JsonFactory jsonFactory = new JsonFactory();
         try (JsonGenerator jsonGenerator = jsonFactory

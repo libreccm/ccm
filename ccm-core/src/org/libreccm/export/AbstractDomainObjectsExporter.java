@@ -45,6 +45,10 @@ public abstract class AbstractDomainObjectsExporter<T extends DomainObject> {
      */
     public abstract String exportsBaseDataObjectType();
 
+    protected boolean includeSubTypes() {
+        return false;
+    }
+
     /**
      * Provides the fully qualified class name of the type to which the domain
      * objects handled by the implementation are converted.
@@ -149,12 +153,12 @@ public abstract class AbstractDomainObjectsExporter<T extends DomainObject> {
         final DataCollection dataCollection = session
             .retrieve(exportsBaseDataObjectType());
 
-        final List<T> domainObjects = new ArrayList<>();
+//        final List<T> domainObjects = new ArrayList<>();
+        final List<String> uuids = new ArrayList<>();
         while (dataCollection.next()) {
 
-            final DataObject dataObject = dataCollection.getDataObject();
-            final DomainObject domainObject = DomainObjectFactory
-                .newInstance(dataObject);
+            final DataObject dataObj = dataCollection.getDataObject();
+            final T domainObject = (T) DomainObjectFactory.newInstance(dataObj);
 
 //            if (!(exportsType().isAssignableFrom(domainObject.getClass()))) {
 //                throw new ExportException(String.format(
@@ -162,23 +166,33 @@ public abstract class AbstractDomainObjectsExporter<T extends DomainObject> {
 //                    exportsType().getName(),
 //                    domainObject.getClass().getName()));
 //            }
-            if (!exportsType().equals(domainObject.getClass())) {
-                // Is not exact type (sub class?). Skip.
-                continue;
+            if (includeSubTypes()) {
+                if (!(exportsType().isAssignableFrom(domainObject.getClass()))) {
+                    continue;
+                }
+            } else {
+                if (!exportsType().equals(domainObject.getClass())) {
+                    // Is not exact type (sub class?). Skip.
+                    continue;
+                }
             }
 
-            domainObjects.add((T) domainObject);
-        }
-
-        final List<String> uuids = new ArrayList<>();
-        for (final T domainObject : domainObjects) {
+//            domainObjects.add((T) domainObject);
             System.out.printf("Exporting domain object %s...%n",
                               domainObject.getOID().toString());
-            final List<String> createdUuids = exportDomainObject(domainObject,
-                                                                 targetDir);
+            final List<String> createdUuids = exportDomainObject(
+                domainObject,
+                targetDir);
             uuids.addAll(createdUuids);
         }
 
+//        for (final T domainObject : domainObjects) {
+//            System.out.printf("Exporting domain object %s...%n",
+//                              domainObject.getOID().toString());
+//            final List<String> createdUuids = exportDomainObject(domainObject,
+//                                                                 targetDir);
+//            uuids.addAll(createdUuids);
+//        }
         return uuids;
     }
 
