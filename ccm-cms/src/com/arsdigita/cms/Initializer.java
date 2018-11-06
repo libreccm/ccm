@@ -85,7 +85,14 @@ import com.arsdigita.xml.XML;
 
 import org.apache.log4j.Logger;
 import org.libreccm.export.ExportManager;
-import org.librecms.contentsection.AbstractAttachmentListsExporter;
+import org.librecms.assets.ImagesExporter;
+import org.librecms.contentsection.ContentSectionsExporter;
+import org.librecms.contentsection.ContentTypesExporter;
+import org.librecms.contentsection.FoldersExporter;
+import org.librecms.lifecycle.LifecycleDefinitionsExporter;
+import org.librecms.lifecycle.LifecyclesExporter;
+import org.librecms.lifecycle.PhaseDefinitionsExporter;
+import org.librecms.lifecycle.PhasesExporter;
 import org.librecms.workflow.CmsTasksExporter;
 
 /**
@@ -97,9 +104,13 @@ import org.librecms.workflow.CmsTasksExporter;
  */
 public class Initializer extends CompoundInitializer {
 
-    /** Creates a s_logging category with name = to the full name of class */
+    /**
+     * Creates a s_logging category with name = to the full name of class
+     */
     private static Logger s_log = Logger.getLogger(Initializer.class);
-    /** Configuration object for the CMS module     */
+    /**
+     * Configuration object for the CMS module
+     */
     private static final CMSConfig s_conf = CMSConfig.getInstanceOf();
 
     /**
@@ -114,7 +125,8 @@ public class Initializer extends CompoundInitializer {
 
         add(new PDLInitializer(new ManifestSource("ccm-cms.pdl.mf",
                                                   new NameFilter(DbHelper
-                .getDatabaseSuffix(database),
+                                                      .getDatabaseSuffix(
+                                                          database),
                                                                  "pdl"))));
 
         add(new com.arsdigita.cms.contentsection.Initializer());
@@ -126,8 +138,8 @@ public class Initializer extends CompoundInitializer {
     }
 
     /**
-     * Initializes domain-coupling machinery, usually consisting of
-     * registering object instantiators and observers.
+     * Initializes domain-coupling machinery, usually consisting of registering
+     * object instantiators and observers.
      */
     @Override
     public void init(DomainInitEvent e) {
@@ -137,25 +149,29 @@ public class Initializer extends CompoundInitializer {
         /* Register object instantiator for ContentCenter (Content Center)    */
         e.getFactory().registerInstantiator(ContentCenter.BASE_DATA_OBJECT_TYPE,
                                             new ACSObjectInstantiator() {
-            @Override
-            public DomainObject doNewInstance(DataObject dobj) {
-                return new ContentCenter(dobj);
-            }
 
-        });
+                                            @Override
+                                            public DomainObject doNewInstance(
+                                                DataObject dobj) {
+                                                return new ContentCenter(dobj);
+                                            }
+
+                                        });
 
         LanguageUtil.setSupportedLanguages(
-                Kernel.getConfig().getSupportedLanguages());
+            Kernel.getConfig().getSupportedLanguages());
 
         /* Register object instantiator for CMS Service         */
         e.getFactory().registerInstantiator(Service.BASE_DATA_OBJECT_TYPE,
                                             new ACSObjectInstantiator() {
-            @Override
-            public DomainObject doNewInstance(DataObject dobj) {
-                return new Service(dobj);
-            }
 
-        });
+                                            @Override
+                                            public DomainObject doNewInstance(
+                                                DataObject dobj) {
+                                                return new Service(dobj);
+                                            }
+
+                                        });
 
         URLService.registerFinder(ContentPage.BASE_DATA_OBJECT_TYPE,
                                   new ItemURLFinder());
@@ -167,22 +183,24 @@ public class Initializer extends CompoundInitializer {
                                   new AssetURLFinder());
 
         URLService.registerFinder(
-                Link.BASE_DATA_OBJECT_TYPE,
-                new URLFinder() {
+            Link.BASE_DATA_OBJECT_TYPE,
+            new URLFinder() {
+
             public String find(OID oid, String context)
-                    throws NoValidURLException {
+                throws NoValidURLException {
 
                 return find(oid);
             }
 
             public String find(OID oid)
-                    throws NoValidURLException {
+                throws NoValidURLException {
 
                 Link link;
                 try {
                     link = (Link) DomainObjectFactory.newInstance(oid);
                 } catch (DataObjectNotFoundException ex) {
-                    throw new NoValidURLException("Cannot find an object with oid: " + oid);
+                    throw new NoValidURLException(
+                        "Cannot find an object with oid: " + oid);
                 }
 
                 if (Link.EXTERNAL_LINK.equals(link.getTargetType())) {
@@ -224,18 +242,21 @@ public class Initializer extends CompoundInitializer {
         // Just set the class implementing methods run when for publishing
         // or unpublishing to file. No initialisation of the class here.
         try {
-            QueueManager.setListener((PublishToFileListener) ContentSection.getConfig()
-                    .getPublishToFileClass().newInstance());
+            QueueManager.setListener((PublishToFileListener) ContentSection
+                .getConfig()
+                .getPublishToFileClass().newInstance());
         } catch (InstantiationException ex) {
-            throw new UncheckedWrapperException("Failed to instantiate the listener class", ex);
+            throw new UncheckedWrapperException(
+                "Failed to instantiate the listener class", ex);
         } catch (IllegalAccessException ex) {
-            throw new UncheckedWrapperException("Couldn't access the listener class", ex);
+            throw new UncheckedWrapperException(
+                "Couldn't access the listener class", ex);
         }
 
         MetadataProviderRegistry.registerAdapter(
-                FileAsset.BASE_DATA_OBJECT_TYPE,
-                new AssetMetadataProvider());
-        
+            FileAsset.BASE_DATA_OBJECT_TYPE,
+            new AssetMetadataProvider());
+
         //Register the ApplicationManager implementations provided by this module
         ApplicationManagers.register(new ContentCenterAppManager());
         ApplicationManagers.register(new ServiceAppManager());
@@ -243,18 +264,28 @@ public class Initializer extends CompoundInitializer {
 
         if (s_conf.getAttachPersonOrgaUnitsStep()) {
             AuthoringKitWizard.registerAssetStep(
-                    GenericPerson.BASE_DATA_OBJECT_TYPE,
-                    GenericPersonOrgaUnitsStep.class,
-                    ContenttypesGlobalizationUtil.globalize("person.authoring.orgas.title"),
-                    ContenttypesGlobalizationUtil.globalize("person.authoring.orgas.title"),
-                    s_conf.getPersonOrgaUnitsStepSortKey());
+                GenericPerson.BASE_DATA_OBJECT_TYPE,
+                GenericPersonOrgaUnitsStep.class,
+                ContenttypesGlobalizationUtil.globalize(
+                    "person.authoring.orgas.title"),
+                ContenttypesGlobalizationUtil.globalize(
+                    "person.authoring.orgas.title"),
+                s_conf.getPersonOrgaUnitsStepSortKey());
         }
-        
-        ExportManager.getInstance().registerExporter(new CmsTasksExporter());
-//        ExportManager
-//            .getInstance()
-//            .registerExporter(new AbstractAttachmentListsExporter());
 
+        ExportManager.getInstance().registerExporter(new CmsTasksExporter());
+        ExportManager
+            .getInstance()
+            .registerExporter(new ContentSectionsExporter());
+        ExportManager.getInstance().registerExporter(new ContentTypesExporter());
+        ExportManager.getInstance().registerExporter(new FoldersExporter());
+        ExportManager.getInstance().registerExporter(new ImagesExporter());
+        ExportManager.getInstance().registerExporter(new LifecyclesExporter());
+        ExportManager.getInstance()
+            .registerExporter(new LifecycleDefinitionsExporter());
+        ExportManager.getInstance().registerExporter(
+            new PhaseDefinitionsExporter());
+        ExportManager.getInstance().registerExporter(new PhasesExporter());
         s_log.debug("CMS.Initializer.init(DomainInitEvent) completed");
     }    //  END init(DomainInitEvent e)
 
@@ -263,12 +294,12 @@ public class Initializer extends CompoundInitializer {
      */
     private void registerPatternGenerators() {
         PatternStylesheetResolver.registerPatternGenerator(
-                "item_template_oid",
-                new ItemTemplatePatternGenerator());
+            "item_template_oid",
+            new ItemTemplatePatternGenerator());
 
         PatternStylesheetResolver.registerPatternGenerator(
-                "item_delegated_url",
-                new ItemDelegatedURLPatternGenerator());
+            "item_delegated_url",
+            new ItemDelegatedURLPatternGenerator());
     }
 
     /**
@@ -279,83 +310,98 @@ public class Initializer extends CompoundInitializer {
         // Register the CMSTaskInstaniator
         f.registerInstantiator(CMSTask.BASE_DATA_OBJECT_TYPE,
                                new ACSObjectInstantiator() {
-            @Override
-            public DomainObject doNewInstance(DataObject dataObject) {
-                return new CMSTask(dataObject);
-            }
 
-        });
+                               @Override
+                               public DomainObject doNewInstance(
+                                   DataObject dataObject) {
+                                   return new CMSTask(dataObject);
+                               }
+
+                           });
         f.registerInstantiator(CMSTaskType.BASE_DATA_OBJECT_TYPE,
                                new DomainObjectInstantiator() {
-            public DomainObject doNewInstance(DataObject dataObject) {
-                return new CMSTaskType(dataObject);
-            }
 
-        });
+                               public DomainObject doNewInstance(
+                                   DataObject dataObject) {
+                                   return new CMSTaskType(dataObject);
+                               }
+
+                           });
         f.registerInstantiator(TaskEventURLGenerator.BASE_DATA_OBJECT_TYPE,
                                new DomainObjectInstantiator() {
-            public DomainObject doNewInstance(DataObject dataObject) {
-                return new TaskEventURLGenerator(dataObject);
-            }
 
-        });
+                               public DomainObject doNewInstance(
+                                   DataObject dataObject) {
+                                   return new TaskEventURLGenerator(dataObject);
+                               }
+
+                           });
 
         f.registerInstantiator(Workflow.BASE_DATA_OBJECT_TYPE,
                                new ACSObjectInstantiator() {
-            public DomainObject doNewInstance(DataObject dataObject) {
-                return new Workflow(dataObject);
-            }
 
-        });
+                               public DomainObject doNewInstance(
+                                   DataObject dataObject) {
+                                   return new Workflow(dataObject);
+                               }
+
+                           });
 
         f.registerInstantiator(WorkflowTemplate.BASE_DATA_OBJECT_TYPE,
                                new ACSObjectInstantiator() {
-            @Override
-            public DomainObject doNewInstance(DataObject dataObject) {
-                return new WorkflowTemplate(dataObject);
-            }
 
-        });
+                               @Override
+                               public DomainObject doNewInstance(
+                                   DataObject dataObject) {
+                                   return new WorkflowTemplate(dataObject);
+                               }
+
+                           });
 
         f.registerInstantiator(TemplateContext.BASE_DATA_OBJECT_TYPE,
                                new DomainObjectInstantiator() {
-            public DomainObject doNewInstance(DataObject dataObject) {
-                return new TemplateContext(dataObject);
-            }
 
-            @Override
-            public DomainObjectInstantiator resolveInstantiator(DataObject obj) {
-                return this;
-            }
+                               public DomainObject doNewInstance(
+                                   DataObject dataObject) {
+                                   return new TemplateContext(dataObject);
+                               }
 
-        });
+                               @Override
+                               public DomainObjectInstantiator resolveInstantiator(
+                                   DataObject obj) {
+                                   return this;
+                               }
+
+                           });
 
         f.registerInstantiator(RelationAttribute.BASE_DATA_OBJECT_TYPE,
                                new ACSObjectInstantiator() {
-            @Override
-            public DomainObject doNewInstance(DataObject dataObject) {
-                return new RelationAttribute(dataObject);
-            }
 
-        });
+                               @Override
+                               public DomainObject doNewInstance(
+                                   DataObject dataObject) {
+                                   return new RelationAttribute(dataObject);
+                               }
+
+                           });
     }
 
     private void registerLuceneEngine() {
 
         QueryEngineRegistry.registerEngine(IndexerType.LUCENE,
                                            new FilterType[]{
-            new CategoryFilterType(),
-            new ContentSectionFilterType(),
-            new CMSContentSectionFilterType(),
-            new ContentTypeFilterType(),
-            new CreationDateFilterType(),
-            new CreationUserFilterType(),
-            new LastModifiedDateFilterType(),
-            new LastModifiedUserFilterType(),
-            new ObjectTypeFilterType(),
-            new PermissionFilterType(),
-            new VersionFilterType()
-        },
+                                               new CategoryFilterType(),
+                                               new ContentSectionFilterType(),
+                                               new CMSContentSectionFilterType(),
+                                               new ContentTypeFilterType(),
+                                               new CreationDateFilterType(),
+                                               new CreationUserFilterType(),
+                                               new LastModifiedDateFilterType(),
+                                               new LastModifiedUserFilterType(),
+                                               new ObjectTypeFilterType(),
+                                               new PermissionFilterType(),
+                                               new VersionFilterType()
+                                           },
                                            new LuceneQueryEngine());
     }
 
@@ -363,19 +409,19 @@ public class Initializer extends CompoundInitializer {
 
         QueryEngineRegistry.registerEngine(IndexerType.INTERMEDIA,
                                            new FilterType[]{
-            new CategoryFilterType(),
-            new ContentSectionFilterType(),
-            new CMSContentSectionFilterType(),
-            new ContentTypeFilterType(),
-            new CreationDateFilterType(),
-            new CreationUserFilterType(),
-            new LastModifiedDateFilterType(),
-            new LastModifiedUserFilterType(),
-            new LaunchDateFilterType(),
-            new ObjectTypeFilterType(),
-            new PermissionFilterType(),
-            new VersionFilterType()
-        },
+                                               new CategoryFilterType(),
+                                               new ContentSectionFilterType(),
+                                               new CMSContentSectionFilterType(),
+                                               new ContentTypeFilterType(),
+                                               new CreationDateFilterType(),
+                                               new CreationUserFilterType(),
+                                               new LastModifiedDateFilterType(),
+                                               new LastModifiedUserFilterType(),
+                                               new LaunchDateFilterType(),
+                                               new ObjectTypeFilterType(),
+                                               new PermissionFilterType(),
+                                               new VersionFilterType()
+                                           },
                                            new IntermediaQueryEngine());
     }
 

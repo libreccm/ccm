@@ -27,7 +27,8 @@ import java.util.UUID;
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
-public class ContentTypesExporter extends AbstractDomainObjectsExporter<ContentType> {
+public class ContentTypesExporter 
+    extends AbstractDomainObjectsExporter<ContentType> {
 
     @Override
     public Class<ContentType> exportsType() {
