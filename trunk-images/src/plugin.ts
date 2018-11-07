@@ -1,15 +1,20 @@
 import Dialog from "./Dialog";
+declare var tinymce: any;
 
 const plugin = (editor: any, url: String) => {
-  console.log("Trunk-Images loaded");
-  editor.addMenuItem("trunk-images", {
-    icon: false,
-    text: "Insert Trunk-Images",
-    onclick: function() {
-      Dialog.open(editor);
-    },
-    context: "insert"
+  editor.addButton("trunk-images-button", {
+    icon: "image",
+    onlick: Dialog(editor).open,
+    stateSelector: "div.image"
   });
-  return {};
+
+  editor.addMenuItem("trunk-images", {
+    icon: "image",
+    text: "Insert Images",
+    onclick: Dialog(editor).open,
+    stateSelector: "image",
+    context: "insert",
+    prependToContext: true
+  });
 };
 export default plugin;
