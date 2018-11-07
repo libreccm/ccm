@@ -53,7 +53,7 @@ public class PhaseDefinitionsExporter
             .createGenerator(targetFile, JsonEncoding.UTF8)) {
 
             setPrettyPrinter(jsonGenerator);
-            
+
             jsonGenerator.writeStartObject();
 
             jsonGenerator.writeNumberField("definitionId",
@@ -74,8 +74,11 @@ public class PhaseDefinitionsExporter
 
             jsonGenerator.writeNumberField("defaultDelay",
                                            phaseDefinition.getDefaultDelay());
-            jsonGenerator.writeNumberField("defaultDuration",
-                                           phaseDefinition.getDefaultDuration());
+            if (phaseDefinition.getDefaultDuration() != null) {
+                jsonGenerator.writeNumberField(
+                    "defaultDuration",
+                    phaseDefinition.getDefaultDuration());
+            }
 
             jsonGenerator.writeStringField("defaultListener",
                                            phaseDefinition.getDefaultListener());

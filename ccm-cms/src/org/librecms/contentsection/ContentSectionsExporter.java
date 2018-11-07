@@ -6,6 +6,7 @@ import com.arsdigita.cms.ContentTypeCollection;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.lifecycle.LifecycleDefinitionCollection;
+import com.arsdigita.kernel.KernelConfig;
 import com.arsdigita.kernel.Role;
 import com.arsdigita.kernel.RoleCollection;
 import com.arsdigita.workflow.simple.Task;
@@ -62,18 +63,25 @@ public class ContentSectionsExporter
         jsonGenerator.writeStringField("xmlGeneratorClass",
                                        section.getXMLGeneratorClassName());
 
-        jsonGenerator.writeArrayFieldStart("roles");
-        final RoleCollection roles = section.getGroup().getRoles();
-        while (roles.next()) {
+        if (section.getGroup() != null) {
+            jsonGenerator.writeArrayFieldStart("roles");
+            final RoleCollection roles = section.getGroup().getRoles();
+            while (roles.next()) {
 
-            final Role role = roles.getRole();
-            final String roleUuid = generateUuid(role);
-            jsonGenerator.writeString(roleUuid);
+                final Role role = roles.getRole();
+                final String roleUuid = generateUuid(role);
+                jsonGenerator.writeString(roleUuid);
+            }
+            jsonGenerator.writeEndArray();
         }
-        jsonGenerator.writeEndArray();
 
-        jsonGenerator.writeStringField("defaultLocale",
-                                       section.getDefaultLocale().toString());
+        if (section.getDefaultLocale() == null) {
+            jsonGenerator.writeStringField(
+                "defaultLocale", KernelConfig.getConfig().getDefaultLanguage());
+        } else {
+            jsonGenerator.writeStringField(
+                "defaultLocale", section.getDefaultLocale().toString());
+        }
 
         jsonGenerator.writeArrayFieldStart("contentTypes");
         final ContentTypeCollection types = section.getContentTypes();

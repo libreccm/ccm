@@ -31,9 +31,7 @@ public class LifecyclesExporter extends AbstractDomainObjectsExporter<Lifecycle>
 
         final String uuid = generateUuid(lifecycle);
 
-        final Path targetFilePath = targetDir
-            .resolve("org.libreccm.lifecycle.Lifecycle")
-            .resolve(String.format("%s.json", uuid));
+        final Path targetFilePath = generateTargetFilePath(targetDir, uuid);
         final File targetFile = targetFilePath.toFile();
 
         final JsonFactory jsonFactory = new JsonFactory();
@@ -41,7 +39,7 @@ public class LifecyclesExporter extends AbstractDomainObjectsExporter<Lifecycle>
             .createGenerator(targetFile, JsonEncoding.UTF8)) {
 
             setPrettyPrinter(jsonGenerator);
-            
+
             jsonGenerator.writeStartObject();
 
             jsonGenerator.writeNumberField("lifecycleId",
@@ -57,12 +55,14 @@ public class LifecyclesExporter extends AbstractDomainObjectsExporter<Lifecycle>
                     LocalDateTime.ofInstant(
                         lifecycle.getStartDate().toInstant(),
                         ZoneId.systemDefault())));
-            jsonGenerator.writeStringField(
-                "endDateTime",
-                dateTimeFormatter.format(
-                    LocalDateTime.ofInstant(
-                        lifecycle.getEndDate().toInstant(),
-                        ZoneId.systemDefault())));
+            if (lifecycle.getEndDate() != null) {
+                jsonGenerator.writeStringField(
+                    "endDateTime",
+                    dateTimeFormatter.format(
+                        LocalDateTime.ofInstant(
+                            lifecycle.getEndDate().toInstant(),
+                            ZoneId.systemDefault())));
+            }
 
             jsonGenerator.writeStringField("listener",
                                            lifecycle.getListenerClassName());
@@ -80,7 +80,7 @@ public class LifecyclesExporter extends AbstractDomainObjectsExporter<Lifecycle>
                 jsonGenerator.writeString(generateUuid(phases.getPhase()));
             }
             jsonGenerator.writeEndArray();
-            
+
             jsonGenerator.writeEndObject();
 
         } catch (IOException ex) {
@@ -108,4 +108,5 @@ public class LifecyclesExporter extends AbstractDomainObjectsExporter<Lifecycle>
         return "org.librecms.lifecycle.Lifecycle";
 
     }
+
 }

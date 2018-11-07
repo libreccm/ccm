@@ -44,9 +44,7 @@ public class PhasesExporter extends AbstractDomainObjectsExporter<Phase> {
                                               final Path targetDir) {
 
         final String uuid = generateUuid(phase);
-        final Path targetFilePath = targetDir
-            .resolve("org.librecms.lifecycle.Phase")
-            .resolve(String.format("%s.json", uuid));
+        final Path targetFilePath = generateTargetFilePath(targetDir, uuid);
         final File targetFile = targetFilePath.toFile();
 
         final JsonFactory jsonFactory = new JsonFactory();

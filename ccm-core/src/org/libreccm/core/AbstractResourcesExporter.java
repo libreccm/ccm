@@ -21,6 +21,7 @@ public abstract class AbstractResourcesExporter<T extends Resource>
      *
      * @param resource      The {@link Resource} to export.
      * @param jsonGenerator The {@link JsonGenerator} to use.
+     *
      * @throws java.io.IOException
      */
     @Override
@@ -33,21 +34,23 @@ public abstract class AbstractResourcesExporter<T extends Resource>
             KernelConfig.getConfig().getDefaultLanguage(),
             resource.getTitle());
         jsonGenerator.writeEndObject();
-        
+
         jsonGenerator.writeObjectFieldStart("description");
         jsonGenerator.writeStringField(
             KernelConfig.getConfig().getDefaultLanguage(),
             resource.getDescription());
         jsonGenerator.writeEndObject();
-        
+
         final ResourceType type = resource.getResourceType();
         final String typeUuid = generateUuid(type);
         jsonGenerator.writeStringField("resourceType", typeUuid);
-        
+
         final Resource parent = resource.getParentResource();
-        final String parentUuid = generateUuid(parent);
-        jsonGenerator.writeStringField("parent", parentUuid);
-        
+        if (parent != null) {
+            final String parentUuid = generateUuid(parent);
+            jsonGenerator.writeStringField("parent", parentUuid);
+        }
+
         exportResourceProperties(resource, jsonGenerator);
     }
 

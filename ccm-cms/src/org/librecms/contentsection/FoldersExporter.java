@@ -24,8 +24,10 @@ public class FoldersExporter extends AbstractCcmObjectsExporter<Folder> {
         jsonGenerator.writeStringField("name", folder.getName());
 
         final ContentSection section = folder.getContentSection();
-        final String sectionUuid = generateUuid(section);
-        jsonGenerator.writeStringField("contentSection", sectionUuid);
+        if (section != null) {
+            final String sectionUuid = generateUuid(section);
+            jsonGenerator.writeStringField("contentSection", sectionUuid);
+        }
 
         jsonGenerator.writeObjectFieldStart("title");
         jsonGenerator.writeStringField(
@@ -37,9 +39,11 @@ public class FoldersExporter extends AbstractCcmObjectsExporter<Folder> {
         jsonGenerator.writeBooleanField("visible", true);
         jsonGenerator.writeBooleanField("abstractCategory", true);
 
-        jsonGenerator.writeStringField(
-            "parentCategory",
-            generateUuid(folder.getParent()));
+        if (folder.getParent() != null) {
+            jsonGenerator.writeStringField(
+                "parentCategory",
+                generateUuid(folder.getParent()));
+        }
 
     }
 

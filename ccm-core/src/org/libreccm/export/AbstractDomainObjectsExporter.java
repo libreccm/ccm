@@ -15,6 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -94,6 +95,8 @@ public abstract class AbstractDomainObjectsExporter<T extends DomainObject> {
      */
     protected final String generateUuid(final DomainObject forDomainObject) {
 
+        Objects.requireNonNull(forDomainObject);
+        
         final String uuidSource = String.format(
             "%s/%s",
             webConfig.getSiteName(),
