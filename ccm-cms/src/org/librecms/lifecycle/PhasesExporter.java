@@ -68,11 +68,13 @@ public class PhasesExporter extends AbstractDomainObjectsExporter<Phase> {
                     LocalDateTime.ofInstant(phase.getStartDate().toInstant(),
                                             ZoneId.systemDefault())));
 
-            jsonGenerator.writeStringField(
-                "endDateTime",
-                dateTimeFormatter.format(
-                    LocalDateTime.ofInstant(phase.getEndDate().toInstant(),
-                                            ZoneId.systemDefault())));
+            if (phase.getEndDate() != null) {
+                jsonGenerator.writeStringField(
+                    "endDateTime",
+                    dateTimeFormatter.format(
+                        LocalDateTime.ofInstant(phase.getEndDate().toInstant(),
+                                                ZoneId.systemDefault())));
+            }
 
             jsonGenerator.writeStringField("listener",
                                            phase.getListenerClassName());
