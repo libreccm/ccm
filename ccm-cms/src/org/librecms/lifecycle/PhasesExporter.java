@@ -36,7 +36,7 @@ public class PhasesExporter extends AbstractDomainObjectsExporter<Phase> {
 
     @Override
     public String convertsToType() {
-        return "org.librcms.lifecycle.Phase";
+        return "org.librecms.lifecycle.Phase";
     }
 
     @Override

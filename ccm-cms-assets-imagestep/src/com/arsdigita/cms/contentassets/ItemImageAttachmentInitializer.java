@@ -30,6 +30,7 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.runtime.DomainInitEvent;
 
 import org.libreccm.export.ExportManager;
+import org.librecms.assets.ImageAttachmentListsExporter;
 import org.librecms.assets.ImageAttachmentsExporter;
 
 /**
@@ -79,6 +80,9 @@ public class ItemImageAttachmentInitializer extends ContentAssetInitializer {
         ExportManager
             .getInstance()
             .registerExporter(new ImageAttachmentsExporter());
+        ExportManager
+            .getInstance()
+            .registerExporter(new ImageAttachmentListsExporter());
 
     }
 

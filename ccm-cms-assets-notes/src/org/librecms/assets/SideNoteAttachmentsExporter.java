@@ -1,7 +1,8 @@
 package org.librecms.assets;
 
+
 import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.contentassets.FileAttachment;
+import com.arsdigita.cms.contentassets.Note;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -26,8 +27,8 @@ import java.util.UUID;
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
-public class FileAttachmentsExporter
-    extends AbstractDomainObjectsExporter<ContentItem> {
+public class SideNoteAttachmentsExporter 
+extends AbstractDomainObjectsExporter<ContentItem>{
 
     @Override
     public Class<ContentItem> exportsType() {
@@ -43,84 +44,79 @@ public class FileAttachmentsExporter
     public String convertsToType() {
         return "org.librecms.contentsection.ItemAttachment";
     }
-
+    
     @Override
     protected boolean includeSubTypes() {
         return true;
     }
 
+
     @Override
-    protected List<String> exportDomainObject(
-        final ContentItem item, final Path targetDir) {
-
+    protected List<String> exportDomainObject(final ContentItem item,
+                                              final Path targetDir) {
+        
         final String listUuid = AbstractAttachmentListsExporter
-            .generateListUuid(item, "files");
+            .generateListUuid(item, "notes");
 
-        final List<String> attachmentUuids = new ArrayList<>();
-
-        final DataCollection fileAttachments = FileAttachment
-            .getAttachments(item);
-
+        final List<String> attachmentsUuids = new ArrayList<>();
+        
+        final DataCollection noteAttachments = Note.getNotes(item);
+        
         long sortKey = 0;
-        while (fileAttachments.next()) {
-
+        while(noteAttachments.next()) {
+            
             sortKey++;
-            final String uuid = exportFileAttachment(
-                item,
-                fileAttachments.getDataObject(),
+            final String uuid = exportNoteAttachment(
+                noteAttachments.getDataObject(),
                 listUuid,
                 sortKey,
                 targetDir);
-            attachmentUuids.add(uuid);
         }
-
-        return attachmentUuids;
+        
+        return attachmentsUuids;
     }
-
-    private String exportFileAttachment(final ContentItem item,
-                                        final DataObject dataObj,
-                                        final String listUuid,
-                                        final long sortKey,
-                                        final Path targetDir) {
-
-        final FileAttachment fileAttachment = new FileAttachment(dataObj);
-        final String fileAssetUuid = FileAssetsExporter
-            .generateFileAssetUuid(fileAttachment);
-
+    
+    private String exportNoteAttachment(final DataObject dataObj,
+                                         final String listUuid,
+                                         final long sortKey,
+                                         final Path targetDir) {
+        
+        final Note note = new Note(dataObj);
+        final String noteUuid = generateUuid(note);
+        
         final byte[] uuidSource = String.format(
-            "%s/%s/files/%s",
+        "%s/notes/%s",
             WebConfig.getInstanceOf().getSiteName(),
-            item.getOID().toString(),
-            fileAttachment.getOID().toString())
-            .getBytes(StandardCharsets.UTF_8);
+            note.getOID().toString())
+        .getBytes(StandardCharsets.UTF_8);
         final String uuid = UUID.nameUUIDFromBytes(uuidSource).toString();
-
-        final Path targetFilePath = generateTargetFilePath(targetDir, uuid);
+        
+         final Path targetFilePath = generateTargetFilePath(targetDir, uuid);
         final File targetFile = targetFilePath.toFile();
 
         final JsonFactory jsonFactory = new JsonFactory();
         try (JsonGenerator jsonGenerator = jsonFactory
             .createGenerator(targetFile, JsonEncoding.UTF8)) {
-
-            jsonGenerator.writeStartObject();
+            
+             jsonGenerator.writeStartObject();
 
             jsonGenerator.writeNumberField("attachmentId",
                                            IdSequence.getInstance().nextId());
             jsonGenerator.writeStringField("uuid", uuid);
 
             jsonGenerator.writeStringField("attachmentList", listUuid);
-            jsonGenerator.writeStringField("asset", fileAssetUuid);
+            jsonGenerator.writeStringField("asset", noteUuid);
 
             jsonGenerator.writeNumberField("sortKey", sortKey);
 
             jsonGenerator.writeEndObject();
-
-            return uuid;
-
-        } catch (IOException ex) {
+            
+        } catch(IOException ex) {
+            
             throw new UncheckedWrapperException(ex);
         }
-
+        
+        return noteUuid;
     }
-
+    
 }

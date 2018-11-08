@@ -11,6 +11,7 @@ import java.io.IOException;
 /**
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
+ * @param <T>
  */
 public abstract class AbstractBinaryAssetsExporter<T extends BinaryAsset> 
     extends AbstractAssetsExporter<T>{

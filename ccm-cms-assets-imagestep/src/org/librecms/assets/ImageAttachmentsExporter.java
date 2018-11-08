@@ -70,11 +70,11 @@ public class ImageAttachmentsExporter
         while (imageAttachments.next()) {
 
             sortKey++;
-            final String uuid = exportImageAttachment(imageAttachments
-                .getDataObject(),
-                                                      listUuid,
-                                                      sortKey,
-                                                      targetDir);
+            final String uuid = exportImageAttachment(
+                imageAttachments.getDataObject(),
+                listUuid,
+                sortKey,
+                targetDir);
             attachmentsUuids.add(uuid);
         }
 
@@ -122,7 +122,7 @@ public class ImageAttachmentsExporter
 
             throw new UncheckedWrapperException(ex);
         }
-        
+
         return uuid;
     }
 
