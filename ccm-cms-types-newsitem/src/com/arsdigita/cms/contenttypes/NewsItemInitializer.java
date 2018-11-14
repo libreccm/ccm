@@ -20,6 +20,8 @@
 package com.arsdigita.cms.contenttypes;
 
 import org.apache.log4j.Logger;
+import org.libreccm.export.ExportManager;
+import org.librecms.contenttypes.NewsExporter;
 
 /**
  * Executes at each system startup and initializes the NewsItem content type.
@@ -43,6 +45,8 @@ public class NewsItemInitializer extends ContentTypeInitializer {
      */
     public NewsItemInitializer() {
         super("ccm-cms-types-newsitem.pdl.mf", NewsItem.BASE_DATA_OBJECT_TYPE);
+        
+        ExportManager.getInstance().registerExporter(new NewsExporter());
     }
 
     /**

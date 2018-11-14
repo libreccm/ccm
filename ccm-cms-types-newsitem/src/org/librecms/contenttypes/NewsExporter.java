@@ -1,11 +1,15 @@
-package com.arsdigita.cms.contenttypes;
+package org.librecms.contenttypes;
 
 import com.arsdigita.cms.ItemCollection;
+import com.arsdigita.cms.contenttypes.NewsItem;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.librecms.contentsection.AbstractContentItemsExporter;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -14,14 +18,23 @@ import java.util.Map;
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
-public class ArticlesExporter extends AbstractContentItemsExporter<Article> {
+public class NewsExporter extends AbstractContentItemsExporter<NewsItem> {
 
     @Override
     protected void exportContentItemProperties(
-        final Article contentItem, final JsonGenerator jsonGenerator)
+        final NewsItem newsItem, final JsonGenerator jsonGenerator)
         throws IOException {
 
-        // Nothing
+        final DateTimeFormatter dateTimeFormatter
+                                    = DateTimeFormatter.ISO_DATE_TIME;
+        if (newsItem.getNewsDate() != null) {
+            final LocalDateTime newsDate = LocalDateTime
+                .ofInstant(newsItem.getNewsDate().toInstant(),
+                           ZoneId.systemDefault());
+            jsonGenerator.writeStringField(
+                "releaseDate", dateTimeFormatter.format(newsDate));
+        }
+        jsonGenerator.writeBooleanField("homepage", newsItem.isHomepage());
     }
 
     @Override
@@ -33,15 +46,15 @@ public class ArticlesExporter extends AbstractContentItemsExporter<Article> {
 
         while (instances.next()) {
 
-            final Article article = (Article) instances.getContentItem();
-            final String lang = article.getLanguage();
+            final NewsItem news = (NewsItem) instances.getContentItem();
+            final String lang = news.getLanguage();
             final Locale locale = new Locale(lang);
-            final String lead = article.getLead();
+            final String lead = news.getLead();
             final String text;
-            if (article.getTextAsset() == null) {
+            if (news.getTextAsset() == null) {
                 text = "";
             } else {
-                text = article.getTextAsset().getText();
+                text = news.getTextAsset().getText();
             }
 
             leadPropertyValues.put(locale, lead);
@@ -58,18 +71,21 @@ public class ArticlesExporter extends AbstractContentItemsExporter<Article> {
     }
 
     @Override
-    public Class<Article> exportsType() {
-        return Article.class;
+    public Class<NewsItem> exportsType() {
+
+        return NewsItem.class;
     }
 
     @Override
     public String exportsBaseDataObjectType() {
-        return Article.BASE_DATA_OBJECT_TYPE;
+
+        return NewsItem.BASE_DATA_OBJECT_TYPE;
     }
 
     @Override
     public String convertsToType() {
-        return "org.librecms.contenttypes.Article";
+
+        return "org.librecms.contenttypes.News";
     }
 
 }
