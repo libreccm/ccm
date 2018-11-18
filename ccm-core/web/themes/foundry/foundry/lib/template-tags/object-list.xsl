@@ -76,12 +76,33 @@
                     </xsl:when>
                 </xsl:choose>
             </xsl:variable>
-            
-            <xsl:apply-templates>
-                <xsl:with-param name="object-list-datatree" 
-                                tunnel="yes" 
-                                select="$object-list-datatree"/>
-            </xsl:apply-templates>
+
+            <xsl:variable name="hide-empty-list">
+                <xsl:choose>
+                    <xsl:when test="./@hide-empty-list">
+                        <xsl:value-of select="foundry:boolean(./@hide-empty-list)" />
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="foundry:boolean(foundry:get-setting('global', 'hide-empty-list', 'true'))" />
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+
+            <!--<pre>
+                <xsl:value-of select="./@hide-empty-list" />
+                <xsl:value-of select="$hide-empty-list" />
+                <xsl:value-of select="$hide-empty-list = false()" />
+                <xsl:value-of select="./nav:noContent and $hide-empty-list = false()" />
+            </pre>-->
+
+            <xsl:if test="not(./nav:noContent) or (./nav:content and $hide-empty-list = false())">
+                <!--<pre>showing list</pre>-->
+                <xsl:apply-templates>
+                    <xsl:with-param name="object-list-datatree" 
+                                    tunnel="yes" 
+                                    select="$object-list-datatree"/>
+                 </xsl:apply-templates>
+            </xsl:if>
        </xsl:if>
     </xsl:template>
 
