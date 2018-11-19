@@ -77,7 +77,30 @@
                 </xsl:choose>
             </xsl:variable>
 
-            <xsl:variable name="hide-empty-list">
+            <xsl:variable name="is-empty" as="xs:boolean">
+                <xsl:choose>
+                     <xsl:when test="$data-tree//nav:simpleObjectList[@id = $object-list-id]/nav:noContent">
+                        <xsl:value-of select="true()" />
+                    </xsl:when>
+                    <xsl:when test="$data-tree//nav:complexObjectList[@id = $object-list-id]/nav:noContent">
+                        <xsl:value-of select="true()" />
+                    </xsl:when>
+                    <xsl:when test="$data-tree//nav:customizableObjectList[@id = $object-list-id]/nav:noContent">
+                        <xsl:value-of select="true()" />
+                    </xsl:when>
+                    <xsl:when test="$data-tree//nav:atozObjectList[@id = $object-list-id]/nav:noContent">
+                        <xsl:value-of select="true()" />
+                    </xsl:when>
+                    <xsl:when test="$data-tree//nav:filterObjectList[@id = $object-list-id]/nav:noContent">
+                        <xsl:value-of select="true()" />
+                    </xsl:when>                  
+                    <xsl:otherwise>
+                        <xsl:value-of select="false()" />
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+
+            <xsl:variable name="hide-empty-list" as="xs:boolean">
                 <xsl:choose>
                     <xsl:when test="./@hide-empty-list">
                         <xsl:value-of select="foundry:boolean(./@hide-empty-list)" />
@@ -89,13 +112,31 @@
             </xsl:variable>
 
             <!--<pre>
-                <xsl:value-of select="./@hide-empty-list" />
-                <xsl:value-of select="$hide-empty-list" />
-                <xsl:value-of select="$hide-empty-list = false()" />
-                <xsl:value-of select="./nav:noContent and $hide-empty-list = false()" />
+                <xsl:value-of select="concat('$object-list-id = ', $object-list-id)" />
+            </pre>
+            <pre>
+                <xsl:value-of select="concat('@hide-empty-list = ', ./@hide-empty-list)" />
+            </pre>
+            <pre>
+                <xsl:value-of select="concat('$hide-empty-list = ', $hide-empty-list)" />
+            </pre>
+            <pre>
+                <xsl:value-of select="concat('$hide-empty-list = false() = ',  $hide-empty-list = false())" />
+            </pre>
+            <pre>
+               <xsl:value-of select="concat('$is-empty = ', $is-empty)" />
+            </pre> 
+            <pre>
+               <xsl:value-of select="concat('not($is-empty) = ', not($is-empty))" />
+            </pre>
+            <pre>
+               <xsl:value-of select="concat('$is-empty and $hide-empty-list = ', $is-empty and $hide-empty-list)" />
+            </pre>
+            <pre>
+               <xsl:value-of select="concat('not($is-empty) or ($is-empty and not($hide-empty-list)) = ', not($is-empty) or ($is-empty and not($hide-empty-list)))" />
             </pre>-->
 
-            <xsl:if test="./nav:noContent or (./nav:content and $hide-empty-list = false())">
+            <xsl:if test="not($is-empty) or ($is-empty and not($hide-empty-list))">
                 <!--<pre>showing list</pre>-->
                 <xsl:apply-templates>
                     <xsl:with-param name="object-list-datatree" 
