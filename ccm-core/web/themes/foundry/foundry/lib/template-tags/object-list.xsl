@@ -95,7 +95,7 @@
                 <xsl:value-of select="./nav:noContent and $hide-empty-list = false()" />
             </pre>-->
 
-            <xsl:if test="not(./nav:noContent) or (./nav:content and $hide-empty-list = false())">
+            <xsl:if test="./nav:noContent or (./nav:content and $hide-empty-list = false())">
                 <!--<pre>showing list</pre>-->
                 <xsl:apply-templates>
                     <xsl:with-param name="object-list-datatree" 
