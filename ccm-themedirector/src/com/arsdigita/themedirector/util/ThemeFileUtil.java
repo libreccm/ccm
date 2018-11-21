@@ -40,7 +40,6 @@ import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * This is a utility class that is able to take a theme and, when necessary,
@@ -79,10 +78,12 @@ public class ThemeFileUtil {
      *                            ThemeFile.DRAFT are the two allowed values.
      *
      */
-    public static void updateDatabaseFiles(File currentFile, Theme currentTheme,
+    public static void updateDatabaseFiles(File currentFile, 
+                                           Theme currentTheme,
                                            String serverSpecificPath,
                                            boolean overwriteNewerFiles,
                                            String fileType) {
+        
         Assert.isTrue(ThemeFile.LIVE.equals(fileType) || ThemeFile.DRAFT.equals(
             fileType));
 
@@ -103,8 +104,12 @@ public class ThemeFileUtil {
             }
         }
 
-        updateDatabaseFiles(currentFile, currentTheme, serverSpecificPath,
-                            themeFiles, overwriteNewerFiles, fileType);
+        updateDatabaseFiles(currentFile, 
+                            currentTheme, 
+                            serverSpecificPath,
+                            themeFiles, 
+                            overwriteNewerFiles, 
+                            fileType);
     }
 
     /**
@@ -115,7 +120,7 @@ public class ThemeFileUtil {
      *
      * @param themePath
      */
-    private static void prepareThemeDirectory(final String themePath) {
+    public static void prepareThemeDirectory(final String themePath) {
 
         final Path root = Paths.get(themePath);
 
