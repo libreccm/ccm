@@ -1,7 +1,7 @@
 tinymce.init({
-  menubar: "tools",
-  plugins: "trunk-images code lists nonbreaking noneditable paste searchreplace table template visualblocks wordcount",
+  plugins: "ccm-cms-images code lists nonbreaking noneditable paste searchreplace table template visualblocks wordcount",
   selector: ".tinymce",
   templates: [],
-  toolbar: "code"
+  content_css: ['./editor.css'],
+  toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | numlist bullist | outdent indent"
 });
