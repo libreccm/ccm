@@ -23,15 +23,11 @@
                 exclude-result-prefixes="xsl"
                 version="2.0">
     
-    <xsl:import href="lib/bebop.xsl"/>
-    <xsl:import href="lib/cms.xsl"/>
-    <xsl:import href="lib/formbuilder.xsl"/>
-    <xsl:import href="lib/navigation.xsl"/>
-    <xsl:import href="lib/global-vars.xsl"/>
-    <xsl:import href="lib/search.xsl"/>
-    <xsl:import href="lib/template-parser.xsl"/>
-    <xsl:import href="lib/template-tags.xsl"/>
-    <xsl:import href="lib/themedirector.xsl" />
-    <xsl:import href="lib/utils.xsl"/>
+    <xsl:import href="themedirector/themeErrorInfo.xsl" />
+    <xsl:import href="themedirector/themeFileList.xsl" />
+    <xsl:import href="themedirector/themeFile.xsl" />
+    <xsl:import href="themedirector/themeFolder.xsl" />
+
     
+
 </xsl:stylesheet>

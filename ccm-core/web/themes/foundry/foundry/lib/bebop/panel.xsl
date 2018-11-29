@@ -141,7 +141,9 @@
     <!-- EN PanelRow creates a new row in a (grid) panel -->
     <xsl:template match="bebop:panelRow">
         <div class="bebop-panel-row">
-            <xsl:apply-templates/>
+            <xsl:for-each select="bebop:cell">
+                <xsl:apply-templates />  
+            </xsl:for-each>
         </div>
     </xsl:template>
   

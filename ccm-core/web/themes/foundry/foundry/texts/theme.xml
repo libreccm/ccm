@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<foundry:static-texts xmlns:foundry="http://foundry.libreccm.org">
+
+    <text id="delete/title">
+        <translation lang="de">Diese Datei löschen</translation>
+        <translation lang="en">Delete this file?</translation>
+    </text>
+        
+    <text id="delete/link">
+        <translation lang="de"> [Löschen]</translation>
+        <translation lang="en"> [remove]</translation>
+    </text>
+
+   <text id="delete/confirmMessage">
+        <translation lang="de">Sind Sie sicher?</translation>
+        <translation lang="en">Are you sure?</translation>
+    </text>
+
+   <text id="fileinfo/size">
+        <translation lang="de">Größe: </translation>
+        <translation lang="en">Size: </translation>
+    </text>
+
+   <text id="fileinfo/date">
+        <translation lang="de">Datum</translation>
+        <translation lang="en">Date: </translation>
+    </text>
+
+   <text id="filemode/ignored">
+        <translation lang="de"> (ignoriert)</translation>
+        <translation lang="en"> (ignored)</translation>
+    </text>
+
+   <text id="filemode/deleted">
+        <translation lang="de"> (wird gelöscht)</translation>
+        <translation lang="en"> (scheduled for removal)</translation>
+    </text>
+
+   <text id="errorInfo/warning">
+        <translation lang="de">Warnungen</translation>
+        <translation lang="en">Warnings</translation>
+    </text>
+
+   <text id="errorInfo/error">
+        <translation lang="de">Fehler</translation>
+        <translation lang="en">Errors</translation>
+    </text>
+
+   <text id="errorInfo/fatal">
+        <translation lang="de">Schwere Fehler</translation>
+        <translation lang="en">Fatal Errors</translation>
+    </text>
+
+    <text id="errorInfo/location">
+        <translation lang="de">Datei: </translation>
+        <translation lang="en">File: </translation>
+    </text>
+
+   <text id="errorInfo/line">
+        <translation lang="de">Zeile: </translation>
+        <translation lang="en">Line: </translation>
+    </text>
+
+   <text id="errorInfo/column">
+        <translation lang="de">Position: </translation>
+        <translation lang="en">Column: </translation>
+    </text>
+
+   <text id="errorInfo/cause">
+        <translation lang="de">Meldung vom XSL-Parser: </translation>
+        <translation lang="en">Message from XSL-Parser: </translation>
+    </text>
+
+
+
+</foundry:static-texts>
