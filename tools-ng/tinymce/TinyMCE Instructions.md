@@ -5,7 +5,7 @@
 To be able to switch to TinyMCE, you need to add a few lines in the `integration.properties` file in your bundles `cfg` directory:
 
 ```properties
-com.arsdigita.cms.dhtml_editor_config=/assets/tinymce/tinymce_cms_config.js
+com.arsdigita.cms.dhtml_editor_config=TinyMCE.Config,/assets/tinymce/tinymce_cms_config.js
 waf.bebop.dhtml_editor=TinyMCE
 waf.bebop.dhtml_editor_src=/assets/tinymce/js/tinymce/tinymce.min.js
 ```
