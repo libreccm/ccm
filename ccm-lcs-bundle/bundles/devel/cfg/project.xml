@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!--    project.xml - ccm devel - containing only those modules used for 
-                                  generic CCM / LibreCMS development         -->
+<!-- ======================================================================   
+     project.xml - lcs devel - containing all modules of the current generic
+     LibreCMS repository. It is specifically for developers to help them to make 
+     every module deployable and to create the distribution.
+     It is NOT a production grade bundle!
+     ======================================================================= -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
@@ -9,7 +13,7 @@
                     name="librecms-dev" 
               prettyName="LibreCMS OpenCCM" 
                  version="2.3.99" 
-                 release="devel-SNAPSHOT-r5397" 
+                 release="devel-SNAPSHOT-r5758" 
                   webxml="libre-web.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
