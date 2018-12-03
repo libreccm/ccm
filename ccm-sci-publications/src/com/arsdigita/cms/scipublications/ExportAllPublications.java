@@ -3,6 +3,7 @@ package com.arsdigita.cms.scipublications;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.scipublications.exporter.SciPublicationsExporter;
 import com.arsdigita.cms.scipublications.exporter.SciPublicationsExporters;
+import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.persistence.DataCollection;
@@ -112,8 +113,9 @@ public class ExportAllPublications extends Program {
                                   index,
                                   publications.size());
 
-                final Publication publication = new Publication(publications
-                    .getDataObject());
+                final Publication publication
+                                  = (Publication) DomainObjectFactory
+                        .newInstance(publications.getDataObject());
                 writer.append(exporter.exportPublication(publication));
                 index++;
             }
