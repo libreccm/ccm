@@ -11,6 +11,7 @@
     "start": "webpack-dev-server --config config/webpack.config.dev.js --progress --open --inline",
     "lint": "tslint 'src/**/*.js'",
     "build": "webpack --config config/webpack.config.prod.js --progress",
+    "test": "webpack --config config/webpack.config.test.js --progress",
     "watch": "npm-watch"
   },
   "author": "",
