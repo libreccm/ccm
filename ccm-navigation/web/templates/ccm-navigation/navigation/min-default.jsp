@@ -36,6 +36,8 @@
 
     <define:component name="greetingItem"
       classname="com.arsdigita.navigation.ui.GreetingItem"/>
+    <define:component name="greetingItemExtraXML"
+      classname="com.arsdigita.navigation.ui.GreetingItemExtraXML"/>
     <define:component name="categoryPath"
       classname="com.arsdigita.navigation.ui.category.Path"/>
     <define:component name="categoryMenu"

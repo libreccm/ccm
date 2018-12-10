@@ -6,5 +6,5 @@ ScientificCMS Portal Page,Sci Portal Page for embedding a portal page as navigat
 ScientificCMS Portal Welcome Page,Sci Portal page meant as site welcome page,/templates/ccm-navigation/navigation/def-portal-welcome.jsp
 ScientificCMS Navigation Welcome Page,Sci site welcome page created by navigation root term,/templates/ccm-navigation/navigation/def-welcome.jsp
 ScientificCMS Specializing Items List,Index page of items with a full set of attributes,/templates/ccm-navigation/navigation/def-specializing-list.jsp
-ScientificCMS Publications List,Sci publications listing page,/templates/ccm-navigation/navigation/sci-publicationList.jsp
+ScientificCMS Publications List,Sci publications listing page,/templates/ccm-navigation/navigation/sci-publicationslist.jsp
 ScientificCMS Institut Project List,Sci project listing page,/templates/ccm-navigation/navigation/sci-institute-projectlist.jsp
