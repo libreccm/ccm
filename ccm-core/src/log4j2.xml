@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Change status to DEBUG for more verbose output-->
-<configuration status="INFO">
+<configuration status="WARN">
   <appenders>
     <Console name="Console" target="SYSTEM_OUT">
       <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
     </Console>
 
-    <File name="FileLog" fileName="${sys:catalina.base}/logs/libreccm.log">
-        <PatternLayout pattern="%d{yyyy-mm-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
-    </File>
+    <RollingRandomAccessFile name="FileLog" 
+                 fileName="${sys:catalina.base}/logs/libreccm.log"
+                 filePattern="${sys:catalina.base}/logs/libreccm-%i.log">
+      <PatternLayout pattern="%d{yyyy-mm-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+      <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+      <DefaultRolloverStrategy fileindex="min" />
+    </RollingRandomAccessFile>
   </appenders>
 
 
   <loggers>
-
     <root level="ERROR" additivity="false" >
       <appenderRef ref="Console"/>
       <appenderRef ref="FileLog" />
@@ -40,16 +43,19 @@
     <Logger name="com.arsdigita.templating.PatternStylesheetResolver"
             level="ERROR" additivity="false" >
       <!-- output just to libreccm specific application log, no system log -->
+      <appenderRef ref="Console"/>
       <appenderRef ref="FileLog" />
     </Logger>
                                                                                                                                                    43,1          40%
     <!-- Set level="DEBUG" to get information JSP file dispatcher      -->
     <Logger name="com.arsdigita.web.ApplicationFileServlet"
             level="ERROR" additivity="false" >
+      <appenderRef ref="Console"/>
       <appenderRef ref="FileLog" />
     </Logger>
     <Logger name="com.arsdigita.web.DefaultApplicationFileResolver"
             level="ERROR" additivity="false" >
+      <appenderRef ref="Console"/>
       <appenderRef ref="FileLog" />
     </Logger>
 
