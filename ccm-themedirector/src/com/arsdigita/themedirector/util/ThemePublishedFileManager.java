@@ -1,22 +1,24 @@
 /*
-* Copyright (C) 2001, 2003 ArsDigita Corporation. All Rights Reserved.
-*
-* The contents of this file are subject to the ArsDigita Public
-* License (the "License"); you may not use this file except in
-* compliance with the License. You may obtain a copy of
-* the License at http://www.arsdigita.com/ADPL.txt
-*
-* Software distributed under the License is distributed on an "AS
-* IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
-* implied. See the License for the specific language governing
-* rights and limitations under the License.
-*
+ * Copyright (C) 2001, 2003 ArsDigita Corporation. All Rights Reserved.
+ *
+ * The contents of this file are subject to the ArsDigita Public
+ * License (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of
+ * the License at http://www.arsdigita.com/ADPL.txt
+ *
+ * Software distributed under the License is distributed on an "AS
+ * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+ * implied. See the License for the specific language governing
+ * rights and limitations under the License.
+ *
  */
+
 package com.arsdigita.themedirector.util;
 
 import com.arsdigita.themedirector.Theme;
 import com.arsdigita.themedirector.ThemeFileCollection;
 import com.arsdigita.templating.Templating;
+
 import java.io.File;
 import org.apache.log4j.Logger;
 
@@ -30,7 +32,6 @@ import org.apache.log4j.Logger;
  * examines all themes.
  *
  * @author <a href="mailto:randyg@redhat.com">Randy Graebner</a>
- * @version $Revision: #2 $ $DateTime: 2004/03/17 09:56:37 $
  */
 public class ThemePublishedFileManager extends ThemeFileManager {
 
@@ -45,6 +46,7 @@ public class ThemePublishedFileManager extends ThemeFileManager {
 
     // The code in this class borrows heavily from
     // com.arsdigita.cms.publishToFile.FileManager
+
     static private ThemeFileManager s_manager = null;
 
     /**
@@ -69,29 +71,28 @@ public class ThemePublishedFileManager extends ThemeFileManager {
         super(s_log, startupDelay, pollDelay, baseDirectory);
     }
 
-    // is there a way to move this code up in to the parent class?
     /**
      * Start watching the files. This method spawns a background thread that
-     * looks for changes in files in the database if there is not already a
-     * thread that has been spawned. If there is already a running thread then
-     * this is a no-op that returns a reference to the running thread.
+     * looks for changes in files if startupDelay > 0. 
      *
      * Specifically it is used by Themedirector's Initializer() to start a
      * continuous background process to synchronize database and filesystem.
+     * 
+     * If there is already a thread that has been spawned and there is already
+     * a running thread then this is a no-op that returns that running thread.
+     * It will not start up multiple threads!
      *
      * The thread starts processing after <code>startupDelay</code> seconds. The
      * db is checked for new/updated files every <code>pollDelay</code> seconds.
-     *
-     * This will not start up multiple threads...if there is already a thread
-     * running, it will return that thread to you.
      *
      * @param startupDelay  number of seconds to wait before starting to process
      *                      the file. A startupDelay of 0 means this is a no-op
      * @param pollDelay     number of seconds to wait between checks if the file
      *                      has any entries.
-     * @param baseDirectory String with the path to theme files base directory
-     *                      (the directory containing devel and pub subdirs) May
-     *                      be null! (Specificall if invokel by Initializer!)
+     * @param baseDirectory String with the file system path to document root 
+     *                     for the application context ThemeDirector is running.
+     *                     (the directory containing WEB-INF subdir)
+     *                     May be null! (Specificall if invokel by Initializer!)
      *
      * @return
      */
@@ -134,13 +135,15 @@ public class ThemePublishedFileManager extends ThemeFileManager {
      */
     @Override
     protected String getManagerSpecificDirectory() {
-        return getBaseDirectory() + PROD_THEMES_BASE_DIR;
+        String pubDir = getBaseDirectory() + PROD_THEMES_BASE_DIR;
+        s_log.info(pubDir + " is the published themes directory used.");
+        return pubDir ;
     }
 
     /**
-     * This looks at all of the files in the db for the passed in theme and
-     * makes sure that this servers file system has all of the updated files. If
-     * the thread has run since the theme was last published then this is a
+     * This looks at all of the files in the db for the passed in published theme
+     * and makes sure that this servers file system has all of the updated files.
+     * It the thread has run since the theme was last published then this is a
      * no-op
      */
     @Override

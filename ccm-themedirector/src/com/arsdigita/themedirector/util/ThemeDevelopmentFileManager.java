@@ -21,19 +21,18 @@ package com.arsdigita.themedirector.util;
 import com.arsdigita.themedirector.Theme;
 import com.arsdigita.themedirector.ThemeFile;
 import com.arsdigita.themedirector.ThemeFileCollection;
+import com.arsdigita.templating.Templating;
 
 import java.io.File;
-
 import org.apache.log4j.Logger;
 
 /**
- * Class for polling the database to look for new/updated development files
- * in the ThemeFile table.  
+ * Class for synchronizing the database and file system of the theme development 
+ * files.  
  *
- * For "development" files, it looks at every file in the db and, if the
- * timestamp is after the timestamp of the file on the file system (or
- * there is no file on the file system) then it writes out the new file.
- * If the timestamp on the file system is newer, it ignores the file.
+ * For "development" files, he first step is to ensure that all files in the 
+ * file system are contained in the database and are up to date. A second step
+ * ensures that the file system has everything from the database.
  *
  * @author <a href="mailto:randyg@redhat.com">Randy Graebner</a>
  */
@@ -79,21 +78,19 @@ public class ThemeDevelopmentFileManager extends ThemeFileManager {
     }
 
 
-    // is there a way to move this code up in to the parent class?
     /**
      * Start watching the files. This method spawns a background thread that
-     * looks for changes in files in the database if there is not already a
-     * thread that has been spawned.  If there is already a running thread then
-     * this is a no-op that returns a reference to the running thread.
+     * looks for changes in files if startupDelay > 0. 
      *
      * Specifically it is used by Themedirector's Initializer() to start a
      * continuous background process to synchronize database and filesystem.
+     * 
+     * If there is already a thread that has been spawned and there is already
+     * a running thread then this is a no-op that returns that running thread.
+     * It will not start up multiple threads!
      *
      * The thread starts processing after <code>startupDelay</code> seconds. The
      * db is checked for new/updated files every <code>pollDelay</code> seconds.
-     *
-     * This will not start up multiple threads...if there is already a thread
-     * running, it will return that thread to you.
      *
      * @param startupDelay number of seconds to wait before starting to process
      *                     the file. A startupDelay of 0 means this is a no-op
@@ -103,6 +100,7 @@ public class ThemeDevelopmentFileManager extends ThemeFileManager {
      *                     for the application context ThemeDirector is running.
      *                     (the directory containing WEB-INF subdir)
      *                     May be null! (Specificall if invokel by Initializer!)
+     * 
      * @return 
      */
     public static ThemeFileManager startWatchingFiles(int startupDelay, 
@@ -175,10 +173,13 @@ public class ThemeDevelopmentFileManager extends ThemeFileManager {
                                               ThemeFile.DRAFT);
         }
 
-        // the call to super makes sure that the file system has everything
-        // from the database.  
+        // second step: the call to super makes sure that the file system
+        // has everything from the database.  
         super.updateTheme(theme);
-    }
+        // purge the templating cache  -- we want newly published themes
+        // to be visible immediately, and not after a server restart.
+        Templating.purgeTemplates();
+  }
 
 
     /**
