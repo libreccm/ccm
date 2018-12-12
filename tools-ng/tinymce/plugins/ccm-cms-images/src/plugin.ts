@@ -11,7 +11,7 @@ const plugin = (editor: any, url: String) => {
 
   editor.addMenuItem("ccm-cms-images-menu", {
     icon: "image",
-    text: "Insert Images",
+    text: "Insert/Edit Images",
     onclick: Dialog(editor).open,
     stateSelector: "image",
     context: "insert",

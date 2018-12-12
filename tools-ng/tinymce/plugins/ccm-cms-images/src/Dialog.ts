@@ -6,16 +6,21 @@ export default function(editor) {
     const imgDiv = editor.dom.getParent(elem, "div.image");
     const img = editor.dom.select("img", imgDiv)[0];
     if (imgDiv != null) {
-	    let imageData = {
-	      file: img.getAttribute("src"),
-	      width: img.getAttribute("width").slice(0, -2),
-	      height: img.getAttribute("height").slice(0, -2),
-	      alt: img.getAttribute("alt"),
-	      parent: imgDiv
-	    };
-	    return imageData;
+      let imageData = {
+        file: img.getAttribute("src"),
+        width: img.getAttribute("width").slice(0, -2),
+        height: img.getAttribute("height").slice(0, -2),
+        alt: img.getAttribute("alt"),
+        align: imgDiv.classList[1],
+        fancy: imgDiv.childNodes[0].classList[0].slice(0, -1),
+        title: imgDiv.childNodes[0].title,
+        caption: imgDiv.childNodes[1].localName == "span",
+        parent: imgDiv
+      };
+      console.log(imageData);
+      return imageData;
     } else {
-    	return null;
+      return null;
     }
   }
 
@@ -243,11 +248,11 @@ export default function(editor) {
             "</div>";
           if (imageData != null) {
             editor.dom.replace(
-              editor.dom.createFragment(img_div + "<br/>"),
+              editor.dom.createFragment(img_div),
               imageData.parent
             );
           } else {
-            editor.insertContent(img_div + "<br/>");
+            editor.insertContent(img_div);
           }
         }
       }
@@ -269,6 +274,26 @@ export default function(editor) {
       win
         .find("#height")
         .value(imageData.height)
+        .fire("change");
+      if (imageData.align != undefined) {
+        win
+          .find("#alignment")
+          .value(imageData.align)
+          .fire("change");
+      }
+      if (imageData.fancy != undefined) {
+        win
+          .find("#fancybox")
+          .value(imageData.fancy)
+          .fire("change");
+      }
+      win
+        .find("#title")
+        .value(imageData.title)
+        .fire("change");
+      win
+        .find("#caption")
+        .value(imageData.caption)
         .fire("change");
     }
     // ================== Fill with selection =============

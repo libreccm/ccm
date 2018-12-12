@@ -111,8 +111,13 @@ function default_1(editor) {
                 width: img.getAttribute("width").slice(0, -2),
                 height: img.getAttribute("height").slice(0, -2),
                 alt: img.getAttribute("alt"),
+                align: imgDiv.classList[1],
+                fancy: imgDiv.childNodes[0].classList[0].slice(0, -1),
+                title: imgDiv.childNodes[0].title,
+                caption: imgDiv.childNodes[1].localName == "span",
                 parent: imgDiv
             };
+            console.log(imageData);
             return imageData;
         }
         else {
@@ -299,10 +304,10 @@ function default_1(editor) {
                         span +
                         "</div>";
                     if (imageData != null) {
-                        editor.dom.replace(editor.dom.createFragment(img_div + "<br/>"), imageData.parent);
+                        editor.dom.replace(editor.dom.createFragment(img_div), imageData.parent);
                     }
                     else {
-                        editor.insertContent(img_div + "<br/>");
+                        editor.insertContent(img_div);
                     }
                 }
             }
@@ -323,6 +328,26 @@ function default_1(editor) {
             win
                 .find("#height")
                 .value(imageData.height)
+                .fire("change");
+            if (imageData.align != undefined) {
+                win
+                    .find("#alignment")
+                    .value(imageData.align)
+                    .fire("change");
+            }
+            if (imageData.fancy != undefined) {
+                win
+                    .find("#fancybox")
+                    .value(imageData.fancy)
+                    .fire("change");
+            }
+            win
+                .find("#title")
+                .value(imageData.title)
+                .fire("change");
+            win
+                .find("#caption")
+                .value(imageData.caption)
                 .fire("change");
         }
     }
