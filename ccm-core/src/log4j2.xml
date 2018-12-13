@@ -42,7 +42,6 @@
     <!-- Set level="DEBUG" to get information about XSLT file resolution -->
     <Logger name="com.arsdigita.templating.PatternStylesheetResolver"
             level="ERROR" additivity="false" >
-      <!-- output just to libreccm specific application log, no system log -->
       <appenderRef ref="Console"/>
       <appenderRef ref="FileLog" />
     </Logger>

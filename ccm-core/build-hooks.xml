@@ -39,17 +39,35 @@
   <target name="clean-build-hook"/>
   <target name="clean-tests-hook"/>
 
+  <target name="package-hook">
+    <!-- Adapt the name of the logfile to the software bundle           -->
+    <replace file="${build.classes.dir}/log4j2.xml" 
+             token="libreccm" value="${this.appName}"  />
+    <!-- deploy the log4j v2 configuration file into web WEB-INF/conf   -->
+    <mkdir dir="../${package.dir}/ccm-core/web/WEB-INF/conf"/>
+    <copy todir="../${package.dir}/ccm-core/web/WEB-INF/conf"
+          file="${build.classes.dir}/log4j2.xml" />
+
+    <xslt style="${ccm.tools.xsl.dir}/build-version.xsl" 
+          in="${ccm.bundle.folder}/cfg/project.xml"
+          out="${build.classes.dir}/ccm-version.properties" 
+          classpathref="ccm.tools.classpath" force="yes" />
+  </target>
+
   <target name="deploy-hook">
     <fail message="Property this.deploy.dir not defined." 
           unless="this.deploy.dir" />
+    <!-- Adapt the name of the logfile to the software bundle           -->
+    <replace file="${build.classes.dir}/log4j2.xml" 
+             token="libreccm" value="${this.appName}"  />
     <!-- deploy the log4j v2 configuration file into the web applications
          document root tree                                               -->
     <mkdir dir="${this.deploy.dir}/WEB-INF/conf"/>
     <copy todir="${this.deploy.dir}/WEB-INF/conf"
-          file="${src.dir}/log4j2.xml" />
+          file="${build.classes.dir}/log4j2.xml" />
+<!--    <replace file="${this.deploy.dir}/WEB-INF/conf/log4j2.xml" 
+             token="libreccm" value="${this.appName}"  />  -->
 
-    <!-- project.xml moved to bundle cfg directory where it replaces
-         former application.cfg                                            -->
     <xslt style="${ccm.tools.xsl.dir}/build-version.xsl" 
           in="${ccm.bundle.folder}/cfg/project.xml"
           out="${build.classes.dir}/ccm-version.properties" 

@@ -75,7 +75,7 @@
                 <antversion atleast="1.7.0" />
             </not>
         </condition>
-    </fail> 
+    </fail>
 
     <!-- set basic build variables base on project.xml tags name, prettyName, webapp -->
     <xsl:variable select="@name"       name="name"/>
@@ -83,7 +83,7 @@
     <xsl:variable select="@webapp"     name="context" />
 
     <!-- Setting the layout of the basic build environment    -->
-    <!-- just in case: 
+    <!-- just in case:
          check environment to set properties not already set by parent scripts  -->
     <property environment="env"/>
 
@@ -115,7 +115,7 @@
           unless="app.server.lib.dir" />
 
     <!-- XXX deprecated -->
-    <!-- Used to be the same as CATALINA_HOME and a required base for 
+    <!-- Used to be the same as CATALINA_HOME and a required base for
          CCM installation tool PackageMastertool                            -->
     <property value="${{env.CCM_HOME}}" name="ccm.home"/>
     <property value="${{env.CCM_WEBAPP_DIST_DIR}}" name="webapp.dist.dir"/>
@@ -189,7 +189,7 @@
     <property value="xml" name="pmd.format"/>
     <property value="${{build.dir}}/pmd" name="pmd.report.dir"/>
     <property value="pmd.${{pmd.format}}" name="pmd.report.file"/>
-    <!-- Presumably no longer used does not exist in devel environment, 
+    <!-- Presumably no longer used does not exist in devel environment,
          Red Hat made their own
     <property value="${{shared.lib.dist.dir}}/jdo" name="jdo.lib.dir"/>  -->
 
@@ -214,9 +214,9 @@
       </xsl:otherwise>
     </xsl:choose>
 
-    <!-- Determines the portlet.xml file to use. If the project.xml file 
-         contains a ccm:project/portlet.xml property this name is used to 
-         search for the file in later steps. 
+    <!-- Determines the portlet.xml file to use. If the project.xml file
+         contains a ccm:project/portlet.xml property this name is used to
+         search for the file in later steps.
          Otherwise leave the property unset!
     -->
     <xsl:choose>
@@ -302,7 +302,7 @@
           <property value="{$location}" name="apps.{$name}.location"/>
         </xsl:when>
         <xsl:otherwise>
-	  <!-- shared.lib.dist.dir was /usr/share/java contain ccm apps installed by rpm 
+	  <!-- shared.lib.dist.dir was /usr/share/java contain ccm apps installed by rpm
                no longer valid!                                                 -->
           <property value="${{shared.lib.dist.dir}}" name="apps.{$name}.location"/>
         </xsl:otherwise>
@@ -584,7 +584,7 @@
            select="/ccm:project/ccm:application[@name=$fullname]/ccm:dependencies/ccm:requires"/>
 
       <target name="compile-{$name}"
-       description="Compiles the Java code for the '{$name}' application" 
+       description="Compiles the Java code for the '{$name}' application"
            depends="init">
 
         <!-- Special compile tasks specified in application? Handle first  -->
@@ -635,7 +635,7 @@
       </target>   <!-- compile name -->
 
       <xsl:if test="$jdodirs">
-        <target name="jdo-{$name}" 
+        <target name="jdo-{$name}"
                 description="JOD enhances the Java classes for the '{$name}' application"
                 depends="init,compile-{$name}">
           <jdoenhance destination="{$name}/${{build.classes.dir}}">
@@ -765,7 +765,7 @@
                         <xsl:choose>
             <xsl:when test="$haspdldir">
               <manifest>
-                <attribute name="Class-Path" 
+                <attribute name="Class-Path"
                 value="${{apps.{$name}.name}}-${{apps.{$name}.version}}-pdl.jar
                        ${{apps.{$name}.name}}-${{apps.{$name}.version}}-sql.jar"/>
               </manifest>
@@ -989,8 +989,8 @@
 
 
   <!-- DEPRECATED and no longer used nor supported!
-       Up to APLAWS+ 1.0.5 / CCM 6.5 the system used a application specific 
-       URL protocol extension which had to be compiled and deployed into a 
+       Up to APLAWS+ 1.0.5 / CCM 6.5 the system used a application specific
+       URL protocol extension which had to be compiled and deployed into a
        "system" jar which had to be added to a Tomcat system configuration.
        No longer used, but mechansim preserved here just in case it is needed
        for another purpose.
@@ -1019,7 +1019,7 @@
   <xsl:template name="TargetDeploy">
     <xsl:variable name="name" select="@name"/>
 
-    <!-- step through the list of included modules in project.xml and 
+    <!-- step through the list of included modules in project.xml and
          execute for each one                                              -->
     <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
       <xsl:variable name="name" select="@name"/>
@@ -1258,11 +1258,11 @@
     </target>
 
 
- 
+
     <!-- Builds web.xml either by copying a predefined file from bundle or
          by merging each modules web.xml stubs into a base file, existing
          in core.
-         Uses check-webxml to check if the bundle contains a predefined file. 
+         Uses check-webxml to check if the bundle contains a predefined file.
          If if does, copy-webxml copies the file, otherwise merge-webxml
          creates one.
     -->
@@ -1271,19 +1271,19 @@
         <echo>Processing web.xml done.</echo>
     </target>
 
-    <!-- Determines whether web.xml as specified in webxml.source.file exists, 
+    <!-- Determines whether web.xml as specified in webxml.source.file exists,
          and determines its fully qualified file name. Uses copy-bundle-init to
-         ensure the proper installation bundle.  
+         ensure the proper installation bundle.
          Property "resolved.webxml.source.file" is set to the source.        -->
     <target name="check-webxml" depends="copy-bundle-init,init"
             if="webxml.source.file"                           >
       <available file="${{this.deploy.dir}}/WEB-INF" type="dir"
                  property="root.webapp.exists"/>
-      <!--           
+      <!--
       <echo message="TEST 1: ${{resolved.bundle.source.dir}}"/>
       <echo message="TEST 2: ${{webxml.source.file}}"/>                      -->
       <!-- First check, if file exist in bundle dir                          -->
-      <condition property="resolved.webxml.source.file" 
+      <condition property="resolved.webxml.source.file"
                     value="${{resolved.bundle.source.dir}}/cfg/${{webxml.source.file}}">
         <and>
           <isset property="root.webapp.exists"/>
@@ -1306,12 +1306,12 @@
         </and>
       </condition>
       -->
-      
+
       <echo message="web.xml spezfied: ${{resolved.webxml.source.file}}" />
     </target>
 
     <!-- Copies the web.xml file as specified in bundle's project.xml,
-         provided check-webxml found ssuch a specification.  
+         provided check-webxml found ssuch a specification.
          It does just the copy operation, no further processing.             -->
     <target name="copy-webxml"
             depends="init,check-webxml" if="resolved.webxml.source.file">
@@ -1323,29 +1323,29 @@
             unless="resolved.webxml.source.file">
         <echo>Start to merge web.xml file.</echo>
 
-        <property name="originalWebXML" 
+        <property name="originalWebXML"
                  value="${{this.deploy.dir}}/WEB-INF/web.xml"/>
         <property name="mergedWebXML" value="${{originalWebXML}}.merged"/>
         <for param="file">
             <path>
-                <fileset dir="${{this.deploy.dir}}/WEB-INF/web.d/" 
+                <fileset dir="${{this.deploy.dir}}/WEB-INF/web.d/"
                          includes="web.ccm-*.xml"/>
             </path>
             <sequential>
                 <echo message="Merging in: @{{file}}"/>
                 <webxmlmerge originalfile="${{originalWebXML}}"
-                                mergefile="@{{file}}" 
-                                 destfile="${{mergedWebXML}}"    /> 
+                                mergefile="@{{file}}"
+                                 destfile="${{mergedWebXML}}"    />
 
                 <!-- the merged file becomes the new original web.xml                -->
-                <copy   file="${{mergedWebXML}}" 
-                      tofile="${{originalWebXML}}" 
+                <copy   file="${{mergedWebXML}}"
+                      tofile="${{originalWebXML}}"
                    overwrite="yes"/>
                 <delete file="${{mergedWebXML}}"/>
-            </sequential>    
+            </sequential>
         </for>
 
-    </target>    
+    </target>
 
 
     <!-- Builds portlet xml either by copying a predefined file from bundle or
@@ -1355,27 +1355,27 @@
          does, copy-portletxml copies the file, otherwise merge-portletxml
          creates one.
     -->
-    <target name="build-portletxml" 
+    <target name="build-portletxml"
             depends="check-portletxml,copy-portletxml,merge-portletxml">
         <echo>portlet.xml done.</echo>
-    </target>    
+    </target>
 
-    <!-- Determines if portlet.xml as specified in portletxml.source.file 
+    <!-- Determines if portlet.xml as specified in portletxml.source.file
          attribute exists, and determines its fully qualified file name.
-         Uses copy-bundle-init to ensure the proper installation bundle.  
+         Uses copy-bundle-init to ensure the proper installation bundle.
          Property "resolved.portletxml.source.file" is set to the source.        -->
-    <target name="check-portletxml" 
+    <target name="check-portletxml"
             depends="copy-bundle-init,init" if="portletxml.source.file">
       <available file="${{this.deploy.dir}}/WEB-INF" type="dir"
                  property="root.webapp.exists"/>
-      
+
       <echo message="TEST 1: ${{resolved.bundle.source.dir}}"/>
-      <echo message="TEST 2: ${{portletxml.source.file}}"/> 
+      <echo message="TEST 2: ${{portletxml.source.file}}"/>
 
       <!-- First check, if file a portlet.xml exist in bundle dir, if it does,
            set property resolved.portletxml.source.file to the fully qualified
            path/file name.                                                   -->
-      <condition property="resolved.portletxml.source.file" 
+      <condition property="resolved.portletxml.source.file"
                     value="${{resolved.bundle.source.dir}}/cfg/${{portletxml.source.file}}">
         <and>
           <isset property="root.webapp.exists"/>
@@ -1389,7 +1389,7 @@
     </target>
 
     <!-- Copies a bundle's predefined portlet.xml to WEB-INF, if the
-         property  resolved.portletxml.source.file is set. Otherwise this 
+         property  resolved.portletxml.source.file is set. Otherwise this
          target is skipped doing nothing.                                    -->
     <target name="copy-portletxml"     if="resolved.portletxml.source.file">
       <copy file="${{resolved.portletxml.source.file}}"
@@ -1397,24 +1397,24 @@
       <echo>${resolved.portletxml.source.file} copied to ${this.deploy.dir}/WEB-INF/portlet.xml</echo>
     </target>
 
-    <!-- Counterpart to copy-portletxml. Merges each module's portlet.xml 
-         stub into a base file, if property resolved.portletxml.source.file 
+    <!-- Counterpart to copy-portletxml. Merges each module's portlet.xml
+         stub into a base file, if property resolved.portletxml.source.file
          is NOT set.
     -->
     <target name="merge-portletxml"   unless="resolved.portletxml.source.file">
         <echo>Merging portlet.xml, not implemented yet.</echo>
-    </target>    
+    </target>
 
 
     <!-- Ensures that property ccm.bundle.folder is set and points to an
-         existing file location. If true sets property 
+         existing file location. If true sets property
          resolved.bundle.source.dir to the existing bundle                   -->
     <target name="copy-bundle-init" depends="init">
-        
+
         <!-- Check if ccm.bundle.folder is set and points to a existing bundle -->
         <available file="${{ccm.bundle.folder}}" type="dir"
                  property="root.bundle.exists"/>
-                 
+
       <condition property="resolved.bundle.source.dir"
                  value="${{ccm.bundle.folder}}">
         <and>
@@ -1431,11 +1431,11 @@
 
     <!-- Copies the installation bundle actually used by this deploy to the
          WEB-INF directory of the deploy target so it can be used by the
-         load-bundle step on the server machine and outside the development 
+         load-bundle step on the server machine and outside the development
          environment.                                                        -->
     <target name="copy-bundle"
             depends="init,copy-bundle-init" if="root.webapp.exists">
-      <!--                
+      <!--
       <copy todir="${{this.deploy.dir}}/WEB-INF/bin/bundle" overwrite="yes">
       -->
       <copy todir="${{this.bundle.dir}}" overwrite="yes">
@@ -1478,8 +1478,8 @@
                 <exclude name="placeholder.info" />
             </fileset>
       </copy>
-      
-      
+
+
       <!-- Autogenerate from project.xml a file containing a space delimited
            list of package keys included in this build. Used during
            initialization of a *.war file distribution as simplification and
@@ -1495,7 +1495,7 @@
             <arg value="${{ccm.tools.xsl.dir}}/listapps.xsl"/>
             <arg value="-TEXT"/>
       </java>
-      
+
     </target>
 
     <!-- Master deploy -->
@@ -1504,7 +1504,7 @@
       <xsl:attribute name="description">
           Builds and deploys all applications, also deploys prebuilt applications and config files
       </xsl:attribute>
-      <echo>Deploy completed!</echo> 
+      <echo>Deploy completed!</echo>
     </target>
   </xsl:template>  <!-- TargetDeploy -->
 
@@ -1535,7 +1535,7 @@
     <!-- Package hooks -->
       <xsl:if test="$application/@buildHooks">
         <target name="package-{$name}-hook" depends="init">
-          <ant target="deploy-hook" dir="{$name}" inheritRefs="true">
+          <ant target="package-hook" dir="{$name}" inheritRefs="true">
             <xsl:attribute name="antfile">
               <xsl:value-of select="$application/@buildHooks"/>
             </xsl:attribute>
@@ -1570,8 +1570,8 @@
             <fileset dir="{$name}/${{build.dir}}">
               <include name="*pdl.jar"/>
             </fileset>
-          </copy>   
-          
+          </copy>
+
         </target>
       </xsl:if>
 
@@ -1695,9 +1695,9 @@
         You have to perform the load-bundle step first if you would like
         to have a valid web.xml file and a basic configuration!
       </echo>
-      
+
       <xsl:variable name="name" select="@name"/>
-      
+
         <!-- web.xml will be copied implicitly from deployed WEB-INF! -->
         <war needxmlfile="False" >
           <xsl:attribute name="destfile">
@@ -2137,7 +2137,7 @@
         doctitle="&lt;h1&gt;${{app.prettyname}} API Documentation&lt;/h1&gt;"
 	access="private">
         <packageset dir="${{build.src.dir}}"/>
-        <classpath refid="server.build.classpath"/>	
+        <classpath refid="server.build.classpath"/>
         <link href="http://java.sun.com/j2se/1.4/docs/api/"/>
         <link href="http://java.sun.com/j2ee/tutorial/api/"/>
 	<!--<doclet name="org.umlgraph.doclet.UmlGraphDoc" path="tools-ng/devel/lib/UmlGraph.jar">
@@ -2268,7 +2268,7 @@
       </xsl:for-each>
 
 	<!-- should be deprecated, TODO: check for usage  -->
-<!-- TESTwise excluded    
+<!-- TESTwise excluded
       <path id="ccm.java.ext.dirs">
         < ! - - no longer present in APLAWS 1.0.4
         <dirset dir="${{ccm.tools.dir}}">
@@ -2280,8 +2280,8 @@
 
       <pathconvert dirsep="/" pathsep=":" property="ccm.java.ext.dirs"
                    refid="ccm.java.ext.dirs"/>
--->      
-                   
+-->
+
       <condition property="junit.jvmargs"
        value="-Xdebug -Xrunjdwp:transport=dt_socket,address=${{test.remote.port}},
                server=y,suspend=y -Xnoagent -Djava.compiler=NONE">
@@ -2315,18 +2315,18 @@
         <property value="${{this.deploy.dir}}/WEB-INF/classes"  name="this.deploy.classes.dir"/>
         <property value="${{this.deploy.dir}}/WEB-INF/lib"      name="this.deploy.lib.dir"/>
         <property value="${{this.deploy.dir}}/WEB-INF/lib"      name="this.deploy.externallib.dir"/>
-      <!--          
+      <!--
           </xsl:when>
           <xsl:otherwise>
       -->
-        <!-- will copy modules classes/libs into shared directory. 6.1 - 6.4: webapps/WEB-INF non-standard 
+        <!-- will copy modules classes/libs into shared directory. 6.1 - 6.4: webapps/WEB-INF non-standard
              up to 6.4 the only metheod that works.
              Option currently NOT ACTIVE!
         <property value="${{app.server.shared.dir}}"	name="this.deploy.classes.dir"/>
         <property value="${{app.server.shared.dir}}"    name="this.deploy.lib.dir"/>
         <property value="${{app.server.shared.dir}}"    name="this.deploy.externallib.dir"/>
         -->
-      <!--          
+      <!--
         </xsl:otherwise>
       </xsl:choose>
       -->
@@ -2340,7 +2340,7 @@
 
       <!--  location of log4j configuration is handled inside the running CCM application.
             But may be requirred for junit tests?  Otherwise not needed
-      --> 
+      -->
       <condition property="log4j.configuration.sysproperty" value="/WEB-INF/conf/log4j.properties">
         <and>
           <not><isset property="log4j.configuration.sysproperty"/></not>

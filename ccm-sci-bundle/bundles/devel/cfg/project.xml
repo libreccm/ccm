@@ -13,7 +13,7 @@
                     name="scientificcms-dev" 
               prettyName="Scientific CMS" 
                  version="2.3.99" 
-                 release="SNAPSHOT-r5758" 
+                 release="SNAPSHOT-r5778" 
                   webxml="sci-web.xml" 
               portletxml="sci-portlet.xml" 
                   webapp="ROOT" 
