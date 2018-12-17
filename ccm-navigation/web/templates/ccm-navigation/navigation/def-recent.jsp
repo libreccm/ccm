@@ -30,6 +30,15 @@
       classname="com.arsdigita.navigation.ui.category.Path"/>
     <define:component name="categoryMenu"
       classname="com.arsdigita.navigation.ui.category.Menu"/>
+
+    // optional: mobile navigation menu in responsive design
+    <define:component name="categoryNav"
+                      classname="com.arsdigita.navigation.ui.category.Hierarchy">
+    </define:component>
+    <jsp:scriptlet>
+                ((com.arsdigita.navigation.ui.category.Hierarchy) categoryNav).setShowItems(false);
+    </jsp:scriptlet>
+
     <define:component name="itemList"
       classname="com.arsdigita.navigation.ui.object.SimpleObjectList"/>
     <jsp:scriptlet>

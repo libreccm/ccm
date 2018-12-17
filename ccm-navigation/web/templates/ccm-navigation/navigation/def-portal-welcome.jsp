@@ -35,11 +35,19 @@
                           classname="com.arsdigita.navigation.ui.category.Path"/>
         <define:component name="categoryMenu"
                           classname="com.arsdigita.navigation.ui.category.Menu"/>
+        // optional: mobile responsive menu
+        <define:component name="categoryNav"
+                      classname="com.arsdigita.navigation.ui.category.Hierarchy">
+        </define:component>
+        <jsp:scriptlet>
+                ((com.arsdigita.navigation.ui.category.Hierarchy) categoryNav).setShowItems(false);
+        </jsp:scriptlet>
+
         <define:component name="portalWorkspace"
                           classname="com.arsdigita.portalworkspace.ui.WorkspaceViewer"/>
         <jsp:scriptlet>
-        portalsPage.setClassAttr("portalPage");
-      ((com.arsdigita.portalworkspace.ui.WorkspaceViewer) portalWorkspace).setWorkspaceModel(new CategoryPortalSelectionModel());
+            portalsPage.setClassAttr("portalPage");
+            ((com.arsdigita.portalworkspace.ui.WorkspaceViewer) portalWorkspace).setWorkspaceModel(new CategoryPortalSelectionModel());
         </jsp:scriptlet>
     </define:page>
 

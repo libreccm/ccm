@@ -13,14 +13,13 @@
     <jsp:directive.page import="com.arsdigita.navigation.cms.CMSDataCollectionRenderer"/>
 
     <jsp:scriptlet>
-
-    long age = Navigation.getConfig().getIndexPageCacheLifetime();
-    if (age == 0) {
-      DispatcherHelper.cacheDisable(response);
-    } else {
-      DispatcherHelper.cacheForWorld(response, (int)age);
-    }
-    int maxItems = Navigation.getConfig().getIndexPageMaxItems();
+        long age = Navigation.getConfig().getIndexPageCacheLifetime();
+        if (age == 0) {
+          DispatcherHelper.cacheDisable(response);
+        } else {
+          DispatcherHelper.cacheForWorld(response, (int)age);
+        }
+        int maxItems = Navigation.getConfig().getIndexPageMaxItems();
     </jsp:scriptlet>
 
     <define:page name="defaultItemPage" 
