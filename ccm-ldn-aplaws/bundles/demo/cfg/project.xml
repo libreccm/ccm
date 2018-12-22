@@ -11,9 +11,10 @@
               ccmVersion="6.1" 
                     name="aplaws" 
               prettyName="APLAWS plus Demo Spin"
-                 version="2.3.0" 
+                 version="2.3.99" 
                  release="demo" 
                   webxml="web.xml" 
+              portletxml="portlet.xml" 
                   webapp="ROOT"
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 

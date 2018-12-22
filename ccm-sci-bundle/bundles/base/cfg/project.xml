@@ -15,9 +15,10 @@
               ccmVersion="6.1" 
                     name="scientificcms" 
               prettyName="Scientific CMS BaseBundle" 
-                 version="2-3-0" 
-                 release="base" 
-                  webxml="web-sci.xml" 
+                 version="2.3.99" 
+                 release="base-r57xx" 
+                  webxml="web.xml" 
+              portletxml="portlet.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 

@@ -10,11 +10,12 @@
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
               ccmVersion="6.1" 
-                    name="librecms-ccm" 
-              prettyName="LibreCMS OpenCCM" 
-                 version="0-0-0" 
-                 release="trunk-demo" 
-                  webxml="libre-web.xml" 
+                    name="librecms" 
+              prettyName="LibreCMS OpenCCM - Demo Bundle" 
+                 version="2.3.99" 
+                 release="demo" 
+                  webxml="web.xml" 
+              portletxml="portlet.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 
@@ -45,7 +46,6 @@
         <ccm:application name="ccm-portalworkspace"/>
         <ccm:application name="ccm-shortcuts"/>
         <ccm:application name="ccm-subsite"/>                    
-
         <ccm:application name="ccm-themedirector"/>
 
 <!--   LDN extension  -->

@@ -1,0 +1,17 @@
+Purpose:
+This subdir is an optional default, pre-configured location for a custom theme, 
+which is included in / added to a distribution.
+
+In unmanaged (without ccm-themedirector installed) mode it is at first searched 
+for a theme. If none is found, the bundle default (scicms-defaault) is used.
+
+In managed mode (with ccm-themedirector installed) the parameter 
+themedirector.default_theme_path=themes/scicms-[custom|default]
+is used to select between custom or bundle default.
+
+All files and subdirectories are copied asis to the applications ~/themes 
+directory in its document (context) root.
+
+It is the responsibility of the developer / system integrator to ensure all files
+are copied to the right location and the theme works with the modification. No
+functionality or consistency check is performed!

@@ -10,11 +10,12 @@
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
               ccmVersion="6.1" 
-                    name="librecms-dev" 
-              prettyName="LibreCMS OpenCCM" 
+                    name="librecms" 
+              prettyName="LibreCMS OpenCCM - Development Bundle" 
                  version="2.3.99" 
                  release="devel-SNAPSHOT-r5758" 
-                  webxml="libre-web.xml" 
+                  webxml="web.xml" 
+              portletxml="portlet.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 

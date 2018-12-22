@@ -1,4 +1,4 @@
-Navigation Default Index Page,Default Navigation Index Page ordering items in ascending order,/templates/ccm-navigation/navigation/nav-default.jsp
-Navigation Recent Items,List of items ordered with most recent first,/templates/ccm-navigation/navigation/nav-recent.jsp
-Navigation A-Z Items,List of items paginated as A-Z,/templates/ccm-navigation/navigation/nav-atoz.jsp
+Navigation Default Index Page,Default Navigation Index Page ordering items in ascending order,/templates/ccm-navigation/navigation/def-page.jsp
+Navigation Recent Items,List of items ordered with most recent first,/templates/ccm-navigation/navigation/def-recent.jsp
+Navigation A-Z Items,List of items paginated as A-Z,/templates/ccm-navigation/navigation/def-atoz.jsp
 Navigation Demo Items Page,Demo items page,/templates/ccm-navigation/navigation/nav-demo.jsp

@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!--  project.xml SCI standard - containing only modules used for 
-                                 ScientificCMS  standard bundle              -->
+<!-- ======================================================================
+     project.xml SCI standard - containing only modules used for 
+                                 ScientificCMS  standard bundle
+     ======================================================================= -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
               ccmVersion="6.1" 
                     name="scientificcms" 
-              prettyName="Scientific CMS" 
-                 version="2.1.0" 
-                 release="SNAPSHOT-r2170" 
-                  webxml="web-sci.xml" 
+              prettyName="Scientific CMS - Standard Bundle" 
+                 version="2.3.99" 
+                 release="std-SNAPSHOT-r5778" 
+                  webxml="web.xml" 
+              portletxml="portlet.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 

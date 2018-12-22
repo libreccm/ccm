@@ -7,6 +7,7 @@
      Other modules are commented out but compiled into an add-on bundle to 
      be used by a site administrator to create a customized installation
      using ccm-hostinit command.
+     Last checked: 2018-12
      ======================================================================= -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
@@ -14,9 +15,10 @@
                ccmVersion="6.1" 
                name="aplaws" 
                prettyName="APLAWS plus Standard Spin"
-               version="2.3.1" 
-               release="std-rc1"
+               version="2.3.99" 
+               release="std-r5397"
                webxml="web.xml" 
+               portletxml="portlet.xml" 
                webapp="ROOT"
    xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 

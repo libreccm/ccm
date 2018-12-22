@@ -4,4 +4,3 @@ addressed as /bundle/[fileName|dirName]
 EXAMPLE:
 com.arsdigita.navigation.templates_file=bundle/navigation/templates.txt
 
-

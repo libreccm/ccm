@@ -17,9 +17,10 @@
              ccmVersion="6.1" 
                    name="aplaws" 
              prettyName="APLAWS plus Base Bundle" 
-                version="2.3.1" 
-                release="base-rc1"
+                version="2.3.99" 
+                release="base-rxxx"
                  webxml="web.xml" 
+             portletxml="portlet.xml" 
                  webapp="ROOT" 
      xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 
@@ -27,6 +28,7 @@
         <ccm:database name="postgres"/>
         <ccm:database name="oracle-se"/>
 </ccm:databases>
+
 
 <ccm:build>
       
@@ -67,6 +69,16 @@
 <!--    APLAWS+  OPTIONAL packages                                           -->
 <!--    Various combinations of these packages make up specific bundles      -->
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
+
+<!--   Content Assets   -->
+
+<!--   Content Types   -->
+
+<!--   Applications   -->
+
+<!--   LDN extension  -->
+
+
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 <!--    Base Add-On packages (& Standard Bundle's included packages)         -->

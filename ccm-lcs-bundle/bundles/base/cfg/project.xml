@@ -8,16 +8,17 @@
      The unmodified (as distributed) bundle may be used to create a custom
      set of packages by a site administrator using ccm-hostinit command and
      an appropriate set of add-on packages.
-     ======================================================================= -->
+     ========================================================================== -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
               ccmVersion="6.1" 
-                    name="librecms-ccm" 
-              prettyName="LibreCMS OpenCCM" 
-                 version="0-0-0" 
-                 release="trunk-base" 
-                  webxml="libre-web.xml" 
+                    name="librecms" 
+              prettyName="LibreCMS / OpenCCM Base Bundle" 
+                 version="2.3.99" 
+                 release="base-r57xx" 
+                  webxml="web.xml" 
+              portletxml="portlet.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 

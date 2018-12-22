@@ -10,12 +10,13 @@
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
               ccmVersion="6.1" 
-                    name="aplaws-dev" 
+                    name="aplaws" 
               prettyName="APLAWS plus (devel)"
                  version="2.3.99" 
-                 release="SNAPSHOT-r5758" 
+                 release="dev-SNAPSHOT-r5758" 
                   webxml="web.xml" 
-                  webapp="aplaws"
+              portletxml="portlet.xml" 
+                  webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 
 <ccm:databases>

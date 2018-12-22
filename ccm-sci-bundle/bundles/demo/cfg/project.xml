@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!--  project.xml SCI demo  - containing only modules used for 
-                              ScientificCMS  DEMO exition                      -->
+<!-- ======================================================================
+     project.xml SCI demo  - containing only modules used for 
+                              ScientificCMS  DEMO edition
+     ======================================================================= -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
               ccmVersion="6.1" 
-                    name="ScientificCMS" 
-              prettyName="Scientific CMS" 
-                 version="2-0-0" 
-                 release="devel" 
-                  webxml="web-sci.xml" 
+                    name="scientificcms" 
+              prettyName="Scientific CMS - DEMO Bundle" 
+                 version="2.3.99" 
+                 release="demo-r57xx" 
+                  webxml="web.xml" 
+              portletxml="portlet.xml" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 

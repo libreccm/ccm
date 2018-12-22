@@ -4,6 +4,7 @@
      project.xml - COMPLETE - containing a nearly complete set of modules
      of the current aplaws repository.
      DEPRECATED!  DON'T USE for new installations!
+     Last checked: 2018-12
      ======================================================================= -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
@@ -11,13 +12,20 @@
                ccmVersion="6.1" 
                name="aplaws" 
                prettyName="APLAWS plus Complete Bundle" 
-               version="2.3.0" 
-               release="compl-beta-1"
+               version="2.3.99" 
+               release="compl-r5397"
                webxml="web.xml" 
+               portletxml="portlet.xml" 
                webapp="ROOT" 
    xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 
-  <ccm:build>
+<ccm:databases>
+        <ccm:database name="postgres"/>
+        <ccm:database name="oracle-se"/>
+</ccm:databases>
+
+
+<ccm:build>
 
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 <!--    APLAWS+ set of CORE packages                                         -->

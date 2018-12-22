@@ -11,7 +11,7 @@
         complete web.xml file from an installation bundle may be used.
         
         ccm-core requires at minimum Servlet Spec 3.0 / Tomcat 7.0
-        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 
   <display-name>APLAWS devel bundle </display-name>

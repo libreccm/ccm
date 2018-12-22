@@ -1,0 +1,4 @@
+Subdirectory  <navigation> may optionally contain a local site specific 
+text files describing additional jsp templates for navigation. 
+The template jsp files are stored in templates/ccm-navigation/navigation
+

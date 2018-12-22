@@ -1,4 +1,4 @@
 BUNDLE_NAME=scientificcms-custom
 BUNDLE_PRETTY_NAME="ScientificCMS custom bundle, minimal set of required modules"
-VERSION=2.0.0
+VERSION=2.3.99
 RELEASE=1

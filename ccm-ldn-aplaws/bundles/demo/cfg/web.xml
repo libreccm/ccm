@@ -502,6 +502,7 @@
     <url-pattern>/themes/servlet/template/*</url-pattern>
   </servlet-mapping>
 
+
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
      ERROR PAGES
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
