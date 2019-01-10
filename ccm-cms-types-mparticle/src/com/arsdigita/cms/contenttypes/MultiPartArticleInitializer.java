@@ -25,6 +25,8 @@ import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.search.MetadataProviderRegistry;
 
 import org.apache.log4j.Logger;
+import org.libreccm.export.ExportManager;
+import org.librecms.contenttypes.MpaExporter;
 
 /**
  * Executes at each system startup and initializes the MultiPartArticle 
@@ -50,6 +52,8 @@ public class MultiPartArticleInitializer extends ContentTypeInitializer {
      */
     public MultiPartArticleInitializer() {
         super("ccm-cms-types-mparticle.pdl.mf", MultiPartArticle.BASE_DATA_OBJECT_TYPE);
+    
+        ExportManager.getInstance().registerExporter(new MpaExporter());
     }
 
 
