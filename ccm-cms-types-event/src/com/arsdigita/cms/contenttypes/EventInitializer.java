@@ -19,6 +19,8 @@
 package com.arsdigita.cms.contenttypes;
 
 import org.apache.log4j.Logger;
+import org.libreccm.export.ExportManager;
+import org.librecms.contenttypes.EventExporter;
 
 /**
  * Executes at each system startup and initializes the Event content type.
@@ -42,6 +44,8 @@ public class EventInitializer extends ContentTypeInitializer {
      */
     public EventInitializer() {
         super("ccm-cms-types-event.pdl.mf", Event.BASE_DATA_OBJECT_TYPE);
+        
+        ExportManager.getInstance().registerExporter(new EventExporter());
     }
 
     /**
