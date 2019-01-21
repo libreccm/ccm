@@ -1,0 +1,116 @@
+model org.libreccm.pagemodel;
+
+import com.arsdigita.web.Application;
+import com.arsdigita.kernel.ACSObject;
+
+import com.arsdigita.cms.ContentItem;
+
+object type PageModel {
+
+    BigDecimal[1..1] pageModelId = ccm_page_models.page_model_id INTEGER;
+
+    String[1..1] uuid = ccm_page_models.uuid VARCHAR(38);
+
+    String[1..1] modelUuid = ccm_page_models.model_uuid VARCHAR(38);
+
+    String[1..1] name = ccm_page_models.name VARCHAR(512);
+
+    String[1..1] pageModelVersion = ccm_page_models.page_model_version VARCHAR(256);
+
+    Date[0..1] lastModified = ccm_page_models.last_modified TIMESTAMP;
+
+    String[0..1] title = ccm_page_models.title VARCHAR(1024);
+
+    String[0..1] description = ccm_page_models.description VARCHAR(4096);
+
+    String[0..1] type = ccm_page_models.type VARCHAR(256);
+
+    Application[1..1] application = join ccm_page_models.application_id
+                                      to applications.application_id;
+
+    ContainerModel[0..n] containerModels = join ccm_page_models.page_model_id
+                                             to ccm_page_model_container_models.page_model_id;
+
+    object key(pageModelId);
+}
+
+object type ContainerModel {
+
+    BigDecimal[1..1] containerModelId = ccm_page_model_container_models.container_model_id INTEGER;
+
+    String[1..1] uuid = ccm_page_model_container_models.uuid VARCHAR(38);
+
+    String[1..1] containerUuid = ccm_page_model_container_models.container_uuid VARCHAR(38);
+
+    String[1..1] key = ccm_page_model_container_models.key VARCHAR(256);
+
+    ComponentModel[0..n] componentModel = join ccm_page_model_container_models.container_model_id
+                                            to ccm_page_model_component_models.container_model_id;
+
+    object key(containerModelId); 
+}
+
+object type ComponentModel {
+    
+    BigDecimal[1..1] componentModelId = ccm_page_model_component_models.component_model_id;
+
+    String[1..1] uuid = ccm_page_model_component_models.uuid VARCHAR(38);
+
+    String[1..1] componentModelUuid = ccm_page_model_component_models.component_model_uuid VARCHAR(38);
+
+    String[0..1] idAttribute = ccm_page_model_component_models.id_attribute VARCHAR(255);
+
+    String[0..1] classAttribute = ccm_page_model_component_models.class_attribute VARCHAR(512);
+
+    String[0..1] styleAttribute = ccm_page_model_component_models.style_attribute VARCHAR(1024);
+
+    String[0..1] key = ccm_page_model_component_models.component_key VARCHAR(255);
+
+    object key(componentModelId);
+}
+
+object type CategoryTreeComponent extends ComponentModel {
+
+    Boolean[0..1] showFullTree = ccm_page_model_category_tree_components.show_full_tree BIT;
+
+    reference key(ccm_page_model_category_tree_components.component_model_id);
+}
+
+object type ContentItemComponent extends ComponentModel {
+    
+    String[0..1] mode = ccm_page_model_content_item_components.mode VARCHAR(255);
+
+    reference key(ccm_page_model_item_list_components.component_model_id);
+}
+
+object type ItemListComponent extends ComponentModel {
+
+    Boolean[0..1] descending = ccm_page_model_item_list_components.descending BIT;
+
+    String[0..1] limitToType = ccm_page_model_item_list_components.limit_to_type VARCHAR(255);
+
+    Integer[0..1] pageSize = ccm_page_model_item_list_components.page_size INTEGER;
+
+    String[0..1] listOrder = ccm_page_model_item_list_components.list_order VARCHAR(255);
+
+    reference key(ccm_page_model_item_list_components.component_model_id);
+}
+
+object type CategorizedItemComponent extends ContentItemComponent {
+
+    reference key(ccm_page_model_categorized_item_components.component_model_id);
+}
+
+object type GreetingItemComponent extends ContentItemComponent {
+
+    reference key(ccm_page_model_greeting_item_components.component_model_id);
+}
+
+object type FixedContentItemComponent extends ContentItemComponent {
+
+    ContentItem[0..1] contentItem = join ccm_page_model_fixed_content_item_components.content_item_id
+                                      to cms_items.item_id;
+
+    reference key(ccm_page_model_fixed_content_item_components.component_model_id);
+}
+
