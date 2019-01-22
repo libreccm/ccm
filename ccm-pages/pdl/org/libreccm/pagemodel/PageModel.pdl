@@ -44,6 +44,9 @@ object type ContainerModel {
 
     String[1..1] key = ccm_page_model_container_models.key VARCHAR(256);
 
+    PageModel[1..1] pageModel = join ccm_page_model_container_models.page_model_id
+                                  to ccm_page_models.page_model_id;
+
     ComponentModel[0..n] componentModel = join ccm_page_model_container_models.container_model_id
                                             to ccm_page_model_component_models.container_model_id;
 
