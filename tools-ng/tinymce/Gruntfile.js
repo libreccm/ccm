@@ -50,7 +50,8 @@ let plugins = [
     "visualblocks",
     "visualchars",
     "wordcount",
-    "ccmcmsimages"
+    "ccmcmsimages",
+    "ccmcmslinks"
 ];
 
 let themes = ["modern", "mobile", "inlite"];

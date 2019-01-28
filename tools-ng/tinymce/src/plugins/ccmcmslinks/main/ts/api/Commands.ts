@@ -5,10 +5,12 @@
  * For commercial licenses see https://www.tiny.cloud/
  */
 
-const fireInsertCustomChar = function (editor, chr) {
-  return editor.fire('insertCustomChar', { chr });
+import Actions from '../core/Actions';
+
+const register = function (editor) {
+  editor.addCommand('mceLink', Actions.openDialog(editor));
 };
 
 export default {
-  fireInsertCustomChar
+  register
 };
