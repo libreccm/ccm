@@ -23,7 +23,7 @@ elif [[ $1 == "plugin" ]]; then
     grunt uglify:$2-plugin
     grunt copy:plugins
     
-    cp -rv $SCRIPTPATH/js/tinymce/plugins/$1 $CORE_PATH
+    cp -rv $SCRIPTPATH/js/tinymce/plugins/$2 $CORE_PATH
 elif [[ $1 == "test" ]]; then
     grunt validateVersion
     grunt shell:tsc
@@ -32,5 +32,5 @@ elif [[ $1 == "test" ]]; then
     grunt uglify:$2-plugin
     grunt copy:plugins
     
-    cp -rv $SCRIPTPATH/js/tinymce/plugins/$1 $RUNTIME_PATH
+    cp -rv $SCRIPTPATH/js/tinymce/plugins/$2 $RUNTIME_PATH
 fi
