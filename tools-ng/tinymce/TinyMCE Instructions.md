@@ -12,8 +12,11 @@ waf.bebop.dhtml_editor_src=/assets/tinymce/js/tinymce/tinymce.min.js
 
 This change will only take effect after you've run `ant load-bundle` again and restarted your installation.
 
-## How to compile an individual plugin
+## How to compile the editor and the plugins
 
-After you changed a plugin in `tools-ng/tinymce/plugins`, you may want to see this changes reflected in your installation for testing. To do this, you need to change into the directory of the plugin and execute `npm run build`. Of course you need to have `npm` installed to do this.
+Use the handy `tinymce.sh` script for that. You can do the following things:
 
-After you've done this, you need to recompile your code. You can do this by running `ant deploy`.
+-   `./tinymce.sh` - Sets up the environment for compiling and builds the whole editor with all plugins. You can find the compiled files in `editor/js`
+-   `./tinymce.sh build` - Builds everything (Editor, Plugins, Themes, ...)
+-   `./tinymce.sh plugin <name>` - To compile a single plugin run this with the desired plugin name. The plugin will also be copied into `ccm-core`
+-   `./tinymce.sh test <name>` - Similar to `plugin`, but without linting and copies the files into the current runtime for instant testing.
