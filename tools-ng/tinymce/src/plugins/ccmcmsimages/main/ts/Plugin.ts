@@ -11,7 +11,7 @@ PluginManager.add('ccmcmsimages', function (editor) {
 
   editor.addMenuItem('ccm-cms-images-menu', {
     icon: 'image',
-    text: 'Insert/Edit Images',
+    text: 'Insert/Edit image',
     onclick: Dialog(editor).open,
     stateSelector: 'image',
     context: 'insert',
