@@ -79,6 +79,8 @@ public class ExportAllPublications extends Program {
                                              getNegotiatedLocale().getLanguage());
         }
 
+        publications.addEqualsFilter("version", "live");
+        
         publications.addOrder("yearOfPublication desc");
         publications.addOrder("authorsStr");
         publications.addOrder("title");
@@ -109,13 +111,18 @@ public class ExportAllPublications extends Program {
             long index = 1;
             while (publications.next()) {
 
-                System.out.printf("Exporting publication %d of %d...%n",
+                System.out.printf("Exporting publication %d of %d... ",
                                   index,
                                   publications.size());
 
                 final Publication publication
                                   = (Publication) DomainObjectFactory
                         .newInstance(publications.getDataObject());
+                
+                System.out.printf("oid = \"%s\", name = \"%s\"%n",
+                                  publication.getOID().toString(),
+                                  publication.getName());
+                
                 writer.append(exporter.exportPublication(publication));
                 index++;
             }

@@ -29,33 +29,33 @@ import java.util.List;
 
 /**
  * <p>
- * This is the base class for all other Publication Content types. The
- * following UML class diagram shows an overview of the classes of the 
- * Publications module. Please note that the UML diagram shown an general 
- * overview of the classes/object types of the publications module. It shows
- * the attributes of the content types and theirs associations between them. Not
- * all classes shown in the UML have a Java counterpart. These classes are
- * representing associations <em>with</em> extra attributes. The associations
- * are defined in the PDL files of this module.
+ * This is the base class for all other Publication Content types. The following
+ * UML class diagram shows an overview of the classes of the Publications
+ * module. Please note that the UML diagram shown an general overview of the
+ * classes/object types of the publications module. It shows the attributes of
+ * the content types and theirs associations between them. Not all classes shown
+ * in the UML have a Java counterpart. These classes are representing
+ * associations <em>with</em> extra attributes. The associations are defined in
+ * the PDL files of this module.
  * </p>
  * <p>
  * <img src="doc-files/PublicationModule.png" width="100%">
  * </p>
  * <p>
- * This class is not a directly usable Content type. Its is only used to
- * define some common attributes needed for all kinds of publications.
+ * This class is not a directly usable Content type. Its is only used to define
+ * some common attributes needed for all kinds of publications.
  * </p>
  * <p>
- * As of version 6.6.1 of this module, the reviewed property has been moved 
- * from the types {@link ArticleInCollectedVolume}, {@link ArticleInJournal}, 
+ * As of version 6.6.1 of this module, the reviewed property has been moved from
+ * the types {@link ArticleInCollectedVolume}, {@link ArticleInJournal},
  * {@link CollectedVolume}, {@link Monograph} and {@link WorkingPaper} to this
  * class. This has been done for performance reasons. Several use cases demanded
  * the use of a data query (for performance reasons) over all publications with
  * the option to filter for reviewed publications. Since the reviewed property
- * was only available for some types this was not possible, even with joins.
- * The publications types which do not need the reviewed property will not show
- * this property in their forms. Also, the reviewed property was excluded from
- * the XML of these types using their traversal adapters.
+ * was only available for some types this was not possible, even with joins. The
+ * publications types which do not need the reviewed property will not show this
+ * property in their forms. Also, the reviewed property was excluded from the
+ * XML of these types using their traversal adapters.
  * </p>
  *
  *
@@ -76,8 +76,8 @@ public class Publication extends ContentPage {
     public static final String REVIEWED = "reviewed";
     public static final String FIRST_PUBLISHED = "yearFirstPublished";
     public static final String LANG = "languageOfPublication";
-    public final static String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.cms.contenttypes.Publication";
+    public final static String BASE_DATA_OBJECT_TYPE
+                               = "com.arsdigita.cms.contenttypes.Publication";
     private final static PublicationsConfig config = new PublicationsConfig();
 
     static {
@@ -89,7 +89,7 @@ public class Publication extends ContentPage {
     }
 
     public Publication(final BigDecimal id) throws
-            DataObjectNotFoundException {
+        DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
@@ -151,8 +151,8 @@ public class Publication extends ContentPage {
     }
 
     /**
-     * Retrieves the contents of the misc field. This field can be used for
-     * all sorts of remarks etc. which do not fit in the other fields.
+     * Retrieves the contents of the misc field. This field can be used for all
+     * sorts of remarks etc. which do not fit in the other fields.
      *
      * @return Contents of the misc field.
      */
@@ -170,7 +170,12 @@ public class Publication extends ContentPage {
     }
 
     public Boolean getReviewed() {
-        return (Boolean) get(REVIEWED);
+        final Object value = get(REVIEWED);
+        if (value == null) {
+            return null;
+        } else {
+            return (Boolean) get(REVIEWED);
+        }
     }
 
     public void setReviewed(final Boolean reviewed) {
@@ -191,19 +196,16 @@ public class Publication extends ContentPage {
      * Adds an author to the publication
      *
      * @param author The author to add. This can an instance of any content type
-     * which is derivated from the {@link GenericPerson} type.
+     *               which is derivated from the {@link GenericPerson} type.
      * @param editor Is the author an editor?
      */
     public void addAuthor(final GenericPerson author, final Boolean editor) {
         //Assert.exists(author, GenericPerson.class);
 
         //DataObject link = add(AUTHORS, author);
-
         //link.set(EDITOR, editor);
         //link.set(AUTHOR_ORDER, Integer.valueOf((int) getAuthors().size()));
-
         //updateAuthorsStr();
-
         getPublicationBundle().addAuthor(author, editor);
     }
 
@@ -249,7 +251,7 @@ public class Publication extends ContentPage {
      * Method to check if the publication has authors.
      *
      * @return {@code true} if the publications has authors, {@code false}
-     * otherwise.
+     *         otherwise.
      */
     public boolean hasAuthors() {
         return !getAuthors().isEmpty();
@@ -271,7 +273,6 @@ public class Publication extends ContentPage {
         //Assert.exists(series, Series.class);
 
         //remove(SERIES, series);
-
         getPublicationBundle().removeSeries(series);
     }
 
@@ -289,12 +290,11 @@ public class Publication extends ContentPage {
         //Assert.exists(orgaunit, GenericOrganizationalUnit.class);
 
         //add(ORGAUNITS, orgaunit);
-
         getPublicationBundle().addOrganizationalUnit(orgaunit);
     }
 
     public void removeOrganizationalUnit(
-            final GenericOrganizationalUnit orgaunit) {
+        final GenericOrganizationalUnit orgaunit) {
         //Assert.exists(orgaunit, GenericOrganizationalUnit.class);
 
         //remove(ORGAUNITS, orgaunit);
@@ -305,18 +305,18 @@ public class Publication extends ContentPage {
         return !getOrganizationalUnits().isEmpty();
     }
 
-    public static PublicationBundleCollection getPublications(final GenericPerson person) {
+    public static PublicationBundleCollection getPublications(
+        final GenericPerson person) {
         return PublicationBundle.getPublications(person);
     }
-    
+
     public static GenericOrganizationalUnitPublicationsCollection getPublications(
-            final GenericOrganizationalUnit orgaunit) {
+        final GenericOrganizationalUnit orgaunit) {
         //final DataCollection dataCollection = (DataCollection) orgaunit.get(
         //        ORGAUNIT_PUBLICATIONS);
 
         //return new GenericOrganizationalUnitPublicationsCollection(
         //        dataCollection);
-
         return PublicationBundle.getPublications(orgaunit);
     }
 
@@ -329,36 +329,36 @@ public class Publication extends ContentPage {
     }
 
     public static void removePublication(
-            final GenericOrganizationalUnit orgaunit,
-            final Publication publication) {
+        final GenericOrganizationalUnit orgaunit,
+        final Publication publication) {
         //Assert.exists(publication);
 
         //orgaunit.remove(ORGAUNIT_PUBLICATIONS, publication);
         PublicationBundle.removePublication(orgaunit, publication);
     }
-    
+
     /**
      * The year when the first edition of the publication was published.
-     * 
-     * @return 
+     *
+     * @return
      */
     public Integer getYearFirstPublished() {
         return (Integer) get(FIRST_PUBLISHED);
     }
-        
+
     public void setYearFirstPublished(final Integer value) {
         set(FIRST_PUBLISHED, value);
     }
-    
+
     /**
      * The language the publication is written in.
-     * 
-     * @return 
+     *
+     * @return
      */
     public String getLanguageOfPublication() {
         return (String) get(LANG);
     }
-    
+
     public void setLanguageOfPublication(final String value) {
         set(LANG, value);
     }
@@ -372,14 +372,16 @@ public class Publication extends ContentPage {
 
     @Override
     public List<ExtraXMLGenerator> getExtraListXMLGenerators() {
-        final List<ExtraXMLGenerator> generators = super.getExtraListXMLGenerators();
+        final List<ExtraXMLGenerator> generators = super
+            .getExtraListXMLGenerators();
         generators.add(new PublicationExtraXmlGenerator());
         return generators;
     }
 
     @Override
     public String getSearchSummary() {
-        String summary = String.format("%s %s %s", getTitle(), (String)get(AUTHORS_STR), getAbstract());
+        String summary = String.format("%s %s %s", getTitle(), (String) get(
+                                       AUTHORS_STR), getAbstract());
         if (summary.length() > 4000) {
             summary = summary.substring(0, 4000);
         }

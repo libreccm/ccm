@@ -56,7 +56,9 @@ public abstract class AbstractRisConverter implements RisConverter {
     }
 
     protected void convertYear(final Publication publication) {
-        getRisBuilder().addField(RisField.PY, String.format("%d///", publication.getYearOfPublication()));
+        if (publication.getYearOfPublication() != null) {
+            getRisBuilder().addField(RisField.PY, String.format("%d", publication.getYearOfPublication()));
+        }
     }
 
     protected void convertPublisher(final PublicationWithPublisher publication) {

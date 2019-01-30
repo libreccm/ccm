@@ -1,21 +1,22 @@
 <?xml version="1.0"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
-  name="ccm-pages"
-  prettyName="Pages"
-  version="6.0.0"
-  release="2"
-  webapp="ROOT">
+                 name="ccm-pages"
+                 prettyName="Pages"
+                 version="6.0.0"
+                 release="2"
+                 webapp="ROOT">
     
     <ccm:dependencies>
-    <ccm:requires name="ccm-core" version="6.6.0" relation="ge"/>
-    <ccm:requires name="ccm-cms" version="6.6.0" relation="ge"/>
-    <ccm:requires name="ccm-subsite" version="6.6.0" relation="ge"/>
-    <ccm:requires name="ccm-ldn-terms" version="6.6.0" relation="ge"/>
+        <ccm:requires name="ccm-cms" version="6.6.0" relation="ge" />
+        <ccm:requires name="ccm-core" version="6.6.0" relation="ge" />
+        <ccm:requires name="ccm-ldn-terms" version="6.6.0" relation="ge" />
+        <ccm:requires name="ccm-subsite" version="6.6.0" relation="ge" />
+        <ccm:requires name="ccm-themedirector" version="6.6.0" relation="ge" />
     </ccm:dependencies>
     
     <ccm:contacts>
         <ccm:contact uri="https://www.scientificcms.org" type="website"/>
-    <ccm:contact uri="mailto:info@scentificcms.org" type="support"/>
+        <ccm:contact uri="mailto:info@scentificcms.org" type="support"/>
     </ccm:contacts>
     
     <ccm:description>

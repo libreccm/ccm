@@ -23,6 +23,8 @@ import com.arsdigita.cms.scipublications.imexporter.ris.RisField;
 import com.arsdigita.cms.contenttypes.InternetArticle;
 import com.arsdigita.cms.contenttypes.Publication;
 
+import java.util.Objects;
+
 /**
  * Converts a {@link InternetArticle} to a RIS reference.
  *
@@ -35,6 +37,9 @@ public class InternetArticleConverter extends AbstractRisConverter {
     public String convert(final Publication publication) {
         InternetArticle article;
 
+        System.err.printf("Converting publication %s as InternetArticle to RIS...%n",
+                          Objects.toString(publication));
+        
         if (!(publication instanceof InternetArticle)) {
             throw new UnsupportedCcmTypeException(
                     String.format("The InternetArticleConverter only "
@@ -49,21 +54,29 @@ public class InternetArticleConverter extends AbstractRisConverter {
                                   publication.getClass().getName()));
         }
 
+        System.err.printf("Casting to InternetArticle%n");
         article = (InternetArticle) publication;
 
+        System.err.printf("Setting RIS type to EJOUR...%n");
         getRisBuilder().setType(RisType.EJOUR);
+        System.err.printf("Converting authors...%n");
         convertAuthors(publication);
+        System.err.printf("Converting title...%n");
         convertTitle(publication);
+        System.err.printf("Converting year...%n");
         convertYear(publication);
         
-        if (article.getReviewed()) {
+        System.err.printf("Converting reviewed...%n");
+        if (article.getReviewed() != null && article.getReviewed()) {
             getRisBuilder().addField(RisField.RI, "");
         }
         
+        System.err.printf("Converting  URL...%n");
         if (article.getUrl() != null) {
             getRisBuilder().addField(RisField.UR, article.getUrl());
         }
 
+        System.err.printf("Building String%n");
         return getRisBuilder().toRis();
     }
 

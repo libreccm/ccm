@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.subsite;
 
 import com.arsdigita.categorization.Category;
@@ -37,30 +36,39 @@ import java.math.BigDecimal;
  *
  */
 public class Site extends ACSObject {
-    
-    public static final String BASE_DATA_OBJECT_TYPE = 
-                               "com.arsdigita.subsite.Site";
 
-    /** Title for a subsite, text field. */
+    public static final String BASE_DATA_OBJECT_TYPE
+                               = "com.arsdigita.subsite.Site";
+
+    /**
+     * Title for a subsite, text field.
+     */
     public static final String TITLE = "title";
-    /** Description for a subsite, text field. */
+    /**
+     * Description for a subsite, text field.
+     */
     public static final String DESCRIPTION = "description";
-    /** Subsite host name, text field, must be unique. */
+    /**
+     * Subsite host name, text field, must be unique.
+     */
     public static final String HOSTNAME = "hostname";
-    /** Directory containin the theme to be used for the subsite. */
+    /**
+     * Directory containin the theme to be used for the subsite.
+     */
     public static final String STYLE_DIRECTORY = "styleDirectory";
     public static final String FRONT_PAGE = "frontPage";
     public static final String TEMPLATE_CONTEXT = "templateContext";
 
     /**
-     * 
+     *
      */
     public Site() {
         this(BASE_DATA_OBJECT_TYPE);
     }
-    
-    /** 
+
+    /**
      * Constructor
+     *
      * @param type
      */
     public Site(String type) {
@@ -70,7 +78,7 @@ public class Site extends ACSObject {
     public Site(DataObject obj) {
         super(obj);
     }
-    
+
     public Site(final OID oid) {
         super(oid);
     }
@@ -82,7 +90,7 @@ public class Site extends ACSObject {
                               Category root,
                               Application frontPage) {
         Site site = new Site();
-        site.setup(title, 
+        site.setup(title,
                    description,
                    hostname,
                    styleDir,
@@ -91,8 +99,8 @@ public class Site extends ACSObject {
         return site;
     }
 
-    /** 
-     * 
+    /**
+     *
      * @param title
      * @param description
      * @param hostname
@@ -133,7 +141,7 @@ public class Site extends ACSObject {
     @Override
     public void beforeDelete() {
         super.beforeDelete();
-        
+
         TemplateContext ctx = getTemplateContext();
         ctx.delete();
     }
@@ -141,28 +149,30 @@ public class Site extends ACSObject {
     public static Site retrieve(BigDecimal id)
         throws DataObjectNotFoundException {
 
-        return (Site)DomainObjectFactory.newInstance(
+        return (Site) DomainObjectFactory.newInstance(
             new OID(BASE_DATA_OBJECT_TYPE, id)
         );
     }
 
     public static Site retrieve(DataObject obj) {
-        return (Site)DomainObjectFactory.newInstance(obj);
+        return (Site) DomainObjectFactory.newInstance(obj);
     }
-    
-    /** 
-     * 
+
+    /**
+     *
      * @param hostname
+     *
      * @return
+     *
      * @throws DataObjectNotFoundException
      */
     public static Site findByHostname(String hostname)
         throws DataObjectNotFoundException {
         DataCollection sites = SessionManager.getSession()
             .retrieve(BASE_DATA_OBJECT_TYPE);
-        
+
         sites.addEqualsFilter(HOSTNAME, hostname);
-        
+
         if (sites.next()) {
             DataObject obj = sites.getDataObject();
             if (sites.next()) {
@@ -171,15 +181,15 @@ public class Site extends ACSObject {
             }
             return retrieve(obj);
         }
-        
+
         throw new DataObjectNotFoundException(
             "cannot find site for hostname" + hostname
         );
     }
 
     public TemplateContext getTemplateContext() {
-        return (TemplateContext)DomainObjectFactory
-            .newInstance((DataObject)get(TEMPLATE_CONTEXT));
+        return (TemplateContext) DomainObjectFactory
+            .newInstance((DataObject) get(TEMPLATE_CONTEXT));
     }
 
     public void setTitle(String title) {
@@ -188,7 +198,7 @@ public class Site extends ACSObject {
     }
 
     public String getTitle() {
-        return(String)get(TITLE);
+        return (String) get(TITLE);
     }
 
     public void setDescription(String description) {
@@ -197,7 +207,7 @@ public class Site extends ACSObject {
     }
 
     public String getDescription() {
-        return(String)get(DESCRIPTION);
+        return (String) get(DESCRIPTION);
     }
 
     public void setHostname(String hostname) {
@@ -205,7 +215,7 @@ public class Site extends ACSObject {
     }
 
     public String getHostname() {
-        return(String)get(HOSTNAME);
+        return (String) get(HOSTNAME);
     }
 
     public void setStyleDirectory(String styleDirectory) {
@@ -213,7 +223,7 @@ public class Site extends ACSObject {
     }
 
     public String getStyleDirectory() {
-        return(String)get(STYLE_DIRECTORY);
+        return (String) get(STYLE_DIRECTORY);
     }
 
     public void setRootCategory(Category rootCategory) {
@@ -229,8 +239,8 @@ public class Site extends ACSObject {
     }
 
     public Application getFrontPage() {
-        return (Application)DomainObjectFactory
-            .newInstance((DataObject)get(FRONT_PAGE));
+        return (Application) DomainObjectFactory
+            .newInstance((DataObject) get(FRONT_PAGE));
     }
 
 }
