@@ -27,11 +27,11 @@ import org.apache.log4j.Logger;
 
 /**
  * Implementation of {@link SciPublicationsExporter} which exports publications
- * in the RIS format. The RIS format is described at 
+ * in the RIS format. The RIS format is described at
  * <a href="http://www.refman.com/support/risformat_intro.asp">http://www.refman.com/support/risformat_intro.asp</a>
- * and 
+ * and
  * <a href="http://www.adeptscience.co.uk/kb/article/FE26">http://www.adeptscience.co.uk/kb/article/FE26</a>.
- * The <code>RisExporter</code> uses implementations of the {@link RisConverter} 
+ * The <code>RisExporter</code> uses implementations of the {@link RisConverter}
  * interface provided by the {@link RisConverters} class to convert the
  * publication content items from CCM to RIS references.
  *
@@ -45,11 +45,11 @@ public class RisExporter implements SciPublicationsExporter {
     public PublicationFormat getSupportedFormat() {
         try {
             return new PublicationFormat("RIS",
-                    new MimeType("text", "x-ris"),
-                    "ris");
-        } catch(MimeTypeParseException ex) {
-             logger.warn("Failed to create MimeType for PublicationFormat."
-                        + "Using null mimetype instead. Cause: ", ex);
+                                         new MimeType("text", "x-ris"),
+                                         "ris");
+        } catch (MimeTypeParseException ex) {
+            logger.warn("Failed to create MimeType for PublicationFormat."
+                            + "Using null mimetype instead. Cause: ", ex);
             return new PublicationFormat("RIS",
                                          null,
                                          "ris");
@@ -59,9 +59,10 @@ public class RisExporter implements SciPublicationsExporter {
     public String exportPublication(final Publication publication) {
         return RisConverters.getInstance().convert(publication);
     }
-    
-      @Override
+
+    @Override
     public String getPreamble() {
-        return null;
+        return "";
     }
+
 }

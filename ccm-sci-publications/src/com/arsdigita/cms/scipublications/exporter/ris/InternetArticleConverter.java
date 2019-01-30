@@ -35,10 +35,11 @@ public class InternetArticleConverter extends AbstractRisConverter {
 
     @Override
     public String convert(final Publication publication) {
+        
         InternetArticle article;
 
-        System.err.printf("Converting publication %s as InternetArticle to RIS...%n",
-                          Objects.toString(publication));
+//        System.err.printf("Converting publication %s as InternetArticle to RIS...%n",
+//                          Objects.toString(publication));
         
         if (!(publication instanceof InternetArticle)) {
             throw new UnsupportedCcmTypeException(
@@ -54,29 +55,29 @@ public class InternetArticleConverter extends AbstractRisConverter {
                                   publication.getClass().getName()));
         }
 
-        System.err.printf("Casting to InternetArticle%n");
+//        System.err.printf("Casting to InternetArticle%n");
         article = (InternetArticle) publication;
 
-        System.err.printf("Setting RIS type to EJOUR...%n");
+//        System.err.printf("Setting RIS type to EJOUR...%n");
         getRisBuilder().setType(RisType.EJOUR);
-        System.err.printf("Converting authors...%n");
+//        System.err.printf("Converting authors...%n");
         convertAuthors(publication);
-        System.err.printf("Converting title...%n");
+//        System.err.printf("Converting title...%n");
         convertTitle(publication);
-        System.err.printf("Converting year...%n");
+//        System.err.printf("Converting year...%n");
         convertYear(publication);
         
-        System.err.printf("Converting reviewed...%n");
+//        System.err.printf("Converting reviewed...%n");
         if (article.getReviewed() != null && article.getReviewed()) {
             getRisBuilder().addField(RisField.RI, "");
         }
         
-        System.err.printf("Converting  URL...%n");
+//        System.err.printf("Converting  URL...%n");
         if (article.getUrl() != null) {
             getRisBuilder().addField(RisField.UR, article.getUrl());
         }
 
-        System.err.printf("Building String%n");
+//        System.err.printf("Building String%n");
         return getRisBuilder().toRis();
     }
 
