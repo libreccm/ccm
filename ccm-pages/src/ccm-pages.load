@@ -2,13 +2,13 @@
     <requires>
         <table name="inits"/>
         <table name="acs_objects"/>
-        <initializer class="com.arsdigita.core.Initializer" />
+        <!--<initializer class="com.arsdigita.core.Initializer" />-->
     </requires>
-    <provides>
+    <!--<provides>
         <initializer class="org.librecms.pages.Initializer" />
     </provides>
     <scripts>
         <schema directory="ccm-pages" />
         <data class="org.librecms.pages.Loader" />
-    </scripts>
+    </scripts>-->
 </load>
