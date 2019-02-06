@@ -8,17 +8,16 @@ import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Web;
 import com.arsdigita.xml.Document;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
+import org.libreccm.theming.manifest.ThemeManifest;
+import org.libreccm.theming.manifest.ThemeManifestUtil;
 import org.w3c.dom.Node;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.stream.Collectors;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +49,9 @@ public class FreeMarkerPresentationManager implements PresentationManager {
 
         final String defaultTheme;
         if (subSite == null) {
-            defaultTheme = ThemeDirector.getThemeDirector().getDefaultTheme()
+            defaultTheme = ThemeDirector
+                .getThemeDirector()
+                .getDefaultTheme()
                 .getURL();
         } else {
             defaultTheme = subSite.getStyleDirectory();
@@ -77,46 +78,65 @@ public class FreeMarkerPresentationManager implements PresentationManager {
         }
         themePathBuilder.append(selectedTheme).append("/");
         final String themePath = themePathBuilder.toString();
-        final String themeManifestPath = String.format("%stheme-manifest.json",
-                                                       themePath);
+        final String themeManifestPath = String.format(
+            "%s" + ThemeConstants.THEME_MANIFEST_JSON, themePath);
 
         final ServletContext servletContext = Web.getServletContext();
 
 //        final String themeManifest = "";
-        final String themeManifest = new BufferedReader(
-            new InputStreamReader(
-                servletContext.getResourceAsStream(themeManifestPath),
-                StandardCharsets.UTF_8))
-            .lines()
-            .collect(Collectors.joining(System.lineSeparator()));
+//        final String themeManifest = new BufferedReader(
+//            new InputStreamReader(
+//                servletContext.getResourceAsStream(themeManifestPath),
+//                StandardCharsets.UTF_8))
+//            .lines()
+//            .collect(Collectors.joining(System.lineSeparator()));
+//
+//        String name = "???";
+//        final JsonFactory jsonFactory = new JsonFactory();
+//        try {
+//            final JsonParser parser = jsonFactory.createParser(servletContext
+//                .getResourceAsStream(themeManifestPath));
+//
+//            while (!parser.isClosed()) {
+//
+//                final JsonToken token = parser.nextToken();
+//                if (JsonToken.FIELD_NAME.equals(token)) {
+//                    final String fieldName = parser.getCurrentName();
+//
+//                    if ("name".equals(fieldName)) {
+//
+//                        final JsonToken valueToken = parser.nextToken();
+//                        final String value = parser.getValueAsString();
+//                        name = value;
+//                    }
+//                }
+//
+//            }
+//
+//        } catch (IOException ex) {
+//            throw new UncheckedWrapperException(ex);
+//        }
+        final InputStream manifestInputStream = servletContext
+            .getResourceAsStream(themeManifestPath);
+        final ThemeManifestUtil manifestUtil = ThemeManifestUtil.getInstance();
 
-        String name = "???";
-        final JsonFactory jsonFactory = new JsonFactory();
+        final ThemeManifest manifest = manifestUtil
+            .loadManifest(manifestInputStream,
+                          themeManifestPath);
+
+        final ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JaxbAnnotationModule());
+        final Templates templates;
         try {
-            final JsonParser parser = jsonFactory.createParser(servletContext
-                .getResourceAsStream(themeManifestPath));
-
-            while (!parser.isClosed()) {
-
-                final JsonToken token = parser.nextToken();
-                if (JsonToken.FIELD_NAME.equals(token)) {
-                    final String fieldName = parser.getCurrentName();
-
-                    if ("name".equals(fieldName)) {
-
-                        final JsonToken valueToken = parser.nextToken();
-                        final String value = parser.getValueAsString();
-                        name = value;
-                    }
-                }
-
-            }
-
+            templates = objectMapper.readValue(
+                servletContext.getResourceAsStream(
+                    String.format("%stemplates.json", themePath)),
+                Templates.class);
         } catch (IOException ex) {
             throw new UncheckedWrapperException(ex);
         }
+
         // ToDo
-        //     Parse theme manifest
         //     Get Freemarker templates by File API or by HTTP?
         //     Or via getResourceAsStream?
         response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
@@ -152,12 +172,21 @@ public class FreeMarkerPresentationManager implements PresentationManager {
                 .append("\n");
             writer
                 .append("themeManifest: ")
-                .append(themeManifest)
+                .append(manifest.toString())
                 .append("\n");
             writer
                 .append("theme name: ")
-                .append(name)
+                .append(manifest.getName())
                 .append("\n");
+            writer
+                .append("Application templates:\n");
+            for (final ApplicationTemplate template : templates
+                .getApplications()) {
+                writer
+                    .append("\t")
+                    .append(template.toString())
+                    .append("\n");
+            }
         } catch (IOException ex) {
             throw new UncheckedWrapperException(ex);
         }
