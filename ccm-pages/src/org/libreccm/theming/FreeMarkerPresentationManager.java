@@ -10,14 +10,22 @@ import com.arsdigita.xml.Document;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
+import freemarker.ext.dom.NodeModel;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import org.libreccm.theming.manifest.ThemeManifest;
 import org.libreccm.theming.manifest.ThemeManifestUtil;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -137,61 +145,140 @@ public class FreeMarkerPresentationManager implements PresentationManager {
         }
 
         // ToDo
-        //     Get Freemarker templates by File API or by HTTP?
-        //     Or via getResourceAsStream?
-        response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
-        response.setContentType("text/plain");
-        try (PrintWriter writer = response.getWriter()) {
-            writer.append("Data:\n");
-            writer
-                .append("Current Site Name: ")
-                .append(currentSiteName).append("\n");
-            writer
-                .append("isSubSite: ")
-                .append(Boolean.toString(isSubSite))
-                .append("\n");
-            writer
-                .append("default theme: ")
-                .append(defaultTheme)
-                .append("\n");
-            writer
-                .append("selected theme: ")
-                .append(selectedTheme)
-                .append("\n");
-            writer
-                .append("preview theme? ")
-                .append(Boolean.toString(preview))
-                .append("\n");
-            writer
-                .append("themePath: ")
-                .append(themePath)
-                .append("\n");
-            writer
-                .append("themeManifestPath: ")
-                .append(themeManifestPath)
-                .append("\n");
-            writer
-                .append("themeManifest: ")
-                .append(manifest.toString())
-                .append("\n");
-            writer
-                .append("theme name: ")
-                .append(manifest.getName())
-                .append("\n");
-            writer
-                .append("Application templates:\n");
-            for (final ApplicationTemplate template : templates
-                .getApplications()) {
-                writer
-                    .append("\t")
-                    .append(template.toString())
-                    .append("\n");
-            }
+        final NamedNodeMap pageAttrs = root.getAttributes();
+        final Node applicationNameAttr = pageAttrs.getNamedItem("application");
+        final Node applicationClassAttr = pageAttrs.getNamedItem("class");
+        final String applicationName = applicationNameAttr.getNodeValue();
+        final String applicationClass = applicationClassAttr.getNodeValue();
+
+        final Optional<ApplicationTemplate> applicationTemplate
+                                                = findApplicationTemplate(
+                templates,
+                applicationName,
+                applicationClass);
+        final String applicationTemplatePath;
+        if (applicationTemplate.isPresent()) {
+            applicationTemplatePath = applicationTemplate.get().getTemplate();
+        } else {
+            applicationTemplatePath = templates.getDefaultApplicationTemplate();
+        }
+
+        final Configuration configuration = new Configuration(
+            Configuration.VERSION_2_3_28);
+        configuration.setServletContextForTemplateLoading(servletContext,
+                                                          themePath);
+        configuration.setDefaultEncoding("UTF-8");
+
+        final Map<String, Object> data = new HashMap<>();
+        data.put("ccm", NodeModel.wrap(root));
+
+        final Template template;
+        try {
+            template = configuration.getTemplate(applicationTemplatePath);
         } catch (IOException ex) {
             throw new UncheckedWrapperException(ex);
         }
 
+        response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
+        response.setContentType("text/html");
+
+        try (PrintWriter writer = response.getWriter()) {
+
+            template.process(data, writer);
+
+//            writer.append("Data:\n");
+//            writer
+//                .append("Current Site Name: ")
+//                .append(currentSiteName).append("\n");
+//            writer
+//                .append("isSubSite: ")
+//                .append(Boolean.toString(isSubSite))
+//                .append("\n");
+//            writer
+//                .append("default theme: ")
+//                .append(defaultTheme)
+//                .append("\n");
+//            writer
+//                .append("selected theme: ")
+//                .append(selectedTheme)
+//                .append("\n");
+//            writer
+//                .append("preview theme? ")
+//                .append(Boolean.toString(preview))
+//                .append("\n");
+//            writer
+//                .append("themePath: ")
+//                .append(themePath)
+//                .append("\n");
+//            writer
+//                .append("themeManifestPath: ")
+//                .append(themeManifestPath)
+//                .append("\n");
+//            writer
+//                .append("themeManifest: ")
+//                .append(manifest.toString())
+//                .append("\n");
+//            writer
+//                .append("theme name: ")
+//                .append(manifest.getName())
+//                .append("\n");
+//            writer
+//                .append("Application name: ")
+//                .append(applicationName)
+//                .append("\n");
+//            writer
+//                .append("Application class: ")
+//                .append(applicationClass)
+//                .append("\n");
+//            writer
+//                .append("Application templates:\n");
+//            for (final ApplicationTemplate template : templates
+//                .getApplications()) {
+//                writer
+//                    .append("\t")
+//                    .append(template.toString())
+//                    .append("\n");
+//            }
+        } catch (IOException  | TemplateException ex) {
+            throw new UncheckedWrapperException(ex);
+        }
+
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private Optional<ApplicationTemplate> findApplicationTemplate(
+        final Templates templates,
+        final String applicationName,
+        final String applicationClass) {
+
+        final Optional<ApplicationTemplate> forNameAndClass = templates
+            .getApplications()
+            .stream()
+            .filter(template -> filterApplicationTemplates(template,
+                                                           applicationName,
+                                                           applicationClass))
+            .findAny();
+        if (forNameAndClass.isPresent()) {
+            return forNameAndClass;
+        } else {
+
+            final Optional<ApplicationTemplate> forName = templates
+                .getApplications()
+                .stream()
+                .filter(tpl -> tpl.getApplicationName().equals(applicationName))
+                .findAny();
+
+            return forName;
+        }
+    }
+
+    private boolean filterApplicationTemplates(
+        final ApplicationTemplate template,
+        final String applicationName,
+        final String applicationClass) {
+
+        return template.getApplicationName().equals(applicationName)
+                   && template.getApplicationClass().equals(applicationClass);
     }
 
 }

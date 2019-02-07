@@ -30,9 +30,17 @@ public class Templates {
     @XmlElement(name = "applications", namespace = THEMES_XML_NS)
     private List<ApplicationTemplate> applications;
     
+    @XmlElement(name = "default-application-template", 
+                namespace = THEMES_XML_NS)
+    private String defaultApplicationTemplate;
+    
     @XmlElementWrapper(name = "contentitems", namespace = THEMES_XML_NS)
     @XmlElement(name = "contentitems", namespace = THEMES_XML_NS)
     private List<ContentItemTemplate> contentItems;
+    
+    @XmlElement(name = "default-contentitem-template", 
+                namespace = THEMES_XML_NS)
+    private String defaultContentItemsTemplate;
     
     public Templates() {
         
@@ -60,6 +68,15 @@ public class Templates {
         this.applications = new ArrayList<>(applications);
     }
     
+    public String getDefaultApplicationTemplate() {
+        return defaultApplicationTemplate;
+    }
+    
+    public void setDefaultApplicationTemplate(
+        final String defaultApplicationTemplate) {
+        this.defaultApplicationTemplate = defaultApplicationTemplate;
+    }
+    
     public List<ContentItemTemplate> getContentItems() {
         
         return Collections.unmodifiableList(contentItems);
@@ -80,4 +97,12 @@ public class Templates {
         this.contentItems = new ArrayList<>(contentItems);
     }
     
+    public String getDefaultContentItemsTemplate() {
+        return defaultContentItemsTemplate;
+    }
+    
+    public void setDefaultContentItemsTemplate(
+        final String defaultContentItemsTemplate) {
+        this.defaultContentItemsTemplate = defaultContentItemsTemplate;
+    }
 }
