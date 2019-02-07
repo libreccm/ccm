@@ -10,6 +10,9 @@ import com.arsdigita.xml.Document;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
+import freemarker.cache.MultiTemplateLoader;
+import freemarker.cache.TemplateLoader;
+import freemarker.cache.WebappTemplateLoader;
 import freemarker.ext.dom.NodeModel;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -165,8 +168,17 @@ public class FreeMarkerPresentationManager implements PresentationManager {
 
         final Configuration configuration = new Configuration(
             Configuration.VERSION_2_3_28);
-        configuration.setServletContextForTemplateLoading(servletContext,
-                                                          themePath);
+        final WebappTemplateLoader themeTemplateLoader
+                                       = new WebappTemplateLoader(servletContext,
+                                                                  themePath);
+        final WebappTemplateLoader macrosLoader = new WebappTemplateLoader(
+            servletContext,
+            "/themes/freemarker");
+        final MultiTemplateLoader templateLoader = new MultiTemplateLoader(
+            new TemplateLoader[]{themeTemplateLoader, macrosLoader});
+//        configuration.setServletContextForTemplateLoading(servletContext,
+//                                                          themePath);
+        configuration.setTemplateLoader(templateLoader);
         configuration.setDefaultEncoding("UTF-8");
 
         final Map<String, Object> data = new HashMap<>();
@@ -239,7 +251,7 @@ public class FreeMarkerPresentationManager implements PresentationManager {
 //                    .append(template.toString())
 //                    .append("\n");
 //            }
-        } catch (IOException  | TemplateException ex) {
+        } catch (IOException | TemplateException ex) {
             throw new UncheckedWrapperException(ex);
         }
 
