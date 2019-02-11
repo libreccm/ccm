@@ -1,6 +1,8 @@
 package org.libreccm.theming;
 
+import com.arsdigita.bebop.Bebop;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.subsite.Site;
 import com.arsdigita.templating.PresentationManager;
 import com.arsdigita.themedirector.ThemeDirector;
@@ -27,6 +29,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
@@ -182,7 +185,49 @@ public class FreeMarkerPresentationManager implements PresentationManager {
         configuration.setDefaultEncoding("UTF-8");
 
         final Map<String, Object> data = new HashMap<>();
+
+        // The XML document
         data.put("ccm", NodeModel.wrap(root));
+
+        // Parameters (in XSL provided as XSL parameters)
+        data.put("contextPath", request.getContextPath());
+        data.put("contextPrefix",
+                 Web.getWebContext().getRequestURL().getContextPath());
+        data.put("dcpOnButtons",
+                 Bebop.getConfig().doubleClickProtectionOnButtons());
+        data.put("dcpOnLinks",
+                 Bebop.getConfig().doubleClickProtectionOnLinks());
+        data.put("dispatcherPrefix", com.arsdigita.web.URL.getDispatcherPath());
+        final String host;
+        if (request.getServerPort() == 80) {
+            host = String.format("%s://%s",
+                                 request.getScheme(),
+                                 request.getServerName());
+        } else {
+            host = String.format("%s://%s:%d",
+                                 request.getScheme(),
+                                 request.getServerName(),
+                                 request.getServerPort());
+        }
+        data.put("host", host);
+        data.put("internalTheme",
+                 Web.getWebContext().getRequestURL().getContextPath()
+                     + com.arsdigita.web.URL.INTERNAL_THEME_DIR);
+        data.put("negotiatedLanguage",
+                 GlobalizationHelper.getNegotiatedLocale().getLanguage());
+        data.put("requestScheme", request.getScheme());
+        data.put("rootContextPrefix",
+                 Web.getConfig().getDispatcherContextPath());
+        final Locale selectedLocale = GlobalizationHelper
+            .getSelectedLocale(request);
+        if (selectedLocale == null) {
+            data.put("selectedLanguage", "");
+        } else {
+            data.put("selectedLanguage", selectedLocale.getLanguage());
+        }
+        data.put("serverName", request.getServerName());
+        data.put("serverPort", request.getServerPort());
+        data.put("userAgent", request.getHeader("user-Agent"));
 
         final Template template;
         try {
