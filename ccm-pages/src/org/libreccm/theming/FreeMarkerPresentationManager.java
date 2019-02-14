@@ -187,7 +187,7 @@ public class FreeMarkerPresentationManager implements PresentationManager {
         final Map<String, Object> data = new HashMap<>();
 
         // The XML document
-        data.put("ccm", NodeModel.wrap(root));
+        data.put("model", NodeModel.wrap(root));
 
         // Parameters (in XSL provided as XSL parameters)
         data.put("contextPath", request.getContextPath());

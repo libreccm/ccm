@@ -5,9 +5,7 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
-
-
 <#macro pageTitle>
-    ${ccm["//nav:categoryMenu/nav:category/@title"]}
+    ${model["//nav:categoryMenu/nav:category/@title"]}
 </#macro>
 
