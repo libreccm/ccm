@@ -1,6 +1,7 @@
 package org.libreccm.theming;
 
 import com.arsdigita.bebop.Bebop;
+import com.arsdigita.bebop.page.PageTransformer;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.subsite.Site;
@@ -132,6 +133,11 @@ public class FreeMarkerPresentationManager implements PresentationManager {
 //        }
         final InputStream manifestInputStream = servletContext
             .getResourceAsStream(themeManifestPath);
+        if (manifestInputStream == null) {
+            final PageTransformer pageTransformer = new PageTransformer();
+            pageTransformer.servePage(document, request, response);
+            return;
+        }
         final ThemeManifestUtil manifestUtil = ThemeManifestUtil.getInstance();
 
         final ThemeManifest manifest = manifestUtil
@@ -167,6 +173,12 @@ public class FreeMarkerPresentationManager implements PresentationManager {
             applicationTemplatePath = applicationTemplate.get().getTemplate();
         } else {
             applicationTemplatePath = templates.getDefaultApplicationTemplate();
+        }
+        
+        if ("XSL_FALLBACK.XSL".equals(applicationTemplatePath)) {
+            final PageTransformer pageTransformer = new PageTransformer();
+            pageTransformer.servePage(document, request, response);
+            return;
         }
 
         final Configuration configuration = new Configuration(

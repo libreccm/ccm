@@ -5,6 +5,7 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
+<#-- Move to Navigation tags? -->
 <#macro pageTitle>
     ${model["//nav:categoryMenu/nav:category/@title"]}
 </#macro>
