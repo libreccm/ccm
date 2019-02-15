@@ -15,38 +15,48 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
- */
-package org.libreccm.l10n;
+ */package org.libreccm.l10n;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.libreccm.l10n.jaxb.LocalizedStringValuesAdapter;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
-/**
- * A helper class for localisable string properties. This class is declared as
- * embeddable, so that it can be used in every other entity. The localised
- * values are stored in a {@link Map}. This class is <em>not</em> designed to be
- * overwritten. But because it is an entity class we can't make the class final.
- *
- * @author <a href="mailto:tosmers@uni-bremen.de>Tobias Osmers<\a>
- * @version created on 6/15/16
- */
-//@XmlAccessorType(XmlAccessType.FIELD)
-public class LocalizedString {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-    //@XmlElement(name = "values", namespace = L10N_XML_NS)
-    //@XmlJavaTypeAdapter(LocalizedStringValuesAdapter.class)
+/**
+ *
+ * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
+ */
+@XmlRootElement(name = "localized-string",
+                namespace = L10NConstants.L10N_XML_NS)
+@XmlAccessorType(XmlAccessType.FIELD)
+public class LocalizedString implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * The localised values of the string.
+     */
+    @XmlElement(name = "values", namespace = L10NConstants.L10N_XML_NS)
+    @XmlJavaTypeAdapter(LocalizedStringValuesAdapter.class)
     private Map<Locale, String> values;
 
     /**
      * Constructor. Only creates the initial, empty map for new instances.
      */
     public LocalizedString() {
-        this.values = new HashMap<>();
+        values = new HashMap<>();
     }
 
     /**
@@ -70,7 +80,11 @@ public class LocalizedString {
      * @param values The new map of values.
      */
     protected void setValues(final Map<Locale, String> values) {
-        this.values = values;
+        if (values == null) {
+            this.values = new HashMap<>();
+        } else {
+            this.values = new HashMap<>(values);
+        }
     }
 
     /**
@@ -80,7 +94,6 @@ public class LocalizedString {
      *         application is running on. In most cases this is not what you
      *         want. Use {@link #getValue(java.util.Locale)} instead.
      */
-    @JsonIgnore
     public String getValue() {
         return getValue(Locale.getDefault());
     }
@@ -93,7 +106,6 @@ public class LocalizedString {
      * @return The localised for the {@code locale} or {@code null} if there is
      *         no value for the provided locale.
      */
-    @JsonIgnore
     public String getValue(final Locale locale) {
         return values.get(locale);
     }
@@ -140,4 +152,42 @@ public class LocalizedString {
     public Set<Locale> getAvailableLocales() {
         return values.keySet();
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.values);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof LocalizedString)) {
+            return false;
+        }
+        final LocalizedString other = (LocalizedString) obj;
+        if (!other.canEqual(this)) {
+            return false;
+        }
+
+        return Objects.equals(values, other.getValues());
+    }
+
+    public boolean canEqual(final Object obj) {
+        return obj instanceof LocalizedString;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+            "%s{ "
+                + "%s"
+                + " }",
+            super.toString(),
+            Objects.toString(values));
+    }
+
 }
