@@ -33,12 +33,50 @@
 --%>
 <#macro navigationRoot navId="categoryMenu">
 
-    <assign urlPath="/bebop:page/nav:categoryMenu[@id='${navId}']/nav:category/@url">
-    <assign titlePath="/bebop:page/nav:categoryMenu[@id='${navId}']/nav:category/@title">
-
     <#assign url=model["/bebop:page/nav:categoryMenu[@id='${navId}']/nav:category/@url"]>
     <#assign title=model["/bebop:page/nav:categoryMenu[@id='categoryMenu']/nav:category/@title"]>
 
     <#nested navId, url, title> 
+
+</#macro>
+
+<#macro categoryMenu menuId="categoryMenu">
+
+    <#assign categories=model["/bebop:page/nav:categoryMenu[@id='${menuId}']/nav:category/nav:category"]>
+
+    <#list categories as category>
+        <#nested category["./@id"], category["./@url"], category["./@title"], category>
+    </#list>
+
+</#macro>
+
+<#macro categoryHierarchy hierarchyId="categoryNav">
+
+    <#assign categories=model["/bebop:page/nav:categoryHierarchy[@id='${hierarchyId}']/nav:category"]>
+
+    <#list categories as category>
+        <#nested category["./@id"], category["./@url"], category["./@title"], category>
+    </#list>
+
+</#macro>
+
+<#macro ifHasSubCategories category>
+
+    <#if (category?size > 0)>
+
+        <#assign childs=category["./nav:category"]>
+
+        <#if (childs?size > 0)>
+            <#nested> 
+        </#if>
+    </#if>
+
+</#macro>
+
+<#macro subCategories ofCategory>
+
+    <#list ofCategory["./nav:category"] as category>
+        <#nested category["./@id"], category["./@url"], category["./@title"], category["./nav:category"]>
+    </#list>
 
 </#macro>
