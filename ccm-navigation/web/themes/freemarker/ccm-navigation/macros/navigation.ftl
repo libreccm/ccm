@@ -112,3 +112,9 @@
     </#if>
 
 </#macro>
+
+<#macro greetingItem>
+
+    <#nested model["/bebop:page/nav:greetingItem/cms:item"]>
+
+</#macro>

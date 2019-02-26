@@ -12,7 +12,7 @@ import java.util.Objects;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlRootElement;    
 
 /**
  *
@@ -25,13 +25,13 @@ public class ContentItemTemplate {
     @XmlElement(name = "view", namespace = THEMES_XML_NS)
     private ContentItemViews view;
     
-    @XmlElement(name = "contenttype", namespace = THEMES_XML_NS)
+    @XmlElement(name = "contentType", namespace = THEMES_XML_NS)
     private String contentType;
     
     @XmlElement(name = "style", namespace = THEMES_XML_NS)
     private String style;
     
-    @XmlElement(name = "contentsection", namespace = THEMES_XML_NS)
+    @XmlElement(name = "contentSection", namespace = THEMES_XML_NS)
     private String contentSection;
     
     @XmlElement(name = "category", namespace = THEMES_XML_NS)

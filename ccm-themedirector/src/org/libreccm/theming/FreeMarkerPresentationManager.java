@@ -18,8 +18,12 @@ import freemarker.cache.TemplateLoader;
 import freemarker.cache.WebappTemplateLoader;
 import freemarker.ext.dom.NodeModel;
 import freemarker.template.Configuration;
+import freemarker.template.SimpleScalar;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import freemarker.template.TemplateMethodModelEx;
+import freemarker.template.TemplateModelException;
+import freemarker.template.TemplateScalarModel;
 import org.libreccm.theming.manifest.ThemeManifest;
 import org.libreccm.theming.manifest.ThemeManifestUtil;
 import org.w3c.dom.NamedNodeMap;
@@ -30,6 +34,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
@@ -174,7 +179,7 @@ public class FreeMarkerPresentationManager implements PresentationManager {
         } else {
             applicationTemplatePath = templates.getDefaultApplicationTemplate();
         }
-        
+
         if ("XSL_FALLBACK.XSL".equals(applicationTemplatePath)) {
             final PageTransformer pageTransformer = new PageTransformer();
             pageTransformer.servePage(document, request, response);
@@ -195,6 +200,8 @@ public class FreeMarkerPresentationManager implements PresentationManager {
 //                                                          themePath);
         configuration.setTemplateLoader(templateLoader);
         configuration.setDefaultEncoding("UTF-8");
+        configuration.setSharedVariable("getContentItemTemplate",
+                                        new GetContentItemTemplate(templates));
 
         final Map<String, Object> data = new HashMap<>();
 
@@ -348,6 +355,137 @@ public class FreeMarkerPresentationManager implements PresentationManager {
 
         return template.getApplicationName().equals(applicationName)
                    && template.getApplicationClass().equals(applicationClass);
+    }
+
+    private class GetContentItemTemplate implements TemplateMethodModelEx {
+
+        private final Templates templates;
+
+        public GetContentItemTemplate(final Templates templates) {
+            this.templates = templates;
+        }
+
+        @Override
+        public Object exec(final List list) throws TemplateModelException {
+
+            if (list.isEmpty()) {
+                throw new IllegalArgumentException("GetContentItemTemplate "
+                                                       + "requires the following parameters: "
+                                                   + "item: NodeModel, view: String, style: String");
+            }
+
+            final Object arg0 = list.get(0);
+            if (!(arg0 instanceof NodeModel)) {
+                throw new IllegalArgumentException(
+                    "Parameter item must be a NodeModel.");
+            }
+            final NodeModel itemModel = (NodeModel) arg0;
+
+            final String view;
+            if (list.size() >= 2) {
+                view = ((TemplateScalarModel) list.get(1))
+                    .getAsString()
+                    .toUpperCase(Locale.ROOT);
+            } else {
+                view = "DETAIL";
+            }
+            final ContentItemViews contentItemView = ContentItemViews
+                .valueOf(view);
+
+            final String style;
+            if (list.size() >= 3) {
+                style = ((TemplateScalarModel) list.get(2)).getAsString();
+            } else {
+                style = "";
+            }
+
+            return findContentItemTemplate(templates, 
+                                           itemModel, 
+                                           contentItemView, 
+                                           style);
+        }
+
+    }
+
+    private String findContentItemTemplate(
+        final Templates templates,
+        final NodeModel itemModel,
+        final ContentItemViews view,
+        final String style) throws TemplateModelException {
+
+        final String contentType = ((TemplateScalarModel) itemModel
+                                    .get("objectType"))
+            .getAsString();
+
+        final Optional<ContentItemTemplate> forTypeViewAndStyle = templates
+            .getContentItems()
+            .stream()
+            .filter(template -> filterContentItemTemplate(template,
+                                                          contentType,
+                                                          view,
+                                                          style))
+            .findAny();
+
+        if (forTypeViewAndStyle.isPresent()) {
+            return forTypeViewAndStyle.get().getTemplate();
+        } else {
+
+            final Optional<ContentItemTemplate> forTypeAndView = templates
+                .getContentItems()
+                .stream()
+                .filter(template -> filterContentItemTemplate(template,
+                                                              contentType,
+                                                              view))
+                .findAny();
+
+            if (forTypeAndView.isPresent()) {
+                return forTypeAndView.get().getTemplate();
+            } else {
+                return templates.getDefaultContentItemsTemplate();
+            }
+        }
+
+    }
+
+    private boolean filterContentItemTemplate(
+        final ContentItemTemplate template,
+        final String contentType,
+        final ContentItemViews view) {
+
+         final ContentItemViews templateView;
+        if (template.getView() == null) {
+            templateView = ContentItemViews.DETAIL;
+        } else {
+            templateView = template.getView();
+        }
+        
+        return template.getContentType().equals(contentType)
+                   && templateView == view;
+    }
+
+    private boolean filterContentItemTemplate(
+        final ContentItemTemplate template,
+        final String contentType,
+        final ContentItemViews view,
+        final String style) {
+
+        final ContentItemViews templateView;
+        if (template.getView() == null) {
+            templateView = ContentItemViews.DETAIL;
+        } else {
+            templateView = template.getView();
+        }
+        
+        final String templateStyle;
+        if (template.getStyle() == null) {
+            templateStyle = "";
+        } else {
+            templateStyle = template.getStyle();
+        }
+        
+        return template.getContentType().equals(contentType)
+                   && templateView == view
+                   && templateStyle.equals(style);
     }
 
 }
