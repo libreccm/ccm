@@ -17,13 +17,15 @@ import freemarker.cache.MultiTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.cache.WebappTemplateLoader;
 import freemarker.ext.dom.NodeModel;
+import freemarker.ext.xml.NodeListModel;
 import freemarker.template.Configuration;
-import freemarker.template.SimpleScalar;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateMethodModelEx;
+import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 import freemarker.template.TemplateScalarModel;
+import freemarker.template.TemplateSequenceModel;
 import org.libreccm.theming.manifest.ThemeManifest;
 import org.libreccm.theming.manifest.ThemeManifestUtil;
 import org.w3c.dom.NamedNodeMap;
@@ -399,9 +401,9 @@ public class FreeMarkerPresentationManager implements PresentationManager {
                 style = "";
             }
 
-            return findContentItemTemplate(templates, 
-                                           itemModel, 
-                                           contentItemView, 
+            return findContentItemTemplate(templates,
+                                           itemModel,
+                                           contentItemView,
                                            style);
         }
 
@@ -413,9 +415,39 @@ public class FreeMarkerPresentationManager implements PresentationManager {
         final ContentItemViews view,
         final String style) throws TemplateModelException {
 
-        final String contentType = ((TemplateScalarModel) itemModel
-                                    .get("objectType"))
-            .getAsString();
+        final String nodeNamespace = itemModel.getNodeNamespace();
+        final String nodeName = itemModel.getNodeName();
+
+        final String contentType;
+        if ("http://www.arsdigita.com/cms/1.0".equals(nodeNamespace)
+                && "item".equals(nodeName)) {
+            contentType = ((TemplateScalarModel) itemModel
+                           .get("objectType"))
+                .getAsString();
+        } else if ("http://ccm.redhat.com/navigation".equals(nodeNamespace)
+                       && "item".equals(nodeName)) {
+            final TemplateModel objectTypeElems = itemModel
+                .get("attribute[@name='objectType']");
+            if (objectTypeElems instanceof TemplateSequenceModel) {
+                final TemplateModel objectTypeElem
+                                    = ((TemplateSequenceModel) objectTypeElems)
+                        .get(0);
+                contentType = ((TemplateScalarModel) objectTypeElem)
+                    .getAsString();
+            } else if (objectTypeElems instanceof TemplateScalarModel) {
+                contentType = ((TemplateScalarModel) objectTypeElems)
+                    .getAsString();
+            } else {
+                throw new IllegalArgumentException(
+                    "Can't determine object type of item.");
+            }
+        } else {
+            throw new IllegalArgumentException(String.format(
+                "Unexpected combination of node namespace and nodename. "
+                    + "nodeNamespace = \"%s\"; nodeName = \"%s\"",
+                nodeNamespace,
+                nodeName));
+        }
 
         final Optional<ContentItemTemplate> forTypeViewAndStyle = templates
             .getContentItems()
@@ -452,13 +484,13 @@ public class FreeMarkerPresentationManager implements PresentationManager {
         final String contentType,
         final ContentItemViews view) {
 
-         final ContentItemViews templateView;
+        final ContentItemViews templateView;
         if (template.getView() == null) {
             templateView = ContentItemViews.DETAIL;
         } else {
             templateView = template.getView();
         }
-        
+
         return template.getContentType().equals(contentType)
                    && templateView == view;
     }
@@ -475,14 +507,14 @@ public class FreeMarkerPresentationManager implements PresentationManager {
         } else {
             templateView = template.getView();
         }
-        
+
         final String templateStyle;
         if (template.getStyle() == null) {
             templateStyle = "";
         } else {
             templateStyle = template.getStyle();
         }
-        
+
         return template.getContentType().equals(contentType)
                    && templateView == view
                    && templateStyle.equals(style);
