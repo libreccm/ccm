@@ -1,0 +1,43 @@
+<#ftl ns_prefixes={
+"bebop":"http://www.arsdigita.com/bebop/1.0",
+"cms":"http://www.arsdigita.com/cms/1.0",
+"nav":"http://ccm.redhat.com/navigation",
+"ui": "http://www.arsdigita.com/ui/1.0"}
+>
+
+<#--
+    Passed the content item provided by the model to the nested content if 
+    the model provides a content item.
+-->
+<#macro contentPage>
+
+    <#nested model["/bebop:page/cms:contentPanel/cms:item"]>
+
+</#macro>
+
+<#--
+    Includes the template for the type of the provided content item 
+    for the provided view and style. The paramters view and style are
+    optional. If not provided the default value "detail" is used for 
+    the view parameter.
+-->
+<#macro contentItem item view="detail" style="">
+
+    <#include getContentItemTemplate(item, view, style)>
+
+    <#--<pre>
+        Using content item template ${getContentItemTemplate(item, view, style)}
+    </pre>-->
+
+</#macro>
+
+<#--
+    Outputs the title of the provided content item.
+-->
+<#macro title item>
+    <#if (item["./title"]?size > 0)>
+        ${item["./title"]}
+    <#elseif (item["./nav:attribute[@name='title']"]?size > 0)>
+        ${item["./nav:attribute[@name='title']"]}
+    </#if>
+</#macro>

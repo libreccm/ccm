@@ -105,6 +105,11 @@
 
 </#macro>
 
+<#--
+    Checks of the provided category has subcategories. If the category
+    has subcategories they are passed to the nested content and can be 
+    used to iterate over them.
+-->
 <#macro subCategories ofCategory>
 
     <#if (ofCategory["./nav:category"]?size > 0)>
@@ -113,6 +118,9 @@
 
 </#macro>
 
+<#--
+    Passed the GreetingItem provided by the model to the nested content if their is an GreetingItem.
+-->
 <#macro greetingItem>
 
     <#nested model["/bebop:page/nav:greetingItem/cms:item"]>
