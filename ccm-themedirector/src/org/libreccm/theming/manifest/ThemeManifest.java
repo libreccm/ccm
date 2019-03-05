@@ -20,15 +20,11 @@ package org.libreccm.theming.manifest;
 
 import org.libreccm.l10n.LocalizedString;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import static org.libreccm.theming.ThemeConstants.*;
@@ -75,12 +71,14 @@ public class ThemeManifest implements Serializable {
     @XmlElement(name = "description", namespace = THEMES_XML_NS)
     private LocalizedString description;
 
-    /**
-     * The templates provided by the theme.
-     */
-    @XmlElementWrapper(name = "templates", namespace = THEMES_XML_NS)
-    @XmlElement(name = "template", namespace = THEMES_XML_NS)
-    private List<ThemeTemplate> templates;
+//    /**
+//     * The templates provided by the theme.
+//     */
+//    @XmlElementWrapper(name = "templates", namespace = THEMES_XML_NS)
+//    @XmlElement(name = "template", namespace = THEMES_XML_NS)
+//    private List<ThemeTemplate> templates;
+    @XmlElement(name = "templates")
+    private Templates templates;
 
     /**
      * Path of the default template.
@@ -89,7 +87,7 @@ public class ThemeManifest implements Serializable {
     private String defaultTemplate;
 
     public ThemeManifest() {
-        templates = new ArrayList<>();
+//        templates = new ArrayList<>();
     }
 
     public String getName() {
@@ -132,20 +130,12 @@ public class ThemeManifest implements Serializable {
         this.description = description;
     }
 
-    public List<ThemeTemplate> getTemplates() {
-        return Collections.unmodifiableList(templates);
+    public Templates getTemplates() {
+        return templates;
     }
 
-    public void setTemplates(final List<ThemeTemplate> templates) {
-        this.templates = new ArrayList<>(templates);
-    }
-
-    public void addThemeTemplate(final ThemeTemplate template) {
-        templates.add(template);
-    }
-
-    public void removeThemeTemplate(final ThemeTemplate template) {
-        templates.remove(template);
+    public void setTemplates(final Templates templates) {
+        this.templates = templates;
     }
 
     public String getDefaultTemplate() {

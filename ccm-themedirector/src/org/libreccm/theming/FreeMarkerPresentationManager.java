@@ -1,5 +1,9 @@
 package org.libreccm.theming;
 
+import org.libreccm.theming.manifest.ApplicationTemplate;
+import org.libreccm.theming.manifest.ContentItemTemplate;
+import org.libreccm.theming.manifest.Templates;
+
 import com.arsdigita.bebop.Bebop;
 import com.arsdigita.bebop.page.PageTransformer;
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -102,39 +106,6 @@ public class FreeMarkerPresentationManager implements PresentationManager {
 
         final ServletContext servletContext = Web.getServletContext();
 
-//        final String themeManifest = "";
-//        final String themeManifest = new BufferedReader(
-//            new InputStreamReader(
-//                servletContext.getResourceAsStream(themeManifestPath),
-//                StandardCharsets.UTF_8))
-//            .lines()
-//            .collect(Collectors.joining(System.lineSeparator()));
-//
-//        String name = "???";
-//        final JsonFactory jsonFactory = new JsonFactory();
-//        try {
-//            final JsonParser parser = jsonFactory.createParser(servletContext
-//                .getResourceAsStream(themeManifestPath));
-//
-//            while (!parser.isClosed()) {
-//
-//                final JsonToken token = parser.nextToken();
-//                if (JsonToken.FIELD_NAME.equals(token)) {
-//                    final String fieldName = parser.getCurrentName();
-//
-//                    if ("name".equals(fieldName)) {
-//
-//                        final JsonToken valueToken = parser.nextToken();
-//                        final String value = parser.getValueAsString();
-//                        name = value;
-//                    }
-//                }
-//
-//            }
-//
-//        } catch (IOException ex) {
-//            throw new UncheckedWrapperException(ex);
-//        }
         final InputStream manifestInputStream = servletContext
             .getResourceAsStream(themeManifestPath);
         if (manifestInputStream == null) {
@@ -148,17 +119,7 @@ public class FreeMarkerPresentationManager implements PresentationManager {
             .loadManifest(manifestInputStream,
                           themeManifestPath);
 
-        final ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JaxbAnnotationModule());
-        final Templates templates;
-        try {
-            templates = objectMapper.readValue(
-                servletContext.getResourceAsStream(
-                    String.format("%stemplates.json", themePath)),
-                Templates.class);
-        } catch (IOException ex) {
-            throw new UncheckedWrapperException(ex);
-        }
+        final Templates templates = manifest.getTemplates();
 
         // ToDo
         final NamedNodeMap pageAttrs = root.getAttributes();
