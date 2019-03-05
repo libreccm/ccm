@@ -23,12 +23,21 @@
 -->
 <#macro contentItem item view="detail" style="">
 
-    <#include getContentItemTemplate(item, view, style)>
-
     <#--<pre>
-        Using content item template ${getContentItemTemplate(item, view, style)}
+        item["/objectType"]: ${item["./objectType"]?size}
+        item["/nav:attribute[@name='objectType']"]: ${item["./nav:attribute[@name='objectType']"]?size}
     </pre>-->
 
+    
+    <#if (item["./objectType"]?size > 0)>
+        <#include getContentItemTemplate(item["./objectType"], view, style)>
+    <#elseif (item["./nav:attribute[@name='objectType']"]?size > 0)>
+        <#include getContentItemTemplate(item["./nav:attribute[@name='objectType'][1]"], view, style)>
+    <#else>
+        <#include getContentItemTemplate("com.arsdigita.cms.ContentItem", view, style)>
+    </#if>
+    
+    
 </#macro>
 
 <#--

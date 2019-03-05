@@ -17,15 +17,12 @@ import freemarker.cache.MultiTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.cache.WebappTemplateLoader;
 import freemarker.ext.dom.NodeModel;
-import freemarker.ext.xml.NodeListModel;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateMethodModelEx;
-import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 import freemarker.template.TemplateScalarModel;
-import freemarker.template.TemplateSequenceModel;
 import org.libreccm.theming.manifest.ThemeManifest;
 import org.libreccm.theming.manifest.ThemeManifestUtil;
 import org.w3c.dom.NamedNodeMap;
@@ -376,16 +373,21 @@ public class FreeMarkerPresentationManager implements PresentationManager {
                                                    + "item: NodeModel, view: String, style: String");
             }
 
-            final Object arg0 = list.get(0);
-            if (!(arg0 instanceof NodeModel)) {
-                throw new IllegalArgumentException(
-                    "Parameter item must be a NodeModel.");
-            }
-            final NodeModel itemModel = (NodeModel) arg0;
+//            final Object arg0 = list.get(0);
+//            if (!(arg0 instanceof NodeModel)) {
+//                throw new IllegalArgumentException(
+//                    "Parameter item must be a NodeModel.");
+//            }
+//            final NodeModel itemModel = (NodeModel) arg0;
 
+            final String objectType = ((TemplateScalarModel) list
+                .get(0))
+            .getAsString();
+            
             final String view;
             if (list.size() >= 2) {
-                view = ((TemplateScalarModel) list.get(1))
+                view = ((TemplateScalarModel) list
+                    .get(1))
                     .getAsString()
                     .toUpperCase(Locale.ROOT);
             } else {
@@ -402,7 +404,7 @@ public class FreeMarkerPresentationManager implements PresentationManager {
             }
 
             return findContentItemTemplate(templates,
-                                           itemModel,
+                                           objectType,
                                            contentItemView,
                                            style);
         }
@@ -411,49 +413,49 @@ public class FreeMarkerPresentationManager implements PresentationManager {
 
     private String findContentItemTemplate(
         final Templates templates,
-        final NodeModel itemModel,
+        final String objectType,
         final ContentItemViews view,
         final String style) throws TemplateModelException {
 
-        final String nodeNamespace = itemModel.getNodeNamespace();
-        final String nodeName = itemModel.getNodeName();
+//        final String nodeNamespace = itemModel.getNodeNamespace();
+//        final String nodeName = itemModel.getNodeName();
 
-        final String contentType;
-        if ("http://www.arsdigita.com/cms/1.0".equals(nodeNamespace)
-                && "item".equals(nodeName)) {
-            contentType = ((TemplateScalarModel) itemModel
-                           .get("objectType"))
-                .getAsString();
-        } else if ("http://ccm.redhat.com/navigation".equals(nodeNamespace)
-                       && "item".equals(nodeName)) {
-            final TemplateModel objectTypeElems = itemModel
-                .get("attribute[@name='objectType']");
-            if (objectTypeElems instanceof TemplateSequenceModel) {
-                final TemplateModel objectTypeElem
-                                    = ((TemplateSequenceModel) objectTypeElems)
-                        .get(0);
-                contentType = ((TemplateScalarModel) objectTypeElem)
-                    .getAsString();
-            } else if (objectTypeElems instanceof TemplateScalarModel) {
-                contentType = ((TemplateScalarModel) objectTypeElems)
-                    .getAsString();
-            } else {
-                throw new IllegalArgumentException(
-                    "Can't determine object type of item.");
-            }
-        } else {
-            throw new IllegalArgumentException(String.format(
-                "Unexpected combination of node namespace and nodename. "
-                    + "nodeNamespace = \"%s\"; nodeName = \"%s\"",
-                nodeNamespace,
-                nodeName));
-        }
+//        final String contentType;
+//        if ("http://www.arsdigita.com/cms/1.0".equals(nodeNamespace)
+//                && "item".equals(nodeName)) {
+//            contentType = ((TemplateScalarModel) itemModel
+//                           .get("objectType"))
+//                .getAsString();
+//        } else if ("http://ccm.redhat.com/navigation".equals(nodeNamespace)
+//                       && "item".equals(nodeName)) {
+//            final TemplateModel objectTypeElems = itemModel
+//                .get("attribute[@name='objectType']");
+//            if (objectTypeElems instanceof TemplateSequenceModel) {
+//                final TemplateModel objectTypeElem
+//                                    = ((TemplateSequenceModel) objectTypeElems)
+//                        .get(0);
+//                contentType = ((TemplateScalarModel) objectTypeElem)
+//                    .getAsString();
+//            } else if (objectTypeElems instanceof TemplateScalarModel) {
+//                contentType = ((TemplateScalarModel) objectTypeElems)
+//                    .getAsString();
+//            } else {
+//                throw new IllegalArgumentException(
+//                    "Can't determine object type of item.");
+//            }
+//        } else {
+//            throw new IllegalArgumentException(String.format(
+//                "Unexpected combination of node namespace and nodename. "
+//                    + "nodeNamespace = \"%s\"; nodeName = \"%s\"",
+//                nodeNamespace,
+//                nodeName));
+//        }
 
         final Optional<ContentItemTemplate> forTypeViewAndStyle = templates
             .getContentItems()
             .stream()
             .filter(template -> filterContentItemTemplate(template,
-                                                          contentType,
+                                                          objectType,
                                                           view,
                                                           style))
             .findAny();
@@ -466,7 +468,7 @@ public class FreeMarkerPresentationManager implements PresentationManager {
                 .getContentItems()
                 .stream()
                 .filter(template -> filterContentItemTemplate(template,
-                                                              contentType,
+                                                              objectType,
                                                               view))
                 .findAny();
 
