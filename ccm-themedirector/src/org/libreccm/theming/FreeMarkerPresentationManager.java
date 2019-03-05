@@ -121,7 +121,6 @@ public class FreeMarkerPresentationManager implements PresentationManager {
 
         final Templates templates = manifest.getTemplates();
 
-        // ToDo
         final NamedNodeMap pageAttrs = root.getAttributes();
         final Node applicationNameAttr = pageAttrs.getNamedItem("application");
         final Node applicationClassAttr = pageAttrs.getNamedItem("class");

@@ -25,11 +25,15 @@ import java.util.Objects;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import static org.libreccm.theming.ThemeConstants.*;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Each theme contains a Manifest (either in XML or JSON format) which provides
@@ -77,7 +81,7 @@ public class ThemeManifest implements Serializable {
 //    @XmlElementWrapper(name = "templates", namespace = THEMES_XML_NS)
 //    @XmlElement(name = "template", namespace = THEMES_XML_NS)
 //    private List<ThemeTemplate> templates;
-    @XmlElement(name = "templates")
+    @XmlElement(name = "templates", namespace = THEMES_XML_NS)
     private Templates templates;
 
     /**
@@ -86,8 +90,12 @@ public class ThemeManifest implements Serializable {
     @XmlElement(name = "default-template", namespace = THEMES_XML_NS)
     private String defaultTemplate;
 
+    @XmlElementWrapper(name = "config", namespace = THEMES_XML_NS)
+    private Map<String, String> config;
+
     public ThemeManifest() {
 //        templates = new ArrayList<>();
+        config = new HashMap<>();
     }
 
     public String getName() {
@@ -146,6 +154,23 @@ public class ThemeManifest implements Serializable {
         this.defaultTemplate = defaultTemplate;
     }
 
+    public Map<String, String> getConfig() {
+        return Collections.unmodifiableMap(config);
+    }
+
+    public void setConfig(final Map<String, String> config) {
+
+        this.config = new HashMap<>(config);
+    }
+
+    public void addSetting(final String key, final String value) {
+        config.put(key, value);
+    }
+
+    public void removeSetting(final String key) {
+        config.remove(key);
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -156,6 +181,7 @@ public class ThemeManifest implements Serializable {
         hash = 83 * hash + Objects.hashCode(description);
         hash = 83 * hash + Objects.hashCode(templates);
         hash = 83 * hash + Objects.hashCode(defaultTemplate);
+        hash = 83 * hash + Objects.hashCode(config);
         return hash;
     }
 
@@ -192,6 +218,9 @@ public class ThemeManifest implements Serializable {
         if (!Objects.equals(templates, other.getTemplates())) {
             return false;
         }
+        if (!Objects.equals(config, other.getConfig())) {
+            return false;
+        }
         return Objects.equals(defaultTemplate, other.getDefaultTemplate());
     }
 
@@ -213,7 +242,8 @@ public class ThemeManifest implements Serializable {
                                  + "title = \"%s\", "
                                  + "description = \"%s\", "
                                  + "templates = %s, "
-                                 + "defaultTemplate%s"
+                                 + "defaultTemplate: \"%s\", ,"
+                                 + "config: %s%s"
                                  + " }",
                              super.toString(),
                              name,
@@ -223,6 +253,7 @@ public class ThemeManifest implements Serializable {
                              Objects.toString(description),
                              Objects.toString(templates),
                              defaultTemplate,
+                             Objects.toString(config),
                              data);
 
     }
