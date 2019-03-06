@@ -11,13 +11,10 @@ import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.subsite.Site;
 import com.arsdigita.templating.PresentationManager;
 import com.arsdigita.themedirector.ThemeDirector;
-import com.arsdigita.themedirector.ui.ThemeXSLParameterGenerator;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Web;
 import com.arsdigita.xml.Document;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 import freemarker.cache.MultiTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.cache.WebappTemplateLoader;
@@ -42,6 +39,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -203,8 +202,16 @@ public class FreeMarkerPresentationManager implements PresentationManager {
         if (selectedLocale == null) {
             data.put("selectedLanguage", "");
         } else {
-            data.put("selectedLanguage", selectedLocale.getLanguage());
+            data.put("selectedLanguage",
+                     GlobalizationHelper.getNegotiatedLocale().getLanguage());
         }
+
+        configuration.setSharedVariable(
+            "getLocalizedText",
+            new GetLocalizedText(servletContext,
+                                 themePath,
+                                 selectedLocale.getLanguage()));
+
         data.put("serverName", request.getServerName());
         data.put("serverPort", request.getServerPort());
         data.put("userAgent", request.getHeader("user-Agent"));
@@ -330,9 +337,9 @@ public class FreeMarkerPresentationManager implements PresentationManager {
         public Object exec(final List list) throws TemplateModelException {
 
             if (list.isEmpty()) {
-                throw new IllegalArgumentException("GetContentItemTemplate "
-                                                       + "requires the following parameters: "
-                                                   + "item: NodeModel, view: String, style: String");
+                throw new IllegalArgumentException(
+                    "GetContentItemTemplate requires the following parameters: "
+                        + "item: NodeModel, view: String, style: String");
             }
 
 //            final Object arg0 = list.get(0);
@@ -368,6 +375,42 @@ public class FreeMarkerPresentationManager implements PresentationManager {
                                            objectType,
                                            contentItemView,
                                            style);
+        }
+
+    }
+
+    private class GetLocalizedText implements TemplateMethodModelEx {
+
+        private final ResourceBundle resourceBundle;
+
+        public GetLocalizedText(final ServletContext servletContext,
+                                final String themePath,
+                                final String language) {
+
+            final String bundleName = String.format("%stexts", themePath);
+            final ThemeResourceBundleControl control
+                                                 = new ThemeResourceBundleControl(
+                    servletContext);
+            resourceBundle = ResourceBundle.getBundle(bundleName,
+                                                      new Locale(language),
+                                                      control);
+        }
+
+        @Override
+        public Object exec(final List list) throws TemplateModelException {
+
+            if (list.size() != 1) {
+                throw new IllegalArgumentException(
+                    "GetLocalizedText requires exactly one parameter: "
+                        + "The key for the text to localize."
+                );
+            }
+
+            final String key = ((TemplateScalarModel) list
+                                .get(0))
+                .getAsString();
+
+            return resourceBundle.getString(key);
         }
 
     }
