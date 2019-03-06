@@ -7,6 +7,8 @@ package org.libreccm.theming;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
@@ -38,16 +40,19 @@ public class ThemeResourceBundleControl extends ResourceBundle.Control {
 
         final String bundleName = toBundleName(baseName, locale);
         final String fileName = String.format("%s.properties", bundleName);
-        
+
         final InputStream stream = servletContext
             .getResourceAsStream(fileName);
-        
+
         if (stream == null) {
             return null;
         } else {
-            return new PropertyResourceBundle(stream);
+            final InputStreamReader reader = new InputStreamReader(
+                stream,
+                StandardCharsets.UTF_8);
+            return new PropertyResourceBundle(reader);
         }
-        
+
     }
 
 }
