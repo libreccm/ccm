@@ -174,9 +174,7 @@ public class FreeMarkerPresentationManager implements PresentationManager {
                  Web.getWebContext().getRequestURL().getContextPath());
         data.put("dcpOnButtons",
                  Bebop.getConfig().doubleClickProtectionOnButtons());
-        final ThemeXSLParameterGenerator paramGenerator
-                                         = new ThemeXSLParameterGenerator();
-        data.put("themePrefix", paramGenerator.generateValue(request));
+        data.put("themePrefix", themePath);
         data.put("dcpOnLinks",
                  Bebop.getConfig().doubleClickProtectionOnLinks());
         data.put("dispatcherPrefix", com.arsdigita.web.URL.getDispatcherPath());
