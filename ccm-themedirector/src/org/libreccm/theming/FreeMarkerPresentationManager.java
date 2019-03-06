@@ -11,6 +11,7 @@ import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.subsite.Site;
 import com.arsdigita.templating.PresentationManager;
 import com.arsdigita.themedirector.ThemeDirector;
+import com.arsdigita.themedirector.ui.ThemeXSLParameterGenerator;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Web;
 import com.arsdigita.xml.Document;
@@ -173,6 +174,9 @@ public class FreeMarkerPresentationManager implements PresentationManager {
                  Web.getWebContext().getRequestURL().getContextPath());
         data.put("dcpOnButtons",
                  Bebop.getConfig().doubleClickProtectionOnButtons());
+        final ThemeXSLParameterGenerator paramGenerator
+                                         = new ThemeXSLParameterGenerator();
+        data.put("themePrefix", paramGenerator.generateValue(request));
         data.put("dcpOnLinks",
                  Bebop.getConfig().doubleClickProtectionOnLinks());
         data.put("dispatcherPrefix", com.arsdigita.web.URL.getDispatcherPath());
@@ -339,15 +343,14 @@ public class FreeMarkerPresentationManager implements PresentationManager {
 //                    "Parameter item must be a NodeModel.");
 //            }
 //            final NodeModel itemModel = (NodeModel) arg0;
-
             final String objectType = ((TemplateScalarModel) list
-                .get(0))
-            .getAsString();
-            
+                                       .get(0))
+                .getAsString();
+
             final String view;
             if (list.size() >= 2) {
                 view = ((TemplateScalarModel) list
-                    .get(1))
+                        .get(1))
                     .getAsString()
                     .toUpperCase(Locale.ROOT);
             } else {
@@ -379,7 +382,6 @@ public class FreeMarkerPresentationManager implements PresentationManager {
 
 //        final String nodeNamespace = itemModel.getNodeNamespace();
 //        final String nodeName = itemModel.getNodeName();
-
 //        final String contentType;
 //        if ("http://www.arsdigita.com/cms/1.0".equals(nodeNamespace)
 //                && "item".equals(nodeName)) {
@@ -410,7 +412,6 @@ public class FreeMarkerPresentationManager implements PresentationManager {
 //                nodeNamespace,
 //                nodeName));
 //        }
-
         final Optional<ContentItemTemplate> forTypeViewAndStyle = templates
             .getContentItems()
             .stream()
