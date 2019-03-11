@@ -38,6 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.Optional;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
@@ -381,19 +382,25 @@ public class FreeMarkerPresentationManager implements PresentationManager {
 
     private class GetLocalizedText implements TemplateMethodModelEx {
 
-        private final ResourceBundle resourceBundle;
+//        private final ResourceBundle resourceBundle;
+        private final ThemeResourceBundleControl control;
+        private final String bundleName;
+        private final Locale locale;
 
         public GetLocalizedText(final ServletContext servletContext,
                                 final String themePath,
                                 final String language) {
 
-            final String bundleName = String.format("%stexts", themePath);
-            final ThemeResourceBundleControl control
-                                                 = new ThemeResourceBundleControl(
-                    servletContext);
-            resourceBundle = ResourceBundle.getBundle(bundleName,
-                                                      new Locale(language),
-                                                      control);
+//            final String bundleName = String.format("%stexts", themePath);
+//            final ThemeResourceBundleControl control
+//                                                 = new ThemeResourceBundleControl(
+//                    servletContext);
+//            resourceBundle = ResourceBundle.getBundle(bundleName,
+//                                                      new Locale(language),
+//                                                      control);
+            control = new ThemeResourceBundleControl(servletContext);
+            bundleName = String.format("%stexts", themePath);
+            locale = new Locale(language);
         }
 
         @Override
@@ -410,7 +417,15 @@ public class FreeMarkerPresentationManager implements PresentationManager {
                                 .get(0))
                 .getAsString();
 
-            return resourceBundle.getString(key);
+            final ResourceBundle bundle = ResourceBundle.getBundle(bundleName,
+                                                                   locale,
+                                                                   control);
+
+            try {
+                return bundle.getString(key);
+            } catch (MissingResourceException ex) {
+                return key;
+            }
         }
 
     }
