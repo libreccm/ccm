@@ -9,8 +9,8 @@
 
     <#if (model["/bebop:page/nav:simpleObjectList[@id='${listId}']/nav:objectList"]?size > 0)>
         <#--  <#assign items=model["/bebop:page/nav:simpleObjectList[@id='${listId}']/nav:objectList/nav:item"]>  -->
-        <pre>Found simple object list ${listId}</pre>
-        <pre></pre>
+        <#--  <pre>Found simple object list ${listId}</pre>
+        <pre></pre>  -->
         <#nested model["/bebop:page/nav:simpleObjectList[@id='${listId}']/nav:objectList/nav:item"]>
     <#elseif (model["/bebop:page/nav:complexObjectList[@id='${listId}']/nav:objectList"]?size > 0)>
         <pre>Found complex object list ${listId}</pre>

@@ -10,3 +10,12 @@
     ${model["//nav:categoryMenu/nav:category/@title"]}
 </#macro>
 
+<#function getBooleanAttrValue fromNode attrName>
+    <#assign path='@' + attrName>
+    <#if (fromNode[path]?size > 0)>
+        <#assign value=fromNode[path][0]>
+        <#return value?lower_case?switch('true', true, 'false', false, 'yes', true, 'no', false, false)>
+    <#else>
+        <#return false>
+    </#if>
+</#function>
