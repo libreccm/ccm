@@ -18,9 +18,6 @@
 package com.arsdigita.navigation;
 
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.categorization.Categorization;
-import com.arsdigita.categorization.Category;
-import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
@@ -31,7 +28,6 @@ import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.persistence.DataCollection;
@@ -45,15 +41,18 @@ import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+
 import org.apache.log4j.Logger;
+
+import java.text.SimpleDateFormat;
 
 public class DataCollectionRenderer extends LockableImpl {
 
@@ -362,6 +361,10 @@ public class DataCollectionRenderer extends LockableImpl {
                 attribute.addAttribute("time", timeFormatter.format(date));
                 attribute.addAttribute("monthName", calDate.getDisplayName(Calendar.MONTH, Calendar.LONG, negLocale));
                 // Quasimodo: END
+                
+                // jensp ISO date/time in ISO format
+                final DateFormat isoDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.ROOT);
+                attribute.addAttribute("iso", isoDateFormat.format(date));
 
             }
             item.addContent(attribute);

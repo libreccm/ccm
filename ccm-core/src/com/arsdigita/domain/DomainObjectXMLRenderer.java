@@ -39,16 +39,19 @@ import java.util.Locale;
 
 import org.apache.log4j.Logger;
 
+import java.text.SimpleDateFormat;
+
 /**
- * An implementation of DomainObjectTraversal that generates an XML tree representing the
- * DomainObject. The output format of the XML can be controlled using the various setWrapXXX methods
- * detailed below.
+ * An implementation of DomainObjectTraversal that generates an XML tree
+ * representing the DomainObject. The output format of the XML can be controlled
+ * using the various setWrapXXX methods detailed below.
  *
  * @version $Id: DomainObjectXMLRenderer.java 2141 2011-01-16 12:17:15Z pboy $
  */
 public class DomainObjectXMLRenderer extends DomainObjectTraversal {
 
-    private static final Logger s_log = Logger.getLogger(DomainObjectXMLRenderer.class);
+    private static final Logger s_log = Logger.getLogger(
+        DomainObjectXMLRenderer.class);
     private static Map s_formatters = new HashMap();
     private Stack m_elements = new Stack();
     protected Element m_element;
@@ -81,7 +84,8 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
      * @param type    the object type whose items will be traversed
      * @param context the context in which the formatter should be used
      */
-    public static void unregisterFormatter(final ObjectType type, final String context) {
+    public static void unregisterFormatter(final ObjectType type,
+                                           final String context) {
         s_formatters.remove(new AdapterKey(type, context));
     }
 
@@ -97,7 +101,8 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
                                          final String context) {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Registering formatter "
-                            + formatter.getClass().getName() + " for type " + type
+                            + formatter.getClass().getName() + " for type "
+                        + type
                             + " in context " + context);
         }
 
@@ -124,27 +129,32 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
      * @param type    the object type to lookup
      * @param context the formatter context
      */
-    public static DomainObjectXMLFormatter getFormatter(final ObjectType type, final String context) {
-        return (DomainObjectXMLFormatter) s_formatters.get(new AdapterKey(type, context));
+    public static DomainObjectXMLFormatter getFormatter(final ObjectType type,
+                                                        final String context) {
+        return (DomainObjectXMLFormatter) s_formatters.get(new AdapterKey(type,
+                                                                          context));
     }
 
     /**
-     * Retrieves the closest matching traversal formatter for an object type in a given context. The
-     * algorithm looks for an exact match, then considers the supertype, and the supertype's
-     * supertype. If no match could be found at all, returns null
+     * Retrieves the closest matching traversal formatter for an object type in
+     * a given context. The algorithm looks for an exact match, then considers
+     * the supertype, and the supertype's supertype. If no match could be found
+     * at all, returns null
      *
      * @param type    the object type to search for
      * @param context the formatter context
      *
      * @return
      */
-    public static DomainObjectXMLFormatter findFormatter(final ObjectType type, final String context) {
+    public static DomainObjectXMLFormatter findFormatter(final ObjectType type,
+                                                         final String context) {
         DomainObjectXMLFormatter formatter = null;
         ObjectType curType = type;
         while (formatter == null && curType != null) {
             formatter = getFormatter(curType, context);
             if (s_log.isDebugEnabled()) {
-                s_log.debug("getFormatter(" + curType + "," + context + ")=" + formatter);
+                s_log.debug("getFormatter(" + curType + "," + context + ")="
+                            + formatter);
             }
             curType = curType.getSupertype();
         }
@@ -152,8 +162,8 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
     }
 
     /**
-     * Creates a new DomainObject XML renderer that outputs XML into the element passed into the
-     * constructor.
+     * Creates a new DomainObject XML renderer that outputs XML into the element
+     * passed into the constructor.
      *
      * @param root the XML element in which to output children
      */
@@ -167,13 +177,15 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
         m_namespaceURI = uri;
     }
 
-    protected Object format(final DomainObject obj, final String path, final Property prop,
+    protected Object format(final DomainObject obj, final String path,
+                            final Property prop,
                             final Object value) {
         if (m_formatter != null) {
             final String propertyPath = appendToPath(path, prop.getName());
             Object rendered = m_formatter.format(obj, propertyPath, prop, value);
             if (s_log.isDebugEnabled()) {
-                s_log.debug("FORMAT " + obj + " m_formatter=" + m_formatter + " rendered="
+                s_log.debug("FORMAT " + obj + " m_formatter=" + m_formatter
+                            + " rendered="
                                 + rendered);
             }
 
@@ -181,15 +193,18 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
                 // try supertype formatters
                 ObjectType objectType = obj.getObjectType().getSupertype();
                 DomainObjectXMLFormatter formatter = m_formatter;
-                while (rendered == null && formatter != null && objectType != null) {
+                while (rendered == null && formatter != null && objectType
+                                                                != null) {
                     formatter = findFormatter(objectType, m_context);
                     if (formatter == null) {
                         rendered = null;
                     } else {
-                        rendered = formatter.format(obj, propertyPath, prop, value);
+                        rendered = formatter.format(obj, propertyPath, prop,
+                                                    value);
                     }
                     if (s_log.isDebugEnabled()) {
-                        s_log.debug("FALLBACK supertype " + objectType + " formatter=" + formatter
+                        s_log.debug("FALLBACK supertype " + objectType
+                                    + " formatter=" + formatter
                                         + " rendered="
                                         + rendered);
                     }
@@ -224,8 +239,9 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
     }
 
     /**
-     * Determines XML output for root object. If set to true a separate element will be output for
-     * the root object, if false, then the element passed into the constructor will be used.
+     * Determines XML output for root object. If set to true a separate element
+     * will be output for the root object, if false, then the element passed
+     * into the constructor will be used.
      *
      * @param value
      */
@@ -234,9 +250,10 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
     }
 
     /**
-     * Determines XML output used for objects. If set to true, then a wrapper XML element will be
-     * generated for the association, and then individual elements generated for each object. If
-     * false then no wrapper XML element will be produced.
+     * Determines XML output used for objects. If set to true, then a wrapper
+     * XML element will be generated for the association, and then individual
+     * elements generated for each object. If false then no wrapper XML element
+     * will be produced.
      *
      * @param value
      */
@@ -245,16 +262,18 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
     }
 
     /**
-     * Determines XML output used for scalar attributes. If set to true, then each attribute is
-     * output as a separate element, otherwise, attributes are output as simple attributes.
+     * Determines XML output used for scalar attributes. If set to true, then
+     * each attribute is output as a separate element, otherwise, attributes are
+     * output as simple attributes.
      */
     public void setWrapAttributes(final boolean value) {
         m_wrapAttributes = value;
     }
 
     /**
-     * Determines XML output used for objects. If set to true, then repeated objects will generate
-     * full xml. If false then only the OID will be printed.
+     * Determines XML output used for objects. If set to true, then repeated
+     * objects will generate full xml. If false then only the OID will be
+     * printed.
      */
     public void setRevisitFullObject(final boolean value) {
         m_revisitFullObject = value;
@@ -341,51 +360,76 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
 
                         // locale-independent date output
                         element.addAttribute("year",
-                                             Integer.toString(calDate.get(Calendar.YEAR)));
+                                             Integer.toString(calDate.get(
+                                                 Calendar.YEAR)));
                         element.addAttribute("month",
-                                             Integer.toString(calDate.get(Calendar.MONTH) + 1));
+                                             Integer.toString(calDate.get(
+                                                 Calendar.MONTH) + 1));
                         element.addAttribute("day",
-                                             Integer.toString(calDate.get(Calendar.DAY_OF_MONTH)));
+                                             Integer.toString(calDate.get(
+                                                 Calendar.DAY_OF_MONTH)));
                         element.addAttribute("dayOfWeek",
-                                             Integer.toString(calDate.get(Calendar.DAY_OF_WEEK)));
+                                             Integer.toString(calDate.get(
+                                                 Calendar.DAY_OF_WEEK)));
                         element.addAttribute("hour",
-                                             Integer.toString(calDate.get(Calendar.HOUR_OF_DAY)));
+                                             Integer.toString(calDate.get(
+                                                 Calendar.HOUR_OF_DAY)));
                         element.addAttribute("minute",
-                                             Integer.toString(calDate.get(Calendar.MINUTE)));
+                                             Integer.toString(calDate.get(
+                                                 Calendar.MINUTE)));
                         element.addAttribute("second",
-                                             Integer.toString(calDate.get(Calendar.SECOND)));
+                                             Integer.toString(calDate.get(
+                                                 Calendar.SECOND)));
 
                         // Quasimodo: BEGIN
                         // Add attributes for date and time
-                        final Locale negLocale = GlobalizationHelper.getNegotiatedLocale();
-                        final DateFormat dateFormatter = DateFormat.getDateInstance(
-                            DateFormat.MEDIUM, negLocale);
-                        final DateFormat longDateFormatter = DateFormat.getDateInstance(
-                            DateFormat.LONG, negLocale);
-                        final DateFormat timeFormatter = DateFormat.getTimeInstance(
-                            DateFormat.SHORT, negLocale);
+                        final Locale negLocale = GlobalizationHelper
+                            .getNegotiatedLocale();
+                        final DateFormat dateFormatter = DateFormat
+                            .getDateInstance(
+                                DateFormat.MEDIUM, negLocale);
+                        final DateFormat longDateFormatter = DateFormat
+                            .getDateInstance(
+                                DateFormat.LONG, negLocale);
+                        final DateFormat timeFormatter = DateFormat
+                            .getTimeInstance(
+                                DateFormat.SHORT, negLocale);
                         element.addAttribute("date", dateFormatter.format(date));
-                        element.addAttribute("longDate", longDateFormatter.format(date));
+                        element.addAttribute("longDate", longDateFormatter
+                                             .format(date));
                         element.addAttribute("time", timeFormatter.format(date));
-                        element.addAttribute("monthName", calDate.getDisplayName(
-                                             Calendar.MONTH, Calendar.LONG, negLocale));
-                        element.addAttribute("dayName", calDate.getDisplayName(Calendar.DAY_OF_WEEK,
-                                                                               Calendar.LONG,
-                                                                               negLocale));
-                        element.addAttribute("dayNameShort", calDate.getDisplayName(
-                                             Calendar.DAY_OF_WEEK, Calendar.SHORT, negLocale));
+                        element.addAttribute("monthName", calDate
+                                             .getDisplayName(
+                                                 Calendar.MONTH, Calendar.LONG,
+                                                 negLocale));
+                        element.addAttribute("dayName", calDate.getDisplayName(
+                                             Calendar.DAY_OF_WEEK,
+                                             Calendar.LONG,
+                                             negLocale));
+                        element.addAttribute("dayNameShort", calDate
+                                             .getDisplayName(
+                                                 Calendar.DAY_OF_WEEK,
+                                                 Calendar.SHORT, negLocale));
                         // Quasimodo: END
+
+                        // jensp ISO date/time in ISO format
+                        final DateFormat isoDateFormat = new SimpleDateFormat(
+                            "yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.ROOT);
+                        element
+                            .addAttribute("iso", isoDateFormat.format(date));
 
                     }
                 }
             } else {
                 m_element.addAttribute(property.getName(),
-                                       (String) format(obj, path, property, value));
+                                       (String) format(obj, path, property,
+                                                       value));
             }
         }
     }
 
-    protected void beginRole(final DomainObject obj, final String path, final Property property) {
+    protected void beginRole(final DomainObject obj, final String path,
+                             final Property property) {
         if (m_wrapObjects) {
             final Element element = newElement(m_element, property.getName());
             m_elements.push(m_element);
@@ -393,7 +437,8 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
         }
     }
 
-    protected void endRole(final DomainObject obj, final String path, final Property property) {
+    protected void endRole(final DomainObject obj, final String path,
+                           final Property property) {
         if (m_wrapObjects) {
             m_element = (Element) m_elements.pop();
         }
@@ -408,7 +453,8 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
         }
     }
 
-    protected void endAssociation(final DomainObject obj, final String path, final Property property) {
+    protected void endAssociation(final DomainObject obj, final String path,
+                                  final Property property) {
         if (m_wrapObjects) {
             m_element = (Element) m_elements.pop();
         }
@@ -444,7 +490,8 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
 //                                        m_namespaceURI);
     }
 
-    protected Element newElement(final Element parent, final String name, final Element copy) {
+    protected Element newElement(final Element parent, final String name,
+                                 final Element copy) {
         if (m_namespaceURI == null) {
             return parent.newChildElement(name, copy);
         } else {
