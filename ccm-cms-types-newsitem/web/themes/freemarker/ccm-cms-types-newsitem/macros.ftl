@@ -25,6 +25,14 @@
     </#if>
 </#macro>
 
+<#function funNewsDate item>
+    <#if (item["./newsDate"]?size > 0)>
+        <#return item["./newsDate"].@@text />
+    <#elseif (item["./nav:attribute[@name='newsDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='newsDate']"].@@text />
+    </#if>
+</#function>
+
 <#--
     Outputs value of the date property of the provided news item as provided by the model.
 -->
@@ -47,6 +55,14 @@
     </#if>
 </#macro>
 
+<#function funNewsDateYear item>
+    <#if (item["./newsDate"]?size > 0)>
+        <#return item["./newsDate/@year"]>
+    <#elseif (item["./nav:attribute[@name='newsDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='newsDate']/@year"]>
+    </#if>
+</#function>
+
 <#--
     Outputs the month part of the date property of the provided news item.
 -->
@@ -57,6 +73,14 @@
         ${item["./nav:attribute[@name='newsDate']/@month"]}
     </#if>
 </#macro>
+
+<#function funNewsDateMonth item>
+    <#if (item["./newsDate"]?size > 0)>
+        <#return item["./newsDate/@month"]>
+    <#elseif (item["./nav:attribute[@name='newsDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='newsDate']/@month"]>
+    </#if>
+</#function>
 
 <#--
     Outputs the day part of the date property of the provided news item.
@@ -69,6 +93,15 @@
     </#if>
 </#macro>
 
+<#function funNewsDateDay item>
+    <#if (item["./newsDate"]?size > 0)>
+        <#return item["./newsDate/@day"]>
+    <#elseif (item["./nav:attribute[@name='newsDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='newsDate']/@day"]>
+    </#if>
+</#function>
+
+
 <#--
     Outputs the short day name of the date property of the provided news item.
 -->
@@ -79,6 +112,14 @@
         ${item["./nav:attribute[@name='newsDate']/@dayNameShort"]}
     </#if>
 </#macro>
+
+<#function funNewsDateDayNameShort item>
+    <#if (item["./newsDate"]?size > 0)>
+        <#return item["./newsDate/@dayNameShort"]>
+    <#elseif (item["./nav:attribute[@name='newsDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='newsDate']/@dayNameShort"]>
+    </#if>
+</#function>
 
 <#--
     Outputs the hour part of the date property of the provided news item.
@@ -91,6 +132,14 @@
     </#if>
 </#macro>
 
+<#function newsDateHour item>
+    <#if (item["./newsDate"]?size > 0)>
+        <#return item["./newsDate/@hour"]>
+    <#elseif (item["./nav:attribute[@name='newsDate']"]?size > 0)>
+        <#return $item["./nav:attribute[@name='newsDate']/@hour"]>
+    </#if>
+</#function>
+
 <#--
     Outputs the minute part of the date property of the provided news item.
 -->
@@ -102,8 +151,16 @@
     </#if>
 </#macro>
 
+<#function newsDateMinute item>
+    <#if (item["./newsDate"]?size > 0)>
+        <#return item["./newsDate/@minute"]>
+    <#elseif (item["./nav:attribute[@name='newsDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='newsDate']/@minute"]>
+    </#if>
+</#function>
+
 <#--
-    Outputs the second part of the date property of the provided news item.
+    Outputs the Second (the time unit) part of the date property of the provided news item.
 -->
 <#macro newsDateSecond item>
     <#if (item["./newsDate"]?size > 0)>
@@ -113,4 +170,11 @@
     </#if>
 </#macro>
 
-h
+<#function newsDateSecond item>
+    <#if (item["./newsDate"]?size > 0)>
+        <#return item["./newsDate/@second"]>
+    <#elseif (item["./nav:attribute[@name='newsDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='newsDate']/@second"]>
+    </#if>
+</#function>
+

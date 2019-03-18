@@ -89,69 +89,197 @@
     </#if>
 </#macro>
 
-<#macro endDate item>
-    <#if (item["./endDate"]?size > 0)>
-        ${item["./endDate"]}
-    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='endDate']"]}
+<#macro startDate item>
+    <#if (item["./startDate"]?size > 0)>
+        ${item["./startDate"]}
+    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
+        ${item["./nav:attribute[@name='startDate']"]}
     </#if>
 </#macro>
 
-<#macro endDateYear item>
-    <#if (item["./endDate"]?size > 0)>
-        ${item["./endDate/@year"]}
-    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='endDate']/@year"]}
+<#macro startDateYear item>
+    <#if (item["./startDate"]?size > 0)>
+        ${item["./startDate/@year"]}
+    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
+        ${item["./nav:attribute[@name='startDate']/@year"]}
     </#if>
 </#macro>
 
-<#macro endDateMonth item>
-    <#if (item["./endDate"]?size > 0)>
-        ${item["./endDate/@month"]}
-    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='endDate']/@month"]}
+<#macro startDateMonth item>
+    <#if (item["./startDate"]?size > 0)>
+        ${item["./startDate/@month"]}
+    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
+        ${item["./nav:attribute[@name='startDate']/@month"]}
     </#if>
 </#macro>
 
-<#macro endDateDay item>
-    <#if (item["./endDate"]?size > 0)>
-        ${item["./endDate/@day"]}
-    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='endDate']/@day"]}
+<#macro startDateDay item>
+    <#if (item["./startDate"]?size > 0)>
+        ${item["./startDate/@day"]}
+    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
+        ${item["./nav:attribute[@name='startDate']/@day"]}
     </#if>
 </#macro>
 
-<#macro endDateDayNameShort item>
-    <#if (item["./endDate"]?size > 0)>
-        ${item["./endDate/@dayNameShort"]}
-    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='endDate']/@dayNameShort"]}
+<#macro startDateDayNameShort item>
+    <#if (item["./startDate"]?size > 0)>
+        ${item["./startDate/@dayNameShort"]}
+    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
+        ${item["./nav:attribute[@name='startDate']/@dayNameShort"]}
     </#if>
 </#macro>
 
-<#macro endDateHour item>
-    <#if (item["./endDate"]?size > 0)>
-        ${item["./endDate/@hour"]}
-    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='endDate']/@hour"]}
+<#macro startDateHour item>
+    <#if (item["./startDate"]?size > 0)>
+        ${item["./startDate/@hour"]}
+    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
+        ${item["./nav:attribute[@name='startDate']/@hour"]}
     </#if>
 </#macro>
 
-<#macro endDateMinute item>
-    <#if (item["./endDate"]?size > 0)>
-        ${item["./endDate/@minute"]}
-    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='endDate']/@minute"]}
+<#macro startDateMinute item>
+    <#if (item["./startDate"]?size > 0)>
+        ${item["./startDate/@minute"]}
+    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
+        ${item["./nav:attribute[@name='startDate']/@minute"]}
     </#if>
 </#macro>
 
-<#macro endDateSecond item>
-    <#if (item["./endDate"]?size > 0)>
-        ${item["./endDate/@second"]}
-    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='endDate']/@second"]}
+<#macro startDateSecond item>
+    <#if (item["./startDate"]?size > 0)>
+        ${item["./startDate/@second"]}
+    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
+        ${item["./nav:attribute[@name='startDate']/@second"]}
     </#if>
 </#macro>
+
+<#function funEndDate item>
+    <#if (item["./endDate"]?size > 0)>
+        <#return item["./endDate"]>
+    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='endDate']"]>
+    </#if>
+</#function>
+
+<#function funEndDateYear item>
+    <#if (item["./endDate"]?size > 0)>
+        <#return item["./endDate/@year"]>
+    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='endDate']/@year"]>
+    </#if>
+</#function>
+
+<#function funEndDateMonth item>
+    <#if (item["./endDate"]?size > 0)>
+        <#return item["./endDate/@month"]>
+    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='endDate']/@month"]>
+    </#if>
+</#function>
+
+<#function funEndDateDay item>
+    <#if (item["./endDate"]?size > 0)>
+        <#return item["./endDate/@day"]>
+    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='endDate']/@day"]>
+    </#if>
+</#function>
+
+<#function funEndDateDayNameShort item>
+    <#if (item["./endDate"]?size > 0)>
+        <#return item["./endDate/@dayNameShort"]>
+    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='endDate']/@dayNameShort"]>
+    </#if>
+</#function>
+
+<#function funEndDateHour item>
+    <#if (item["./endDate"]?size > 0)>
+        <#return item["./endDate/@hour"]>
+    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='endDate']/@hour"]>
+    </#if>
+</#function>
+
+<#function funEndDateMinute item>
+    <#if (item["./endDate"]?size > 0)>
+        <#return item["./endDate/@minute"]>
+    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='endDate']/@minute"]>
+    </#if>
+</#function>
+
+<#function funEndDateSecond item>
+    <#if (item["./endDate"]?size > 0)>
+        <#return item["./endDate/@second"]>
+    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='endDate']/@second"]>
+    </#if>
+</#function>
+
+<#function funStartDate item>
+    <#if (item["./startDate"]?size > 0)>
+        <#return item["./startDate"]>
+    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='startDate']"]>
+    </#if>
+</#function>
+
+<#function funStartDateYear item>
+    <#if (item["./startDate"]?size > 0)>
+        <#return item["./startDate/@year"]>
+    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='startDate']/@year"]>
+    </#if>
+</#function>
+
+<#function funStartDateMonth item>
+    <#if (item["./startDate"]?size > 0)>
+        <#return item["./startDate/@month"]>
+    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='startDate']/@month"]>
+    </#if>
+</#function>
+
+<#function funStartDateDay item>
+    <#if (item["./startDate"]?size > 0)>
+        <#return item["./startDate/@day"]>
+    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='startDate']/@day"]>
+    </#if>
+</#function>
+
+<#function funStartDateDayNameShort item>
+    <#if (item["./startDate"]?size > 0)>
+        <#return item["./startDate/@dayNameShort"]>
+    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='startDate']/@dayNameShort"]>
+    </#if>
+</#function>
+
+<#function funStartDateHour item>
+    <#if (item["./startDate"]?size > 0)>
+        <#return item["./startDate/@hour"]>
+    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='startDate']/@hour"]>
+    </#if>
+</#function>
+
+<#function funStartDateMinute item>
+    <#if (item["./startDate"]?size > 0)>
+        <#return item["./startDate/@minute"]>
+    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='startDate']/@minute"]>
+    </#if>
+</#function>
+
+<#function funStartDateSecond item>
+    <#if (item["./startDate"]?size > 0)>
+        <#return item["./startDate/@second"]>
+    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='startDate']/@second"]>
+    </#if>
+</#function>
 
 <#macro location item>
     <#if (item["./location"]?size > 0)>
@@ -162,24 +290,24 @@
 <#macro mainContributor item>
     <#if (item["./mainContributor"]?size > 0)>
         ${item["./mainContributor"]}
-    <#/if>
+    </#if>
 </#macro>
 
 <#macro eventType item>
     <#if (item["./eventType"]?size > 0)>
         ${item["./eventType"]}
-    <#/if>
+    </#if>
 </#macro>
 
 <#macro cost item>
     <#if (item["./cost"]?size > 0)>
-        ${item[./cost"]}
+        ${item["./cost"]}
     </#if>
 </#macro>
 
 <#macro mapLink item>
     <#if (item["./mapLink"]?size > 0)>
-        <#nested item["./mapLink">
+        <#nested item["./mapLink"]>
     </#if>
 </#macro>
 
