@@ -16,11 +16,25 @@
     </#if>
 </#macro>
 
+<#function getLead item>
+    <#if (item["./lead"]?size > 0)> 
+        <#return item["./lead"]>
+    <#elseif (item["./nav:attribute[@name='lead']"]?size > 0)>
+        <#return item["./nav:attribute[@name='lead']"]>
+    </#if>
+</#function>
+
 <#--
     Output the main text of the provided article.
 -->
-<#macro main item>
+<#macro mainText item>
     <#if (item["./textAsset"]?size > 0)>
         ${item["./textAsset/content"]}
     </#if>
 </#macro>
+
+<#function getMainText item>
+    <#if (item["./textAsset"]?size > 0)>
+        <#return item["./textAsset/content"]>
+    </#if>
+</#function>

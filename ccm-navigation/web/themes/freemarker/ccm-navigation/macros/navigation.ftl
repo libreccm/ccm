@@ -126,3 +126,7 @@
     <#nested model["/bebop:page/nav:greetingItem/cms:item"]>
 
 </#macro>
+
+<#function getGreetingItem>    
+    <#return model["/bebop:page/nav:greetingItem/cms:item"]>
+</#function>
