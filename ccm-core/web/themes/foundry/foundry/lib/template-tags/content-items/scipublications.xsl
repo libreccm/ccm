@@ -67,6 +67,19 @@
         <xsl:variable name="layout-tree" select="./*"/>
 
         <xsl:for-each select="$authors/author">
+
+            <xsl:variable name="authorLink">
+                <xsl:choose>
+                    <xsl:when test="./contacts/contact/contactentries[./keyId = 'homepage']">
+                        <xsl:value-of select="./contacts/contact/contactentries[./keyId = 'homepage']/value" />
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <!-- <xsl:value-of select="foundry:generate-contentitem-link(./@oid)" /> -->
+                        <xsl:value-of select='' />
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+
             <xsl:apply-templates select="$layout-tree">
                 <xsl:with-param name="author" tunnel="yes" select="."/>
                 <xsl:with-param name="contentitem-tree" tunnel="yes" select="."/>
@@ -76,7 +89,7 @@
                                                ./@name)"/>
                 <xsl:with-param name="href"
                                 tunnel="yes"
-                                select="foundry:generate-contentitem-link(./@oid)"/>
+                                select="$authorLink"/>
                 <xsl:with-param name="position" tunnel="yes" select="position()"/>
                 <xsl:with-param name="last" tunnel="yes" select="last()"/>
             </xsl:apply-templates>
