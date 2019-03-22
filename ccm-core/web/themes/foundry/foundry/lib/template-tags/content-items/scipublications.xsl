@@ -75,7 +75,7 @@
                     </xsl:when>
                     <xsl:otherwise>
                         <!-- <xsl:value-of select="foundry:generate-contentitem-link(./@oid)" /> -->
-                        <xsl:value-of select='' />
+                        <xsl:value-of select="''" />
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
