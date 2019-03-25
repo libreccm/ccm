@@ -14,13 +14,21 @@ import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.cms.contenttypes.SciProjectSponsorCollection;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.globalization.GlobalizationHelper;
+import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.Session;
+import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
+
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
 import org.apache.log4j.Logger;
+
+import java.util.Optional;
 
 /**
  * Summary tab for projects, displays lifespan of the project, the short
@@ -33,8 +41,8 @@ import org.apache.log4j.Logger;
 public class SciProjectSummaryTab implements GenericOrgaUnitTab {
 
     private final Logger logger = Logger.getLogger(SciProjectSummaryTab.class);
-    private final static SciProjectSummaryTabConfig config =
-                                                    new SciProjectSummaryTabConfig();
+    private final static SciProjectSummaryTabConfig config
+                                                        = new SciProjectSummaryTabConfig();
     private String key;
 
     static {
@@ -64,16 +72,16 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                             final PageState state) {
         if (!(orgaunit instanceof SciProject)) {
             throw new IllegalArgumentException(String.format(
-                    "This tab can only process instances of SciProject."
+                "This tab can only process instances of SciProject."
                     + "The provided object is of type '%s'.",
-                    orgaunit.getClass().getName()));
+                orgaunit.getClass().getName()));
         }
 
         final long start = System.currentTimeMillis();
         final SciProject project = (SciProject) orgaunit;
 
         final Element projectSummaryElem = parent.newChildElement(
-                "projectSummary");
+            "projectSummary");
 
         generateBasicDataXml(project, projectSummaryElem);
 
@@ -98,7 +106,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
         }
 
         logger.debug(String.format("Generated XML for summary tab of project "
-                                   + "'%s' in %d ms.",
+                                       + "'%s' in %d ms.",
                                    orgaunit.getName(),
                                    System.currentTimeMillis() - start));
     }
@@ -113,7 +121,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                                         final Element parent) {
         final long start = System.currentTimeMillis();
         if ((project.getAddendum() != null)
-            && !project.getAddendum().trim().isEmpty()) {
+                && !project.getAddendum().trim().isEmpty()) {
             final Element addendumElem = parent.newChildElement("addendum");
             addendumElem.setText(project.getAddendum());
         }
@@ -126,12 +134,12 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                 addDateAttributes(beginElem, project.getBegin());
 
                 final Element beginSkipMonthElem = lifeSpanElem.newChildElement(
-                        "beginSkipMonth");
+                    "beginSkipMonth");
                 beginSkipMonthElem.setText(
-                        project.getBeginSkipMonth().toString());
+                    project.getBeginSkipMonth().toString());
 
                 final Element beginSkipDayElem = lifeSpanElem.newChildElement(
-                        "beginSkipDay");
+                    "beginSkipDay");
                 beginSkipDayElem.setText(project.getBeginSkipDay().toString());
             }
             if (project.getEnd() != null) {
@@ -139,23 +147,23 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                 addDateAttributes(endElem, project.getEnd());
 
                 final Element endSkipMonthElem = lifeSpanElem.newChildElement(
-                        "endSkipMonth");
+                    "endSkipMonth");
                 endSkipMonthElem.setText(project.getEndSkipMonth().toString());
 
                 final Element endSkipDayElem = lifeSpanElem.newChildElement(
-                        "endSkipDay");
+                    "endSkipDay");
                 endSkipDayElem.setText(project.getEndSkipDay().toString());
             }
         }
 
         if ((project.getProjectShortDescription() != null)
-            && !project.getProjectShortDescription().trim().isEmpty()) {
+                && !project.getProjectShortDescription().trim().isEmpty()) {
             final Element shortDescElem = parent.newChildElement("shortDesc");
             shortDescElem.setText(project.getProjectShortDescription());
         }
 
         logger.debug(String.format("Generated basic data XML for project '%s' "
-                                   + "in %d ms",
+                                       + "in %d ms",
                                    project.getName(),
                                    System.currentTimeMillis() - start));
     }
@@ -166,30 +174,30 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
 
         elem.addAttribute("year",
                           Integer.toString(cal.get(
-                Calendar.YEAR)));
+                              Calendar.YEAR)));
         elem.addAttribute("month",
                           Integer.toString(cal.get(
-                Calendar.MONTH) + 1));
+                              Calendar.MONTH) + 1));
         elem.addAttribute("day",
                           Integer.toString(cal.get(
-                Calendar.DAY_OF_MONTH)));
+                              Calendar.DAY_OF_MONTH)));
         elem.addAttribute("hour",
                           Integer.toString(cal.get(
-                Calendar.HOUR_OF_DAY)));
+                              Calendar.HOUR_OF_DAY)));
         elem.addAttribute("minute",
                           Integer.toString(cal.get(
-                Calendar.MINUTE)));
+                              Calendar.MINUTE)));
         elem.addAttribute("second",
                           Integer.toString(cal.get(
-                Calendar.SECOND)));
+                              Calendar.SECOND)));
 
         final Locale negLocale = GlobalizationHelper.getNegotiatedLocale();
         final DateFormat dateFormat = DateFormat.getDateInstance(
-                DateFormat.MEDIUM, negLocale);
+            DateFormat.MEDIUM, negLocale);
         final DateFormat longDateFormat = DateFormat.getDateInstance(
-                DateFormat.LONG, negLocale);
+            DateFormat.LONG, negLocale);
         final DateFormat timeFormat = DateFormat.getDateInstance(
-                DateFormat.SHORT, negLocale);
+            DateFormat.SHORT, negLocale);
         elem.addAttribute("date", dateFormat.format(date));
         elem.addAttribute("longDate", longDateFormat.format(date));
         elem.addAttribute("time", timeFormat.format(date));
@@ -207,7 +215,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
         final Element membersElem = parent.newChildElement("members");
 
         final GenericOrganizationalUnitPersonCollection members = project.
-                getPersons();
+            getPersons();
 
         while (members.next()) {
             generateMemberXml(members.getPerson(),
@@ -250,9 +258,8 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
          * membersElem, members.getRoleName(), state); }
          }
          */
-
         logger.debug(String.format("Generated members XML for project '%s'"
-                                   + "in '%d ms'. MergeMembers is set to '%b'.",
+                                       + "in '%d ms'. MergeMembers is set to '%b'.",
                                    project.getName(),
                                    System.currentTimeMillis() - start,
                                    config.isMergingMembers()));
@@ -266,7 +273,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
         final long start = System.currentTimeMillis();
         final GenericPerson member = new GenericPerson(memberId);
         logger.debug(String.format("Got domain object for member '%s' "
-                                   + "in %d ms.",
+                                       + "in %d ms.",
                                    member.getFullName(),
                                    System.currentTimeMillis() - start));
         generateMemberXml(member, parent, role, status, state);
@@ -294,7 +301,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                                        final PageState state) {
         final long start = System.currentTimeMillis();
         final GenericOrganizationalUnitContactCollection contacts = project.
-                getContacts();
+            getContacts();
 
         if ((contacts == null) || contacts.isEmpty()) {
             return;
@@ -309,7 +316,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                                state);
         }
         logger.debug(String.format("Generated XML for contacts of project '%s'"
-                                   + " in %d ms.",
+                                       + " in %d ms.",
                                    project.getName(),
                                    System.currentTimeMillis() - start));
     }
@@ -320,7 +327,8 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                                       final PageState state) {
 
         if (contact == null) {
-            logger.warn("Provided contact is null. Will not continue with XML generation for contact.");
+            logger.warn(
+                "Provided contact is null. Will not continue with XML generation for contact.");
             return;
         }
 
@@ -337,13 +345,13 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
     }
 
     private String getContactTypeName(final String contactTypeKey) {
-        final RelationAttributeCollection relAttrs =
-                                          new RelationAttributeCollection();
+        final RelationAttributeCollection relAttrs
+                                              = new RelationAttributeCollection();
         relAttrs.addFilter(String.format("attribute = '%s'",
                                          "GenericOrganizationContactTypes"));
         relAttrs.addFilter(String.format("attr_key = '%s'", contactTypeKey));
         relAttrs.addFilter(String.format("lang = '%s'", GlobalizationHelper.
-                getNegotiatedLocale().getLanguage()));
+                                         getNegotiatedLocale().getLanguage()));
 
         if (relAttrs.isEmpty()) {
             return contactTypeKey;
@@ -361,44 +369,44 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                                             final PageState state) {
         final long start = System.currentTimeMillis();
         final GenericOrganizationalUnitSuperiorCollection orgas = project.
-                getSuperiorOrgaUnits();
+            getSuperiorOrgaUnits();
 
         if (orgas == null) {
             return;
         }
 
         orgas.addFilter(
-                String.format("link.assocType = '%s'",
-                              SciProjectInvolvedOrganizationsStep.ASSOC_TYPE));
+            String.format("link.assocType = '%s'",
+                          SciProjectInvolvedOrganizationsStep.ASSOC_TYPE));
 
         if (orgas.isEmpty()) {
             return;
         }
 
         final Element involvedElem = parent.newChildElement(
-                "involvedOrganizations");
+            "involvedOrganizations");
         while (orgas.next()) {
             generateInvolvedOrgaXml(orgas.getGenericOrganizationalUnit(),
                                     involvedElem,
                                     state);
         }
         logger.debug(String.format("Generated XML for involved organizations "
-                                   + "of project '%s' in %d ms.",
+                                       + "of project '%s' in %d ms.",
                                    project.getName(),
                                    System.currentTimeMillis() - start));
     }
 
     protected void generateInvolvedOrgaXml(
-            final GenericOrganizationalUnit involved,
-            final Element parent,
-            final PageState state) {
+        final GenericOrganizationalUnit involved,
+        final Element parent,
+        final PageState state) {
         final long start = System.currentTimeMillis();
         final XmlGenerator generator = new XmlGenerator(involved);
         generator.setUseExtraXml(false);
         generator.setItemElemName("organization", "");
         generator.generateXML(state, parent, "");
         logger.debug(String.format("Generated XML for involved organization "
-                                   + "'%s' in %d ms.",
+                                       + "'%s' in %d ms.",
                                    involved.getName(),
                                    System.currentTimeMillis() - start));
     }
@@ -407,8 +415,8 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                                           final Element parent,
                                           final PageState state) {
         final long start = System.currentTimeMillis();
-        final GenericOrganizationalUnitSubordinateCollection subProjects =
-                                                             project.
+        final GenericOrganizationalUnitSubordinateCollection subProjects
+                                                                 = project.
                 getSubordinateOrgaUnits();
 
         if (subProjects == null) {
@@ -416,8 +424,8 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
         }
 
         subProjects.addFilter(
-                String.format("link.assocType = '%s'",
-                              SciProjectSubProjectsStep.ASSOC_TYPE));
+            String.format("link.assocType = '%s'",
+                          SciProjectSubProjectsStep.ASSOC_TYPE));
 
         if (subProjects.isEmpty()) {
             return;
@@ -426,12 +434,12 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
         final Element subProjectsElem = parent.newChildElement("subProjects");
         while (subProjects.next()) {
             generateSubProjectXml(
-                    (SciProject) subProjects.getGenericOrganizationalUnit(),
-                    subProjectsElem,
-                    state);
+                (SciProject) subProjects.getGenericOrganizationalUnit(),
+                subProjectsElem,
+                state);
         }
         logger.debug(String.format("Generated XML for subprojects of "
-                                   + "project '%s' in %d ms.",
+                                       + "project '%s' in %d ms.",
                                    project.getName(),
                                    System.currentTimeMillis() - start));
     }
@@ -447,7 +455,7 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
         generator.generateXML(state, parent, "");
 
         logger.debug(String.format("Generated XML for subproject '%s' in"
-                                   + "%d ms",
+                                       + "%d ms",
                                    subProject.getName(),
                                    System.currentTimeMillis() - start));
     }
@@ -456,30 +464,63 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
                                       final Element parent,
                                       final PageState state) {
         if ((project.getSponsors() != null)
-            && !project.getSponsors().isEmpty()) {
+                && !project.getSponsors().isEmpty()) {
             final SciProjectSponsorCollection sponsors = project.getSponsors();
             final Element sponsorsElem = parent.newChildElement("sponsors");
             while (sponsors.next()) {
-                final Element sponsorElem = sponsorsElem.newChildElement("sponsor");
+                final Element sponsorElem = sponsorsElem.newChildElement(
+                    "sponsor");
                 final GenericOrganizationalUnit sponsor = sponsors.getSponsor();
                 sponsorElem.setText(sponsor.getTitle());
+
+                final Optional<String> link = getSponsorLink(sponsor);
+                if (link.isPresent()) {
+                    sponsorElem.addAttribute("href", link.get());
+                }
+
                 if ((sponsors.getFundingCode() != null) && !sponsors.isEmpty()) {
-                    sponsorElem.addAttribute("fundingCode", sponsors.getFundingCode());
+                    sponsorElem.addAttribute("fundingCode", sponsors
+                                             .getFundingCode());
                 }
             }
         }
 
         if ((project.getFunding() != null)
-            && !project.getFunding().trim().isEmpty()) {
+                && !project.getFunding().trim().isEmpty()) {
             final Element fundingElem = parent.newChildElement("funding");
             fundingElem.setText(project.getFunding());
         }
 
         if ((project.getFundingVolume() != null)
-            && !project.getFundingVolume().trim().isEmpty()) {
+                && !project.getFundingVolume().trim().isEmpty()) {
             final Element fundingVolumeElem = parent.newChildElement(
-                    "fundingVolume");
+                "fundingVolume");
             fundingVolumeElem.setText(project.getFundingVolume());
+        }
+    }
+
+    private Optional<String> getSponsorLink(
+        final GenericOrganizationalUnit orga) {
+
+        Session session = SessionManager.getSession();
+        DataCollection links = session
+            .retrieve("com.arsdigita.cms.contentassets.RelatedLink");
+        links.addEqualsFilter("linkOwner.id", orga.getID());
+        links.addEqualsFilter("linkListName", "NONE");
+        links.addOrder("linkOrder");
+
+        if (links.next()) {
+            final DataObject link = links.getDataObject();
+            final String targetUri = (String) link.get("targetURI");
+
+            if (targetUri == null || targetUri.isEmpty()) {
+                return Optional.empty();
+            } else {
+                return Optional.of(targetUri);
+            }
+
+        } else {
+            return Optional.empty();
         }
     }
 
@@ -498,4 +539,5 @@ public class SciProjectSummaryTab implements GenericOrgaUnitTab {
         }
 
     }
+
 }

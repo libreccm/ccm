@@ -142,7 +142,7 @@
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sciproject-shortdesc">
         <xsl:param name="orgaunit-data" tunnel="yes"/>
         
-       <xsl:choose>
+        <xsl:choose>
             <xsl:when test="$orgaunit-data/projectShortDesc">
                 <xsl:value-of select="$orgaunit-data/projectShortDesc"/>
             </xsl:when>
@@ -190,6 +190,9 @@
                 <xsl:with-param name="funding-code" 
                                 tunnel="yes" 
                                 select="./@fundingCode"/>
+                <xsl:with-param name="sponsor-link"
+                                tunnel="yes"
+                                select="./@href" />
             </xsl:apply-templates>
         </xsl:for-each>
     </xsl:template>
@@ -202,9 +205,21 @@
         </foundry:doc-desc>
     </foundry:doc>
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//sponsors//sponsor//sponsor-name">
-        <xsl:param name="sponsor-name" tunnel="yes"/>
         
-        <xsl:value-of select="$sponsor-name"/>
+        <xsl:param name="sponsor-name" tunnel="yes" />
+        <xsl:param name="sponsor-link" tunnel="yes" />
+        
+        <xsl:choose>
+            <xsl:when test="$sponsor-link">
+                <a href="{$sponsor-link}">
+                    <xsl:value-of select="$sponsor-name"/>
+                </a>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$sponsor-name"/>
+            </xsl:otherwise>
+        </xsl:choose>
+        
     </xsl:template>
     
     <foundry:doc section="user" type="template-tag">
@@ -218,6 +233,7 @@
         <xsl:param name="funding-code" tunnel="yes"/>
         
         <xsl:value-of select="$funding-code"/>
+        
     </xsl:template>
     
     <foundry:doc section="user" type="template-tag">
@@ -475,14 +491,27 @@
         <xsl:for-each select="$orgaunit-data/involvedOrganizations/organization">
             <xsl:apply-templates select="$layout-tree">
                 <xsl:with-param name="involved-organization-name" select="./title" tunnel="yes" />
+                <xsl:with-param name="involved-organization-link" select="./links[1]/targetURI" tunnel="yes" />
             </xsl:apply-templates>
         </xsl:for-each>
     </xsl:template>
 
     <xsl:template match="content-item-layout//*[starts-with(name(), 'orgaunit')]//involved-organizations//involved-organization//involved-organization-name">
+        
         <xsl:param name="involved-organization-name" tunnel="yes" />
+        <xsl:param name="involved-organization-link" tunnel="yes" />
 
-        <xsl:value-of select="$involved-organization-name" />
+        <xsl:choose>
+            <xsl:when test="$involved-organization-link">
+                <a href="{$involved-organization-link}">
+                    <xsl:value-of select="$involved-organization-name" />
+                </a>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$involved-organization-name" />
+            </xsl:otherwise>
+        </xsl:choose>
+        
     </xsl:template>
 
 </xsl:stylesheet>
