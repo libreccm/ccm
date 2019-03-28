@@ -5,10 +5,22 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
-<#-- Move to Navigation tags? -->
+<#-- Move to Navigation macros/functions? -->
 <#macro pageTitle>
     ${model["//nav:categoryMenu/nav:category/@title"]}
 </#macro>
+
+<#function getPageTitle>
+    <#return model["//nav:categoryMenu/nav:category/@title"]>
+</#function>
+
+<#function getSiteHostName>
+    <#return model["/bebop:page/ui:siteBanner/@hostname"]>
+</#function>
+
+<#function getSiteName>
+    <#return model["/bebop:page/ui:siteBanner/@sitename"]>
+</#function>
 
 <#function getBooleanAttrValue fromNode attrName>
     <#assign path='@' + attrName>

@@ -5,40 +5,55 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
-<#--
-    Output all path tokens of the current category path. Provides the 
-    following parameters for nested content:
-    
-    1: title
-    2: url
-    3: id
-
-    of the category.
+<#-- 
+    Get all categories from the category path.
 -->
-<#macro categoryPath>
-    
-    <#list model["/bebop:page/nav:categoryPath/nav:category"] as token>
-        <#nested token["./@title"], token["./@url"], token["./@id"]>
-    </#list>
-    
-</#macro>
+<#function getCategoryPath>
+    <#return model["/bebop:page/nav:categoryPath/nav:category"]>
+</#function>
+
+<#function isRootPage>
+    <#return (model["/bebop:page/nav:categoryPath/nav:category"]?size <= 1)>
+</#function>
+
+<#function getSelectedCategory>
+    <#return model["/bebop:page/nav:categoryPath/nav:category[last()]"]>
+</#function>
 
 <#--
-    Provides the following data about the current navigation instance to 
-    the nested content:
-
-    1. ID of the navigation menu from which the data was retrieved
-    2. URL to the root of the navigation
-    3. title of the navigation
+    Get the title of the provided category.
 -->
-<#macro navigationRoot navId="categoryMenu">
+<#function getCategoryTitle category>
+    <#return category["./@title"]>
+</#function>
 
-    <#assign url=model["/bebop:page/nav:categoryMenu[@id='${navId}']/nav:category/@url"]>
-    <#assign title=model["/bebop:page/nav:categoryMenu[@id='categoryMenu']/nav:category/@title"]>
+<#--
+    Get the URL of the provided category.
+-->
+<#function getCategoryUrl category>
+    <#return category["./@url"]>
+</#function>
 
-    <#nested navId, url, title> 
+<#--
+    Get the ID get the provided category.
+-->
+<#function getCategoryId category>
+    <#return category["./@id"]>
+</#function>
 
-</#macro>
+<#--
+    Get the URL of the root category of the navigation with the provided id.
+-->
+<#function getNavigationRootUrl navigationId="categoryMenu">
+    <#return model["/bebop:page/nav:categoryMenu[@id='${navigationId}']/nav:category/@url"]>
+</#function>
+
+<#--
+    Get title of the navigation with the provided id.
+-->
+<#function getNavigationTitle navigationId="categoryMenu">
+    <#return model["/bebop:page/nav:categoryMenu[@id='${navigationId}']/nav:category/@title"]>
+</#function>
 
 <#--
     Checks if the a categoryMenu is available in the model and shows the 
@@ -65,6 +80,22 @@
     -->
 
 </#macro>
+
+<#--
+    Retrieves the first level of categories from the category menu with the provided ID. 
+    If no id is provided "categoryMenu" is used.
+-->
+<#function getCategoryMenu menuId="categoryMenu">
+    <#return model["/bebop:page/nav:categoryMenu[@id='${menuId}']/nav:category/nav:category"]>
+</#function>
+
+<#--
+    Retrieves the first level of categories from the category hierachy with the provided ID.
+    If no id is provided 'categoryNav' is used.
+-->
+<#function getCategoryHierarchy hierarchyId="categoryNav">
+    <#return model["/bebop:page/nav:categoryHierarchy[@id='${hierarchyId}']/nav:category"]>
+</#function>
 
 <#--
     Checks if an categoryHierachy is avialable in the model and shows the 
@@ -117,6 +148,13 @@
     </#if>
 
 </#macro>
+
+<#--
+    Gets the subcategories of the provided category.
+-->
+<#function getSubCategories ofCategory>
+    <#return ofCategory["./nav:category"]>
+</#function>
 
 <#--
     Passed the GreetingItem provided by the model to the nested content if their is an GreetingItem.

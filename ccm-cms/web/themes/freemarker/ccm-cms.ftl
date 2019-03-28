@@ -6,7 +6,7 @@
 >
 
 <#--
-    Passed the content item provided by the model to the nested content if 
+    Passes the content item provided by the model to the nested content if 
     the model provides a content item.
 -->
 <#macro contentPage>

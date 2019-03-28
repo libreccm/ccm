@@ -25,7 +25,7 @@
     </#if>
 </#macro>
 
-<#function funNewsDate item>
+<#function getNewsDate item>
     <#if (item["./newsDate"]?size > 0)>
         <#return item["./newsDate"].@@text />
     <#elseif (item["./nav:attribute[@name='newsDate']"]?size > 0)>
@@ -55,7 +55,7 @@
     </#if>
 </#macro>
 
-<#function funNewsDateYear item>
+<#function getNewsDateYear item>
     <#if (item["./newsDate"]?size > 0)>
         <#return item["./newsDate/@year"]>
     <#elseif (item["./nav:attribute[@name='newsDate']"]?size > 0)>
@@ -74,7 +74,7 @@
     </#if>
 </#macro>
 
-<#function funNewsDateMonth item>
+<#function getNewsDateMonth item>
     <#if (item["./newsDate"]?size > 0)>
         <#return item["./newsDate/@month"]>
     <#elseif (item["./nav:attribute[@name='newsDate']"]?size > 0)>
@@ -93,7 +93,7 @@
     </#if>
 </#macro>
 
-<#function funNewsDateDay item>
+<#function getNewsDateDay item>
     <#if (item["./newsDate"]?size > 0)>
         <#return item["./newsDate/@day"]>
     <#elseif (item["./nav:attribute[@name='newsDate']"]?size > 0)>
@@ -113,7 +113,7 @@
     </#if>
 </#macro>
 
-<#function funNewsDateDayNameShort item>
+<#function getNewsDateDayNameShort item>
     <#if (item["./newsDate"]?size > 0)>
         <#return item["./newsDate/@dayNameShort"]>
     <#elseif (item["./nav:attribute[@name='newsDate']"]?size > 0)>
