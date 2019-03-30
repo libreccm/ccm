@@ -1,0 +1,7 @@
+@startuml
+
+title ccm-cms/com.arsdigita.cms
+
+!include com.arsdigita.cms.iuml
+
+@enduml
