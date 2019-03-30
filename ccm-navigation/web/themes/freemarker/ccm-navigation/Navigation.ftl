@@ -41,6 +41,10 @@
     <#return category["./@id"]>
 </#function>
 
+<#function isCategorySelected category>
+    <#return (category["./@isSelected='true'"] == true)>
+</#function>
+
 <#--
     Get the URL of the root category of the navigation with the provided id.
 -->

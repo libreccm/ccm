@@ -10,6 +10,13 @@
     ${model["//nav:categoryMenu/nav:category/@title"]}
 </#macro>
 
+<#--
+    Gets the application of the page served from the model
+-->
+<#function getPageApplication>
+    <#return model["/bebop:page/@application"]>
+</#function>
+
 <#function getPageTitle>
     <#return model["//nav:categoryMenu/nav:category/@title"]>
 </#function>
