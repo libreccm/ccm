@@ -29,3 +29,35 @@
 <#macro imageAttachment image>
     <#nested image["./image/id"], image["./image/name"], image["./caption"] image["./sortKey"], image["./image/width"], image["./image/height"]> 
 </#macro>
+
+<#function getImageAttachments item>
+    <#return item["./imageAttachments"]>
+</#function>
+
+<#function getImageId image>
+    <#return image["./image/id"]>
+</#function>
+
+<#function getImageName image>
+    <#return image["./image/name"]>
+</#function>
+
+<#function getImageCaption image>
+    <#return image["./image/caption"]>
+</#function>
+
+<#function getImageSortKey image>
+    <#return image["./image/sortKey"]>
+</#function>
+
+<#function getImageWidth image>
+    <#return image["./image/width"]>
+</#function>
+
+<#function getImageHeight image>
+    <#return image["./image/height"]>
+</#function>
+
+<#function getImageUrl image>
+    <#return dispatcherPrefix + '/cms-service/stream/image/?image_id=' + getImageId(image)>
+</#function>
