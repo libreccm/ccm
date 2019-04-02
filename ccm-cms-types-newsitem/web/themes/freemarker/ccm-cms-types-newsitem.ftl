@@ -4,6 +4,7 @@
 "nav":"http://ccm.redhat.com/navigation",
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
+<#import "/ccm-cms-types-article/macros.ftl" as Article>
 
 <#--
     Outputs the lead text of the provided news item.
@@ -15,6 +16,14 @@
         ${item["./nav:attribute[@name='lead']"]}
     </#if>
 </#macro>
+
+<#function getLead item>
+    <#return Article.getLead(item)>
+</#function>
+
+<#function getMainText item>
+    <#return Article.getMainText(item)>
+</#function>
 
 <#--
     Output the main text of the provided news item.

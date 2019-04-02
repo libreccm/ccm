@@ -5,6 +5,8 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
+<#import "/ccm-cms-types-article/macros.ftl" as Article>
+
 <#--
     Outputs the lead text of the provided event.
 -->
@@ -153,6 +155,15 @@
     </#if>
 </#macro>
 
+<#function getLead item>
+    <#return Article.getLead(item)>
+</#function>
+
+<#function getMainText item>
+    <#return Article.getMainText(item)>
+</#function>
+
+
 <#function getEndDate item>
     <#if (item["./endDate"]?size > 0)>
         <#return item["./endDate"]>
@@ -287,11 +298,19 @@
     </#if>
 </#macro>
 
+<#function getLocation(item)>
+    <#return item["./location"]>
+</#function>
+
 <#macro mainContributor item>
     <#if (item["./mainContributor"]?size > 0)>
         ${item["./mainContributor"]}
     </#if>
 </#macro>
+
+<#function getMainContributor item>
+    <#return item["./mainContributor"]>
+</#function>
 
 <#macro eventType item>
     <#if (item["./eventType"]?size > 0)>
@@ -299,11 +318,19 @@
     </#if>
 </#macro>
 
+<#function getEventType item>
+    <#return item["./eventType"]>
+</#function>
+
 <#macro cost item>
     <#if (item["./cost"]?size > 0)>
         ${item["./cost"]}
     </#if>
 </#macro>
+
+<#function getCost item>
+    <#return item["./cost"]>
+</#function>
 
 <#macro mapLink item>
     <#if (item["./mapLink"]?size > 0)>
@@ -311,7 +338,9 @@
     </#if>
 </#macro>
 
-
+<#function getMapLink>
+    <#return item["./mapLink"]>
+</#function>
 
 
 
