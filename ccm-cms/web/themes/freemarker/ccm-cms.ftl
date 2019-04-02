@@ -15,6 +15,10 @@
 
 </#macro>
 
+<#function getContentItem>
+    <#return model["/bebop:page/cms:contentPanel/cms:item"]>
+</#function>
+
 <#--
     Includes the template for the type of the provided content item 
     for the provided view and style. The paramters view and style are

@@ -187,3 +187,11 @@
     </#if>
 </#function>
 
+<#function getNewsDateIso item>
+    <#if (item["./newsDate"]?size > 0)>
+        <#return item["./newsDate/@iso"]>
+    <#elseif (item["./nav:attribute[@name='newsDate']"]?size > 0)>
+        <#return item["./nav:attribute[@name='newsDate']/@iso"]>
+    </#if>
+</#function>
+
