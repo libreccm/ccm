@@ -25,6 +25,7 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateMethodModelEx;
 import freemarker.template.TemplateModelException;
 import freemarker.template.TemplateScalarModel;
+import org.libreccm.theming.manifest.DateFormat;
 import org.libreccm.theming.manifest.ThemeManifest;
 import org.libreccm.theming.manifest.ThemeManifestUtil;
 import org.w3c.dom.NamedNodeMap;
@@ -34,13 +35,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.Optional;
-import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
@@ -212,6 +215,11 @@ public class FreeMarkerPresentationManager implements PresentationManager {
             new GetLocalizedText(servletContext,
                                  themePath,
                                  selectedLocale.getLanguage()));
+
+        configuration.setSharedVariable(
+            "_formatDateTime",
+            new FormatDateTime(manifest.getDateFormats(),
+                               new Locale(selectedLocale.getLanguage())));
 
         data.put("serverName", request.getServerName());
         data.put("serverPort", request.getServerPort());
@@ -430,44 +438,90 @@ public class FreeMarkerPresentationManager implements PresentationManager {
 
     }
 
+    private class FormatDateTime implements TemplateMethodModelEx {
+
+        private final List<DateFormat> dateFormats;
+        private final Locale locale;
+
+        public FormatDateTime(final List<DateFormat> dateFormats,
+                              final Locale locale) {
+
+            this.dateFormats = dateFormats;
+            this.locale = locale;
+        }
+
+        @Override
+        public Object exec(final List list) throws TemplateModelException {
+
+            if (list.isEmpty()) {
+                throw new IllegalArgumentException(
+                    "FormatDateTime requires the following parameters: "
+                        + "style: string, year: int, month: int, "
+                        + "day of month: int, hour: int, minute: int,"
+                        + "second: int");
+            }
+
+            final String style = ((TemplateScalarModel) list.get(0))
+                .getAsString();
+            final String yearParam = ((TemplateScalarModel) list.get(1))
+                .getAsString();
+            final String monthParam = ((TemplateScalarModel) list.get(2))
+                .getAsString();
+            final String dayOfMonthParam = ((TemplateScalarModel) list.get(3))
+                .getAsString();
+            final String hourParam = ((TemplateScalarModel) list.get(4))
+                .getAsString();
+            final String minuteParam = ((TemplateScalarModel) list.get(5))
+                .getAsString();
+            final String secondParam = ((TemplateScalarModel) list.get(6))
+                .getAsString();
+
+            final int year = Integer.parseInt(yearParam);
+            final int month = Integer.parseInt(monthParam);
+            final int dayOfMonth = Integer.parseInt(dayOfMonthParam);
+            final int hour = Integer.parseInt(hourParam);
+            final int minute = Integer.parseInt(minuteParam);
+            final int second = Integer.parseInt(secondParam);
+
+            final String format = findFormat(dateFormats, style, locale)
+                .orElse("YYYY-MM-dd");
+
+            final LocalDateTime localDateTime = LocalDateTime.of(year,
+                                                                 month,
+                                                                 dayOfMonth,
+                                                                 hour,
+                                                                 minute,
+                                                                 second);
+            final DateTimeFormatter formatter = DateTimeFormatter
+                .ofPattern(format, locale);
+
+            return formatter.format(localDateTime);
+        }
+
+        private Optional<String> findFormat(
+            final List<DateFormat> dateFormats,
+            final String style,
+            final Locale locale) {
+
+            final Optional<String> format = dateFormats
+                .stream()
+                .filter(dateFormat -> dateFormat.getStyle().equals(style))
+                .filter(dateFormat -> dateFormat.getLang().equals(locale
+                .toString()))
+                .map(DateFormat::getFormat)
+                .findAny();
+
+            return format;
+        }
+
+    }
+
     private String findContentItemTemplate(
         final Templates templates,
         final String objectType,
         final ContentItemViews view,
         final String style) throws TemplateModelException {
 
-//        final String nodeNamespace = itemModel.getNodeNamespace();
-//        final String nodeName = itemModel.getNodeName();
-//        final String contentType;
-//        if ("http://www.arsdigita.com/cms/1.0".equals(nodeNamespace)
-//                && "item".equals(nodeName)) {
-//            contentType = ((TemplateScalarModel) itemModel
-//                           .get("objectType"))
-//                .getAsString();
-//        } else if ("http://ccm.redhat.com/navigation".equals(nodeNamespace)
-//                       && "item".equals(nodeName)) {
-//            final TemplateModel objectTypeElems = itemModel
-//                .get("attribute[@name='objectType']");
-//            if (objectTypeElems instanceof TemplateSequenceModel) {
-//                final TemplateModel objectTypeElem
-//                                    = ((TemplateSequenceModel) objectTypeElems)
-//                        .get(0);
-//                contentType = ((TemplateScalarModel) objectTypeElem)
-//                    .getAsString();
-//            } else if (objectTypeElems instanceof TemplateScalarModel) {
-//                contentType = ((TemplateScalarModel) objectTypeElems)
-//                    .getAsString();
-//            } else {
-//                throw new IllegalArgumentException(
-//                    "Can't determine object type of item.");
-//            }
-//        } else {
-//            throw new IllegalArgumentException(String.format(
-//                "Unexpected combination of node namespace and nodename. "
-//                    + "nodeNamespace = \"%s\"; nodeName = \"%s\"",
-//                nodeNamespace,
-//                nodeName));
-//        }
         final Optional<ContentItemTemplate> forTypeViewAndStyle = templates
             .getContentItems()
             .stream()

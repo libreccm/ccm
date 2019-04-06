@@ -38,3 +38,7 @@
         <#return false>
     </#if>
 </#function>
+
+<#function formatDateTime style date>
+    <#return _formatDateTime(style, date["./@year"], date["./@month"], date["./@day"], date["./@hour"], date["./@minute"], date["./@second"])>
+</#function>

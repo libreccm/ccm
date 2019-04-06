@@ -31,8 +31,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 import static org.libreccm.theming.ThemeConstants.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -90,12 +93,16 @@ public class ThemeManifest implements Serializable {
     @XmlElement(name = "default-template", namespace = THEMES_XML_NS)
     private String defaultTemplate;
 
-    @XmlElementWrapper(name = "config", namespace = THEMES_XML_NS)
     private Map<String, String> config;
+
+    @XmlElementWrapper(name = "date-time-formats", namespace = THEMES_XML_NS)
+    @XmlElement(name = "date-time-formats", namespace = THEMES_XML_NS)
+    private List<DateFormat> dateFormats;
 
     public ThemeManifest() {
 //        templates = new ArrayList<>();
         config = new HashMap<>();
+        dateFormats = new ArrayList<>();
     }
 
     public String getName() {
@@ -169,6 +176,26 @@ public class ThemeManifest implements Serializable {
 
     public void removeSetting(final String key) {
         config.remove(key);
+    }
+
+    public List<DateFormat> getDateFormats() {
+        return Collections.unmodifiableList(dateFormats);
+    }
+
+    public void setDateFormats(
+        final ArrayList<DateFormat> dateFormats) {
+
+        this.dateFormats = new ArrayList<>(dateFormats);
+    }
+
+    public void addDateFormat(final DateFormat dateFormat) {
+
+        dateFormats.add(dateFormat);
+    }
+
+    public void removeDateFormat(final DateFormat dateFormat) {
+
+        dateFormats.remove(dateFormat);
     }
 
     @Override

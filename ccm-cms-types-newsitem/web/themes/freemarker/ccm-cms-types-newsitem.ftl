@@ -36,9 +36,9 @@
 
 <#function getNewsDate item>
     <#if (item["./newsDate"]?size > 0)>
-        <#return item["./newsDate"].@@text />
+        <#return item["./newsDate"] />
     <#elseif (item["./nav:attribute[@name='newsDate']"]?size > 0)>
-        <#return item["./nav:attribute[@name='newsDate']"].@@text />
+        <#return item["./nav:attribute[@name='newsDate']"] />
     </#if>
 </#function>
 
