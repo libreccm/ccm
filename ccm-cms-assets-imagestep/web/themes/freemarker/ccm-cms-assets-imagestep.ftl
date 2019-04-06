@@ -43,11 +43,11 @@
 </#function>
 
 <#function getImageCaption image>
-    <#return image["./image/caption"]>
+    <#return image["./caption"]>
 </#function>
 
 <#function getImageSortKey image>
-    <#return image["./image/sortKey"]>
+    <#return image["./sortKey"]>
 </#function>
 
 <#function getImageWidth image>
