@@ -1,0 +1,88 @@
+# -*- text -*-
+# This file locates stylesheets, if you are using the
+# "PatternStylesheetResolver". Please read the Javadoc for that file for
+# the full story.
+
+# Currently the "resource" part is actually "short-circuited", see 
+# Templating#transformURL(url). As long as we store and synchronize all theme
+# files in each server's local file system, we use the direct file apprach to
+# avoid unnecessary http request and traffic between client (user) and server!
+# Additionally all modules are installed into one webapp context, so the
+# webapp tag is redundant, but sort of required by some part of the code.
+
+
+# Theme with single entry point (e.g Foundry/Mandaly) managed by themedirector
+#http://::host::/resource/::webapp::/themes/::themedir::/::theme::/start.xsl
+http://::host::/::webapp::/themes/::themedir::/::theme::/start.xsl
+
+# Theme with single entry point (e.g Foundry) unmanaged distribution default
+# Provides optionally a distribution / bundle specific default theme. It it
+# is empty foundry-base is used as fall-back.
+#http://::host::/resource/::webapp::/themes/mandalay/start.xsl
+http://::host::/::webapp::/themes/aplaws-default/start.xsl
+
+# Theme with single entry point (e.g Foundry) unmanaged fallback
+# Provides a very basic Foundry theme
+#http://::host::/resource/::webapp::/themes/mandalay/start.xsl
+http://::host::/::webapp::/themes/foundry-base/start.xsl
+
+# ===========================================================
+# Entry point for new theme only for content center and admin
+# ===========================================================
+
+http://::host::/::webapp::/themes/foundry-base/::application::-::url::.xsl
+
+
+
+# ==============================================================================
+# The following is for multi-entry themes, the traditional way in APLAWS
+# Deprecated, retained for backwards compatibility to old existing custom themes.
+# ==============================================================================
+
+# Output type is for things such as text/javascript stored in tradition default theme
+#http://::host::/resource/::webapp::/themes/heirloom/apps/::application::/xsl/::url::-::outputtype::-::locale::.xsl
+#http://::host::/resource/::webapp::/themes/heirloom/apps/::application::/xsl/::url::-::outputtype::.xsl
+http://::host::/::webapp::/themes/heirloom/apps/::application::/xsl/::url::-::outputtype::-::locale::.xsl
+http://::host::/::webapp::/themes/heirloom/apps/::application::/xsl/::url::-::outputtype::.xsl
+
+# Grabs custom item xsl for CMS
+http://::host::/themes/servlet/content-item/index.xsl?oid=::item_template_oid::&delegated=::item_delegated_url::
+
+# Theme, managed by themedirector, with optional locale & prefix
+#http://::host::/resource/::webapp::/themes/::themedir::/::theme::/::application::-::url::-::prefix::-::locale::.xsl
+#http://::host::/resource/::webapp::/themes/::themedir::/::theme::/::application::-::url::-::prefix::.xsl
+http://::host::/::webapp::/themes/::themedir::/::theme::/::application::-::url::-::prefix::-::locale::.xsl
+http://::host::/::webapp::/themes/::themedir::/::theme::/::application::-::url::-::prefix::.xsl
+
+# Theme managed by themedirector, with optional locale (without prefix)
+#http://::host::/resource/::webapp::/themes/::themedir::/::theme::/::application::-::url::-::locale::.xsl
+#http://::host::/resource/::webapp::/themes/::themedir::/::theme::/::application::-::url::.xsl
+http://::host::/::webapp::/themes/::themedir::/::theme::/::application::-::url::-::locale::.xsl
+http://::host::/::webapp::/themes/::themedir::/::theme::/::application::-::url::.xsl
+
+# APLAWS default, with locale and prefix
+#http://::host::/resource/ROOT/themes/static/aplaws/::application::-::url::-::prefix::-::locale::.xsl
+#http://::host::/resource/ROOT/themes/static/aplaws/::application::-::url::-::prefix::.xsl
+#http://::host::/resource/ROOT/__ccm__/themes/aplaws/::application::-::url::-::prefix::-::locale::.xsl
+#http://::host::/resource/ROOT/__ccm__/themes/aplaws/::application::-::url::-::prefix::.xsl
+#http://::host::/::webapp::/themes/static/aplaws/::application::-::url::-::prefix::-::locale::.xsl
+#http://::host::/::webapp::/themes/static/aplaws/::application::-::url::-::prefix::.xsl
+#http://::host::/ROOT/__ccm__/themes/aplaws/::application::-::url::-::prefix::-::locale::.xsl
+#http://::host:://ROOT/__ccm__/themes/aplaws/::application::-::url::-::prefix::.xsl
+
+# APLAWS generic default, with locale (without prefix)
+#http://::host::/resource/ROOT/themes/static/aplaws/::application::-::url::-::locale::.xsl
+#http://::host::/resource/ROOT/themes/static/aplaws/::application::-::url::.xsl
+#http://::host::/resource/ROOT/__ccm__/themes/aplaws/::application::-::url::-::locale::.xsl
+#http://::host::/resource/ROOT/__ccm__/themes/aplaws/::application::-::url::.xsl
+#http://::host::/::webapp::/themes/static/aplaws/::application::-::url::-::locale::.xsl
+#http://::host::/::webapp::/themes/static/aplaws/::application::-::url::.xsl
+#http://::host::/::webapp::/__ccm__/themes/aplaws/::application::-::url::-::locale::.xsl
+#http://::host::/::webapp::/__ccm__/themes/aplaws/::application::-::url::.xsl
+
+# Global default, from application's own web app
+#http://::host::/resource/::webapp::/themes/heirloom/apps/::application::/xsl/::url::-::locale::.xsl
+#http://::host::/resource/::webapp::/themes/heirloom/apps/::application::/xsl/::url::.xsl
+http://::host::/::webapp::/themes/heirloom/apps/::application::/xsl/::url::-::locale::.xsl
+http://::host::/::webapp::/themes/heirloom/apps/::application::/xsl/::url::.xsl
+

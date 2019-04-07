@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <page-layout>
-    <!-- 
+    <!--
         This file defines the general layout for this theme. The other layout
         template are extending this file.
-        
-        You should not use this layout template directly in the 
-        conf/templates.xml. Instead use one of the existing files or create 
-        a new one if your application requires some special tags. 
-        
+
+        You should not use this layout template directly in the
+        conf/templates.xml. Instead use one of the existing files or create
+        a new one if your application requires some special tags.
+
         For an example how to create an extending layout look at the
         navigation.xml file or the default-layout.xml file.
     -->
@@ -17,12 +17,12 @@
             <show-text>layout/page/head/title</show-text>
             <show-page-title/>
         </title>
-    
+
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-   
-        <!-- 
+
+        <!--
             This tag loads the CSS files as configured in conf/css-files.xml.
             For details please refer to the documentation of the Foundry theme
             engine.
@@ -31,26 +31,26 @@
 
         <script type="text/javascript" src="js/jquery-1.11.3.min.js">
         </script>
-    
-        <script type="text/javascript" 
+
+        <script type="text/javascript"
                 src="fancybox/jquery.fancybox.pack.js?v=2.1.5">
         </script>
-        
-        <script type="text/javascript" 
+
+        <script type="text/javascript"
                 src="fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5">
         </script>
-        <script type="text/javascript" 
+        <script type="text/javascript"
                 src="fancybox/helpers/jquery.fancybox-media.js?v=1.0.6">
         </script>
 
-        <script type="text/javascript" 
+        <script type="text/javascript"
                 src="fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7">
         </script>
-        
+
         <script type="text/javascript"
                 src="js/js.cookie.js">
         </script>
-        
+
         <script type="text/javascript">
             $(document).ready(function() {
                 $("figure.multiple a.image-attachments").fancybox({
@@ -61,7 +61,7 @@
                                     title: {
                                                 type: 'inside'
                                            },
-                                    buttons: { 
+                                    buttons: {
                                                 position: 'bottom'
                                              }
                                  },
@@ -69,7 +69,7 @@
                     type       : 'image'
                 });
             });
-            
+
             $(document).ready(function() {
                 $("figure.single a.image-attachments").fancybox({
                     arrows     : true,
@@ -84,7 +84,7 @@
                     type       : 'image'
                 });
             });
-            
+
             $(document).ready(function() {
                 $("div.image a.thumbnail").fancybox({
                     arrows     : true,
@@ -100,7 +100,7 @@
                 });
             });
         </script>
-        
+
         <script type="text/javascript">
             $(document).ready(function() {
                 $("#language-switcher button#language-switcher-toggle").click(
@@ -108,7 +108,7 @@
                         $("#language-switcher ul").slideToggle();
                     }
                 );
-            
+
                 $("nav#main-navigation button#main-nav-toggle").click(
                     function() {
                         $("nav#main-navigation ul").slideToggle();
@@ -116,23 +116,23 @@
                 );
             });
         </script>
-        
+
         <script type="text/javascript">
             $(document).ready(function() {
                 $('#cookie-notice-accept').click(function() {
                     $("body").removeClass('cookie-notice');
-            
+
                     Cookies.set('cookie-notice', 'accepted', { expires: 30 })
                 });
-                
+
                 if (Cookies.get('cookie-notice') != 'accepted') {
                     $("body").addClass('cookie-notice');
-                } 
+                }
             });
         </script>
-        
+
     </head>
-    
+
     <body>
         <div id="cookie-notice">
             <show-text>cookie-notice</show-text>
@@ -141,7 +141,7 @@
             </a>
             <button id="cookie-notice-accept">
                 <show-text>cookie-notice/understand</show-text>
-                
+
             </button>
         </div>
         <header>
@@ -169,31 +169,18 @@
                                 </ul>
                             </div>
                         </language-selector>
-                    
-                        <!-- 
-                            The static service menu. The links here are 
+
+                        <!--
+                            The static service menu. The links here are
                             using several shortcuts which must be defined
                             using the shortcuts application.
-                            
+
                             The first link /ccm/sitemap should point to
                             the sitemap of the page, usually the real link
                             is /ccm/navigation/sitemap.jsp.
-                            
+
                             The second points to /ccm/contact is indented to
                             point to a page with contact informations.
-                            
-                            The third link is something which is required
-                            by german law. It should point to page 
-                            describing what data is captured about the 
-                            visitors about the site. For example if tools
-                            like Google Analytics or Piwik are used this
-                            has to be stated on that site. Also the site 
-                            must provide some form for a visitor to object
-                            to this data capture (Opt-out). There is still
-                            some discussion between the jurists in germany
-                            if has the be a separate page and where to place
-                            the link to it, but at the moment the safest 
-                            thing is put the link at the top of the page.
                         -->
                         <div id="shortcuts">
                             <ul id="shortcuts">
@@ -212,13 +199,6 @@
                                     </a>
                                 </li>
                                 <li role="presentation">
-                                    <a href-static="/ccm/privacy">
-                                        <show-text>
-                                            layout/service-links/privacy
-                                        </show-text>
-                                    </a>
-                                </li>
-                                <li role="presentation">
                                     <a href-static="/ccm/help">
                                         <show-text>
                                             layout/service-links/help
@@ -229,7 +209,7 @@
                         </div>
                     </div>
                 </div>
-            
+
             <div class="header-logo">
                 <navigation-home-link>
                     <a>
@@ -242,13 +222,13 @@
                 </p>
             </div>
         </header>
-            
-            <!-- 
-                Main navigation level 1. 
+
+            <!--
+                Main navigation level 1.
             -->
             <nav id="main-navigation">
                 <div id="nav-wrapper">
-                <button id="main-nav-toggle" 
+                <button id="main-nav-toggle"
                         class="fa fa-bars"
                         href="#"
                         type="button">
@@ -258,7 +238,7 @@
                         </show-text>
                     </span>
                 </button>
-                
+
                 <navigation>
                     <navigation-home-link>
                         <ul class="home-link">
@@ -286,11 +266,11 @@
                             </navigation-link>
                         </ul>
                     </navigation-links>
-                    
+
                 </navigation>
                 </div>
             </nav>
-            
+
             <div id="breadcrumbs-top">
                 <div id="breadcrumbs-top-wrapper">
                     <span class="breadcrumb-prefix">
@@ -309,22 +289,25 @@
                     </breadcrumbs>
                 </div>
             </div>
-        
-        
+
+
         <div id="main-wrapper">
             <!--
-            This part is defined by the layout templates which extend 
+            This part is defined by the layout templates which extend
             this template. The content is inserted here.
             -->
             <insert-block name="content"/>
        </div>
-        
+
+       <!-- Optional page (navigation category) related Links -->
+       <include file="fragments/navigation-quick-links.xml"/>
+
         <!-- The footer part -->
         <footer>
             <div id="footer-wrapper">
-                    <!-- 
-                        Breadcrumbs. We are using the Breadcrumbs component 
-                        from Bootstrap here 
+                    <!--
+                        Breadcrumbs. We are using the Breadcrumbs component
+                        from Bootstrap here
                         (see http://getbootstrap.com/components/#breadcrumbs).
                     -->
                     <div id="breadcrumbs-bottom" class="breadcrumbs">
@@ -345,9 +328,9 @@
                             </ol>
                         </breadcrumbs>
                     </div>
-                
-                
-                <!-- 
+
+
+                <!--
                     Some links in the footer. One link to the LibreCMS homepage,
                     one to site about the webmaster of the page (the shortcut
                     /ccm/webmaster has to be defined to make the link work) and
@@ -356,14 +339,14 @@
                     about what a "Impressum" is please have look at
                     http://en.wikipedia.org/wiki/Impressum. The link defined
                     requires uses the shortcut /ccm/impressum.
-                    
+
                 -->
-                
+
                 <div id="footer-logo-wrapper">
                     <a href-static="http://www.librecms.org">
-                        <img id="footer-logo" 
-                             class="img-responsive" 
-                             src-static="images/logo.png"/>
+                        <img id="footer-logo"
+                             class="img-responsive"
+                             src-static="images/poweredby.png"/>
                     </a>
                 </div>
                 <ul id="footer-links">
@@ -375,6 +358,13 @@
                         </a>
                     </li>
                     <li>
+                        <a href-static="/ccm/privacy">
+                            <show-text>
+                                layout/service-links/privacy
+                            </show-text>
+                        </a>
+                    </li>
+                    <li>
                         <a href-static="/ccm/impressum">
                             <show-text>
                                 layout/page/footer/impressum
@@ -382,11 +372,11 @@
                         </a>
                     </li>
                 </ul>
-            
-                
-                
+
+
+
             </div>
         </footer>
-        
+
     </body>
 </page-layout>

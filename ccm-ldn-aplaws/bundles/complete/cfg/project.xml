@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!-- ======================================================================
-     project.xml - COMPLETE - containing a nearly complete set of modules
-     of the current aplaws repository.
+     project.xml - (ldn)COMPLETE - containing a complete set of modules
+     of the current aplaws repository compatible to trhe 1.0.4 complete set.
      DEPRECATED!  DON'T USE for new installations!
      Last checked: 2018-12
      ======================================================================= -->
@@ -11,9 +11,9 @@
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
                ccmVersion="6.1" 
                name="aplaws" 
-               prettyName="APLAWS plus Complete Bundle" 
+               prettyName="APLAWS plus Complete backwards compatible Bundle" 
                version="2.3.99" 
-               release="compl-r5397"
+               release="compl-rxxxx"
                webxml="web.xml" 
                portletxml="portlet.xml" 
                webapp="ROOT" 

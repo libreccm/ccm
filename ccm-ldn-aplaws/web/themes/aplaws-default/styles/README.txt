@@ -1,20 +1,26 @@
-This directory contains all CSS files for the theme. We use the Less CSS
-precompiler (http://lesscss.org/) for creating our CSS files. The source Less
-files are also included. 
+This directory contains all CSS files for all of the theme variants.
 
-If you want to customise the stylesheet we strongly recommanded to use Less. 
+The conf/css-files.xml file points invariably to a file named "style.less"
+in this directory. This naming must not be modified, otherwise the theme 
+publishing process will fail!
 
-to customise to styles make a copy of the Less file(s) you want to customize
-and create a new configuration file pointing to your files in conf.
+The theme is based on the Less CSS precompiler (http://lesscss.org/) for 
+creating the CSS files and we provide the source Less files. These files 
+are automatically compiled into the approprioate css file(s) when you use 
+the theme.  In preview /development mode these files are compiled on the fly. 
+When you publish a theme the css files are stored in the directory and 
+copied into the published-themedir subdirectory. 
 
-To make editing of the Less file(s) 
-easier this theme also includes the Less compiler in the development mode. For
-production mode you have to compile the Less files to CSS as described in the 
-iLess documentation. 
+The file 'style.less' is a starter file which just includes the less files
+containing the concrete styling.
 
-The styles for this theme have been split into two Less files. The styles.less
-file contains all styles for the layout. The aplaws.less file contains several 
-variables which define several properties for the theme. Most of them are
-colours. At the end, the file includes the style.less file. 
+The distribution provides a default variant of the theme in the file
+libre-blue.less file. It provides a set of configuration parameters and 
+its default values. The theme details are defined in the less subdir.
 
+To customise the theme make a copy of the default theme file and name it
+appropriately, e.g. 'libre-blue-mytheme'. Make your customizations in
+'libre-blue-mytheme'. Modify the style.less file to include your
+customization instead of the default one by commenting in / out the
+appropriate files. 
 

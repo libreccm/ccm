@@ -46,12 +46,18 @@
             </div>
             <div class="members">
                 <members>
-                    <project-member separator="; ">
+                    <!--<project-member separator="; ">
                         <span class="member">
                             <surname after=", "/>
                             <givenName/>
                         </span>
-                    </project.member>
+                    </project.member>-->
+                    <member separator="; ">
+                        <span class="member">
+                            <surname after=", "/>
+                            <givenname/>
+                        </span>
+                    </member>
                 </members>
             </div>
             <div class="lead">

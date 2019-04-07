@@ -17,7 +17,6 @@
         <application name="login" origin="internal">admin-layout.xml</application>
         <application name="navigation" class="portalPage">portal-workspace.xml</application>
         <application name="navigation" class="portalGridPage">portal-workspace-grid.xml</application>
-        <!--<application name="navigation" class="simplePage">nav-default.xml</application>-->
         <application name="navigation" class="simplePage">navigation.xml</application>
         <application name="navigation" class="sitemapPage">sitemap.xml</application>
         <application name="navigation" class="welcomePage">welcome.xml</application>
@@ -273,8 +272,7 @@
     </content-items>
     
     <!-- 
-        These entries control which template is used to display a which portlet
-        type.
+        These entries control which xml template is used by the various portlet types.
      -->
     <portlets>
         <portlet class="com.arsdigita.cms.ui.portlet.ContentItemPortletRenderer">

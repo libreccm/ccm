@@ -3,7 +3,7 @@ This theme is structured as follows:
 Directories
 -----------
 
-conf            Configuration files (see README.txt in this directory for more
+conf            Configuration files (see _aREADME_.txt in this directory for more
                 information
 
 fancybox        Files for the Fancybox script (used to display images and image
@@ -35,5 +35,9 @@ admin-index.xsl                 -+
 ccm-admin-application-index.xsl  |----Entry points for legacy configurations
 content-center-index.xsl         |
 content-section-admin.xsl       -+
+
+Before you can use this theme, you have to do some preparatory measures. It
+supports several variants and you have to select and to prepare a specific
+variant to use. See the README files in conf, images, and texts!
 
 

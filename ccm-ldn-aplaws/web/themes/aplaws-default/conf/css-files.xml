@@ -54,7 +54,7 @@
         <css-file>fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5</css-file>
         <css-file>fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7</css-file>
         <css-file>font-awesome/css/font-awesome.min.css</css-file>
-        <css-file less="true">aplaws</css-file>
+        <css-file less="true">style</css-file>
     </application>
     <application name="navigation" class="portalGridPage">
         <!-- 
@@ -66,7 +66,7 @@
         <css-file>fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7</css-file>
         <css-file>font-awesome/css/font-awesome.min.css</css-file>
         <css-file media="screen">portal.css</css-file>
-        <css-file less="true">aplaws</css-file>
+        <css-file less="true">style</css-file>
     </application>
     <application name="none" class="cms-admin">
         <!-- Other admin applications -->
@@ -79,7 +79,7 @@
         <css-file>fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7</css-file>
         <css-file>font-awesome/css/font-awesome.min.css</css-file>
         <css-file origin="internal">portal.css</css-file>
-        <css-file less="true">aplaws</css-file>
+        <css-file less="true">style</css-file>
     </application>
     <default>
         <!-- 
@@ -90,6 +90,6 @@
         <css-file>fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5</css-file>
         <css-file>fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7</css-file>
         <css-file>font-awesome/css/font-awesome.min.css</css-file>
-        <css-file less="true">aplaws</css-file>
+        <css-file less="true">style</css-file>
     </default>
 </css-files>

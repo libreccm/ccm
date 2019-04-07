@@ -4,9 +4,9 @@
                       <!ENTITY ndash '&#8211;'>]>
 <!--
     Copyright 2014 Jens Pelzetter for the LibreCCM Foundation
-    
+
     This file is part of the Foundry Theme Engine for LibreCCM
-    
+
     Foundry is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 2 of the License, or
@@ -31,16 +31,17 @@
                 exclude-result-prefixes="xsl xs bebop foundry ui"
                 version="2.0">
 
-    <!-- 
-        Edit this file to include custom extensions into your theme. 
+    <!--
+        Edit this file to include custom extensions into your theme.
         For each file to include add a line like
-        
+
         <xsl:import href="your-extension.xsl"/>
-        
+
         The path is relative to this file.
     -->
-    
-    <xsl:import href="check-for-related-links-and-file-attachments.xsl"/>
-    <xsl:import href="image-attachment-gallery-indicators.xsl"/>
-    
+
+    <xsl:import href="check-for-related-links-and-file-attachments.xsl" />
+    <xsl:import href="image-attachment-gallery-indicators.xsl" />
+    <!-- <xsl:import href="utils.xsl" /> -->
+
 </xsl:stylesheet>

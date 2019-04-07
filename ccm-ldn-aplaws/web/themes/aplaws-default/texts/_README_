@@ -1,1 +1,14 @@
-This directory contains static texts in the theme
+This directory contains static texts in the theme.
+
+There are variants for some theme variants:
+
+An example is global.xml. There are variants available:
+
+global-libreblue.xml, for the default variant.
+
+global-aplaws.xml,  for aplaws
+
+
+Copy the respective file into its base name, global.xml 
+(or create a symbolic link it your application containes
+supports this).

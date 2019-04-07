@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!-- ======================================================================
-     project.xml - (ldn) DEVEL - containing all modules of the current aplaws 
-     repository. It is specifically for developers to help them to make 
-     every module deployable and to create the distribution. 
+     project.xml - (ldn) DEVEL - containing all modules of the current aplaws
+     repository. It is specifically for developers to help them to make
+     every module deployable and to create the distribution.
      It is NOT a production grade bundle!
+     Additionallyitis used to create the itmes of the ADD ONS packages
      ======================================================================= -->
 
-<ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-               xmlns:ccm="http://ccm.redhat.com/ccm-project" 
-              ccmVersion="6.1" 
-                    name="aplaws" 
+<ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns:ccm="http://ccm.redhat.com/ccm-project"
+              ccmVersion="6.1"
+                    name="aplaws"
               prettyName="APLAWS plus (devel)"
                  version="2.3.99" 
-                 release="dev-SNAPSHOT-r5758" 
-                  webxml="web.xml" 
-              portletxml="portlet.xml" 
-                  webapp="ROOT" 
+                 release="dev-SNAPSHOT-rxxxx" 
+                  webxml="web.xml"
+              portletxml="portlet.xml"
+                  webapp="ROOT"
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 
 <ccm:databases>
@@ -42,14 +43,12 @@
         <ccm:application name="ccm-cms-types-article"/>
 
 <!--   Applications   -->
-        <ccm:application name="ccm-atoz"/>  <!-- part of (default) theme -->
         <ccm:application name="ccm-navigation"/>
         <!-- ccm-portalworkspace depends on ccm-subsite  -
              in class ui.PortletTypeForm                 -->
         <ccm:application name="ccm-portalworkspace"/>
-        <ccm:application name="ccm-rssfeed"/>
         <ccm:application name="ccm-shortcuts"/>
-        <ccm:application name="ccm-subsite"/>                    
+        <ccm:application name="ccm-subsite"/>
         <ccm:application name="ccm-themedirector"/>
 
 <!--   LDN core extensions  -->
@@ -78,20 +77,25 @@
 
 <!--   Standard Bundle's  Content Types   -->
         <ccm:application name="ccm-cms-types-bookmark"/>
+        <ccm:application name="ccm-cms-types-decisiontree"/>
         <ccm:application name="ccm-cms-types-event"/>
+        <ccm:application name="ccm-cms-types-externallink"/>
         <ccm:application name="ccm-cms-types-faqitem"/>
         <ccm:application name="ccm-cms-types-filestorageitem"/>
         <ccm:application name="ccm-cms-types-formitem"/>
         <ccm:application name="ccm-cms-types-formsectionitem"/>
        <ccm:application name="ccm-cms-types-glossaryitem"/>
-         <ccm:application name="ccm-cms-types-inlinesite"/>
         <ccm:application name="ccm-cms-types-mparticle"/>
         <ccm:application name="ccm-cms-types-newsitem"/>
+        <ccm:application name="ccm-cms-types-person"/>
         <ccm:application name="ccm-cms-types-pressrelease"/>
         <ccm:application name="ccm-cms-types-xmlfeed"/>
 
 <!--   Standard Bundle's  Applications   -->
         <ccm:application name="ccm-forum"/>     
+        <ccm:application name="ccm-cms-personalcontentcomponent"/>
+        <ccm:application name="ccm-cms-publicpersonalprofile"/>
+        <ccm:application name="ccm-rssfeed"/>
 
 <!--   Standard Bundle's  LDN extensions  -->
         <ccm:application name="ccm-ldn-atoz"/> 
