@@ -9,5 +9,9 @@ template.txt must be provided and activated in the integrations.properties
 configuration file. 
 
 Naming Convention
-Please, use "sci-" to prefix the name of any added jsp and ensure to include
-the usage comment! 
+Please, use "sci-" to prefix the name of any added generic ScientificCMS jsp 
+and ensure to include the usage comment! 
+
+Please, use "{SITE}-" to prefix the name of any customized jsp, either a new
+one or a modification of an existing one and ensure to include the usage
+comment!

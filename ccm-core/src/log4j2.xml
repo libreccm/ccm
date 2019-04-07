@@ -45,7 +45,7 @@
       <appenderRef ref="Console"/>
       <appenderRef ref="FileLog" />
     </Logger>
-                                                                                                                                                   43,1          40%
+
     <!-- Set level="DEBUG" to get information JSP file dispatcher      -->
     <Logger name="com.arsdigita.web.ApplicationFileServlet"
             level="ERROR" additivity="false" >

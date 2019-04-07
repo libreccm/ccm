@@ -4,9 +4,8 @@ files are also included.
 
 If you want to customise the stylesheet we strongly recommanded to use Less. 
 
-To customise to styles make a copy of the Less file(s) you want to customize
-and create a new configuration file pointing to your files in conf (see
-README.txt in conf).
+to customise to styles make a copy of the Less file(s) you want to customize
+and create a new configuration file pointing to your files in conf.
 
 To make editing of the Less file(s) 
 easier this theme also includes the Less compiler in the development mode. For

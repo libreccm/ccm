@@ -3,6 +3,7 @@
 <!-- ======================================================================
      project.xml SCI standard - containing only modules used for 
                                  ScientificCMS  standard bundle
+     Stand: April 2019
      ======================================================================= -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
