@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!-- ======================================================================
-     project.xml - STANDARD - includes a set of modules supposed to be 
-     useful for most (or even any) installations of LibreCMS. 
+     project.xml - STANDARD - includes a set of modules supposed to be
+     useful for most (or even any) installations of LibreCMS.
 
-     Other modules are commented out but compiled into an add-on bundle to 
+     Other modules are commented out but compiled into an add-on bundle to
      be used by a site administrator to create a customized installation
      using ccm-hostinit command.
      Last checked: 2018-12
      ======================================================================= -->
 
-<ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-               xmlns:ccm="http://ccm.redhat.com/ccm-project" 
-              ccmVersion="6.1" 
-                    name="librecms" 
-              prettyName="LibreCMS (Standard Bundle)" 
+<ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns:ccm="http://ccm.redhat.com/ccm-project"
+              ccmVersion="6.1"
+                    name="librecms"
+              prettyName="LibreCMS (Standard Bundle)"
                  version="2.3.99" 
                  release="std-r5397" 
-                  webxml="web.xml" 
-              portletxml="portlet.xml" 
-                  webapp="ROOT" 
+                  webxml="web.xml"
+              portletxml="portlet.xml"
+                  webapp="ROOT"
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 
 <ccm:databases>
@@ -48,7 +48,7 @@
         <!-- ccm-portalworkspace depends on ccm-subsite  -->
         <ccm:application name="ccm-portalworkspace"/>
         <ccm:application name="ccm-shortcuts"/>
-        <ccm:application name="ccm-subsite"/>                    
+        <ccm:application name="ccm-subsite"/>
         <ccm:application name="ccm-themedirector"/>
 
 <!--   LDN extension  -->
@@ -61,10 +61,11 @@
 
 
 
-<!--   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -     
-       Libre CMS additional packages for STANDARD Bundle
-       Designed primarily for ORGANISATIONAL rich content web sites 
-       Includes all slimline bundle modules and adds a set appropriate for
+<!--   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+       Libre CMS additional packages for SLIMLINE Bundle, which are also
+       part of the STANDARD Bundle.
+       It is designed primarily for ORGANISATIONAL rich content web sites
+       and includes all slimline bundle modules and adds a set appropriate for
        organisations, social movements, foundations, of communities
        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   -->
 
@@ -80,6 +81,7 @@
         <ccm:application name="ccm-cms-types-contact"/>
         <ccm:application name="ccm-cms-types-decisiontree"/>
         <ccm:application name="ccm-cms-types-event"/>
+        <ccm:application name="ccm-cms-types-externallink"/>
         <ccm:application name="ccm-cms-types-faqitem"/>
         <ccm:application name="ccm-cms-types-filestorageitem"/>
         <ccm:application name="ccm-cms-types-formitem"/>
@@ -90,11 +92,12 @@
         <ccm:application name="ccm-cms-types-newsitem"/>
         <ccm:application name="ccm-cms-types-person"/>
 
-<!--   Applications   -->
-        <ccm:application name="ccm-forum"/>  
+<!--   Additional Applications which extends the slimline part  -->
+        <ccm:application name="ccm-forum"/>
+        <ccm:application name="ccm-forum-categorised"/>
 
 <!--    temporarily excluded because configuration issues have to be resolved
-        <ccm:application name="ccm-rssfeed"/>  
+        <ccm:application name="ccm-rssfeed"/>
 -->
 
 
@@ -104,11 +107,11 @@
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--   Content Assets   -->
-<!--    
+<!--
 -->
 
 <!--  CMS Content Types  -->
-<!--    
+<!--
         <ccm:application name="ccm-cms-types-agenda"/>
         <ccm:application name="ccm-cms-types-inlinesite"/>
         <ccm:application name="ccm-cms-types-job"/>
@@ -129,7 +132,7 @@
         <ccm:application name="ccm-cms-publicpersonalprofile"/>
         <ccm:application name="ccm-docmgr"/>
         <ccm:application name="ccm-docrepo"/>
-        <ccm:application name="ccm-forum-categorised"/>
+
 -->
 <!--
         <ccm:application name="ccm-portalserver"/>
@@ -158,9 +161,9 @@
 <!--    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    -->
 
 <!--   Content Types   -->
-<!--    <ccm:application name="ccm-cms-types-motditem"/> 
+<!--    <ccm:application name="ccm-cms-types-motditem"/>
         Current code does not include any xsl templates, conent type does not
-        appear in the list of types in content center. 
+        appear in the list of types in content center.
         For the moment no longer supported (2012-02-06)                      -->
 
 <!--   Applications   -->
@@ -174,8 +177,8 @@
 <!--    and contains very ldn specific (esd) meta tags               -->
 <!--    <ccm:application name="ccm-ldn-aplaws"/>                     -->
 <!--    In it's current implementation very ldn / aplaws specific
-        <ccm:application name="ccm-ldn-atoz"/>  
-        <ccm:application name="ccm-ldn-dublin"/> 
+        <ccm:application name="ccm-ldn-atoz"/>
+        <ccm:application name="ccm-ldn-dublin"/>
         <ccm:application name="ccm-ldn-types-contact"/>
         <ccm:application name="ccm-ldn-types-esdservice"/>                   -->
 
