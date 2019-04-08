@@ -25,6 +25,7 @@
     } else {
       DispatcherHelper.cacheForWorld(response, (int)age);
     }
+    int maxItems = Navigation.getConfig().getIndexPageMaxItems();
   </jsp:scriptlet>
 
   <define:page name="defaultItemPage" application="navigation"
@@ -76,6 +77,7 @@
       ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).getDefinition().setDescendCategories(true);
       ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).getDefinition().addOrder("startDate");
 
+      ((com.arsdigita.navigation.ui.object.SimpleObjectList) itemList).getRenderer().setPageSize(maxItems);
       ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute("objectType");
       ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute("title");
       ((com.arsdigita.navigation.ui.object.ComplexObjectList) eventList).getRenderer().addAttribute("lead");

@@ -1,10 +1,17 @@
+<!-- 
+   The JSP template for the welcome / start page using navigation 
+
+   ##Title: Default Content Items Page 
+   ##Descr: Site start (landing) page created by navigationNavigation ordering 
+            items in ascending order, manually adjustable and adding News and 
+            Events lists
+   ##Path : /templates/ccm-navigation/navigation/def-welcome.jsp
+-->
 <jsp:root 
      xmlns:jsp="http://java.sun.com/JSP/Page"
   xmlns:define="/WEB-INF/bebop-define.tld"
     xmlns:show="/WEB-INF/bebop-show.tld"
        version="1.2">
-
-  <!-- JSP template for the welcome / start page using navigation -->
 
     <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
     <jsp:directive.page import="com.arsdigita.bebop.parameters.BigDecimalParameter"/>

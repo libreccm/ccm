@@ -17,6 +17,7 @@
     } else {
       DispatcherHelper.cacheForWorld(response, (int)age);
     }
+    int maxItems = Navigation.getConfig().getIndexPageMaxItems();
   </jsp:scriptlet>
 
   <define:page name="atozItemPage" application="navigation"
@@ -47,7 +48,7 @@
       ((com.arsdigita.navigation.ui.object.AtoZObjectList) itemList).getDefinition().setDescendCategories(false);      
       ((com.arsdigita.navigation.ui.object.AtoZObjectList) itemList).getDefinition().addOrder("title");
       
-      ((com.arsdigita.navigation.ui.object.AtoZObjectList) itemList).getRenderer().setPageSize(20);
+      ((com.arsdigita.navigation.ui.object.AtoZObjectList) itemList).getRenderer().setPageSize(maxItems);
       ((com.arsdigita.navigation.ui.object.AtoZObjectList) itemList).getRenderer().addAttribute("objectType");
       ((com.arsdigita.navigation.ui.object.AtoZObjectList) itemList).getRenderer().addAttribute( "title");
       ((com.arsdigita.navigation.ui.object.AtoZObjectList) itemList).getRenderer().addAttribute( "definition");
