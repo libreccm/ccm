@@ -9,11 +9,11 @@
     <ccm:requires name="ccm-core" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-cms" version="6.6.0" relation="ge"/>
   </ccm:dependencies>
-  <ccm:directories>
+  <!--<ccm:directories>
     <ccm:directory name="pdl"/>
     <ccm:directory name="sql"/>
     <ccm:directory name="src"/>
-  </ccm:directories>
+  </ccm:directories>-->
   <ccm:contacts>
     <ccm:contact uri="http://www.redhat.com/software/ccm" type="website"/>
     <ccm:contact uri="mailto:ccm@redhat.com" type="support"/>
