@@ -10,9 +10,9 @@
 </#function>
 
 <#function getLinkType link>
-    <#if link["./targetType]@@text == "externalLink" and link["./targetURI"] == "caption">
+    <#if (link["./targetType"].@@text == "externalLink" && link["./targetURI"] == "caption")>
         <#return "caption">
-    <#elseif link["./targetType]@@text == 'internalLink">
+    <#elseif (link["./targetType"].@@text == "internalLink")>
         <#return "internalLink">
     <#else>
         <#return "externalLink">
@@ -20,32 +20,34 @@
 </#function>
 
 <#function getLinkTitle link>
-    <#return link["./linkTitle"]@@text>
-<#function>
+    <#return link["./linkTitle"].@@text>
+</#function>
 
 <#function getLinkDescription link>
     <#return link["./linkDescription"]>
 </#function>
 
 <#function getLinkOrder link>
-    <#return link["./linkOrder"]@@text>
+    <#return link["./linkOrder"].@@text>
 </#function>
 
 <#function getInternalLinkParameters link>
-    <#if getTargetUri(link)@starts_with("&?")>
-        <#return "&${getTargetUri(link)[3]}">
+    <#if (link["./targetURI"]?size > 0)>
+        <#assign targetUri=link["./targetURI"].@@text>
+        <#if (targetUri@starts_with("&?"))>
+            <#return "&${targetUri[3]}">
+        <#else>
+            <#return "">
+        </#if>
     <#else>
         <#return "">
     </#if>
 </#function>
 
 <#function getTargetUri link>
-    <#assign params>
-        
-    </#assign>
-    <#if getLinkType(link) == 'internalLink'>
-        <#return "${contextPrefix}/redirect/?oid=${link["./targetItem/@oid"]}${getInternalLinkParameters(link)}">
+    <#if (getLinkType(link) == "internalLink")>
+        <#return "${contextPrefix}/redirect/?oid=${link['./targetItem/@oid']}${getInternalLinkParameters(link)}">
     <#else>
-        <#return link["./targetURI"]@@text>
-    <#/if>
+        <#return link["./targetURI"].@@text>
+    </#if>
 </#function>
