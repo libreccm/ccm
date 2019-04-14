@@ -35,7 +35,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -461,19 +460,26 @@ public class FreeMarkerPresentationManager implements PresentationManager {
                         + "second: int");
             }
 
-            final String style = ((TemplateScalarModel) list.get(0))
+            final String style = ((TemplateScalarModel) list
+                                  .get(0))
                 .getAsString();
-            final String yearParam = ((TemplateScalarModel) list.get(1))
+            final String yearParam = ((TemplateScalarModel) list
+                                      .get(1))
                 .getAsString();
-            final String monthParam = ((TemplateScalarModel) list.get(2))
+            final String monthParam = ((TemplateScalarModel) list
+                                       .get(2))
                 .getAsString();
-            final String dayOfMonthParam = ((TemplateScalarModel) list.get(3))
+            final String dayOfMonthParam = ((TemplateScalarModel) list
+                                            .get(3))
                 .getAsString();
-            final String hourParam = ((TemplateScalarModel) list.get(4))
+            final String hourParam = ((TemplateScalarModel) list
+                                      .get(4))
                 .getAsString();
-            final String minuteParam = ((TemplateScalarModel) list.get(5))
+            final String minuteParam = ((TemplateScalarModel) list
+                                        .get(5))
                 .getAsString();
-            final String secondParam = ((TemplateScalarModel) list.get(6))
+            final String secondParam = ((TemplateScalarModel) list
+                                        .get(6))
                 .getAsString();
 
             final int year = Integer.parseInt(yearParam);
@@ -506,8 +512,9 @@ public class FreeMarkerPresentationManager implements PresentationManager {
             final Optional<String> format = dateFormats
                 .stream()
                 .filter(dateFormat -> dateFormat.getStyle().equals(style))
-                .filter(dateFormat -> dateFormat.getLang().equals(locale
-                .toString()))
+                .filter(
+                    dateFormat -> dateFormat.getLang().equals(locale.toString())
+                )
                 .map(DateFormat::getFormat)
                 .findAny();
 

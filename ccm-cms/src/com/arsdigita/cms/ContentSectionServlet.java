@@ -353,7 +353,7 @@ public class ContentSectionServlet extends BaseApplicationServlet {
 //                    }
 
             } else {
-                final String lang = url.substring(url.lastIndexOf("."));
+                final String lang = url.substring(url.lastIndexOf(".") + 1);
                 GlobalizationHelper.setSelectedLocale(lang);
             }
         }
