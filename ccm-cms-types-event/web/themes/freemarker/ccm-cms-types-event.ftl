@@ -204,27 +204,35 @@
     </#if>
 </#function>
 
-<#function getEndDateHour item>
-    <#if (item["./endDate"]?size > 0)>
-        <#return item["./endDate/@hour"]>
-    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
-        <#return item["./nav:attribute[@name='endDate']/@hour"]>
+<#function getEndTime item>
+    <#if (item["./endTime"]?size > 0)>
+        <#return item["./endTime"]>
+    <#elseif (item["./nav:attribute[@name='endTime']"]?size > 0)>
+        <#return item["./nav:attribute[@name='endTime']"]>
     </#if>
 </#function>
 
-<#function getEndDateMinute item>
-    <#if (item["./endDate"]?size > 0)>
-        <#return item["./endDate/@minute"]>
-    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
-        <#return item["./nav:attribute[@name='endDate']/@minute"]>
+<#function getEndTimeHour item>
+    <#if (item["./endTime"]?size > 0)>
+        <#return item["./endTime/@hour"]>
+    <#elseif (item["./nav:attribute[@name='endTime']"]?size > 0)>
+        <#return item["./nav:attribute[@name='endTime']/@hour"]>
     </#if>
 </#function>
 
-<#function getEndDateSecond item>
-    <#if (item["./endDate"]?size > 0)>
-        <#return item["./endDate/@second"]>
-    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
-        <#return item["./nav:attribute[@name='endDate']/@second"]>
+<#function getEndTimeMinute item>
+    <#if (item["./endTime"]?size > 0)>
+        <#return item["./endTime/@minute"]>
+    <#elseif (item["./nav:attribute[@name='endTime']"]?size > 0)>
+        <#return item["./nav:attribute[@name='endTime']/@minute"]>
+    </#if>
+</#function>
+
+<#function getEndTimeSecond item>
+    <#if (item["./endTime"]?size > 0)>
+        <#return item["./endTime/@second"]>
+    <#elseif (item["./nav:attribute[@name='endTime']"]?size > 0)>
+        <#return item["./nav:attribute[@name='endTime']/@second"]>
     </#if>
 </#function>
 
@@ -268,27 +276,35 @@
     </#if>
 </#function>
 
-<#function getStartDateHour item>
-    <#if (item["./startDate"]?size > 0)>
-        <#return item["./startDate/@hour"]>
-    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
-        <#return item["./nav:attribute[@name='startDate']/@hour"]>
+<#function getStartTime item>
+    <#if (item["./startTime"]?size > 0)>
+        <#return item["./startTime"]>
+    <#elseif (item["./nav:attribute[@name='startTime']"]?size > 0)>
+        <#return item["./nav:attribute[@name='startTime']"]>
     </#if>
 </#function>
 
-<#function getStartDateMinute item>
-    <#if (item["./startDate"]?size > 0)>
-        <#return item["./startDate/@minute"]>
-    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
-        <#return item["./nav:attribute[@name='startDate']/@minute"]>
+<#function getstartTimeHour item>
+    <#if (item["./startTime"]?size > 0)>
+        <#return item["./startTime/@hour"]>
+    <#elseif (item["./nav:attribute[@name='startTime']"]?size > 0)>
+        <#return item["./nav:attribute[@name='startTime']/@hour"]>
     </#if>
 </#function>
 
-<#function getStartDateSecond item>
-    <#if (item["./startDate"]?size > 0)>
-        <#return item["./startDate/@second"]>
-    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
-        <#return item["./nav:attribute[@name='startDate']/@second"]>
+<#function getstartTimeMinute item>
+    <#if (item["./startTime"]?size > 0)>
+        <#return item["./startTime/@minute"]>
+    <#elseif (item["./nav:attribute[@name='startTime']"]?size > 0)>
+        <#return item["./nav:attribute[@name='startTime']/@minute"]>
+    </#if>
+</#function>
+
+<#function getstartTimeSecond item>
+    <#if (item["./startTime"]?size > 0)>
+        <#return item["./startTime/@second"]>
+    <#elseif (item["./nav:attribute[@name='startTime']"]?size > 0)>
+        <#return item["./nav:attribute[@name='startTime']/@second"]>
     </#if>
 </#function>
 
