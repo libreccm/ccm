@@ -284,6 +284,28 @@
     </#if>
 </#function>
 
+<#function hasStartDate item>
+</#function>
+
+<#function hasEndDate item>
+</#function>
+
+<#function hasStartTime item>
+    <#return (item["./startTime"]?size > 0 || item["./nav:attribute[@name='startTime']"]?size > 0)>
+</#function>
+
+<#function hasEndTime item>
+    <#return (item["./endTime"]?size > 0 || item["./nav:attribute[@name='endTime']"]?size > 0)>
+</#function>
+
+<#function hasStartDate item>
+    <#return (item["./startDate"]?size > 0 || item["./nav:attribute[@name='startDate']"]?size > 0)>
+</#function>
+
+<#function hasEndDate item>
+    <#return (item["./endDate"]?size > 0 || item["./nav:attribute[@name='endDate']"]?size > 0)>
+</#function>
+
 <#function getstartTimeHour item>
     <#if (item["./startTime"]?size > 0)>
         <#return item["./startTime/@hour"]>
@@ -354,10 +376,13 @@
     </#if>
 </#macro>
 
-<#function getMapLink>
+<#function getMapLink item>
     <#return item["./mapLink"]>
 </#function>
 
+<#function getEventDateAddendum item>
+    <#return item["./eventDate"]>
+</#function>
 
 
 
