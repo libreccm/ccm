@@ -6,6 +6,7 @@
 >
 
 <#function getRelatedLinks item linkListName="NONE">
+
     <#return item["./links[./linkListName='${linkListName}']"]>
 </#function>
 
