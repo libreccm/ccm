@@ -126,3 +126,7 @@
         <#return item["./summary"]>
     </#if>    
 </#function>
+
+<#function generateContentItemLink oid>
+    <#return "${contextPrefix}/redirect/?oid=${oid}">
+</#function>
