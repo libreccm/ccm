@@ -8,3 +8,4 @@
 <#function getSubsiteName>
     <#return model["//ui:siteBanner[@bebop:classname='com.arsdigita.subsite.ui.SubSiteBanner']/@sitename)]"]>
 </#function>
+
