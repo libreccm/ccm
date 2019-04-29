@@ -71,3 +71,5 @@
 <#function getOrgaUnitContactEntries data>
     <#return data["./contacts/contact[1]/contactentries"]>
 </#function>
+
+
