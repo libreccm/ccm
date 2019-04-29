@@ -5,7 +5,7 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
-<#import ../ccm-cms.ftl as CMS>
+<#import ../ccm-cms/ContentItem.ftl as ContentItem>
 
 <#function getDescription data>
     <#if (data["./instituteDesc"]?size > 0)>
@@ -34,7 +34,7 @@
 </#function>
 
 <#function getDepartmentHeadLink head>
-    <#return CMS.generateContentItemLink(head)>
+    <#return ContentItem.generateContentItemLink(head)>
 </#function>
 
 <#function getDepartmentViceHeads data>
@@ -58,7 +58,7 @@
 </#function>
 
 <#function getSecretariatsLink sec>
-    <#return CMS.generateContentItemLink(sec)>
+    <#return ContentItem.generateContentItemLink(sec)>
 </#function>
 
 <#function getProjects data>
@@ -70,7 +70,7 @@
 </#function>
 
 <#function getProject project>
-    <#return CMS.generateContentItemLink(project)>
+    <#return ContentItem.generateContentItemLink(project)>
 </#function>
 
 

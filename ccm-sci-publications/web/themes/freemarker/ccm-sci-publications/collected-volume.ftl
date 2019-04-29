@@ -5,8 +5,8 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
-<#import ../ccm-cms.ftl as CMS>
+<#import ../ccm-cms/ContentItem.ftl as ContentItem>
 
 <#function getHref collectedVolume>
-    <#return CMS.generateContentItemLink(collectedVolume["./@oid"])>
+    <#return ContentItem.generateContentItemLink(collectedVolume["./@oid"])>
 </#function>

@@ -5,13 +5,13 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
-<#import ../ccm-cms.ftl as CMS>
+<#import ../ccm-cms/ContentItem.ftl as ContentItem>
 
 <#function getTitle journal>
     <#return journal["./title"]>
 </#function>
 
 <#function getHref journal>
-    <#return CMS.generateContentItemLink(journal["./@oid"])>
+    <#return ContentItem.generateContentItemLink(journal["./@oid"])>
 </#function>
 

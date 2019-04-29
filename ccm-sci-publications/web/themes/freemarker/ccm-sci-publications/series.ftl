@@ -5,10 +5,10 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
-<#import ../ccm-cms.ftl as CMS>
+<#import ../ccm-cms/ContentItem.ftl as ContentItem>
 
 <#function getLink series>
-    <#return CMS.generateContentItemLink(series)>
+    <#return ContentItem.generateContentItemLink(series)>
 </#function>
 
 <#function getName series>
@@ -20,6 +20,6 @@
 </#function>
 
 <#function getVolumeHref volume>
-    <#return CMS.generateContentItemLink(volume)>
+    <#return ContentItem.generateContentItemLink(volume)>
 </#function>
 

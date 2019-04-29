@@ -5,7 +5,7 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
-<#import ../ccm-cms.ftl as CMS>
+<#import ../ccm-cms/ContentItem.ftl as ContentItem>
 
 <#function getDescription data>
     <#if (data["./instituteDesc"]?size > 0)>
@@ -36,7 +36,7 @@
 </#function>
 
 <#function getDepartmentLink department>
-    <#return CMS.generateContentItemLink(department)>
+    <#return ContentItem.generateContentItemLink(department)>
 </#function>
 
 
