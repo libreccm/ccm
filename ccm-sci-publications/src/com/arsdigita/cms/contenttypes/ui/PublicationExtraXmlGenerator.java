@@ -32,10 +32,12 @@ import com.arsdigita.cms.contenttypes.SeriesCollection;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.cms.scipublications.imexporter.PublicationFormat;
 import com.arsdigita.cms.scipublications.exporter.SciPublicationsExporters;
-import com.arsdigita.cms.scipublications.importer.report.OrganizationalUnitImportReport;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.xml.Element;
+import com.arsdigita.persistence.SessionManager;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +50,7 @@ import java.util.List;
 public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
 
     private final static List<ExtraXMLGenerator> EXTENDING_GENERATORS
-                                                 = new ArrayList<ExtraXMLGenerator>();
+                                                     = new ArrayList<ExtraXMLGenerator>();
     private boolean listMode;
 
     public static void addExtendingGenerator(final ExtraXMLGenerator generator) {
@@ -99,14 +101,14 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
     private void createAuthorsXml(final Publication publication,
                                   final Element parent,
                                   final PageState state) {
-//        final long start = System.nanoTime();
+        final long start = System.nanoTime();
         final AuthorshipCollection authors = publication.getAuthors();
         if ((authors == null) || authors.isEmpty()) {
             return;
         }
-//        System.out.printf("[%s#createAuthorsXML] Got authors in %d ms\n",
-//                          PublicationExtraXmlGenerator.class.getName(),
-//                          (System.nanoTime() - start) / 1000000);
+        System.out.printf("[%s#createAuthorsXML] Got authors in %d ms\n",
+                          PublicationExtraXmlGenerator.class.getName(),
+                          (System.nanoTime() - start) / 1000000);
 
         final Element authorsElem = parent.newChildElement("authors");
         while (authors.next()) {
@@ -116,9 +118,24 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
                             authorsElem,
                             state);
         }
-//        System.out.printf("[%s#createAuthorsXML] Created XML for authors in %d ms\n",
-//                          PublicationExtraXmlGenerator.class.getName(),
-//                          (System.nanoTime() - start) / 1000000);
+        System.out.printf(
+            "[%s#createAuthorsXML] Created XML for authors in %d ms\n",
+            PublicationExtraXmlGenerator.class.getName(),
+            (System.nanoTime() - start) / 1000000);
+
+//        final long sqlStart = System.nanoTime();
+//        final Connection connection = SessionManager
+//            .getSession()
+//            .getConnection();
+//
+//        final PreparedStatement statement = connection
+//            .prepareStatement("SELECT person_id "
+//                                  + "FROM ct_publications_authorship "
+//                                  + "WHERE publication_id = ?");
+//        statement.setString(1, publication.getBundle().getBundleID().toString());
+//        
+        
+        
     }
 
     private void createAuthorXml(final GenericPerson author,
@@ -143,7 +160,7 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
                                     final Element parent,
                                     final PageState state) {
         final PublicationGenericOrganizationalsUnitCollection orgaunits
-                                                              = publication
+                                                                  = publication
                 .getOrganizationalUnits();
         if ((orgaunits == null) || orgaunits.isEmpty()) {
             return;
@@ -159,10 +176,11 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
 
             final GenericOrganizationalUnit orgaUnit = orgaunits
                 .getOrganizationalUnit();
-              final Element orgaUnitElem = orgaunitsElem.newChildElement("organizationalunit");
-              orgaUnitElem.addAttribute("oid", orgaUnit.getOID().toString());
-              final Element titleElem = orgaUnitElem.newChildElement("title");
-              titleElem.setText(orgaUnit.getTitle());
+            final Element orgaUnitElem = orgaunitsElem.newChildElement(
+                "organizationalunit");
+            orgaUnitElem.addAttribute("oid", orgaUnit.getOID().toString());
+            final Element titleElem = orgaUnitElem.newChildElement("title");
+            titleElem.setText(orgaUnit.getTitle());
         }
     }
 
@@ -199,14 +217,14 @@ public class PublicationExtraXmlGenerator implements ExtraXMLGenerator {
         if (series == null) {
             return;
         }
-        
+
         final Element seriesItemElem = seriesElem.newChildElement("series");
         seriesItemElem.addAttribute("oid", series.getOID().toString());
         seriesItemElem.addAttribute("volume", volumeOfSeries);
-        
+
         final Element titleElem = seriesItemElem.newChildElement("title");
         titleElem.setText(series.getTitle());
-        
+
 //        final XmlGenerator generator = new XmlGenerator(series);
 //        generator.setItemElemName("series", "");
 //        if (volumeOfSeries != null) {

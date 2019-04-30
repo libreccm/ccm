@@ -5,7 +5,7 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
-<#import ../ccm-cms/ContentItem.ftl as ContentItem>
+<#import ../ccm-cms/content-item.ftl as ContentItem>
 
 <#function getHref article>
     <#return ContentItem.generateContentItemLink(article["./@oid"])>
