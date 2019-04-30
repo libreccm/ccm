@@ -7,154 +7,6 @@
 
 <#import "/ccm-cms-types-article/macros.ftl" as Article>
 
-<#--
-    Outputs the lead text of the provided event.
--->
-<#macro lead item>
-    <#if (item["./lead"]?size > 0)> 
-        ${item["./lead"]}
-    <#elseif (item["./nav:attribute[@name='lead']"]?size > 0)>
-        ${item["./nav:attribute[@name='lead']"]}
-    </#if>
-</#macro>
-
-<#--
-    Output the main text of the provided event.
--->
-<#macro main item>
-    <#if (item["./textAsset"]?size > 0)>
-        ${item["./textAsset/content"]}
-    </#if>
-</#macro>
-
-<#macro endDate item>
-    <#if (item["./endDate"]?size > 0)>
-        ${item["./endDate"]}
-    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='endDate']"]}
-    </#if>
-</#macro>
-
-<#macro endDateYear item>
-    <#if (item["./endDate"]?size > 0)>
-        ${item["./endDate/@year"]}
-    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='endDate']/@year"]}
-    </#if>
-</#macro>
-
-<#macro endDateMonth item>
-    <#if (item["./endDate"]?size > 0)>
-        ${item["./endDate/@month"]}
-    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='endDate']/@month"]}
-    </#if>
-</#macro>
-
-<#macro endDateDay item>
-    <#if (item["./endDate"]?size > 0)>
-        ${item["./endDate/@day"]}
-    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='endDate']/@day"]}
-    </#if>
-</#macro>
-
-<#macro endDateDayNameShort item>
-    <#if (item["./endDate"]?size > 0)>
-        ${item["./endDate/@dayNameShort"]}
-    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='endDate']/@dayNameShort"]}
-    </#if>
-</#macro>
-
-<#macro endDateHour item>
-    <#if (item["./endDate"]?size > 0)>
-        ${item["./endDate/@hour"]}
-    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='endDate']/@hour"]}
-    </#if>
-</#macro>
-
-<#macro endDateMinute item>
-    <#if (item["./endDate"]?size > 0)>
-        ${item["./endDate/@minute"]}
-    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='endDate']/@minute"]}
-    </#if>
-</#macro>
-
-<#macro endDateSecond item>
-    <#if (item["./endDate"]?size > 0)>
-        ${item["./endDate/@second"]}
-    <#elseif (item["./nav:attribute[@name='endDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='endDate']/@second"]}
-    </#if>
-</#macro>
-
-<#macro startDate item>
-    <#if (item["./startDate"]?size > 0)>
-        ${item["./startDate"]}
-    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='startDate']"]}
-    </#if>
-</#macro>
-
-<#macro startDateYear item>
-    <#if (item["./startDate"]?size > 0)>
-        ${item["./startDate/@year"]}
-    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='startDate']/@year"]}
-    </#if>
-</#macro>
-
-<#macro startDateMonth item>
-    <#if (item["./startDate"]?size > 0)>
-        ${item["./startDate/@month"]}
-    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='startDate']/@month"]}
-    </#if>
-</#macro>
-
-<#macro startDateDay item>
-    <#if (item["./startDate"]?size > 0)>
-        ${item["./startDate/@day"]}
-    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='startDate']/@day"]}
-    </#if>
-</#macro>
-
-<#macro startDateDayNameShort item>
-    <#if (item["./startDate"]?size > 0)>
-        ${item["./startDate/@dayNameShort"]}
-    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='startDate']/@dayNameShort"]}
-    </#if>
-</#macro>
-
-<#macro startDateHour item>
-    <#if (item["./startDate"]?size > 0)>
-        ${item["./startDate/@hour"]}
-    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='startDate']/@hour"]}
-    </#if>
-</#macro>
-
-<#macro startDateMinute item>
-    <#if (item["./startDate"]?size > 0)>
-        ${item["./startDate/@minute"]}
-    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='startDate']/@minute"]}
-    </#if>
-</#macro>
-
-<#macro startDateSecond item>
-    <#if (item["./startDate"]?size > 0)>
-        ${item["./startDate/@second"]}
-    <#elseif (item["./nav:attribute[@name='startDate']"]?size > 0)>
-        ${item["./nav:attribute[@name='startDate']/@second"]}
-    </#if>
-</#macro>
-
 <#function getLead item>
     <#return Article.getLead(item)>
 </#function>
@@ -330,51 +182,21 @@
     </#if>
 </#function>
 
-<#macro location item>
-    <#if (item["./location"]?size > 0)>
-        ${item["./location"]}
-    </#if>
-</#macro>
-
 <#function getLocation(item)>
     <#return item["./location"]>
 </#function>
-
-<#macro mainContributor item>
-    <#if (item["./mainContributor"]?size > 0)>
-        ${item["./mainContributor"]}
-    </#if>
-</#macro>
 
 <#function getMainContributor item>
     <#return item["./mainContributor"]>
 </#function>
 
-<#macro eventType item>
-    <#if (item["./eventType"]?size > 0)>
-        ${item["./eventType"]}
-    </#if>
-</#macro>
-
 <#function getEventType item>
     <#return item["./eventType"]>
 </#function>
 
-<#macro cost item>
-    <#if (item["./cost"]?size > 0)>
-        ${item["./cost"]}
-    </#if>
-</#macro>
-
 <#function getCost item>
     <#return item["./cost"]>
 </#function>
-
-<#macro mapLink item>
-    <#if (item["./mapLink"]?size > 0)>
-        <#nested item["./mapLink"]>
-    </#if>
-</#macro>
 
 <#function getMapLink item>
     <#return item["./mapLink"]>
