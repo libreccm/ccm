@@ -1,0 +1,50 @@
+<h1 id="creating-themes-for-libreccm-with-freemarker">Creating themes for LibreCCM with Freemarker</h1>
+<p>Starting with version 2.5 the LibreCCM platform support <a href="https://freemarker.apache.org">Freemarker</a> as an alternative to XSL. Freemarker is a project of the Apache Foundation and a well known and mature template engine for Java. The support for Freemarker in version 2.5 is a backport from the upcoming version 7 of the LibreCCM platform.</p>
+<p>Compared to XSL Freemarker is a lot easier to use, especially if you have worked with other template engines like Twig, Velocity etc before. In version 7 of the LibreCCM platform Freemarker will be become the primary template engine. XSL will still be supported, but we recommanded that you port your themes to Freemarker. Why Freemarker and not one of the other template engines? Freemarker is able to process XML in a <a href="https://freemarker.apache.org/docs/xgui.html">similar way than XSL</a>.</p>
+<p>Freemarker also allows it to define <a href="https://freemarker.apache.org/docs/dgui_misc_userdefdir.html">user defined directivies</a> and <a href="https://freemarker.apache.org/docs/ref_directive_function.html">functions</a>. To make it easier to create impressive themes we provide functions and macros for Freemarker we provide several functions and macros which hide the complexity of the XML data model created by CCM from the template author. It is recommanded not to access the XML data model directly. Instead the provided functions should be used. Otherwise your theme might brake when the XML structure changes.</p>
+<h2 id="general-structure-of-a-freemarker-theme">General structure of a Freemarker theme</h2>
+<p>Freemarker themes have a different structure than the usual &quot;old style&quot; themes of LibreCCM.</p>
+<p>ToDo</p>
+<h2 id="predefined-variables-and-functions">Predefined variables and functions</h2>
+<p>Several variables and functions are predefined and available without importing another file.</p>
+<h3 id="variables">Variables</h3>
+<h4 id="contextpath"><code>contextPath</code></h4>
+<p>The context path in which CCM is running.</p>
+<h4 id="contextprefix"><code>contextPrefix</code></h4>
+<p>The context prefix.</p>
+<h4 id="dispatcherprefix"><code>dispatcherPrefix</code></h4>
+<p>Prefix for the CCM dispatcher (usually <code>/ccm</code>)</p>
+<h4 id="host"><code>host</code></h4>
+<p>The current host.</p>
+<h4 id="model"><code>model</code></h4>
+<p>The XML document created by LibreCCM.</p>
+<h4 id="negotiatedlanguage"><code>negotiatedLanguage</code></h4>
+<p>The language negoiated between the user agent and LibreCCM.</p>
+<h4 id="requestscheme"><code>requestScheme</code></h4>
+<p>The protocol (http or https).</p>
+<h4 id="selectedlanguage"><code>selectedLanguage</code></h4>
+<p>The language selected by the user.</p>
+<h4 id="themeprefix"><code>themePrefix</code></h4>
+<p>The prefix of the theme. Only available if a development theme is viewed.</p>
+<h3 id="functions">Functions</h3>
+<h4 id="getlocalizedtext"><code>getLocalizedText</code></h4>
+<pre><code>String getLocalizedText(String key)</code></pre>
+<p>Returns the localized text from the resource bundle of the theme.</p>
+<h4 id="getcontentitemtemplate"><code>getContentItemTemplate</code></h4>
+<pre><code>String getContentItemTemplate(String objectType, view=&quot;DETAIL&quot;, style=&quot;&quot;)</code></pre>
+<p>This is an internal function!</p>
+<p>Returns the path for the template of a content item of a specific type.</p>
+<h4 id="formatdatetime"><code>_formatDateTime</code></h4>
+<p>An internal functions date time formatting. This functions should not be used directly.</p>
+<h2 id="functions-and-macros">Functions and Macros</h2>
+<h3 id="common-functions">Common functions</h3>
+<h4 id="language-related">Language related</h4>
+<p>Import path: <code>&lt;#import /utils.ftl as Utils&gt;</code></p>
+<h5 id="sequence-getavailablelanguages"><code>Sequence getAvailableLanguages</code></h5>
+<pre><code>Sequence getAvailableLanguages()</code></pre>
+<p>Returns the available languages for the current document as sequence. These sequence can be used for creating links for selecting the language:</p>
+<pre><code>&lt;ul class=&quot;language-selector&quot;&gt;
+    &lt;#list Lang.getAvailableLanguages()?sort as lang&gt;
+        &lt;li class=&quot;${(lang==negotiatedLanguage)?then(&#39;selected&#39;, &#39;&#39;)}&quot;&gt;${lang}&lt;/li&gt;
+    &lt;/#list&gt;
+&lt;/ul&gt;</code></pre>
