@@ -5,16 +5,6 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
-<#--
-    Passes the content item provided by the model to the nested content if 
-    the model provides a content item.
--->
-<#macro contentPage>
-
-    <#nested model["/bebop:page/cms:contentPanel/cms:item"]>
-
-</#macro>
-
 <#function getContentItem>
     <#return model["/bebop:page/cms:contentPanel/cms:item"]>
 </#function>
@@ -42,17 +32,6 @@
     </#if>
     
     
-</#macro>
-
-<#--
-    Outputs the title of the provided content item.
--->
-<#macro title item>
-    <#if (item["./title"]?size > 0)>
-        ${item["./title"]}
-    <#elseif (item["./nav:attribute[@name='title']"]?size > 0)>
-        ${item["./nav:attribute[@name='title']"]}
-    </#if>
 </#macro>
 
 <#function getItemTitle item>
@@ -102,18 +81,6 @@
     </#if>
 
 </#function>
-
-<#macro itemSummary>
-    <#if (item["./nav:attribute[./@name='lead']"]?size > 0)>
-        ${item["./nav:attribute[./@name='lead']"]}
-    <#elseif (item["./nav:attribute[./@name='summary']"]?size > 0)>
-        ${item["./nav:attribute[./@name='summary']"]}
-    <#elseif (item["./lead"]?size > 0)>
-        ${item["./lead"]}
-    <#elseif (item["./summary"]?size > 0)>
-        ${item["./summary"]}
-    </#if>    
-</#macro>
 
 <#function getItemSummary item>
     <#if (item["./nav:attribute[./@name='lead']"]?size > 0)>
