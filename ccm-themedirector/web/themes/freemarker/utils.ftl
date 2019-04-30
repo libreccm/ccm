@@ -5,11 +5,6 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
-<#-- Move to Navigation macros/functions? -->
-<#macro pageTitle>
-    ${model["//nav:categoryMenu/nav:category/@title"]}
-</#macro>
-
 <#--
     Gets the application of the page served from the model
 -->
