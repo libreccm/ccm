@@ -60,32 +60,6 @@
 </#function>
 
 <#--
-    Checks if the a categoryMenu is available in the model and shows the 
-    nested content if one is available. The optional parameter 
-    menuId can be used to select a specific categoryMenu is used. If no value
-    value the parameter is provided the default value "categoryMenu" is used.
-
-    The categories are passed to the nested content. To iterate over the 
-    categories the "categories" macro can be used.
-
--->
-<#macro categoryMenu menuId="categoryMenu">
-
-    <#if (model["/bebop:page/nav:categoryMenu[@id='${menuId}']"]?size > 0) >
-        <#nested model["/bebop:page/nav:categoryMenu[@id='${menuId}']/nav:category/nav:category"]>
-    </#if>
-
-    <#--
-    <#assign categories=model["/bebop:page/nav:categoryMenu[@id='${menuId}']/nav:category/nav:category"]>
-
-    <#list categories as category>
-        <#nested category["./@id"], category["./@url"], category["./@title"], category>
-    </#list>
-    -->
-
-</#macro>
-
-<#--
     Retrieves the first level of categories from the category menu with the provided ID. 
     If no id is provided "categoryMenu" is used.
 -->
@@ -102,72 +76,11 @@
 </#function>
 
 <#--
-    Checks if an categoryHierachy is avialable in the model and shows the 
-    nested content if one is avialable. The optional parameter hierarchyId
-    can be used to select a specific categoryHierarchy. If no value for the 
-    parameter is provided the default value "categoryNav" is used.
--->
-<#macro categoryHierarchy hierarchyId="categoryNav">
-
-    <#if (model["/bebop:page/nav:categoryHierarchy[@id='${hierarchyId}']"]?size > 0)>
-        <#nested model["/bebop:page/nav:categoryHierarchy[@id='${hierarchyId}']/nav:category"]>
-    </#if>
-
-    <#-- 
-    <#assign categories=model["/bebop:page/nav:categoryHierarchy[@id='${hierarchyId}']/nav:category"]>
-
-    <#list categories as category>
-        <#nested category["./@id"], category["./@url"], category["./@title"], category>
-    </#list>
-    -->
-
-</#macro>
-
-<#--
-    Iterates over the provided sequence of categories. For each category 
-    the following parameters are passed to the nested content:
-
-    1. ID of the category
-    2. URL of the category
-    3. Title of the category
-    4. The category itself.
--->
-<#macro categories categories>
-
-    <#list categories as category>
-        <#nested category["./@id"], category["./@url"], category["./@title"], category>
-    </#list>
-
-</#macro>
-
-<#--
-    Checks of the provided category has subcategories. If the category
-    has subcategories they are passed to the nested content and can be 
-    used to iterate over them.
--->
-<#macro subCategories ofCategory>
-
-    <#if (ofCategory["./nav:category"]?size > 0)>
-        <#nested ofCategory["./nav:category"]>
-    </#if>
-
-</#macro>
-
-<#--
     Gets the subcategories of the provided category.
 -->
 <#function getSubCategories ofCategory>
     <#return ofCategory["./nav:category"]>
 </#function>
-
-<#--
-    Passed the GreetingItem provided by the model to the nested content if their is an GreetingItem.
--->
-<#macro greetingItem>
-
-    <#nested model["/bebop:page/nav:greetingItem/cms:item"]>
-
-</#macro>
 
 <#function getGreetingItem>    
     <#return model["/bebop:page/nav:greetingItem/cms:item"]>
