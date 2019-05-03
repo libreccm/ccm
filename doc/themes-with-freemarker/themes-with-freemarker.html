@@ -39,8 +39,8 @@
 <h2 id="functions-and-macros">Functions and Macros</h2>
 <h3 id="common-functions">Common functions</h3>
 <h4 id="language-related">Language related</h4>
-<p>Import path: <code>&lt;#import /utils.ftl as Utils&gt;</code></p>
-<h5 id="sequence-getavailablelanguages"><code>Sequence getAvailableLanguages</code></h5>
+<p>Import path: <code>&lt;#import /language.ftl as Lang&gt;</code></p>
+<h5 id="getavailablelanguages"><code>getAvailableLanguages</code></h5>
 <pre><code>Sequence getAvailableLanguages()</code></pre>
 <p>Returns the available languages for the current document as sequence. These sequence can be used for creating links for selecting the language:</p>
 <pre><code>&lt;ul class=&quot;language-selector&quot;&gt;
@@ -48,3 +48,233 @@
         &lt;li class=&quot;${(lang==negotiatedLanguage)?then(&#39;selected&#39;, &#39;&#39;)}&quot;&gt;${lang}&lt;/li&gt;
     &lt;/#list&gt;
 &lt;/ul&gt;</code></pre>
+<p>This example uses the <code>list</code> directive from Freemarker to iterate over the available languages returned by <code>getAvailableLanguages</code> The Freemarker build-in <code>?then</code> is used together with the <code>negotiatedLanguage</code> variable to check if the curent language is the selected language. If this is the case a CSS class is added to the HTML.</p>
+<h4 id="basic-functions">Basic functions</h4>
+<p>Import path: <code>&lt;#import /utils.ftl as Utils&gt;</code></p>
+<h5 id="getpageapplication">getPageApplication</h5>
+<pre><code>getPageApplication()</code></pre>
+<p>Return the application of the current page.</p>
+<h5 id="getpagetitle">getPageTitle</h5>
+<pre><code>getPageTitle()</code></pre>
+<p>Returns the title of the current page</p>
+<h5 id="getsitehostname">getSiteHostName</h5>
+<pre><code>getSiteHostName()</code></pre>
+<p>Returns the name of the host serving the site.</p>
+<h5 id="getsitename">getSiteName</h5>
+<pre><code>getSiteName()</code></pre>
+<p>Returns the name of the site.</p>
+<h5 id="getbooleanattrvalue">getBooleanAttrValue</h5>
+<pre><code>getBooleanAttrValue(fromNode: Node attrName: String)</code></pre>
+<p>A helper function which tries to convert the value of the attribute <code>attrName</code> of the node <code>fromNode</code> to a boolean. The following values are interpreted as true: <code>true</code>, <code>yes</code>. All other values are interpreted as <code>false</code>.</p>
+<h6 id="parameters">Parameters</h6>
+<p><code>fromNode</code> A XML node</p>
+<p><code>attrName</code> The name of attribute to interpret as boolean</p>
+<h6 id="returns">Returns</h6>
+<p>A boolean for the value of the attribute. If the attribute is not present in the provided node the function returns <code>false</code>.</p>
+<h5 id="formatdatetime-1">formatDateTime</h5>
+<pre><code>formatDateTime(style: String date: Node)</code></pre>
+<p>Formats the value of date/time value node according to the provided <code>style</code>. The is defined in the theme manifest in the <code>date-time-formats</code> section. It is possible to define different styles for different languages. The style definition in the theme manifest must be in the format expected by the Java <a href="https://docs.oracle.com/javase/8/docs/api/index.html?java/time/format/DateTimeFormatter.html">DateTimeFormatter</a> class.</p>
+<h6 id="parameters-1">Parameters</h6>
+<p><code>style</code> A date-time format defined in the theme manifest. The format must be formatted as expected by the <a href="https://docs.oracle.com/javase/8/docs/api/index.html?java/time/format/DateTimeFormatter.html">DateTimeFormatter</a> class.</p>
+<p><code>date</code> The node providing the data of the date to format.</p>
+<h6 id="returns-1">Returns</h6>
+<p>A date formatted as defined in <code>style</code>.</p>
+<h6 id="examples">Examples</h6>
+<p>In the theme manifest in the following format is defined:</p>
+<pre><code>&quot;date-time-formats&quot;: [
+    ...
+    {
+        &quot;style&quot;: &quot;news&quot;,
+        &quot;lang&quot;: &quot;de&quot;,
+        &quot;format&quot;: &quot;dd.MM.YYYY&quot;
+    },
+    {
+        &quot;style&quot;: &quot;news&quot;,
+        &quot;lang&quot;: &quot;en&quot;,
+        &quot;format&quot;: &quot;MM/dd/YY&quot;
+    },
+    ...
+]</code></pre>
+<p>The use this format:</p>
+<pre><code>Utils.formatDateTime(&#39;news&#39;, News.getDateTime(item))</code></pre>
+<p><code>News.getDateTime</code> gets the date of a news item. If the date of the news is 2019-04-01 the return value of the function for german is</p>
+<pre><code>01.04.2019</code></pre>
+<p>and for english:</p>
+<pre><code>4/1/19</code></pre>
+<h3 id="ccm-cms-assets-fileattachment">ccm-cms-assets-fileattachment</h3>
+<p>This module provides functions for dealing with file attachments. A possible usage these functions:</p>
+<pre><code>&lt;#list FileAttachments.getFileAttachments(item)&gt;
+    &lt;div class=&quot;file-attachments&quot;&gt;
+
+        &lt;h2&gt;
+            ${getLocalizedText(&quot;layout.page.main.fileAttachments&quot;)}
+        &lt;/h2&gt;
+
+        &lt;ul class=&quot;file-attachments&quot;&gt;
+            &lt;#items as file&gt;
+                &lt;#if FileAttachments.getFileType(file) == &quot;caption&quot;&gt;
+                    &lt;li class=&quot;caption&quot;&gt;
+                    &lt;strong&gt;${FileAttachments.getFileName(file)}&lt;/strong&gt;
+                    &lt;p&gt;
+                        ${FileAttachments.getFileDescription(file)}
+                    &lt;/p&gt;
+                    &lt;/li&gt;
+                &lt;#else&gt;
+                    &lt;li class=&quot;file-attachment&quot;&gt;
+                        &lt;a href=&quot;${FileAttachments.getFileUrl(file)}&quot;&gt;
+                            &lt;span class=&quot;fa fa-download&quot;&gt;&lt;/span&gt;
+                            ${FileAttachments.getFileDescription(file)} 
+                            (${FileAttachments.getMimeTypeFileExtension(file)},
+                            ${FileAttachments.getFileSize(file, &quot;KiB&quot;)} KB)                                      
+                            
+                        &lt;/a&gt;
+                    &lt;/li&gt;
+                &lt;/#if&gt;
+            &lt;/#items&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+&lt;/#list&gt;</code></pre>
+<h4 id="getfileattachments">getFileAttachments</h4>
+<pre><code>getFileAttachments(item: ContentItemNode): Sequence</code></pre>
+<p>Return the file attachments of a content items</p>
+<h5 id="parameters-2">Parameters</h5>
+<p><code>item</code> The content item from which the file attachments are retrieved.</p>
+<h5 id="returns-2">Returns</h5>
+<p>A sequence of the file attachments of the provided content item.</p>
+<h4 id="getfiletype">getFileType</h4>
+<pre><code>getFileType(file)</code></pre>
+<p>Returns the type of the file attachments which is either <code>caption</code> or <code>file</code>.</p>
+<h5 id="parameters-3">Parameters</h5>
+<p><code>file</code> The file attachment</p>
+<h5 id="returns-3">Returns</h5>
+<p>The type of the file attachment.</p>
+<h4 id="getmimetype">getMimeType</h4>
+<pre><code>getMimeType(file)</code></pre>
+<p>Returns the mime type of the file.</p>
+<h5 id="parameters-4">Parameters</h5>
+<p><code>file</code> The file</p>
+<h5 id="returns-4">Returns</h5>
+<p>The mime type of the file.</p>
+<h4 id="getmimetypefileextension">getMimeTypeFileExtension</h4>
+<pre><code>getMimeTypeFileExtension(file)</code></pre>
+<p>Returns the usual file extension for the mime type of the file.</p>
+<h5 id="parameters-5">Parameters</h5>
+<p><code>file</code> The file</p>
+<h5 id="returns-5">Returns</h5>
+<p>The usual file extension for the mime type of the file.</p>
+<h4 id="getfilesize">getFileSize</h4>
+<pre><code>getFileSize(file unit=&quot;byte&quot;)</code></pre>
+<p>Returns the size of the file in the provided unit.</p>
+<h5 id="parameters-6">Parameters</h5>
+<p><code>file</code>The file</p>
+<p><code>unit</code> Optional parameter for unit in which the size is returned. Default value is <code>byte</code>. Supported values are <code>byte</code>, <code>kB</code> <code>KiB</code>, <code>MB</code> and <code>MiB</code>. All other values are interpreted as <code>byte</code>.</p>
+<h5 id="returns-6">Returns</h5>
+<p>The size of the file in the provided unit.</p>
+<h4 id="getfileid">getFileId</h4>
+<pre><code>getFileId(file)</code></pre>
+<p>Returns the ID of the file.</p>
+<h5 id="parameters-7">Parameters</h5>
+<p><code>file</code> The file</p>
+<h5 id="returns-7">Returns</h5>
+<p>The ID of the file.</p>
+<h4 id="getfilename">getFileName</h4>
+<pre><code>getFileName(file)</code></pre>
+<p>Returns the name of file.</p>
+<h5 id="parameters-8">Parameters</h5>
+<p><code>file</code> The file</p>
+<h5 id="returns-8">Returns</h5>
+<p>The name of the file.</p>
+<h4 id="getfiledescription">getFileDescription</h4>
+<pre><code>getFileDescription(file)</code></pre>
+<p>Returns the name of file.</p>
+<h5 id="parameters-9">Parameters</h5>
+<p><code>file</code> The file</p>
+<h5 id="returns-9">Returns</h5>
+<p>The description of the file.</p>
+<h4 id="getfileurl">getFileUrl</h4>
+<pre><code>getFileUrl(file)</code></pre>
+<p>Returns the name of file.</p>
+<h5 id="parameters-10">Parameters</h5>
+<p><code>file</code> The file</p>
+<h5 id="returns-10">Returns</h5>
+<p>The URL of the file.</p>
+<h3 id="ccm-cms-assets-imagestep">ccm-cms-assets-imagestep</h3>
+<p>Provides functions for dealing with image attachments of a content item.</p>
+<p>Import path: <code>&lt;#import &quot;/ccm-cms-assets-imagestep.ftl&quot; as Images&gt;</code></p>
+<p>Example usage:</p>
+<pre><code>&lt;#import &quot;/ccm-cms-assets-imagestep.ftl&quot; as Images&gt;
+
+&lt;#list Images.getImageAttachments(item)&gt;
+    &lt;div class=&quot;image-attachments&quot;&gt;
+        &lt;#items as image&gt;
+            &lt;figure&gt;
+                &lt;div&gt;
+                    &lt;a data-fancybox=&quot;gallery&quot;&gt;
+                        &lt;img src=&quot;${Images.getImageUrl(image)}&quot;
+                             width=&quot;100%&quot; 
+                             height=&quot;auto&quot; /&gt;
+                    &lt;/a&gt;
+                &lt;/div&gt;
+                &lt;figcaption&gt;
+                    ${Images.getImageCaption(image)}
+                &lt;/figcaption&gt;
+            &lt;/figure&gt;
+        &lt;/#items&gt;
+    &lt;/div&gt;
+&lt;/#list&gt;</code></pre>
+<h4 id="getimageattachments">getImageAttachments</h4>
+<pre><code>getImageAttachments(item)</code></pre>
+<p>Get the image attachments of a content item</p>
+<h5 id="parameters-11">Parameters</h5>
+<p><code>item</code> The content item.</p>
+<h5 id="returns-11">Returns</h5>
+<p>A sequence of the image attachments of the provided content item.</p>
+<h4 id="getimageid">getImageId</h4>
+<pre><code>getImageId(image)</code></pre>
+<p>Get the ID of the provided image.</p>
+<h5 id="parameters-12">Parameters</h5>
+<p><code>image</code> The image.</p>
+<h5 id="returns-12">Returns</h5>
+<p>The id of the image.</p>
+<h4 id="getimagename">getImageName</h4>
+<pre><code>getImageName(image)</code></pre>
+<p>Gets the name of the provided image.</p>
+<h5 id="parameters-13">Parameters</h5>
+<p><code>image</code> The image.</p>
+<h5 id="returns-13">Returns</h5>
+<p>The name of the image.</p>
+<h4 id="getimagecaption">getImageCaption</h4>
+<pre><code>getImageCaption(image)</code></pre>
+<p>Gets the caption of the provided image.</p>
+<h5 id="parameters-14">Parameters</h5>
+<p><code>image</code> The image.</p>
+<h5 id="returns-14">Returns</h5>
+<p>The caption of the image.</p>
+<h4 id="getimagesortkey">getImageSortKey</h4>
+<pre><code>getImageSortKey(image)</code></pre>
+<p>Gets the sort key of the provided image.</p>
+<h5 id="parameters-15">Parameters</h5>
+<p><code>image</code> The image.</p>
+<h5 id="returns-15">Returns</h5>
+<p>The sort key of the provided image.</p>
+<h4 id="getimagewidth">getImageWidth</h4>
+<pre><code>getImageWidth(image)</code></pre>
+<p>Gets the width of the provided image.</p>
+<h5 id="parameters-16">Parameters</h5>
+<p><code>image</code> The image.</p>
+<h5 id="returns-16">Returns</h5>
+<p>The width of the provided image.</p>
+<h4 id="getimageheight">getImageHeight</h4>
+<pre><code>getImageHeight(image)</code></pre>
+<p>Gets the height of the provided image.</p>
+<h5 id="parameters-17">Parameters</h5>
+<p><code>image</code> The image.</p>
+<h5 id="returns-17">Returns</h5>
+<p>The height of the provided image.</p>
+<h4 id="getimageurl">getImageUrl</h4>
+<pre><code>getImageUrl(image)</code></pre>
+<p>Gets the URL of the provided image.</p>
+<h5 id="parameters-18">Parameters</h5>
+<p><code>image</code> The image.</p>
+<h5 id="returns-18">Returns</h5>
+<p>The URL of the provided image.</p>
