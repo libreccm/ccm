@@ -69,7 +69,7 @@
     <#return data["./publications"]>
 </#function>
 
-<#function gtAvailableProjectGroups data>
+<#function getAvailableProjectGroups data>
     <#return data["./ppp:profile/personalProjects/availableProjectGroups/availableProjectGroup"]>
 </#function>
 
