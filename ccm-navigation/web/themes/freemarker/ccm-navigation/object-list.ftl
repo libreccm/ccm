@@ -33,6 +33,10 @@
     <#return item["./nav:attribute[@name='imageAttachments.image.id'][1]"]>
 </#function>
 
+<#function getImageUrl item>
+    <#return dispatcherPrefix + '/cms-service/stream/image/?image_id=' + getImageId(item)>
+</#function>
+
 <#function getImageCaption item>
     <#return item["./nav:attribute[@name='imageAttachments.image.caption'][1]"].@@text>
 </#function>
