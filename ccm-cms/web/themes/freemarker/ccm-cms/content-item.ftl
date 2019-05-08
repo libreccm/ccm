@@ -94,6 +94,14 @@
     </#if>    
 </#function>
 
+<#function getPageDescription item>
+    <#if (item["./pageDescription"]?size > 0)>
+        <#return item["./pageDescription"]>
+    <#elseif (item["./nav:attribute[./@name='pageDescription']"]?size > 0)>
+        <#return item["./nav:attribute[./@name='pageDescription']"]>
+    </#if>
+</#function>
+
 <#function generateContentItemLink oid>
     <#return "${contextPrefix}/redirect/?oid=${oid}">
 </#function>
