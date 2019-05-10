@@ -105,3 +105,11 @@
 <#function generateContentItemLink oid>
     <#return "${contextPrefix}/redirect/?oid=${oid}">
 </#function>
+
+<#function getEditLink item>
+    <#if (item["./editLink"]?size > 0)>
+        <#return "${contentTextPrefix}/ccm" + item["./editLink"]>
+    <#else>
+        <#return "">
+    </#if>
+</#function>
