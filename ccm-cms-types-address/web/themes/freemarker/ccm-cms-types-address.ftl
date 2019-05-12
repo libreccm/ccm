@@ -5,6 +5,10 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
+<#function getAddressText item>
+    <#return item["./address"]>
+</#function>
+
 <#function getCity item>
     <#return item["./city"]>
 </#function>
