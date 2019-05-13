@@ -27,9 +27,21 @@
 
 <#function getSelectedTab item>
 
-    <#assign selectedTab=item["./orgaUnitTabs/availableTabs/*[@selected='true']/@label"]>
+    <#--  <#assign selectedTab=item["./orgaUnitTabs/availableTabs/*[@selected='true']/@label"]>
 
-    <#return item["./tab[@name='${selectedTab}']"]>
+    <#return item["./tab[@name='${selectedTab}']"]>  -->
+
+    <#return item["./orgaUnitTabs/selectedTab/*"]
+</#function>
+
+<#function getTypeOfSelectedTab item>
+
+    <#assign nodeName = item["./orgaUnitTabs/selectedTab/*"]?node_name>
+    <#if (nodeName == "text")>
+        <#return item["./orgaUnitTabs/selectedTab/text/@key"]>
+    <#else>
+        <#return nodeName>
+    </#if>
 </#function>
 
 <#function getPropertyFromTab tab name>
