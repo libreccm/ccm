@@ -40,3 +40,99 @@
 <#function getImageCaption item>
     <#return item["./nav:attribute[@name='imageAttachments.image.caption'][1]"].@@text>
 </#function>
+
+<#function getFilters listId>
+    <#if (model["/bebop:page/nav:simpleObjectList[@id='${listId}']/filterControls"]?size > 0)>
+        <#return model["/bebop:page/nav:simpleObjectList[@id='${listId}']//filterControls/filters/filter"]>
+    <#elseif (model["/bebop:page/nav:complexObjectList[@id='${listId}']//filterControls"]?size > 0)>
+        <#return model["/bebop:page/nav:complexObjectList[@id='${listId}']/nav:objectList/filters/filter"]>
+    <#elseif (model["/bebop:page/nav:customizableObjectList[@id='${listId}']//filterControls"]?size > 0)>
+        <#return model["/bebop:page/nav:simpleObjectList[@id='${listId}']/nav:objectList/filters/filter"]>
+    <#else>
+        <#return []>
+    </#if>
+</#function>
+
+<#function getFilterLabel filter>
+    <#return filter["./@label"]>
+</#function>
+
+<#function getFilterType filter>
+    <#return filter["./@type"]>
+</#function>
+
+<#function getSelectFilterOptions filter>
+    <#if (filter["./@type"] == "select")>
+        <#return filter["./option"]>
+    <#else>
+        <#return []>
+    </#if>
+</#function>
+
+<#function getSelectFilterSelection filter>
+    <#return filter["./selected"]>
+</#function>
+
+<#function getSelectFilterOptionLabel option>
+    <#return option["./label"]>
+</#function>
+
+<#function getCategoryFilterSearchString filter>
+    <#if filter["./@type"] == "categoryFilter">
+        <#return filter["./searchString"]>
+    <#else>
+        <#return "">
+    </#if>
+</#function>
+
+<#function getCategoryFilterSeparator filter>
+    <#if filter["./@type"] == "categoryFilter">
+        <#return filter["./separator"]>
+    <#else>
+        <#return "">
+    </#if>
+</#function>
+
+<#function getCategoryFilterMultiple filter>
+    <#if filter["./@type"] == "categoryFilter">
+        <#return filter["./multiple"] == "true">
+    <#else>
+        <#return false>
+    </#if>
+</#function>
+
+<#function getCategoryFilterCategories filter>
+    <#if filter["./@type"] == "categoryFilter">
+        <#return filter["./categories/categories"]>
+    <#else>
+        <#return []>
+    <#/if>
+</#function>
+
+<#function getCategoryFilterCategoryGroups filter>
+    <#if filter["./@type"] == "categoryFilter">
+        <#return filter["./categories/categoryGroup"]>
+    <#else>
+        <#return []>
+    <#/if>
+</#function>
+
+<#function getCategoryGroupLabel group>
+    <#return group["./label"]>
+</#function>
+
+<#function getCategoryFilterCategoryGroupsCategories groups>
+   
+    <#return group["./categories/categoryGroup/category"]>
+   
+</#function>
+
+<#function getCategoryFilterCategoryId category>
+    <#return category["./@id"]>
+</#function>
+
+<#function getCategoryFilterCategoryLabel category>
+    <#return category["."]@@text>
+</#function>
+
+

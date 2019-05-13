@@ -7,6 +7,10 @@
 
 <#import ../ccm-cms/content-item.ftl as ContentItem>
 
+<#function getFilters series>
+    <#return series["./filters/filter"]>
+</#function>
+
 <#function getLink series>
     <#return ContentItem.generateContentItemLink(series)>
 </#function>
