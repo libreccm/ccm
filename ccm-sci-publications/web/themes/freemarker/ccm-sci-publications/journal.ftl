@@ -7,11 +7,25 @@
 
 <#import ../ccm-cms/content-item.ftl as ContentItem>
 
-<#function getTitle journal>
-    <#return journal["./title"]>
+<#function getFirstYear(journal)>
+    <#return journal["./firstYear"]>
 </#function>
 
 <#function getHref journal>
     <#return ContentItem.generateContentItemLink(journal["./@oid"])>
 </#function>
+
+<#function getIssn journal>
+    <#return journal["./issn"]>
+</#function>
+
+<#function getLastYear(journal)>
+    <#return journal["./lastYear"]>
+</#function>
+
+<#function getTitle journal>
+    <#return journal["./title"]>
+</#function>
+
+
 
