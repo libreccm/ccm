@@ -25,6 +25,18 @@
     <#return owner["./titlePost"]>
 </#function>
 
+<#function getProfileOwnerPosition>
+    <#return data["./position"]>
+</#function>
+
+<#function getProfileOwnerInterests>
+    <#return data["./interests"]>
+</#function>
+
+<#function getProfileOwnerMisc>
+    <#return data["./misc"]>
+</#function>
+
 <#function getProfileOwnerContact owner>
     <#return owner["./contact"]>
 </#function>
