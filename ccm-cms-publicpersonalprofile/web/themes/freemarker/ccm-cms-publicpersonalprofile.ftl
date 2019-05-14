@@ -25,15 +25,15 @@
     <#return owner["./titlePost"]>
 </#function>
 
-<#function getProfileOwnerPosition>
+<#function getProfilePosition>
     <#return data["./position"]>
 </#function>
 
-<#function getProfileOwnerInterests>
+<#function getProfileInterests>
     <#return data["./interests"]>
 </#function>
 
-<#function getProfileOwnerMisc>
+<#function getProfileMisc>
     <#return data["./misc"]>
 </#function>
 
