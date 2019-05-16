@@ -53,6 +53,10 @@
     <#return item["./item-id"]>
 </#function>
 
+<#function getProjectItemName item>
+    <#return item["./name"]>
+</#function>
+
 <#function getProjectItemTitle item>
     <#return item["./title"]>
 </#function>
