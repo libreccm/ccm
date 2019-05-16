@@ -5,6 +5,11 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
+<#---
+    Retrieves the languages in which the content of the current page is available.
+
+    @return A sequence of the available languages (as ISO language codes)
+#>
 <#function getAvailableLanguages>
     <#if (model["/bebop:page/cms:contentPanel"]?size > 0)>
         <#return model["/bebop:page/cms:contentPanel/availableLanguages/language/@locale"]>
