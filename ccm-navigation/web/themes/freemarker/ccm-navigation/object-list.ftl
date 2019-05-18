@@ -26,7 +26,7 @@
 </#function>
 
 <#function getObjectCount listId>
-    <#return model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@objectCount"]@@text>
+    <#return model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@objectCount"].@@text>
 </#function>
 
 <#function getPaginatorBaseUrl listId>
@@ -185,7 +185,7 @@
 </#function>
 
 <#function getCategoryFilterCategoryLabel category>
-    <#return category["."]@@text>
+    <#return category.@@text>
 </#function>
 
 
