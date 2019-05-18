@@ -25,6 +25,10 @@
     </#if>
 </#function>
 
+<#function getObjectCount listId>
+    <#return model["/bebop:page/*[id='${listId}']/nav:ObjectList/nav:paginator/@objectCount"]@@text>
+</#function>
+
 <#function getItemLink item>
     <#return item["./nav:path"]>
 </#function>
