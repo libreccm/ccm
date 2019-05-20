@@ -90,6 +90,10 @@
     <#return item["./nav:attribute[@name='lead']"]>
 </#function>
 
+<#function getItemProperty item property>
+    <#return item["./nav:atttribute[@name='${property}']"]>
+</#function>
+
 <#function hasImage item>
     <#return (item["./nav:attribute[@name='imageAttachments.image.id']"]?size > 0)>
 </#function>
