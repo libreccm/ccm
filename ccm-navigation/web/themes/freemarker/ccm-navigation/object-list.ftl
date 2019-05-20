@@ -78,6 +78,10 @@
     <#return getPaginatorBaseUrl(itemId) + getPageParam(listId) + "=" + getPageCount(itemId)>
 </#function>
 
+<#function getItemTitle item>
+    <#return item["/nav:attribute[@name='title']"]>
+</#function>
+
 <#function getItemLink item>
     <#return item["./nav:path"]>
 </#function>
