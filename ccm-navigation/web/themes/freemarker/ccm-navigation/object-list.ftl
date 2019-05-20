@@ -82,6 +82,10 @@
     <#return item["./nav:path"]>
 </#function>
 
+<#function hasImage item>
+    <#return (item["./nav:attribute[@name='imageAttachments.image.id']"]?size > 0)>
+</#function>
+
 <#function getImageId item>
     <#return item["./nav:attribute[@name='imageAttachments.image.id'][1]"]>
 </#function>
