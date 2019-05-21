@@ -39,27 +39,27 @@
 </#function>
 
 <#function getPaginatorBegin listId>
-    <#return model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@objectBegin>
+    <#return model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@objectBegin"]>
 </#function>
 
 <#function getPaginatorEnd listId>
-    <#return model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@objectEnd>
+    <#return model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@objectEnd"]>
 </#function>
 
 <#function getPageCount listId>
-    <#return model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@pageCount>
+    <#return model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@pageCount"]>
 </#function>
 
 <#function getPageNumber listId>
-    <#return model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@pageNumber>
+    <#return model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@pageNumber"]>
 </#function>
 
 <#function getPageParam listId>
-    <#return model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@pageParam>
+    <#return model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@pageParam"]>
 </#function>
 
 <#function getPageSize listId>
-    <#return model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@pageSize>
+    <#return model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@pageSize"]>
 </#function>
 
 <#function getPrevPageLink listId>
@@ -175,7 +175,7 @@
         <#return filter["./categories/categories"]>
     <#else>
         <#return []>
-    <#/if>
+    </#if>
 </#function>
 
 <#function getCategoryFilterCategoryGroups filter>
@@ -183,7 +183,7 @@
         <#return filter["./categories/categoryGroup"]>
     <#else>
         <#return []>
-    <#/if>
+    </#if>
 </#function>
 
 <#function getCategoryGroupLabel group>

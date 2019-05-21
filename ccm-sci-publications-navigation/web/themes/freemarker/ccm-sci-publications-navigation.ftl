@@ -14,23 +14,23 @@
 </#function>
 
 <#function getTitleFilterValue list>
-    <#return list["./fiters/title]>
+    <#return list["./fiters/title"]>
 </#function>
 
 <#function getYearOfPublicationFilterAvailableYears list>
-    <#return list["./filters/available-years/year]>
+    <#return list["./filters/available-years/year"]>
 </#function>
 
 <#function getYearOfPublicationFilterValue list>
-    <#return list["./fiters/year]>
+    <#return list["./fiters/year"]>
 </#function>
 
 <#function getAuthorsFilterValue list>
-    <#return list["./filters/authors]>
+    <#return list["./filters/authors"]>
 </#function>
 
 <#function getSort list>
-    <#return list["./filters/sort"]
+    <#return list["./filters/sort"]>
 </#function>
 
 <#function getCount list>

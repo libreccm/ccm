@@ -4,7 +4,7 @@
 "nav":"http://ccm.redhat.com/navigation",
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
-<#import "/ccm-cms-types-article/macros.ftl" as Article>
+<#import "/ccm-cms-types-article.ftl" as Article>
 
 <#function getLead item>
     <#return Article.getLead(item)>

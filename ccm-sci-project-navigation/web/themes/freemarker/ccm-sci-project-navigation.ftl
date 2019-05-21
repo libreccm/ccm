@@ -6,11 +6,11 @@
 >
 
 <#function getSciProjectList listId="itemList">
-    <#return model["/bebop:page/nav:sci-project-list[@id='${listId}'"]>
+    <#return model["/bebop:page/nav:sci-project-list[@id='${listId}']"]>
 </#function>
 
 <#function getProjects list>
-    <#return list["./project]>
+    <#return list["./project"]>
 </#function>
 
 <#function getTitleFilterValue list>
@@ -62,7 +62,7 @@
 </#function>
 
 <#function getProjectItemObjectType item>
-    <#return item["./@object-type]>
+    <#return item["./@object-type"]>
 </#function>
 
 <#function getProjectItemBeginDay item>
