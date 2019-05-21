@@ -15,7 +15,7 @@
         <#--  <pre>Found complex object list ${listId}</pre>  -->
         <#return model["/bebop:page/nav:complexObjectList[@id='${listId}']/nav:objectList/nav:item"]>
         <#--  <#assign items=model["/bebop:page/nav:simpleObjectList[@id='${listId}']/nav:objectList/nav:item"]>  -->
-    <#elseif (model["/bebo p:page/nav:customizableObjectList[@id='${listId}']/nav:objectList"]?size > 0)>
+    <#elseif (model["/bebop:page/nav:customizableObjectList[@id='${listId}']/nav:objectList"]?size > 0)>
         <#--  <pre>Found customizable object list ${listId}</pre>  -->
         <#return model["/bebop:page/nav:simpleObjectList[@id='${listId}']/nav:objectList/nav:item"]>
         <#--  <#assign items=model["/bebop:page/nav:simpleObjectList[@id='${listId}']/nav:objectList/nav:item"]>  -->
@@ -26,11 +26,11 @@
 </#function>
 
 <#function getObjectCount listId>
-    <#return model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@objectCount"].@@text>
+    <#return model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@objectCount"].@@text?number>
 </#function>
 
 <#function getPaginatorBaseUrl listId>
-    <#assign baseUrl = model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@baseURL"]>
+    <#assign baseUrl = model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@baseURL"]>
     <#if (baseUrl?contains("?"))>
         <#return baseUrl + "&">
     <#else>
@@ -39,27 +39,32 @@
 </#function>
 
 <#function getPaginatorBegin listId>
-    <#return model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@objectBegin"]>
+    <#return model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@objectBegin"].@@text?number>
 </#function>
 
 <#function getPaginatorEnd listId>
-    <#return model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@objectEnd"]>
+    <#return model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@objectEnd"].@@text?number>
 </#function>
 
 <#function getPageCount listId>
-    <#return model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@pageCount"]>
+    <#if (model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@pageCount"]?size == 1)>
+        <#return model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@pageCount"]?number>
+    <#else>
+        <#return 0>
+    </#if>
+    
 </#function>
 
 <#function getPageNumber listId>
-    <#return model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@pageNumber"]>
+    <#return model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@pageNumber"].@@text?number>
 </#function>
 
 <#function getPageParam listId>
-    <#return model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@pageParam"]>
+    <#return model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@pageParam"]>
 </#function>
 
 <#function getPageSize listId>
-    <#return model["/bebop:page/*[id='${listId}']/nav:objectList/nav:paginator/@pageSize"]>
+    <#return model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@pageSize"].@@text?number>
 </#function>
 
 <#function getPrevPageLink listId>

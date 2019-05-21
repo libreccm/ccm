@@ -18,7 +18,7 @@
 </#function>
 
 <#function isTabSelected tab>
-    <#return tab["./@selected]>
+    <#return tab["./@selected"]>
 </#function>
 
 <#function getTabLink tab>
@@ -31,7 +31,7 @@
 
     <#return item["./tab[@name='${selectedTab}']"]>  -->
 
-    <#return item["./orgaUnitTabs/selectedTab/*"]
+    <#return item["./orgaUnitTabs/selectedTab/*"]>
 </#function>
 
 <#function getTypeOfSelectedTab item>
@@ -45,7 +45,7 @@
 </#function>
 
 <#function getPropertyFromTab tab name>
-    <#return tab["./*[name()='${name}']">
+    <#return tab["./*[name()='${name}']"]>
 </#function>
 
 <#function getTabContent tab>
@@ -54,7 +54,7 @@
 
 <#function getAddendum data>
     <#return data["./addendum"]>
-<#function>
+</#function>
 
 <#function getMembers data>
     <#return data["./members"]>
@@ -65,11 +65,11 @@
 </#function>
 
 <#function getMemberStatus member>
-    <#return member["./@status]>
+    <#return member["./@status"]>
 </#function>
 
 <#function getContactEntries member>
-    <#return member["contacts/contact[@contactType = $contact-type]/contactentries]">
+    <#return member["contacts/contact[@contactType = $contact-type]/contactentries"]>
 </#function>
 
 <#function getOrgaUnitContact data>
