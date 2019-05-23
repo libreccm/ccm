@@ -5,7 +5,7 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
-<#import ../ccm-cms/content-item.ftl as ContentItem>
+<#import "/ccm-cms/content-item.ftl" as ContentItem>
 
 <#function getDescription data>
     <#if (data["./instituteDesc"]?size > 0)>
@@ -16,12 +16,12 @@
 </#function>
 
 <#function getShortDescription data>
-    <#if (data["./instituteShortDescription"])>
-        <#return data["./departmentShortDescription"])>
-    <#elseif (data["./shortDescription"])>
-        <#return data["./shortDescription"])>
-    <#elseif (data["./shortDesc"])>
-        <#return data["./shortDesc"])>
+    <#if (data["./instituteShortDescription"]?size > 0)>
+        <#return data["./departmentShortDescription"]>
+    <#elseif (data["./shortDescription"]?size > 0)>
+        <#return data["./shortDescription"]>
+    <#elseif (data["./shortDesc"]?size > 0)>
+        <#return data["./shortDesc"]>
     </#if>
 </#function>
 

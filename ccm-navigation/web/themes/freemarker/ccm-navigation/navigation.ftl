@@ -20,6 +20,10 @@
     <#return model["/bebop:page/nav:categoryPath/nav:category[last()]"]>
 </#function>
 
+<#function getSelectedCategoryId>
+    <#return model["/bebop:page/nav:categoryPath/nav:category[last()]/@id"]>
+</#function>
+
 <#--
     Get the title of the provided category.
 -->
@@ -80,6 +84,10 @@
 -->
 <#function getSubCategories ofCategory>
     <#return ofCategory["./nav:category"]>
+</#function>
+
+<#function getSubCategoriesOfCategoryWithId categoryId>
+    <#return model["/bebop:page/nav:categoryMenu//nav:category[@id=${categoryId}]/nav:category"]>
 </#function>
 
 <#function getGreetingItem>    

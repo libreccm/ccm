@@ -26,7 +26,7 @@
 </#function>
 
 <#function getObjectCount listId>
-    <#return model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@objectCount"].@@text?number>
+    <#return model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@objectCount"]?number>
 </#function>
 
 <#function getPaginatorBaseUrl listId>
@@ -39,11 +39,11 @@
 </#function>
 
 <#function getPaginatorBegin listId>
-    <#return model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@objectBegin"].@@text?number>
+    <#return model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@objectBegin"]?number>
 </#function>
 
 <#function getPaginatorEnd listId>
-    <#return model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@objectEnd"].@@text?number>
+    <#return model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@objectEnd"]?number>
 </#function>
 
 <#function getPageCount listId>
@@ -56,7 +56,7 @@
 </#function>
 
 <#function getPageNumber listId>
-    <#return model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@pageNumber"].@@text?number>
+    <#return model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@pageNumber"]?number>
 </#function>
 
 <#function getPageParam listId>
@@ -64,7 +64,7 @@
 </#function>
 
 <#function getPageSize listId>
-    <#return model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@pageSize"].@@text?number>
+    <#return model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@pageSize"]?number>
 </#function>
 
 <#function getPrevPageLink listId>
@@ -100,11 +100,15 @@
 </#function>
 
 <#function hasImage item>
-    <#return (item["./nav:attribute[@name='imageAttachments.image.id']"]?size > 0)>
+    <#return (item["./nav:attribute[@name='imageAttachments.image.id']"]?size > 0 || item["./imageAttachments"]?size > 0)>
 </#function>
 
 <#function getImageId item>
-    <#return item["./nav:attribute[@name='imageAttachments.image.id'][1]"]>
+    <#if (item["./nav:attribute[@name='imageAttachments.image.id']"]?size > 0)>
+        <#return item["./nav:attribute[@name='imageAttachments.image.id'][1]"]>
+    <#elseif (item["./imageAttachments"]?size > 0)>
+        <#return item["./imageAttachments[1]/image/id"].@@text>
+    </#if>
 </#function>
 
 <#function getImageUrl item>
@@ -112,7 +116,11 @@
 </#function>
 
 <#function getImageCaption item>
-    <#return item["./nav:attribute[@name='imageAttachments.image.caption'][1]"].@@text>
+    <#if (item["./nav:attribute[@name='imageAttachments.image.id']"]?size > 0)>
+        <#return item["./nav:attribute[@name='imageAttachments.image.caption'][1]"].@@text>
+    <#elseif (item["./imageAttachments"]?size > 0)>
+        <#return item["./imageAttachments[1]/image/caption"].@@text>
+    </#if>
 </#function>
 
 <#function getFilters listId>
