@@ -26,7 +26,7 @@
 </#function>
 
 <#function getDepartmentHeads data>
-    <#return data["./heads"]>
+    <#return data["./heads/head"]>
 </#function>
 
 <#function getDepartmentHeadId head>
@@ -38,7 +38,7 @@
 </#function>
 
 <#function getDepartmentViceHeads data>
-    <#return data["./heads"]>
+    <#return data["./viceheads/vicehead"]>
 </#function>
 
 <#function getDepartmentViceHeadId head>
@@ -50,7 +50,7 @@
 </#function>
 
 <#function getSecretariats data>
-    <#return data["./heads"]>
+    <#return data["./secretariats/secretariat"]>
 </#function>
 
 <#function getSecretariatsId sec>

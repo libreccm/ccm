@@ -19,7 +19,7 @@
 
 <#function getContactEntry item keyId>
     <#return item["./contactentries[keyId=${keyId}]"]>
-<#/function>
+</#function>
 
 <#function getContactEntryLabel entry>
     <#return item["./key"]>

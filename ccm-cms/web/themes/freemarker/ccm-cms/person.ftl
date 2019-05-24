@@ -22,7 +22,7 @@
 </#function>
 
 <#function getHomepageLink item contactType="commonContact" entry="homepage">
-    <#return item["./contacts/contact[./@contactType='${contactType}']/contactentries[./keyId='${entry}]/value'"]>
+    <#return item["./contacts/contact[./@contactType='${contactType}']/contactentries[./keyId='${entry}']/value"]>
 </#function>
 
 <#function getContactEntries item contactType="commonContact">
@@ -30,5 +30,5 @@
 </#function>
 
 <#function getAddress item contactType="commonContact">
-    <#return item["./contacts/contact[@contactType='${contactType}']/address]
+    <#return item["./contacts/contact[@contactType='${contactType}']/address"]>
 </#function>
