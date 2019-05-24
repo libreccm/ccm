@@ -6,7 +6,7 @@
 >
 
 <#function getAvailableTabs item>
-    <#return item["./orgaUnitTabs/availableTabs"]>
+    <#return item["./orgaUnitTabs/availableTabs/availableTab"]>
 </#function>
 
 <#function getTypeNameKey item>
@@ -53,7 +53,7 @@
 </#function>
 
 <#function getAddendum data>
-    <#return data["./addendum"]>
+    <#return data["./addendum"].@@text>
 </#function>
 
 <#function getMembers data>
