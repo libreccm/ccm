@@ -26,7 +26,15 @@
 </#function>
 
 <#function getObjectCount listId>
-    <#return model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@objectCount"]?number>
+    <#if (model["/bebop:page/*[@id='${listId}']/nav:noContent"]?size > 0)>
+        <#return 0>
+    <#elseif (model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@objectCount"]?size > 0)>
+        <#return model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/@objectCount"]?number>
+    <#elseif (model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/count"]?size > 0)>
+        <#return model["/bebop:page/*[@id='${listId}']/nav:objectList/nav:paginator/count"]?number>
+    <#else>
+        <#return 0>
+    </#if>
 </#function>
 
 <#function getPaginatorBaseUrl listId>

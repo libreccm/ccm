@@ -14,11 +14,19 @@
 </#function>
 
 <#function getTitleFilterValue list>
-    <#return list["./filters/title"]>
+    <#if (list["./filters/title"]?size > 0)>
+        <#return list["./filters/title"]>
+    <#else>
+        <#return "">
+    </#if>
 </#function>
 
 <#function getResearchFieldFilterValue list>
-    <#return list["./filters/researchfield"]>
+    <#if (list["./filters/researchfield"]?size > 0)>
+        <#return list["./filters/researchfield"]>
+    <#else>
+        <#return "">
+    </#if>
 </#function>
 
 <#function getCount list>
@@ -65,6 +73,10 @@
     <#return item["./@object-type"]>
 </#function>
 
+<#function getProjectItemBegin item>
+    <#return item["./project-begin"]>
+</#function>
+
 <#function getProjectItemBeginDay item>
     <#return item["./project-begin/@day"]>
 </#function>
@@ -75,6 +87,10 @@
 
 <#function getProjectItemBeginYear item>
     <#return item["./project-begin/@year"]>
+</#function>
+
+<#function getProjectItemEnd item>
+    <#return item["./project-end"]>
 </#function>
 
 <#function getProjectItemEndDay item>
