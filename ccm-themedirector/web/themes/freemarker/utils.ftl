@@ -35,11 +35,11 @@
 </#function>
 
 <#function formatDateTime style date>
-    <#assign year   = (date["./@year"]?size > 0)?then(date["./@year"], 0)>
-    <#assign month  = (date["./@month"]?size > 0)?then(date["./@month"], 0)>
-    <#assign day    = (date["./@day"]?size > 0)?then(date["./@day"], 0)>
-    <#assign hour   = (date["./@hour"]?size > 0)?then(date["./@hour"], 0)>
-    <#assign minute = (date["./@minute"]?size > 0)?then(date["./@minute"], 0)>
-    <#assign second = (date["./@second"]?size > 0)?then(date["./@second"], 0)>
+    <#assign year   = (date["./@year"]?size > 0)?then(date["./@year"]?number, 0)>
+    <#assign month  = (date["./@month"]?size > 0)?then(date["./@month"]?number + 1, 0)>
+    <#assign day    = (date["./@day"]?size > 0)?then(date["./@day"]?number, 0)>
+    <#assign hour   = (date["./@hour"]?size > 0)?then(date["./@hour"]?number, 0)>
+    <#assign minute = (date["./@minute"]?size > 0)?then(date["./@minute"]?number, 0)>
+    <#assign second = (date["./@second"]?size > 0)?then(date["./@second"]?number, 0)>
     <#return _formatDateTime(style, year, month, day, hour, minute, second)>
 </#function>

@@ -114,11 +114,11 @@
 </#function>
 
 <#function getProjectMemberSurname member>
-    <#return member["./surname"]>
+    <#return member["./@surname"]>
 </#function>
 
 <#function getProjectMemberGivenname member>
-    <#return member["./givenname"]>
+    <#return member["./@givenname"]>
 </#function>
 
 

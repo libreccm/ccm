@@ -20,10 +20,12 @@ import freemarker.cache.TemplateLoader;
 import freemarker.cache.WebappTemplateLoader;
 import freemarker.ext.dom.NodeModel;
 import freemarker.template.Configuration;
+import freemarker.template.SimpleNumber;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateMethodModelEx;
 import freemarker.template.TemplateModelException;
+import freemarker.template.TemplateNumberModel;
 import freemarker.template.TemplateScalarModel;
 import org.libreccm.theming.manifest.DateFormat;
 import org.libreccm.theming.manifest.ThemeManifest;
@@ -463,31 +465,55 @@ public class FreeMarkerPresentationManager implements PresentationManager {
             final String style = ((TemplateScalarModel) list
                                   .get(0))
                 .getAsString();
-            final String yearParam = ((TemplateScalarModel) list
-                                      .get(1))
-                .getAsString();
-            final String monthParam = ((TemplateScalarModel) list
-                                       .get(2))
-                .getAsString();
-            final String dayOfMonthParam = ((TemplateScalarModel) list
-                                            .get(3))
-                .getAsString();
-            final String hourParam = ((TemplateScalarModel) list
-                                      .get(4))
-                .getAsString();
-            final String minuteParam = ((TemplateScalarModel) list
-                                        .get(5))
-                .getAsString();
-            final String secondParam = ((TemplateScalarModel) list
-                                        .get(6))
-                .getAsString();
+//            final String yearParam = ((TemplateScalarModel) list
+//                                      .get(1))
+//                .getAsString();
+//            final String monthParam = ((TemplateScalarModel) list
+//                                       .get(2))
+//                .getAsString();
+//            final String dayOfMonthParam = ((TemplateScalarModel) list
+//                                            .get(3))
+//                .getAsString();
+//            final String hourParam = ((TemplateScalarModel) list
+//                                      .get(4))
+//                .getAsString();
+//            final String minuteParam = ((TemplateScalarModel) list
+//                                        .get(5))
+//                .getAsString();
+//            final String secondParam = ((TemplateScalarModel) list
+//                                        .get(6))
+//                .getAsString();
 
-            final int year = Integer.parseInt(yearParam);
-            final int month = Integer.parseInt(monthParam);
-            final int dayOfMonth = Integer.parseInt(dayOfMonthParam);
-            final int hour = Integer.parseInt(hourParam);
-            final int minute = Integer.parseInt(minuteParam);
-            final int second = Integer.parseInt(secondParam);
+//            final int year = Integer.parseInt(yearParam);
+//            final int month = Integer.parseInt(monthParam);
+//            final int dayOfMonth = Integer.parseInt(dayOfMonthParam);
+//            final int hour = Integer.parseInt(hourParam);
+//            final int minute = Integer.parseInt(minuteParam);
+//            final int second = Integer.parseInt(secondParam);
+            final int year = ((TemplateNumberModel) list
+                              .get(1))
+                .getAsNumber()
+                .intValue();
+            final int month = ((TemplateNumberModel) list
+                               .get(2))
+                .getAsNumber()
+                .intValue();
+            final int dayOfMonth = ((TemplateNumberModel) list
+                                    .get(3))
+                .getAsNumber()
+                .intValue();
+            final int hour = ((TemplateNumberModel) list
+                              .get(4))
+                .getAsNumber()
+                .intValue();
+            final int minute = ((TemplateNumberModel) list
+                                .get(5))
+                .getAsNumber()
+                .intValue();
+            final int second = ((TemplateNumberModel) list
+                                .get(6))
+                .getAsNumber()
+                .intValue();
 
             final String format = findFormat(dateFormats, style, locale)
                 .orElse("YYYY-MM-dd");
