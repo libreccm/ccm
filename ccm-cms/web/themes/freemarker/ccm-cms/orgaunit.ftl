@@ -72,6 +72,10 @@
     <#return member["contacts/contact[@contactType = $contact-type]/contactentries"]>
 </#function>
 
+<#function hasOrgaUnitContact data>
+    <#return (data["./contacts/contact"]?size > 0)>
+</#function>
+
 <#function getOrgaUnitContact data>
     <#return data["./contacts/contact[1]"]>
 </#function>

@@ -13,6 +13,7 @@
     <ccm:directory name="pdl"/>
     <ccm:directory name="sql"/>
     <ccm:directory name="src"/>
+    <ccm:directory name="web"/>
   </ccm:directories>
   <ccm:contacts>
     <ccm:contact uri="http://www.redhat.com/software/rhea" type="website"/>

@@ -11,7 +11,7 @@
     <#elseif (item["./lifeSpan/begin"])>
         <#return item["./lifeSpan/begin"]>
     <#elseif (item["./nav:attribute[@name = 'projectBegin']"])>
-        <#return ./nav:attribute[@name = 'projectBegin']"]>
+        <#return item["./nav:attribute[@name = 'projectBegin']"]>
     </#if>
 </#function>
 
@@ -21,7 +21,7 @@
     <#elseif (item["./lifeSpan/end"])>
         <#return item["./lifeSpan/end"]>
     <#elseif (item["./nav:attribute[@name = 'projectEnd']"])>
-        <#return ./nav:attribute[@name = 'projectEnd']"]>
+        <#return item["./nav:attribute[@name = 'projectEnd']"]>
     </#if>
 </#function>
 
@@ -34,11 +34,11 @@
 </#function>
 
 <#function getShortDescription item>
-    <#if (item["./projectShortDesc"])>
+    <#if (item["./projectShortDesc"]?size > 0)>
         <#return item["./projectShortDesc"]>
-    <#elseif (item["./shortDesc"])>
+    <#elseif (item["./shortDesc"]?size > 0)>
         <#return item["./shortDesc"]>
-    <#elseif (item["./"])>
+    <#elseif (item["./"]?size > 0)>
         <#return item["./shortDescription"]>
     </#if>
 </#function>
@@ -51,6 +51,10 @@
     <#return sponsor["."]>
 </#function>
 
+<#function hasSponsorFundingCode sponsor>
+    <#return (sponsor["./@fundingCode"]?size > 0)>
+</#function>
+
 <#function getSponsorFundingCode sponsor>
     <#return sponsor["./@fundingCode"]>
 </#function>
@@ -59,8 +63,16 @@
     <#return sponsor["./@href"]>
 </#function>
 
+<#function hasFunding item>
+    <#return (item["./funding"]?size > 0)>
+</#function>
+
 <#function getFunding item>
     <#return item["./funding"]>
+</#function>
+
+<#function hasFundingVolume item>
+    <#return (item["./fundingVolume"]?size > 0)>
 </#function>
 
 <#function getFundingVolume item>
@@ -112,6 +124,6 @@
 </#function>
 
 <#function getInvolvedOrganizationLink orga>
-    <#return orga["./links[1]/targetURI]>
+    <#return orga["./links[1]/targetURI"]>
 </#function>
 
