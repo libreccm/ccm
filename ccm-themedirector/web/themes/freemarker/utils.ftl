@@ -36,7 +36,7 @@
 
 <#function formatDateTime style date>
     <#assign year   = (date["./@year"]?size > 0)?then(date["./@year"]?number, 0)>
-    <#assign month  = (date["./@month"]?size > 0)?then(date["./@month"]?number + 1, 0)>
+    <#assign month  = (date["./@month"]?size > 0)?then(date["./@month"]?number, 0)>
     <#assign day    = (date["./@day"]?size > 0)?then(date["./@day"]?number, 0)>
     <#assign hour   = (date["./@hour"]?size > 0)?then(date["./@hour"]?number, 0)>
     <#assign minute = (date["./@minute"]?size > 0)?then(date["./@minute"]?number, 0)>
