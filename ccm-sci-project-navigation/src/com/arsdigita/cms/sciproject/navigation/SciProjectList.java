@@ -299,7 +299,7 @@ public class SciProjectList extends AbstractComponent {
             projectBeginElem.addAttribute("year", Integer.toString(projectBegin
                                           .get(Calendar.YEAR)));
             projectBeginElem.addAttribute("month", Integer.toString(projectBegin
-                                          .get(Calendar.MONTH)));
+                                          .get(Calendar.MONTH) + 1));
             projectBeginElem.addAttribute(
                 "month-name",
                 projectBegin.getDisplayName(Calendar.MONTH,
@@ -328,7 +328,7 @@ public class SciProjectList extends AbstractComponent {
             projectEndElem.addAttribute("year", Integer.toString(projectEnd
                                         .get(Calendar.YEAR)));
             projectEndElem.addAttribute("month", Integer.toString(projectEnd
-                                        .get(Calendar.MONTH)));
+                                        .get(Calendar.MONTH) + 1));
             projectEndElem.addAttribute(
                 "month-name",
                 projectEnd.getDisplayName(Calendar.MONTH,
