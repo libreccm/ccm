@@ -14,7 +14,11 @@
 </#function>
 
 <#function getTitleFilterValue list>
-    <#return list["./fiters/title"]>
+    <#if (list["./filters/title"]?size > 0)>
+        <#return list["./filters/title"]>
+    <#else>
+        <#return "">
+    </#if>
 </#function>
 
 <#function getYearOfPublicationFilterAvailableYears list>
@@ -22,15 +26,27 @@
 </#function>
 
 <#function getYearOfPublicationFilterValue list>
-    <#return list["./fiters/year"]>
+    <#if (list["./fiters/year"]?size > 0)>
+        <#return list["./fiters/year"].@@text>
+    <#else>
+        <#return "">
+    </#if>
 </#function>
 
 <#function getAuthorsFilterValue list>
-    <#return list["./filters/authors"]>
+    <#if (list["./filters/authors"]?size > 0)>
+        <#return list["./filters/authors"]>
+    <#else>
+        <#return "">
+    </#if>
 </#function>
 
 <#function getSort list>
-    <#return list["./filters/sort"]>
+    <#if (list["./filters/sort"]?size > 0)>
+        <#return list["./filters/sort"]>
+    <#else>
+        <#return "">
+    </#if>
 </#function>
 
 <#function getCount list>
@@ -66,7 +82,7 @@
 </#function>
 
 <#function getPublicationObjectType item>
-    <#return item["./object-type"]>
+    <#return item["./object-type"].@@text>
 </#function>
 
 <#function getPublicationTitle item>
@@ -81,12 +97,20 @@
     <#return item["./authors/author"]>
 </#function>
 
+<#function hasAuthorSurname author>
+    <#return (author["./@surname"]?size > 0)>
+</#function>
+
 <#function getAuthorSurname author>
-    <#return author["./surname"]>
+    <#return author["./@surname"]>
+</#function>
+
+<#function hasAuthorGivenName author>
+    <#return (author["./@givenname"]?size > 0)>
 </#function>
 
 <#function getAuthorGivenName author>
-    <#return author["./givenname"]>
+    <#return author["./@givenname"]>
 </#function>
 
 <#function getPublicationPlace item>
@@ -122,23 +146,35 @@
 </#function>
 
 <#function getJournalName journal>
-    <#return journal["./name"]>
+    <#return journal["./name"].@@text>
 </#function>
 
 <#function getPublicationIssue item>
-    <#return item["./issue"]>
+    <#return item["./issue"].@@text>
+</#function>
+
+<#function hasPublicationVolumeOfJournal item>
+    <#return (item["./volume-of-journal"]?size > 0)>
 </#function>
 
 <#function getPublicationVolumeOfJournal item>
-    <#return item["./volume-of-journal"]>
+    <#return item["./volume-of-journal"].@@text>
 </#function>
 
 <#function getPublicationPagesFrom item>
-    <#return item["./pages-from"]>
+    <#if (item["./pages-from"]?size > 0)>
+        <#return item["./pages-from"].@@text?number>
+    <#else>
+        <#return 0>
+    </#if>
 </#function>
 
 <#function getPublicationPagesTo item>
-    <#return item["./pages-to"]>
+    <#if (item["./pages-to"]?size > 0)>
+        <#return item["./pages-to"].@@text?number>
+    <#else>
+        <#return 0>
+    </#if>
 </#function>
 
 <#function getPublicationCollectedVolume item>
@@ -150,11 +186,19 @@
 </#function>
 
 <#function getCollectedVolumeTitle collectedVolume>
-    <#return collectedVolume["./title"]>
+    <#return collectedVolume["./title"].@@text>
 </#function>
 
 <#function getCollectedVolumePublisher collectedVolume>
     <#return collectedVolume["./publisher"]>
+</#function>
+
+<#function getCollectedVolumePlace collectedVolume>
+    <#return collectedVolume["./place"]>
+</#function>
+
+<#function hasProceedings item>
+    <#return (item["./proceedings"]?size > 0)>
 </#function>
 
 <#function getProceedings item>
