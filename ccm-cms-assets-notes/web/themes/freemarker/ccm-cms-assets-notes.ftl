@@ -6,7 +6,7 @@
 >
 
 <#function getNotes item>
-    <#return item["./cms:item/ca_notes"]>
+    <#return item["./ca_notes"]>
 </#function>
 
 <#function getContent note>

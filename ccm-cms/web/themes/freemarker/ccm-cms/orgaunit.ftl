@@ -18,7 +18,7 @@
 </#function>
 
 <#function isTabSelected tab>
-    <#return tab["./@selected"]>
+    <#return (tab["./@selected"] == "true")>
 </#function>
 
 <#function getTabLink tab>

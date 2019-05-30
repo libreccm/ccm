@@ -52,7 +52,7 @@
 </#function>
 
 <#function getFileDescription file>
-    <#return file["./description"]>
+    <#return file["./description"].@@text>
 </#function>
 
 <#function getFileUrl file>

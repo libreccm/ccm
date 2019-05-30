@@ -44,7 +44,7 @@
 </#function>
 
 <#function getSponsors item>
-    <#return item["./sponsors"]>
+    <#return item[".//sponsors/sponsor"]>
 </#function>
 
 <#function getSponsorName sponsor>
@@ -68,19 +68,19 @@
 </#function>
 
 <#function getFunding item>
-    <#return item["./funding"]>
+    <#return item[".//funding"]>
 </#function>
 
 <#function hasFundingVolume item>
-    <#return (item["./fundingVolume"]?size > 0)>
+    <#return (item[".//fundingVolume"]?size > 0)>
 </#function>
 
 <#function getFundingVolume item>
-    <#return item["./fundingVolume"]>
+    <#return item[".//fundingVolume"][1].@@text>
 </#function>
 
 <#function getMembers item>
-    <#return item["./members"]>
+    <#return item[".//members/member"]>
 </#function>
 
 <#function getMemberRole member>
@@ -116,7 +116,7 @@
 </#function>
 
 <#function getInvolvedOrganizations item>
-    <#return item["./involvedOrganizations"]>
+    <#return item[".//involvedOrganizations/organization"]>
 </#function>
 
 <#function getInvolvedOrganizationName orga>
