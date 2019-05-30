@@ -498,10 +498,10 @@ public class FreeMarkerPresentationManager implements PresentationManager {
                                .get(2))
                 .getAsNumber()
                 .intValue();
-            final int dayOfMonth = ((TemplateNumberModel) list
-                                    .get(3))
-                .getAsNumber()
-                .intValue();
+            final int dayOfMonth = fixDayOfMonth(
+                ((TemplateNumberModel) list.get(3)).getAsNumber().intValue(),
+                month,
+                year);
             final int hour = ((TemplateNumberModel) list
                               .get(4))
                 .getAsNumber()
@@ -528,6 +528,42 @@ public class FreeMarkerPresentationManager implements PresentationManager {
                 .ofPattern(format, locale);
 
             return formatter.format(localDateTime);
+        }
+
+        private int fixDayOfMonth(final int dayOfMonth,
+                                  final int month,
+                                  final int year) {
+
+            // Febrary is the most complex
+            if (month == 2) {
+                if (year % 4 == 0 && year % 400 == 0) {
+                    if (dayOfMonth > 29) {
+                        return 29;
+                    } else {
+                        return dayOfMonth;
+                    }
+                } else if (year % 4 == 0 && year % 100 != 0) {
+                    if (dayOfMonth > 29) {
+                        return 29;
+                    } else {
+                        return dayOfMonth;
+                    }
+                } else {
+                    if (dayOfMonth > 28) {
+                        return 28;
+                    } else {
+                        return dayOfMonth;
+                    }
+                }
+            } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+                if (dayOfMonth > 30) {
+                    return 30;
+                } else {
+                    return dayOfMonth;
+                }
+            } else {
+                return dayOfMonth;
+            }
         }
 
         private Optional<String> findFormat(
