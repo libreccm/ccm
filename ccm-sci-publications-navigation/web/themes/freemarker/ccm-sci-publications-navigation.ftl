@@ -146,7 +146,7 @@
 </#function>
 
 <#function getJournalName journal>
-    <#return journal["./name"].@@text>
+    <#return journal["./@name"]>
 </#function>
 
 <#function getPublicationIssue item>
