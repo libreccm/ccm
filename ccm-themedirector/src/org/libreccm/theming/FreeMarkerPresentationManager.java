@@ -425,7 +425,9 @@ public class FreeMarkerPresentationManager implements PresentationManager {
             final String key = ((TemplateScalarModel) list
                                 .get(0))
                 .getAsString();
+            
 
+            ResourceBundle.clearCache();
             final ResourceBundle bundle = ResourceBundle.getBundle(bundleName,
                                                                    locale,
                                                                    control);
