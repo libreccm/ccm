@@ -62,6 +62,12 @@ public class FreeMarkerPresentationManager implements PresentationManager {
                           final HttpServletRequest request,
                           final HttpServletResponse response) {
 
+        if ("xml".equals(request.getParameter("output"))) {
+            final PageTransformer pageTransformer = new PageTransformer();
+            pageTransformer.servePage(document, request, response);
+            return;
+        }
+        
         final org.w3c.dom.Document w3cDocument = document.getInternalDocument();
 
         final Node root = w3cDocument.getDocumentElement();
@@ -73,7 +79,7 @@ public class FreeMarkerPresentationManager implements PresentationManager {
         } catch (DataObjectNotFoundException ex) {
             subSite = null;
         }
-        final boolean isSubSite = subSite != null;
+//        final boolean isSubSite = subSite != null;
 
         final String defaultTheme;
         if (subSite == null) {
