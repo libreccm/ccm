@@ -24,6 +24,7 @@
     <#return model["/bebop:page/ui:siteBanner/@sitename"]>
 </#function>
 
+<#-- Internal function -->
 <#function getBooleanAttrValue fromNode attrName>
     <#assign path='@' + attrName>
     <#if (fromNode[path]?size > 0)>
