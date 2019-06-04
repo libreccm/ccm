@@ -1,4 +1,4 @@
-# Freemarker functions provided by ccm-themedirectory
+# Freemarker functions provided by ccm-themedirector
 
 ## Language utilities
 
