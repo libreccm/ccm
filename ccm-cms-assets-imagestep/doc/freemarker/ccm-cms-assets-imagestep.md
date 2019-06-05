@@ -1,8 +1,9 @@
-### ccm-cms-assets-imagestep
+# Freemarker functions for Image Attachments
 
 Provides functions for dealing with image attachments of a content item.
 
-Import path: `<#import "/ccm-cms-assets-imagestep.ftl" as Images>`
+Import path
+: `/ccm-cms-assets-imagestep.ftl"`
 
 Example usage:
 
@@ -29,115 +30,35 @@ Example usage:
 </#list>
 ```
 
-#### getImageAttachments
+## `getImageAttachments(item: Node): Sequence<Node>`
 
-    getImageAttachments(item)
+Get the image attachments of the provided content item.
 
-Get the image attachments of a content item
+## `getImageId(image: Node): String`
 
-##### Parameters
+Gets the ID of the provided image.
 
-`item` The content item.
-
-##### Returns
-
-A sequence of the image attachments of the provided content item.
-
-#### getImageId
-
-    getImageId(image)
-
-Get the ID of the provided image.
-
-##### Parameters
-
-`image` The image.
-
-##### Returns
-
-The id of the image.
-
-#### getImageName
-
-    getImageName(image)
+## `getImageName(image: Node): String`
 
 Gets the name of the provided image.
 
-##### Parameters
-
-`image` The image.
-
-##### Returns
-
-The name of the image.
-
-#### getImageCaption
-
-    getImageCaption(image)
+## `getImageCaption(image: Node): String`
 
 Gets the caption of the provided image.
 
-##### Parameters
-
-`image` The image.
-
-##### Returns
-
-The caption of the image.
-
-#### getImageSortKey
-
-    getImageSortKey(image)
+#### `getImageSortKey(image: Node): String`
 
 Gets the sort key of the provided image.
 
-##### Parameters
-
-`image` The image.
-
-##### Returns
-
-The sort key of the provided image.
-
-#### getImageWidth
-
-    getImageWidth(image)
+## `getImageWidth(image: Node): String`
 
 Gets the width of the provided image.
 
-##### Parameters
-
-`image` The image.
-
-##### Returns
-
-The width of the provided image.
-
-#### getImageHeight
-
-    getImageHeight(image)
+#### `getImageHeight(image: Node): String`
 
 Gets the height of the provided image.
 
-##### Parameters
-
-`image` The image.
-
-##### Returns
-
-The height of the provided image.
-
-#### getImageUrl
-
-    getImageUrl(image)
+## `getImageUrl(image: Node): String`
 
 Gets the URL of the provided image.
-
-##### Parameters
-
-`image` The image.
-
-##### Returns
-
-The URL of the provided image.
 
