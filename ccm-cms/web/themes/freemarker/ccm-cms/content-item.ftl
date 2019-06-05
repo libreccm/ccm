@@ -91,6 +91,8 @@
         <#return item["./lead"]>
     <#elseif (item["./summary"]?size > 0)>
         <#return item["./summary"]>
+    <#else>
+        <#return "">
     </#if>    
 </#function>
 
@@ -99,6 +101,8 @@
         <#return item["./pageDescription"]>
     <#elseif (item["./nav:attribute[./@name='pageDescription']"]?size > 0)>
         <#return item["./nav:attribute[./@name='pageDescription']"]>
+    <#else>
+        <#return "">
     </#if>
 </#function>
 
