@@ -39,7 +39,7 @@
     <#elseif unit == "MiB">
         <#return (file["./length"].@@text?number / 1048576)?round>
     <#else>
-        <#return file["./length"]>
+        <#return file["./length"].@@text?number>
     </#if>
 </#function>
 
@@ -48,7 +48,7 @@
 </#function>
 
 <#function getFileName file>
-    <#return file["./name"]>
+    <#return file["./name"].@@text>
 </#function>
 
 <#function getFileDescription file>

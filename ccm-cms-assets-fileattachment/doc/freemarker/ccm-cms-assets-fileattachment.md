@@ -1,4 +1,7 @@
-### ccm-cms-assets-fileattachment
+# Functions for File Attachments
+
+Import Path
+: `/ccm-cms-assets-fileattachments.ftl`
 
 This module provides functions for dealing with file attachments. A
 possible usage these functions:
@@ -37,133 +40,38 @@ possible usage these functions:
 </#list>
 ```
 
-#### getFileAttachments
+## `getFileAttachments(item: Node): Sequence<Node>`
 
-    getFileAttachments(item: ContentItemNode): Sequence
+Retrieves the file attachments of the provided content item.
 
-Return the file attachments of a content items
-
-##### Parameters
-
-`item` The content item from which the file attachments are retrieved.
-
-##### Returns
-
-A sequence of the file attachments of the provided content item.
-
-#### getFileType
-
-    getFileType(file)
+## `getFileType(file: Node): String`
 
 Returns the type of the file attachments which is either `caption` or `file`.
 
-##### Parameters
+## `getMimeType(file: Node): String`
 
-`file` The file attachment
+Returns the mime type of the file, for example `image/png` or `application/pdf`.
 
-##### Returns
-
-The type of the file attachment.
-
-#### getMimeType
-
-    getMimeType(file)
-
-Returns the mime type of the file.
-
-##### Parameters
-
-`file` The file 
-
-##### Returns
-
-The mime type of the file.
-
-#### getMimeTypeFileExtension
-
-    getMimeTypeFileExtension(file)
-
+## `getMimeTypeFileExtension(file: Node): String`
+    
 Returns the usual file extension for the mime type of the file.
 
-##### Parameters
+## `getFileSize(file: Node, unit: String = "byte"): Number`
 
-`file` The file
+Returns the size of the provided file. The unit in which the size of the file is returned can be changed by using the optional parameter `unit`. The default value for the unit is `byte`.
 
-##### Returns
-
-The usual file extension for the mime type of the file.
-
-#### getFileSize
-
-    getFileSize(file unit="byte")
-
-Returns the size of the file in the provided unit.
-
-##### Parameters
-
-`file`The file
-
-`unit` Optional parameter for unit in which the size is returned. Default 
-value is `byte`. Supported values are `byte`, `kB` `KiB`, `MB` and `MiB`. 
-All other values are interpreted as `byte`.
-
-##### Returns 
-
-The size of the file in the provided unit.
-
-
-#### getFileId
-
-    getFileId(file)
+## `getFileId(file: Node): String`
 
 Returns the ID of the file.
 
-##### Parameters
-
-`file` The file
-
-##### Returns
-
-The ID of the file.
-
-#### getFileName
-
-    getFileName(file)
+## `getFileName(file: Node): String`
 
 Returns the name of file.
 
-##### Parameters 
+## `getFileDescription(file: Node): String`
 
-`file` The file
+Returns the description of the file.
 
-##### Returns
+#### `getFileUrl(file: Node): String`
 
-The name of the file.
-
-#### getFileDescription
-
-    getFileDescription(file)
-
-Returns the name of file.
-
-##### Parameters 
-
-`file` The file
-
-##### Returns
-
-The description of the file.
-
-#### getFileUrl
-
-    getFileUrl(file)
-
-Returns the name of file.
-
-##### Parameters 
-
-`file` The file
-
-##### Returns
-
-The URL of the file.
+Returns the URL of the file.
