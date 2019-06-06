@@ -15,7 +15,6 @@
     <#return Article.getMainText(item)>
 </#function>
 
-
 <#function getEndDate item>
     <#if (item["./endDate"]?size > 0)>
         <#return item["./endDate"]>
