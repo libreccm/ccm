@@ -1,272 +1,210 @@
-### ccm-cms-publicpersonalprofile
+# Freemarker functions for Public Personal Profiles
+
+Import path
+: `/ccm-cms-publicpersonalprofile.md`
 
 Functions for processing the data of a public personal profile.
 
-#### getProfileOwner 
+## `getProfileOwner(data: Node): Node`
 
-    getProfileOwner(data)
+Get the data about the profile owner. The return value is a XML node
+which can be further processed with other functions.
 
-Get the data about the profile owner.
-
-##### Parameters
-
-`data` The public personal profile data
-
-##### Returns
-
-The data about the owner of the profile.
-
-#### getProfileOwnerSurname
-
-    getProfileOwnerSurname(owner)
+## `getProfileOwnerSurname(owner: Node): String`
 
 Gets the surname of a profile owner.
 
-##### Parameters
-
-`owner` The owner.
-
-##### Returns 
-
-The surname of the provided profile owner.
-
-#### getProfileOwnerGivenName
-
-    getProfileOwnerGivenName(owner)
+## `getProfileOwnerGivenName(owner: Node): String`
 
 Gets the given name of a profile owner.
 
-##### Parameters
-
-`owner` The owner.
-
-##### Returns 
-
-The given name of the provided profile owner.
-
-#### getProfileOwnerTitlePre
-
-    getProfileOwnerTitlePre(owner)
+## `getProfileOwnerTitlePre(owner: Node): String`
 
 Gets the titles a profile owner.
 
-##### Parameters
-
-`owner` The owner.
-
-##### Returns 
-
-The titles of the provided profile owner which preceed the name of the owner.
-
-#### getProfileOwnerTitlePost
-
-    getProfileOwnerTitlePost(owner)
+## `getProfileOwnerTitlePost(owner: Node): String`
 
 Gets the titles a profile owner.
 
-##### Parameters
+## `getProfilePosition(data: Node): String`
 
-`owner` The owner.
+Returns the value of the `position` property of a profile.
 
-##### Returns 
+## `getProfileInterests(data: Node): String`
 
-The titles of the provided profile owner which follow the name of the owner.
+Returns the value of the `interests` property of a profile. 
 
-#### getProfileOwnerContact
+## `getProfileMisc(data: Node): String`
 
-    getProfileOwnerContact(owner)
+Returns the value of the `misc` property of a profile.
 
-Gets the contact data of the owner. 
+## `getProfileOwnerContact(owner: Node): Node`
 
-##### Parameters
+Gets the contact data of the owner. The contact data is in the same
+format as a content item of the type `ccm-cms-types-contact`. The
+returned data can be processed further using the functions for content 
+items of the type `ccm-cms-types-contact?`. The functions provided
+by the `ccm-cms-types-contact` module can be used to process this data.
 
-`owner` The owner.
+## `getProfileImage(data: Node): String`
 
-##### Returns
-
-The contact data of the owner. The contact data are in the same format as a
-content item of the type `ccm-cms-types-contact`. The returned data can be
-processed further using the functions for content items of the type 
-`ccm-cms-types-contact?`.
-
-#### getProfileImage
-
-    getProfileImage(data)
-
-Return the data of the image attached to the profile, if any.
-
-##### Parameters
-
-`data` The data of the profile.
-
-##### Returns
-
-The data about the image attached to the profile if an image was attached 
-to the profile. The returned data is a image attachement which can be 
-processed further by the functions provided for processing image assets 
-(see `ccm-cms-assets-imagestep`).
+Returns the data of the image attached to the profile, if any.
+The returned data is a image attachement which can be 
+processed further by the functions provided for processing image assets (see `ccm-cms-assets-imagestep`).
  
-#### getProfileOwnerName
+## `getProfileOwnerName(data: Node): String`
 
-    getProfileOwnerName(data)
+Gets the name of the profile owner which is the name of the content item of the type `Person` assigned to the profile.
 
-Gets the name of the profile owner.    
+## `getPersonalPublications(data: Node): Sequence<Node>`
 
-#### Parameters
+Gets the data about the personal publications of the profile owner, 
+organized in publications groups.
 
-`data` The data of the profile.
+## `getPersonalPublicationsAvailablePublicationGroups(data: Node): Sequence<Node>`
 
-#### Returns
+Get the available publications groups. The items of the sequence can be processed further using `getPublicationGroupId` and 
+`getPublicationGroupLink`.
 
-The name of the content item of the type `Person` assigned to the profile.
+## `getPublicationGroupId(group: Node): String`
 
-#### getPersonalPublications
+Returns the ID of the publication group.
 
-    getPersonalPublications(data)
+## `getPublicationGroupLink(group: Node): String`
 
-Gets the data about the personal publications of the profile owner. 
+Returns the link for showing the publications of the group.
 
-#### Parameters
-
-`data` The data of the profile.
-
-#### Returns
-
-The data about the personal publications of the author, organized
-in publications groups.
-
-#### getPersonalPublicationsAvailablePublicationGroups
-
-    getPersonalPublicationsAvailablePublicationGroups(data)
-
-Get the available publications groups.
-
-##### Parameters 
-
-`data` The data of the profile.
-
-##### Returns
-
-A sequence of the available publication groups. They can processed further
-using `getPublicationGroupId` and `getPublicationGroupLink`.
-
-#### getPublicationGroupId
-
-    getPublicationGroupId(group)
-
-##### Parameters
-
-`group` The publication group.
-
-##### Returns
-
-The ID of the publication group.
-
-#### getPublicationGroupLink
-
-    getPublicationGroupLink(group)
-
-##### Parameters
-
-`group` The publication group.
-
-##### Returns
-
-The link for showing the publications of the group.
-
-#### getPublicationGroups
-
-    getPublicationGroups(data)
+## `getPublicationGroups(data: Node): Sequence<Node>`
 
 Get all publication groups currently displayed. 
 
-##### Parameters
-
-`data` The data of the profile.
-
-##### Returns
-
-A sequence of the publication groups in the data of the profile.
-
-#### getPublicationsOfGroup
-
-    getPublicationsOfGroup(data)
+## `getPublicationsOfGroup(data: Node): Sequence<Node>`
 
 Gets the publiations of a group. The publication can be processed
 further by the functions provided by `ccm-sci-publications`.
 
-##### Parameters
+## `hasPublicationsPaginator(profile: Node): boolean`
 
-`data` The data of the group.
+Determines if there is paginator for the current publication group.
 
-##### Returns
+## `getPublicationsPaginatorBaseUrl(profile: Node): String`
 
-The publications of the group.
+Returns the base URL for the publications paginator.
 
-#### getAvailableProjectGroups
+## `getPublicationsPaginatorPageCount(profile: Node): String`
 
-    getAvailableProjectGroups(data)
+Returns the number of pages from the publications paginatator.
 
-Get the available project groups.
+## `getPublicationsPaginatorPageNumber(profile: Node): String`
 
-##### Parameters 
+Returns the current page of the  current publication group.
 
-`data` The data of the profile.
+## `getPublicationsPaginatorPageParam(profile: Node): String`
 
-##### Returns
+Gets the name of the URL parameter for changing the current page.
 
-A sequence of the available project groups. They can processed further
-using `getProjectGroupId` and `getProjectGroupLink`.
+## `getPublicationsPaginatorPageSize(profile: Node): String`
 
-#### getProjectGroupId
+Gets the page size.
 
-    getProjectGroupId(group)
+## `getPublicationsPaginatorObjectBegin(profile: Node): String`
 
-##### Parameters
+Gets the index of the first displayed item of current publication group.
 
-`group` The Project group.
+## `getPublicationsPaginatorObjectCount(profile: Node): String`
 
-##### Returns
+Gets the index of the number of items in the current publication group.
 
-The ID of the Project group.
+## `getPublicationsPaginatorObjectEnd(profile: Node): String`
 
-#### getProjectGroupLink
+Gets the index of the last displayed item of current publication group.
 
-    getProjectGroupLink(group)
+## `getPublicationsPaginatorPrevPageLink(profile: Node): String`
 
-##### Parameters
+Gets the link to the previous page of the current publication group.
 
-`group` The Project group.
+## `getPublicationsPaginatonFirstPageLink(profile. Node): String`
 
-##### Returns
+Gets the link the first page of the current publication group.
 
-The link for showing the Projects of the group.
+## `getPublicationsPaginatorNextPageLink(profile: Node): String`
 
-#### getProjectGroups
+Gets the link to the next page of the current publication group.
 
-    getProjectGroups(data)
+## `getPublicationsPaginatorLastPageLink(profile: Node): String`
 
-Get all project groups currently displayed. 
+Gets the link to the last page of the current publication group.
 
-##### Parameters
+## `getAvailableProjectGroups(data: Node): Sequence<Node>`
 
-`data` The data of the profile.
+Returns the available project groups. The sequence can be processed 
+further using `getProjectGroupId` and `getProjectGroupLink`.
 
-##### Returns
+## `getProjectGroupId(group: Node): String`
 
-A sequence of the project groups in the data of the profile.
+Returns the ID of the Project group.
 
-#### getProjectsOfGroup
+## `getProjectGroupLink(group: Node): String`
 
-    getProjectOfGroup(data)
+Returns the link for showing the Projects of the group.
+
+#### `getProjectGroups(data: Node): String`
+
+Gets all project groups currently displayed. 
+
+## `getProjectsOfGroup(data: Node): Sequence<Node>`
 
 Gets the projects of a group. The projects can be processed
 further by the functions provided by `ccm-sci-types-project`.
 
-##### Parameters
+## `hasProjectsPaginator(profile: Node): boolean`
 
-`data` The data of the group.
+Determines if the current project group has a paginator.
 
-##### Returns
+## `getProjectsPaginatorBaseUrl(profile: Node): String`
 
-The projects of the group.
+Returns the base URL for the projects paginator.
+
+## `getProjectsPaginatorPageCount(profile: Node): String`
+
+Returns the number of pages from the project paginatator.
+
+## `getProjectsPaginatorPageNumber(profile: Node): String`
+
+Returns the current page of the  current project group.
+
+## `getProjectsPaginatorPageParam(profile: Node): String`
+
+Gets the name of the URL parameter for changing the current page.
+
+## `getProjectsPaginatorPageSize(profile: Node): String`
+
+Gets the page size.
+
+## `getProjectsPaginatorObjectBegin(profile: Node): String`
+
+Gets the index of the first displayed item of current project group.
+
+## `getProjectsPaginatorObjectCount(profile: Node): String`
+
+Gets the number of items in the current project group.
+
+## `getProjectsPaginatorObjectEnd(profile: Node): String`
+
+Gets the index of the last displayed item of current project group.
+
+## `getProjectsPaginatorPrevPageLink(profile: Node): String`
+
+Gets the link to the previous page of the current project group.
+
+## `getProjectsPaginatonFirstPageLink(profile: Node): String`
+
+Gets the link the first page of the current project group.
+
+## `getProjectsPaginatorNextPageLink(profile: Node): String`
+
+Gets the link to the next page of the current project group.
+
+## `getProjectsPaginatorLastPageLink(profile: Node): String`
+
+Gets the link to the last page of the current project group.
