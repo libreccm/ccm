@@ -153,7 +153,7 @@
     <#return component["./parameterName"] + ".month">
 </#function>
 
-<#function getDateFieldYeaerParamName component>
+<#function getDateFieldYearParamName component>
     <#return component["./parameterName"] + ".year">
 </#function>
 
