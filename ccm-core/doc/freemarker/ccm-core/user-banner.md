@@ -1,43 +1,41 @@
-# Freemarker functions provided by ccm-themedirector
-
-## User Banner
+# Freemarker functions for retrieving data from the user banner component.
 
 Import Path
 : `/ccm-core/user-banner.ftl`
 
-### `String getGreeting()`
+### `getGreeting(): String`
 
 Retrieves to the greeting value provided by the _UserBanner_ component.
 
-### `boolean isLoggedIn()`
+### `isLoggedIn(): boolean`
 
 Return `true` if the current user is logged and `false` otherwise. 
 
-### `boolean isNotLoggedIn()`
+### `isNotLoggedIn(): boolean`
 
 Return `true` if the current user is *not* logged and `false` otherwise. 
 
-### `String getChangePasswordUrl()`
+### `getChangePasswordUrl(): String`
 
 Returns the URL where a authenticated user can change his or her password.
 
-### `String getLoginLink()`
+### `getLoginLink(): String`
 
 Returns the URL of the login page.
 
-### `String getLogoutLink()`
+### `getLogoutLink(): String`
 
 Returns the URL for logging out.
 
-### `String getScreenName()`
+### `getScreenName(): String`
 
 Returns the username of the current user. If the user is not authenticated the will return an empty string.
 
-### `String getUserGivenName()`
+### `getUserGivenName(): String`
 
 Returns the given of the current user, if availabe. If the user is not authenticated the will return an empty string.
 
-### `String getUserFamilyName()`
+### `getUserFamilyName(): String`
 
 Returns the given of the current user, if availabe. If the user is not authenticated the will return an empty string.
 
