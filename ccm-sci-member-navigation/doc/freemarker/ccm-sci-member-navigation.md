@@ -80,4 +80,11 @@ item.
 
 Gets the contact entries of the provided member item.
 
+## `getMemberItemCotactEntry(item: Node, key: String): Node`
+
+Gets the contact entry with the provided key of the provided member 
+item.
+
+
+
 

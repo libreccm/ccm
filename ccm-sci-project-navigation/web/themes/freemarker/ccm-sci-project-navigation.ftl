@@ -120,9 +120,3 @@
 <#function getProjectMemberGivenname member>
     <#return member["./@givenname"]>
 </#function>
-
-
-
-
-
-
