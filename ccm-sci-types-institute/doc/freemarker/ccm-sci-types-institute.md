@@ -1,7 +1,7 @@
 # Freemarker functions for SciDepartment items
 
 Import Path
-: `/ccm-sci-types-department.ftl`
+: `/ccm-sci-types-institute.ftl`
 
 ## `getDescription(data: Node): HtmlString`
 
