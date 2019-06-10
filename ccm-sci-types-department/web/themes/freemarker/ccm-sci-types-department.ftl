@@ -8,7 +8,7 @@
 <#import "/ccm-cms/content-item.ftl" as ContentItem>
 
 <#function getDescription data>
-    <#if (data["./instituteDesc"]?size > 0)>
+    <#if (data["./departmentDesc"]?size > 0)>
         <#return data["./departmentDescription"]>
     <#elseif (data["./description"]?size > 0)>
         <#return data["./description"]>
