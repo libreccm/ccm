@@ -37,71 +37,98 @@
 <h4 id="formatdatetime"><code>_formatDateTime</code></h4>
 <p>An internal functions date time formatting. This functions should not be used directly.</p>
 <h2 id="functions-and-macros">Functions and Macros</h2>
-<h3 id="common-functions">Common functions</h3>
-<h4 id="language-related">Language related</h4>
-<p>Import path: <code>&lt;#import /language.ftl as Lang&gt;</code></p>
-<h5 id="getavailablelanguages"><code>getAvailableLanguages</code></h5>
-<pre><code>Sequence getAvailableLanguages()</code></pre>
-<p>Returns the available languages for the current document as sequence. These sequence can be used for creating links for selecting the language:</p>
-<pre><code>&lt;ul class=&quot;language-selector&quot;&gt;
-    &lt;#list Lang.getAvailableLanguages()?sort as lang&gt;
-        &lt;li class=&quot;${(lang==negotiatedLanguage)?then(&#39;selected&#39;, &#39;&#39;)}&quot;&gt;${lang}&lt;/li&gt;
-    &lt;/#list&gt;
-&lt;/ul&gt;</code></pre>
-<p>This example uses the <code>list</code> directive from Freemarker to iterate over the available languages returned by <code>getAvailableLanguages</code> The Freemarker build-in <code>?then</code> is used together with the <code>negotiatedLanguage</code> variable to check if the curent language is the selected language. If this is the case a CSS class is added to the HTML.</p>
-<h4 id="basic-functions">Basic functions</h4>
-<p>Import path: <code>&lt;#import /utils.ftl as Utils&gt;</code></p>
-<h5 id="getpageapplication">getPageApplication</h5>
-<pre><code>getPageApplication()</code></pre>
-<p>Return the application of the current page.</p>
-<h5 id="getpagetitle">getPageTitle</h5>
-<pre><code>getPageTitle()</code></pre>
-<p>Returns the title of the current page</p>
-<h5 id="getsitehostname">getSiteHostName</h5>
-<pre><code>getSiteHostName()</code></pre>
-<p>Returns the name of the host serving the site.</p>
-<h5 id="getsitename">getSiteName</h5>
-<pre><code>getSiteName()</code></pre>
-<p>Returns the name of the site.</p>
-<h5 id="getbooleanattrvalue">getBooleanAttrValue</h5>
-<pre><code>getBooleanAttrValue(fromNode: Node attrName: String)</code></pre>
-<p>A helper function which tries to convert the value of the attribute <code>attrName</code> of the node <code>fromNode</code> to a boolean. The following values are interpreted as true: <code>true</code>, <code>yes</code>. All other values are interpreted as <code>false</code>.</p>
-<h6 id="parameters">Parameters</h6>
-<p><code>fromNode</code> A XML node</p>
-<p><code>attrName</code> The name of attribute to interpret as boolean</p>
-<h6 id="returns">Returns</h6>
-<p>A boolean for the value of the attribute. If the attribute is not present in the provided node the function returns <code>false</code>.</p>
-<h5 id="formatdatetime-1">formatDateTime</h5>
-<pre><code>formatDateTime(style: String date: Node)</code></pre>
-<p>Formats the value of date/time value node according to the provided <code>style</code>. The is defined in the theme manifest in the <code>date-time-formats</code> section. It is possible to define different styles for different languages. The style definition in the theme manifest must be in the format expected by the Java <a href="https://docs.oracle.com/javase/8/docs/api/index.html?java/time/format/DateTimeFormatter.html">DateTimeFormatter</a> class.</p>
-<h6 id="parameters-1">Parameters</h6>
-<p><code>style</code> A date-time format defined in the theme manifest. The format must be formatted as expected by the <a href="https://docs.oracle.com/javase/8/docs/api/index.html?java/time/format/DateTimeFormatter.html">DateTimeFormatter</a> class.</p>
-<p><code>date</code> The node providing the data of the date to format.</p>
-<h6 id="returns-1">Returns</h6>
-<p>A date formatted as defined in <code>style</code>.</p>
-<h6 id="examples">Examples</h6>
-<p>In the theme manifest in the following format is defined:</p>
-<pre><code>&quot;date-time-formats&quot;: [
-    ...
-    {
-        &quot;style&quot;: &quot;news&quot;,
-        &quot;lang&quot;: &quot;de&quot;,
-        &quot;format&quot;: &quot;dd.MM.YYYY&quot;
-    },
-    {
-        &quot;style&quot;: &quot;news&quot;,
-        &quot;lang&quot;: &quot;en&quot;,
-        &quot;format&quot;: &quot;MM/dd/YY&quot;
-    },
-    ...
-]</code></pre>
-<p>The use this format:</p>
-<pre><code>Utils.formatDateTime(&#39;news&#39;, News.getDateTime(item))</code></pre>
-<p><code>News.getDateTime</code> gets the date of a news item. If the date of the news is 2019-04-01 the return value of the function for german is</p>
-<pre><code>01.04.2019</code></pre>
-<p>and for english:</p>
-<pre><code>4/1/19</code></pre>
-<h3 id="ccm-cms-assets-fileattachment">ccm-cms-assets-fileattachment</h3>
+<h1 id="freemarker-functions-for-ccm-cms">Freemarker functions for ccm-cms</h1>
+<h2 id="functions-for-all-content-types">Functions for all content types</h2>
+<dl>
+<dt>Import path</dt>
+<dd><code>/ccm-cms/content-item.ftl</code>
+</dd>
+</dl>
+<p>This functions and macros work for all content item types. Unless stated otherwise all functions support the detail view as well as the list view generated by the <code>ObjectList</code> components of the ccm-navigation module.</p>
+<h3 id="node-getcontentitem"><code>Node getContentItem()</code></h3>
+<p>Retrieves the content item of the current page. This works only on pages generated by the ContentSection application. To get the index item of a navigation page use the functions provided by the ccm-navigation module.</p>
+<p>This function is primarly used to as parameter for other functions dealing with content items.</p>
+<h3 id="contentitem-item-node-view-string-style-string"><code>@contentItem item: Node view: String style: String</code></h3>
+<p>This macro generates the detail view of a content item. Using the type of the provided content items, the provided type and the provided type this macro internally tries to find a view definition in for the provided parameters in the theme manifest. The template defined in this definition is used to generate the HTML representation of the item.</p>
+<p>The parameters <code>view</code> and <code>style</code> are optional. The <code>view</code> parameter defaults to <code>detail</code>, the default value for the <code>style</code> parameter is an empty string.</p>
+<h3 id="string-getitemtitleitem-node"><code>String getItemTitle(item: Node)</code></h3>
+<p>This function retrieves the title of the provided content items.</p>
+<h3 id="string-getpagetitleusecategorymenu-string-userootindexitemtitle-boolean"><code>String getPageTitle(useCategoryMenu: String, useRootIndexItemTitle: boolean)</code></h3>
+<p>Retrieves the title of the current page. The title retrieved depends on the provided parameters. Both parameters are optional. <code>useCategoryMenu</code>is used to select the category menu which is used to retrieve the page title. The default value is <code>categoryMenu</code>. The <code>useRootIndexItemTitle</code> defaults to <code>false</code> and is used to determine if the title of the category or the title of the index item is used as page title for the index page of an category.</p>
+<h3 id="string-getitemsummaryitem-node"><code>String getItemSummary(item: Node)</code></h3>
+<p>Retrieves the summary/lead text of the provided content item if the item has a property. The following property names are tried: <code>lead</code>, <code>summary</code>. If none is found an empty string is returned.</p>
+<h3 id="string-getpagedescriptionitem-node"><code>String getPageDescription(item: Node)</code></h3>
+<p>Retrieves the value of the <code>pageDescription</code> property of the provided content item if the item has such a property. If not an empty string is returned.</p>
+<h3 id="string-generatecontentitemlinkoid-string"><code>String generateContentItemLink(oid: String)</code></h3>
+<p>Generates a link to the content item with the provided OID.</p>
+<h3 id="string-geteditlinkitem-node"><code>String getEditLink(item: Node)</code></h3>
+<p>This function generates a link for editing the provided content item is the link is available. If the link is not available, for example if the current user is not permitted to edit the item, an empty string is returned.</p>
+<h2 id="functions-of-types-derivated-from-organizationalunit">Functions of types derivated from OrganizationalUnit</h2>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-cms/orgaunit.ftl</code>
+</dd>
+</dl>
+<h3 id="sequence-getavailabletabsitem-node"><code>Sequence getAvailableTabs(item: Node)</code></h3>
+<p>Returns a sequence of the information tabs available for the provided organizational unit item. For processing the return values of this functions the other functions provided by this file should be used.</p>
+<h3 id="string-gettypenamekeyitem-node"><code>String getTypeNameKey(item: Node)</code></h3>
+<p>Retrieves the type of the provided orga unit item.</p>
+<h3 id="string-gettablabeltab-node"><code>String getTabLabel(tab: Node)</code></h3>
+<p>Retrieves the label of the provided tab.</p>
+<h3 id="boolean-istabselectedtab-node"><code>boolean isTabSelected(tab: Node)</code></h3>
+<p>Checks if the provided tab is the currently selected tab.</p>
+<h3 id="string-gettablinktab-node"><code>String getTabLink(tab: Node)</code></h3>
+<p>Retrieves the link for the provided tab.</p>
+<h3 id="node-getselectedtabitem-node"><code>Node getSelectedTab(item: Node)</code></h3>
+<p>Retrieves the data of the selected tab.</p>
+<h3 id="string-gettypeofselectedtabitem-node"><code>String getTypeOfSelectedTab(item: Node)</code></h3>
+<p>Returns the type of the selected tab.</p>
+<h3 id="node-getpropertyfromtabtab-node"><code>Node getPropertyFromTab(tab: Node)</code></h3>
+<p>Returns a property from the provided tab.</p>
+<h3 id="mixed-gettabcontenttab-node"><code>Mixed getTabContent(tab: Node)</code></h3>
+<p>Returns the content of the provided tab.</p>
+<h3 id="string-getaddedumdata-node"><code>String getAddedum(data: Node)</code></h3>
+<p>Retrieves the value of the addendum property from the provided tab data (as returned by <code>getTabContent</code>) if the data contains such a property.</p>
+<h3 id="sequence-getmembersdata-node">Sequence<Node> getMembers(data: Node)`</h3>
+<p>Retrieves the members of the orga unit from the provided tab data (as returned by <code>getTabContent</code>) if the data contains such a property.</p>
+<h3 id="string-getmemberrolemember-node"><code>String getMemberRole(member: Node)</code></h3>
+<p>Retrieves the role of the provided member.</p>
+<h3 id="string-getmemberstatusmember-node"><code>String getMemberStatus(member: Node)</code></h3>
+<p>Retrieves the status of the provided member.</p>
+<h3 id="sequencenode-getcontactentriesmember-node"><code>Sequence&lt;Node&gt; getContactEntries(member: Node)</code></h3>
+<p>Retrieves the contact entries of the provided member. For processing the members the functions provided by <code>person.ftl</code> can be used.</p>
+<h3 id="boolean-hasorgaunitcontactdata-node"><code>boolean hasOrgaUnitContact(data: Node)</code></h3>
+<p>Returns <code>true</code> if the provided data contains a contact item.</p>
+<h3 id="node-getorgaunitcontactdata-node"><code>Node getOrgaUnitContact(data: Node)</code></h3>
+<p>Retrieves the contact item for the orga unit from the provided data.</p>
+<h3 id="node-getorgaunitcontactpersondata-node"><code>Node getOrgaUnitContactPerson(data: Node)</code></h3>
+<p>Retrieves the person associated with the provided contact.</p>
+<h3 id="node-getorgaunitcontactentriesdata-node"><code>Node getOrgaUnitContactEntries(data: Node)</code></h3>
+<p>Retrieves the contact entries of the provided contact item. For further processing the functions provided by the <code>ccm-cms-types-contact</code> module should be used.</p>
+<h2 id="functions-for-person-items">Functions for person items</h2>
+<dl>
+<dt>Import path</dt>
+<dd><code>/ccm-cms/person.ftl</code>
+</dd>
+</dl>
+<p>This functions can be used to process content items derivated from the <code>GenericPerson</code> type.</p>
+<h3 id="string-getsurnameitem-node"><code>String getSurname(item: Node)</code></h3>
+<p>Gets the surname from the provided person item.</p>
+<h3 id="string-getgivennameitem-node"><code>String getGivenName(item: Node)</code></h3>
+<p>Gets the given name from the provided person item.</p>
+<h3 id="string-gettitlepreitem-node"><code>String getTitlePre(item: Node)</code></h3>
+<p>Gets the value of the <code>titlePre</code> property of the provided person item.</p>
+<h3 id="string-gettitlepostitem-node"><code>String getTitlePost(item: Node)</code></h3>
+<p>Gets the value of the <code>titlePost</code> property of the provided person item.</p>
+<h3 id="string-gethomepagelinkitem-node-contacttype-stringcommoncontact-entry-stringhomepage"><code>String getHomepageLink(item: Node, contactType: string=&quot;commonContact&quot;, entry: String=&quot;homepage&quot;)</code></h3>
+<p>Retrieves the link to the homepage of the provided person item if the item has an contact entry for a homepage. The optional parameters <code>contactType</code> and <code>entry</code> can be used to select the contact and the entry from which the value is read. The default value for <code>contactType</code> is <code>commonContact</code>. For <code>entry</code> the default value is <code>homepage</code>.</p>
+<h3 id="string-getaddressitem-node-contacttype-stringcommoncontact"><code>String getAddress(item: Node, contactType: String=&quot;commonContact&quot;)</code></h3>
+<p>Retrieves the addres item associated with contact of the provided person. The contact to use can be selected using the optional parameters <code>contactType</code>. The default value is <code>commonContact</code>. # Functions for File Attachments</p>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-cms-assets-fileattachments.ftl</code>
+</dd>
+</dl>
 <p>This module provides functions for dealing with file attachments. A possible usage these functions:</p>
 <pre><code>&lt;#list FileAttachments.getFileAttachments(item)&gt;
     &lt;div class=&quot;file-attachments&quot;&gt;
@@ -134,73 +161,31 @@
         &lt;/ul&gt;
     &lt;/div&gt;
 &lt;/#list&gt;</code></pre>
-<h4 id="getfileattachments">getFileAttachments</h4>
-<pre><code>getFileAttachments(item: ContentItemNode): Sequence</code></pre>
-<p>Return the file attachments of a content items</p>
-<h5 id="parameters-2">Parameters</h5>
-<p><code>item</code> The content item from which the file attachments are retrieved.</p>
-<h5 id="returns-2">Returns</h5>
-<p>A sequence of the file attachments of the provided content item.</p>
-<h4 id="getfiletype">getFileType</h4>
-<pre><code>getFileType(file)</code></pre>
+<h2 id="getfileattachmentsitem-node-sequencenode"><code>getFileAttachments(item: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Retrieves the file attachments of the provided content item.</p>
+<h2 id="getfiletypefile-node-string"><code>getFileType(file: Node): String</code></h2>
 <p>Returns the type of the file attachments which is either <code>caption</code> or <code>file</code>.</p>
-<h5 id="parameters-3">Parameters</h5>
-<p><code>file</code> The file attachment</p>
-<h5 id="returns-3">Returns</h5>
-<p>The type of the file attachment.</p>
-<h4 id="getmimetype">getMimeType</h4>
-<pre><code>getMimeType(file)</code></pre>
-<p>Returns the mime type of the file.</p>
-<h5 id="parameters-4">Parameters</h5>
-<p><code>file</code> The file</p>
-<h5 id="returns-4">Returns</h5>
-<p>The mime type of the file.</p>
-<h4 id="getmimetypefileextension">getMimeTypeFileExtension</h4>
-<pre><code>getMimeTypeFileExtension(file)</code></pre>
+<h2 id="getmimetypefile-node-string"><code>getMimeType(file: Node): String</code></h2>
+<p>Returns the mime type of the file, for example <code>image/png</code> or <code>application/pdf</code>.</p>
+<h2 id="getmimetypefileextensionfile-node-string"><code>getMimeTypeFileExtension(file: Node): String</code></h2>
 <p>Returns the usual file extension for the mime type of the file.</p>
-<h5 id="parameters-5">Parameters</h5>
-<p><code>file</code> The file</p>
-<h5 id="returns-5">Returns</h5>
-<p>The usual file extension for the mime type of the file.</p>
-<h4 id="getfilesize">getFileSize</h4>
-<pre><code>getFileSize(file unit=&quot;byte&quot;)</code></pre>
-<p>Returns the size of the file in the provided unit.</p>
-<h5 id="parameters-6">Parameters</h5>
-<p><code>file</code>The file</p>
-<p><code>unit</code> Optional parameter for unit in which the size is returned. Default value is <code>byte</code>. Supported values are <code>byte</code>, <code>kB</code> <code>KiB</code>, <code>MB</code> and <code>MiB</code>. All other values are interpreted as <code>byte</code>.</p>
-<h5 id="returns-6">Returns</h5>
-<p>The size of the file in the provided unit.</p>
-<h4 id="getfileid">getFileId</h4>
-<pre><code>getFileId(file)</code></pre>
+<h2 id="getfilesizefile-node-unit-string-byte-number"><code>getFileSize(file: Node, unit: String = &quot;byte&quot;): Number</code></h2>
+<p>Returns the size of the provided file. The unit in which the size of the file is returned can be changed by using the optional parameter <code>unit</code>. The default value for the unit is <code>byte</code>.</p>
+<h2 id="getfileidfile-node-string"><code>getFileId(file: Node): String</code></h2>
 <p>Returns the ID of the file.</p>
-<h5 id="parameters-7">Parameters</h5>
-<p><code>file</code> The file</p>
-<h5 id="returns-7">Returns</h5>
-<p>The ID of the file.</p>
-<h4 id="getfilename">getFileName</h4>
-<pre><code>getFileName(file)</code></pre>
+<h2 id="getfilenamefile-node-string"><code>getFileName(file: Node): String</code></h2>
 <p>Returns the name of file.</p>
-<h5 id="parameters-8">Parameters</h5>
-<p><code>file</code> The file</p>
-<h5 id="returns-8">Returns</h5>
-<p>The name of the file.</p>
-<h4 id="getfiledescription">getFileDescription</h4>
-<pre><code>getFileDescription(file)</code></pre>
-<p>Returns the name of file.</p>
-<h5 id="parameters-9">Parameters</h5>
-<p><code>file</code> The file</p>
-<h5 id="returns-9">Returns</h5>
-<p>The description of the file.</p>
-<h4 id="getfileurl">getFileUrl</h4>
-<pre><code>getFileUrl(file)</code></pre>
-<p>Returns the name of file.</p>
-<h5 id="parameters-10">Parameters</h5>
-<p><code>file</code> The file</p>
-<h5 id="returns-10">Returns</h5>
-<p>The URL of the file.</p>
-<h3 id="ccm-cms-assets-imagestep">ccm-cms-assets-imagestep</h3>
+<h2 id="getfiledescriptionfile-node-string"><code>getFileDescription(file: Node): String</code></h2>
+<p>Returns the description of the file.</p>
+<h4 id="getfileurlfile-node-string"><code>getFileUrl(file: Node): String</code></h4>
+<p>Returns the URL of the file.</p>
+<h1 id="freemarker-functions-for-image-attachments">Freemarker functions for Image Attachments</h1>
 <p>Provides functions for dealing with image attachments of a content item.</p>
-<p>Import path: <code>&lt;#import &quot;/ccm-cms-assets-imagestep.ftl&quot; as Images&gt;</code></p>
+<dl>
+<dt>Import path</dt>
+<dd><code>/ccm-cms-assets-imagestep.ftl&quot;</code>
+</dd>
+</dl>
 <p>Example usage:</p>
 <pre><code>&lt;#import &quot;/ccm-cms-assets-imagestep.ftl&quot; as Images&gt;
 
@@ -222,257 +207,1373 @@
         &lt;/#items&gt;
     &lt;/div&gt;
 &lt;/#list&gt;</code></pre>
-<h4 id="getimageattachments">getImageAttachments</h4>
-<pre><code>getImageAttachments(item)</code></pre>
-<p>Get the image attachments of a content item</p>
-<h5 id="parameters-11">Parameters</h5>
-<p><code>item</code> The content item.</p>
-<h5 id="returns-11">Returns</h5>
-<p>A sequence of the image attachments of the provided content item.</p>
-<h4 id="getimageid">getImageId</h4>
-<pre><code>getImageId(image)</code></pre>
-<p>Get the ID of the provided image.</p>
-<h5 id="parameters-12">Parameters</h5>
-<p><code>image</code> The image.</p>
-<h5 id="returns-12">Returns</h5>
-<p>The id of the image.</p>
-<h4 id="getimagename">getImageName</h4>
-<pre><code>getImageName(image)</code></pre>
+<h2 id="getimageattachmentsitem-node-sequencenode"><code>getImageAttachments(item: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Get the image attachments of the provided content item.</p>
+<h2 id="getimageidimage-node-string"><code>getImageId(image: Node): String</code></h2>
+<p>Gets the ID of the provided image.</p>
+<h2 id="getimagenameimage-node-string"><code>getImageName(image: Node): String</code></h2>
 <p>Gets the name of the provided image.</p>
-<h5 id="parameters-13">Parameters</h5>
-<p><code>image</code> The image.</p>
-<h5 id="returns-13">Returns</h5>
-<p>The name of the image.</p>
-<h4 id="getimagecaption">getImageCaption</h4>
-<pre><code>getImageCaption(image)</code></pre>
+<h2 id="getimagecaptionimage-node-string"><code>getImageCaption(image: Node): String</code></h2>
 <p>Gets the caption of the provided image.</p>
-<h5 id="parameters-14">Parameters</h5>
-<p><code>image</code> The image.</p>
-<h5 id="returns-14">Returns</h5>
-<p>The caption of the image.</p>
-<h4 id="getimagesortkey">getImageSortKey</h4>
-<pre><code>getImageSortKey(image)</code></pre>
+<h4 id="getimagesortkeyimage-node-string"><code>getImageSortKey(image: Node): String</code></h4>
 <p>Gets the sort key of the provided image.</p>
-<h5 id="parameters-15">Parameters</h5>
-<p><code>image</code> The image.</p>
-<h5 id="returns-15">Returns</h5>
-<p>The sort key of the provided image.</p>
-<h4 id="getimagewidth">getImageWidth</h4>
-<pre><code>getImageWidth(image)</code></pre>
+<h2 id="getimagewidthimage-node-string"><code>getImageWidth(image: Node): String</code></h2>
 <p>Gets the width of the provided image.</p>
-<h5 id="parameters-16">Parameters</h5>
-<p><code>image</code> The image.</p>
-<h5 id="returns-16">Returns</h5>
-<p>The width of the provided image.</p>
-<h4 id="getimageheight">getImageHeight</h4>
-<pre><code>getImageHeight(image)</code></pre>
+<h4 id="getimageheightimage-node-string"><code>getImageHeight(image: Node): String</code></h4>
 <p>Gets the height of the provided image.</p>
-<h5 id="parameters-17">Parameters</h5>
-<p><code>image</code> The image.</p>
-<h5 id="returns-17">Returns</h5>
-<p>The height of the provided image.</p>
-<h4 id="getimageurl">getImageUrl</h4>
-<pre><code>getImageUrl(image)</code></pre>
+<h2 id="getimageurlimage-node-string"><code>getImageUrl(image: Node): String</code></h2>
 <p>Gets the URL of the provided image.</p>
-<h5 id="parameters-18">Parameters</h5>
-<p><code>image</code> The image.</p>
-<h5 id="returns-18">Returns</h5>
-<p>The URL of the provided image.</p>
-<h3 id="ccm-cms-assets-notes">ccm-cms-assets-notes</h3>
+<h1 id="freemarker-functions-for-sidenote-assets">Freemarker functions for Sidenote assets</h1>
 <p>Functions for processing note assets assigned to a content item.</p>
-<h4 id="getnotes">getNotes</h4>
-<pre><code>getNotes(item)</code></pre>
+<dl>
+<dt>Import path</dt>
+<dd><code>/ccm-cms-assets-notes.ftl</code>
+</dd>
+</dl>
+<h2 id="getnotesitem-node-sequencenode"><code>getNotes(item: Node): Sequence&lt;Node&gt;</code></h2>
 <p>Returns the notes assigned to a content item.</p>
-<h5 id="parameters-19">Parameters</h5>
-<p><code>item</code> The content item</p>
-<h5 id="returns-19">Returns</h5>
-<p>A sequence of the notes assigned to the provided item.</p>
-<h4 id="getcontent">getContent</h4>
-<pre><code>getContent(note)</code></pre>
-<p>Gets the content of a note.</p>
-<h5 id="parameters-20">Parameters</h5>
-<p><code>note</code> The note.</p>
-<h5 id="returns-20">Returns</h5>
-<p>The content of the note. ### ccm-cms-assets-relatedlink</p>
+<h2 id="getcontentitem-node-string">`getContent(item: Node): String</h2>
+<p>Gets the content of a note. The return value is the HTML content of the node. # Freemarker functions for related links</p>
+<dl>
+<dt>Import path</dt>
+<dd><code>/ccm-cms-assets-relatedlinks</code>
+</dd>
+</dl>
 <p>Functions for processing the related links assigned to a content item.</p>
-<h4 id="getrelatedlinks">getRelatedLinks</h4>
-<pre><code>getRelatedLinks(item, linkListName=&quot;NONE&quot;)</code></pre>
-<p>Retrieves the related links assigned to a content item.</p>
-<h5 id="parameters-21">Parameters</h5>
-<p><code>item</code> The content item</p>
-<p><code>linkListName</code> The related links of a content item can be organized in link lists. The default list (if no other is used) is <code>NONE</code> which is the default value of this parameter. Only the links which belong to the provided group are returned.</p>
-<h5 id="returns-21">Returns</h5>
-<p>The related links of the provided <code>linkListGroup</code> of the provided content item.</p>
-<h4 id="getlinktype">getLinkType</h4>
-<pre><code>getLinkType(link)</code></pre>
+<h2 id="getrelatedlinksitem-node-linklistname-string-none-sequencenode"><code>getRelatedLinks(item: Node, linkListName: String = &quot;NONE&quot;): Sequence&lt;Node&gt;</code></h2>
+<p>Retrieves the related links assigned to a content item. Related links can be organized in named list. The optional parameters <code>linkListName</code> controls which list is used. If the parameter is omitted the default value <code>NONE</code> is used.</p>
+<h2 id="getlinktypelink-node-string"><code>getLinkType(link: Node): String</code></h2>
 <p>Gets the type of the provided link which can either be <code>externalLink</code>, <code>internalLink</code> or <code>caption</code>.</p>
-<h5 id="parameters-22">Parameters</h5>
-<p><code>link</code> The link</p>
-<h5 id="returns-22">Returns</h5>
-<p>The type of the provided link.</p>
-<h4 id="getlinktitle">getLinkTitle</h4>
-<pre><code>getLinkTitle(link)</code></pre>
+<h2 id="getlinktitlelink-node-string"><code>getLinkTitle(link: Node): String</code></h2>
 <p>Gets the title of the provided link.</p>
-<h5 id="parameters-23">Parameters</h5>
-<p><code>link</code> The link.</p>
-<h5 id="returns-23">Returns</h5>
-<p>The title of the provided link.</p>
-<h4 id="getlinkdescription">getLinkDescription</h4>
-<pre><code>getLinkDescription(link)</code></pre>
+<h2 id="getlinkdescriptionlink-node-string"><code>getLinkDescription(link: Node): String</code></h2>
 <p>Gets the description of the provided link.</p>
-<h5 id="parameters-24">Parameters</h5>
-<p><code>link</code> The link.</p>
-<h5 id="returns-24">Returns</h5>
-<p>The description of the provided link.</p>
-<h4 id="getlinkorder">getLinkOrder</h4>
-<pre><code>getLinkOrder(link)</code></pre>
-<p>Gets the order value of the provided link.</p>
-<h5 id="parameters-25">Parameters</h5>
-<p><code>link</code> The link.</p>
-<h5 id="returns-25">Returns</h5>
-<p>The order value of the provided link.</p>
-<h4 id="getinternallinkparameters">getInternalLinkParameters</h4>
-<pre><code>getLinkInternalLinkParameters(link)</code></pre>
-<p>Gets the parameters of the of the provided link.</p>
-<h5 id="parameters-26">Parameters</h5>
-<p><code>link</code> The link.</p>
-<h5 id="returns-26">Returns</h5>
-<p>The parameters to add to the URL of the provided link.</p>
-<h4 id="gettargeturi">getTargetUri</h4>
-<pre><code>getTargetUri(link)</code></pre>
+<h2 id="getlinkorderlink-node-string"><code>getLinkOrder(link: Node): String</code></h2>
+<p>Gets the order value for the provided link.</p>
+<h2 id="getinternallinkparameterslink-node-string"><code>getInternalLinkParameters(link: Node): String</code></h2>
+<p>Gets the URL parameters of the of the provided link (The part after the question mark).</p>
+<h2 id="gettargeturilink-node-string"><code>getTargetUri(link: Node</code>): String</h2>
 <p>Gets the URI of the target of the provided link.</p>
-<h5 id="parameters-27">Parameters</h5>
-<p><code>link</code> The link.</p>
-<h5 id="returns-27">Returns</h5>
-<p>The URI of the target of the provided link.</p>
-<h3 id="ccm-cms-publicpersonalprofile">ccm-cms-publicpersonalprofile</h3>
+<h1 id="freemarker-functions-for-public-personal-profiles">Freemarker functions for Public Personal Profiles</h1>
+<dl>
+<dt>Import path</dt>
+<dd><code>/ccm-cms-publicpersonalprofile.md</code>
+</dd>
+</dl>
 <p>Functions for processing the data of a public personal profile.</p>
-<h4 id="getprofileowner">getProfileOwner</h4>
-<pre><code>getProfileOwner(data)</code></pre>
-<p>Get the data about the profile owner.</p>
-<h5 id="parameters-28">Parameters</h5>
-<p><code>data</code> The public personal profile data</p>
-<h5 id="returns-28">Returns</h5>
-<p>The data about the owner of the profile.</p>
-<h4 id="getprofileownersurname">getProfileOwnerSurname</h4>
-<pre><code>getProfileOwnerSurname(owner)</code></pre>
+<h2 id="getprofileownerdata-node-node"><code>getProfileOwner(data: Node): Node</code></h2>
+<p>Get the data about the profile owner. The return value is a XML node which can be further processed with other functions.</p>
+<h2 id="getprofileownersurnameowner-node-string"><code>getProfileOwnerSurname(owner: Node): String</code></h2>
 <p>Gets the surname of a profile owner.</p>
-<h5 id="parameters-29">Parameters</h5>
-<p><code>owner</code> The owner.</p>
-<h5 id="returns-29">Returns</h5>
-<p>The surname of the provided profile owner.</p>
-<h4 id="getprofileownergivenname">getProfileOwnerGivenName</h4>
-<pre><code>getProfileOwnerGivenName(owner)</code></pre>
+<h2 id="getprofileownergivennameowner-node-string"><code>getProfileOwnerGivenName(owner: Node): String</code></h2>
 <p>Gets the given name of a profile owner.</p>
-<h5 id="parameters-30">Parameters</h5>
-<p><code>owner</code> The owner.</p>
-<h5 id="returns-30">Returns</h5>
-<p>The given name of the provided profile owner.</p>
-<h4 id="getprofileownertitlepre">getProfileOwnerTitlePre</h4>
-<pre><code>getProfileOwnerTitlePre(owner)</code></pre>
+<h2 id="getprofileownertitlepreowner-node-string"><code>getProfileOwnerTitlePre(owner: Node): String</code></h2>
 <p>Gets the titles a profile owner.</p>
-<h5 id="parameters-31">Parameters</h5>
-<p><code>owner</code> The owner.</p>
-<h5 id="returns-31">Returns</h5>
-<p>The titles of the provided profile owner which preceed the name of the owner.</p>
-<h4 id="getprofileownertitlepost">getProfileOwnerTitlePost</h4>
-<pre><code>getProfileOwnerTitlePost(owner)</code></pre>
+<h2 id="getprofileownertitlepostowner-node-string"><code>getProfileOwnerTitlePost(owner: Node): String</code></h2>
 <p>Gets the titles a profile owner.</p>
-<h5 id="parameters-32">Parameters</h5>
-<p><code>owner</code> The owner.</p>
-<h5 id="returns-32">Returns</h5>
-<p>The titles of the provided profile owner which follow the name of the owner.</p>
-<h4 id="getprofileownercontact">getProfileOwnerContact</h4>
-<pre><code>getProfileOwnerContact(owner)</code></pre>
-<p>Gets the contact data of the owner.</p>
-<h5 id="parameters-33">Parameters</h5>
-<p><code>owner</code> The owner.</p>
-<h5 id="returns-33">Returns</h5>
-<p>The contact data of the owner. The contact data are in the same format as a content item of the type <code>ccm-cms-types-contact</code>. The returned data can be processed further using the functions for content items of the type <code>ccm-cms-types-contact?</code>.</p>
-<h4 id="getprofileimage">getProfileImage</h4>
-<pre><code>getProfileImage(data)</code></pre>
-<p>Return the data of the image attached to the profile, if any.</p>
-<h5 id="parameters-34">Parameters</h5>
-<p><code>data</code> The data of the profile.</p>
-<h5 id="returns-34">Returns</h5>
-<p>The data about the image attached to the profile if an image was attached to the profile. The returned data is a image attachement which can be processed further by the functions provided for processing image assets (see <code>ccm-cms-assets-imagestep</code>).</p>
-<h4 id="getprofileownername">getProfileOwnerName</h4>
-<pre><code>getProfileOwnerName(data)</code></pre>
-<p>Gets the name of the profile owner.</p>
-<h4 id="parameters-35">Parameters</h4>
-<p><code>data</code> The data of the profile.</p>
-<h4 id="returns-35">Returns</h4>
-<p>The name of the content item of the type <code>Person</code> assigned to the profile.</p>
-<h4 id="getpersonalpublications">getPersonalPublications</h4>
-<pre><code>getPersonalPublications(data)</code></pre>
-<p>Gets the data about the personal publications of the profile owner.</p>
-<h4 id="parameters-36">Parameters</h4>
-<p><code>data</code> The data of the profile.</p>
-<h4 id="returns-36">Returns</h4>
-<p>The data about the personal publications of the author, organized in publications groups.</p>
-<h4 id="getpersonalpublicationsavailablepublicationgroups">getPersonalPublicationsAvailablePublicationGroups</h4>
-<pre><code>getPersonalPublicationsAvailablePublicationGroups(data)</code></pre>
-<p>Get the available publications groups.</p>
-<h5 id="parameters-37">Parameters</h5>
-<p><code>data</code> The data of the profile.</p>
-<h5 id="returns-37">Returns</h5>
-<p>A sequence of the available publication groups. They can processed further using <code>getPublicationGroupId</code> and <code>getPublicationGroupLink</code>.</p>
-<h4 id="getpublicationgroupid">getPublicationGroupId</h4>
-<pre><code>getPublicationGroupId(group)</code></pre>
-<h5 id="parameters-38">Parameters</h5>
-<p><code>group</code> The publication group.</p>
-<h5 id="returns-38">Returns</h5>
-<p>The ID of the publication group.</p>
-<h4 id="getpublicationgrouplink">getPublicationGroupLink</h4>
-<pre><code>getPublicationGroupLink(group)</code></pre>
-<h5 id="parameters-39">Parameters</h5>
-<p><code>group</code> The publication group.</p>
-<h5 id="returns-39">Returns</h5>
-<p>The link for showing the publications of the group.</p>
-<h4 id="getpublicationgroups">getPublicationGroups</h4>
-<pre><code>getPublicationGroups(data)</code></pre>
+<h2 id="getprofilepositiondata-node-string"><code>getProfilePosition(data: Node): String</code></h2>
+<p>Returns the value of the <code>position</code> property of a profile.</p>
+<h2 id="getprofileinterestsdata-node-string"><code>getProfileInterests(data: Node): String</code></h2>
+<p>Returns the value of the <code>interests</code> property of a profile.</p>
+<h2 id="getprofilemiscdata-node-string"><code>getProfileMisc(data: Node): String</code></h2>
+<p>Returns the value of the <code>misc</code> property of a profile.</p>
+<h2 id="getprofileownercontactowner-node-node"><code>getProfileOwnerContact(owner: Node): Node</code></h2>
+<p>Gets the contact data of the owner. The contact data is in the same format as a content item of the type <code>ccm-cms-types-contact</code>. The returned data can be processed further using the functions for content items of the type <code>ccm-cms-types-contact?</code>. The functions provided by the <code>ccm-cms-types-contact</code> module can be used to process this data.</p>
+<h2 id="getprofileimagedata-node-string"><code>getProfileImage(data: Node): String</code></h2>
+<p>Returns the data of the image attached to the profile, if any. The returned data is a image attachement which can be processed further by the functions provided for processing image assets (see <code>ccm-cms-assets-imagestep</code>).</p>
+<h2 id="getprofileownernamedata-node-string"><code>getProfileOwnerName(data: Node): String</code></h2>
+<p>Gets the name of the profile owner which is the name of the content item of the type <code>Person</code> assigned to the profile.</p>
+<h2 id="getpersonalpublicationsdata-node-sequencenode"><code>getPersonalPublications(data: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Gets the data about the personal publications of the profile owner, organized in publications groups.</p>
+<h2 id="getpersonalpublicationsavailablepublicationgroupsdata-node-sequencenode"><code>getPersonalPublicationsAvailablePublicationGroups(data: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Get the available publications groups. The items of the sequence can be processed further using <code>getPublicationGroupId</code> and <code>getPublicationGroupLink</code>.</p>
+<h2 id="getpublicationgroupidgroup-node-string"><code>getPublicationGroupId(group: Node): String</code></h2>
+<p>Returns the ID of the publication group.</p>
+<h2 id="getpublicationgrouplinkgroup-node-string"><code>getPublicationGroupLink(group: Node): String</code></h2>
+<p>Returns the link for showing the publications of the group.</p>
+<h2 id="getpublicationgroupsdata-node-sequencenode"><code>getPublicationGroups(data: Node): Sequence&lt;Node&gt;</code></h2>
 <p>Get all publication groups currently displayed.</p>
-<h5 id="parameters-40">Parameters</h5>
-<p><code>data</code> The data of the profile.</p>
-<h5 id="returns-40">Returns</h5>
-<p>A sequence of the publication groups in the data of the profile.</p>
-<h4 id="getpublicationsofgroup">getPublicationsOfGroup</h4>
-<pre><code>getPublicationsOfGroup(data)</code></pre>
+<h2 id="getpublicationsofgroupdata-node-sequencenode"><code>getPublicationsOfGroup(data: Node): Sequence&lt;Node&gt;</code></h2>
 <p>Gets the publiations of a group. The publication can be processed further by the functions provided by <code>ccm-sci-publications</code>.</p>
-<h5 id="parameters-41">Parameters</h5>
-<p><code>data</code> The data of the group.</p>
-<h5 id="returns-41">Returns</h5>
-<p>The publications of the group.</p>
-<h4 id="getavailableprojectgroups">getAvailableProjectGroups</h4>
-<pre><code>getAvailableProjectGroups(data)</code></pre>
-<p>Get the available project groups.</p>
-<h5 id="parameters-42">Parameters</h5>
-<p><code>data</code> The data of the profile.</p>
-<h5 id="returns-42">Returns</h5>
-<p>A sequence of the available project groups. They can processed further using <code>getProjectGroupId</code> and <code>getProjectGroupLink</code>.</p>
-<h4 id="getprojectgroupid">getProjectGroupId</h4>
-<pre><code>getProjectGroupId(group)</code></pre>
-<h5 id="parameters-43">Parameters</h5>
-<p><code>group</code> The Project group.</p>
-<h5 id="returns-43">Returns</h5>
-<p>The ID of the Project group.</p>
-<h4 id="getprojectgrouplink">getProjectGroupLink</h4>
-<pre><code>getProjectGroupLink(group)</code></pre>
-<h5 id="parameters-44">Parameters</h5>
-<p><code>group</code> The Project group.</p>
-<h5 id="returns-44">Returns</h5>
-<p>The link for showing the Projects of the group.</p>
-<h4 id="getprojectgroups">getProjectGroups</h4>
-<pre><code>getProjectGroups(data)</code></pre>
-<p>Get all project groups currently displayed.</p>
-<h5 id="parameters-45">Parameters</h5>
-<p><code>data</code> The data of the profile.</p>
-<h5 id="returns-45">Returns</h5>
-<p>A sequence of the project groups in the data of the profile.</p>
-<h4 id="getprojectsofgroup">getProjectsOfGroup</h4>
-<pre><code>getProjectOfGroup(data)</code></pre>
+<h2 id="haspublicationspaginatorprofile-node-boolean"><code>hasPublicationsPaginator(profile: Node): boolean</code></h2>
+<p>Determines if there is paginator for the current publication group.</p>
+<h2 id="getpublicationspaginatorbaseurlprofile-node-string"><code>getPublicationsPaginatorBaseUrl(profile: Node): String</code></h2>
+<p>Returns the base URL for the publications paginator.</p>
+<h2 id="getpublicationspaginatorpagecountprofile-node-string"><code>getPublicationsPaginatorPageCount(profile: Node): String</code></h2>
+<p>Returns the number of pages from the publications paginatator.</p>
+<h2 id="getpublicationspaginatorpagenumberprofile-node-string"><code>getPublicationsPaginatorPageNumber(profile: Node): String</code></h2>
+<p>Returns the current page of the current publication group.</p>
+<h2 id="getpublicationspaginatorpageparamprofile-node-string"><code>getPublicationsPaginatorPageParam(profile: Node): String</code></h2>
+<p>Gets the name of the URL parameter for changing the current page.</p>
+<h2 id="getpublicationspaginatorpagesizeprofile-node-string"><code>getPublicationsPaginatorPageSize(profile: Node): String</code></h2>
+<p>Gets the page size.</p>
+<h2 id="getpublicationspaginatorobjectbeginprofile-node-string"><code>getPublicationsPaginatorObjectBegin(profile: Node): String</code></h2>
+<p>Gets the index of the first displayed item of current publication group.</p>
+<h2 id="getpublicationspaginatorobjectcountprofile-node-string"><code>getPublicationsPaginatorObjectCount(profile: Node): String</code></h2>
+<p>Gets the index of the number of items in the current publication group.</p>
+<h2 id="getpublicationspaginatorobjectendprofile-node-string"><code>getPublicationsPaginatorObjectEnd(profile: Node): String</code></h2>
+<p>Gets the index of the last displayed item of current publication group.</p>
+<h2 id="getpublicationspaginatorprevpagelinkprofile-node-string"><code>getPublicationsPaginatorPrevPageLink(profile: Node): String</code></h2>
+<p>Gets the link to the previous page of the current publication group.</p>
+<h2 id="getpublicationspaginatonfirstpagelinkprofile.-node-string"><code>getPublicationsPaginatonFirstPageLink(profile. Node): String</code></h2>
+<p>Gets the link the first page of the current publication group.</p>
+<h2 id="getpublicationspaginatornextpagelinkprofile-node-string"><code>getPublicationsPaginatorNextPageLink(profile: Node): String</code></h2>
+<p>Gets the link to the next page of the current publication group.</p>
+<h2 id="getpublicationspaginatorlastpagelinkprofile-node-string"><code>getPublicationsPaginatorLastPageLink(profile: Node): String</code></h2>
+<p>Gets the link to the last page of the current publication group.</p>
+<h2 id="getavailableprojectgroupsdata-node-sequencenode"><code>getAvailableProjectGroups(data: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the available project groups. The sequence can be processed further using <code>getProjectGroupId</code> and <code>getProjectGroupLink</code>.</p>
+<h2 id="getprojectgroupidgroup-node-string"><code>getProjectGroupId(group: Node): String</code></h2>
+<p>Returns the ID of the Project group.</p>
+<h2 id="getprojectgrouplinkgroup-node-string"><code>getProjectGroupLink(group: Node): String</code></h2>
+<p>Returns the link for showing the Projects of the group.</p>
+<h4 id="getprojectgroupsdata-node-string"><code>getProjectGroups(data: Node): String</code></h4>
+<p>Gets all project groups currently displayed.</p>
+<h2 id="getprojectsofgroupdata-node-sequencenode"><code>getProjectsOfGroup(data: Node): Sequence&lt;Node&gt;</code></h2>
 <p>Gets the projects of a group. The projects can be processed further by the functions provided by <code>ccm-sci-types-project</code>.</p>
-<h5 id="parameters-46">Parameters</h5>
-<p><code>data</code> The data of the group.</p>
-<h5 id="returns-46">Returns</h5>
-<p>The projects of the group.</p>
+<h2 id="hasprojectspaginatorprofile-node-boolean"><code>hasProjectsPaginator(profile: Node): boolean</code></h2>
+<p>Determines if the current project group has a paginator.</p>
+<h2 id="getprojectspaginatorbaseurlprofile-node-string"><code>getProjectsPaginatorBaseUrl(profile: Node): String</code></h2>
+<p>Returns the base URL for the projects paginator.</p>
+<h2 id="getprojectspaginatorpagecountprofile-node-string"><code>getProjectsPaginatorPageCount(profile: Node): String</code></h2>
+<p>Returns the number of pages from the project paginatator.</p>
+<h2 id="getprojectspaginatorpagenumberprofile-node-string"><code>getProjectsPaginatorPageNumber(profile: Node): String</code></h2>
+<p>Returns the current page of the current project group.</p>
+<h2 id="getprojectspaginatorpageparamprofile-node-string"><code>getProjectsPaginatorPageParam(profile: Node): String</code></h2>
+<p>Gets the name of the URL parameter for changing the current page.</p>
+<h2 id="getprojectspaginatorpagesizeprofile-node-string"><code>getProjectsPaginatorPageSize(profile: Node): String</code></h2>
+<p>Gets the page size.</p>
+<h2 id="getprojectspaginatorobjectbeginprofile-node-string"><code>getProjectsPaginatorObjectBegin(profile: Node): String</code></h2>
+<p>Gets the index of the first displayed item of current project group.</p>
+<h2 id="getprojectspaginatorobjectcountprofile-node-string"><code>getProjectsPaginatorObjectCount(profile: Node): String</code></h2>
+<p>Gets the number of items in the current project group.</p>
+<h2 id="getprojectspaginatorobjectendprofile-node-string"><code>getProjectsPaginatorObjectEnd(profile: Node): String</code></h2>
+<p>Gets the index of the last displayed item of current project group.</p>
+<h2 id="getprojectspaginatorprevpagelinkprofile-node-string"><code>getProjectsPaginatorPrevPageLink(profile: Node): String</code></h2>
+<p>Gets the link to the previous page of the current project group.</p>
+<h2 id="getprojectspaginatonfirstpagelinkprofile-node-string"><code>getProjectsPaginatonFirstPageLink(profile: Node): String</code></h2>
+<p>Gets the link the first page of the current project group.</p>
+<h2 id="getprojectspaginatornextpagelinkprofile-node-string"><code>getProjectsPaginatorNextPageLink(profile: Node): String</code></h2>
+<p>Gets the link to the next page of the current project group.</p>
+<h2 id="getprojectspaginatorlastpagelinkprofile-node-string"><code>getProjectsPaginatorLastPageLink(profile: Node): String</code></h2>
+<p>Gets the link to the last page of the current project group. # Freemarker functions for ccm-cms-types-address</p>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-cms-type-address.ftl</code>
+</dd>
+</dl>
+<h2 id="getaddresstextitem-node-string"><code>getAddressText(item: Node): String</code></h2>
+<p>Returns the value of the <code>text</code> property of the address.</p>
+<h2 id="getcityitem-node-string"><code>getCity(item: Node): String</code></h2>
+<p>Returns the value of the <code>city</code> property of the address.</p>
+<h2 id="getpostalcodeitem-node-string"><code>getPostalCode(item: Node): String</code></h2>
+<p>Gets the postal code of the address.</p>
+<h2 id="getstateitem-node-string"><code>getState(item: Node): String</code></h2>
+<p>Gets the value of the <code>state</code> property of the address. (state means the a federal state or the equivialent here, for example California in the USA oder Lower Saxony in Germany)</p>
+<h2 id="getcountryitem-node-string"><code>getCountry(item: Node): String</code></h2>
+<p>The country of the address.</p>
+<h2 id="getisocountrycodeitem-node-string"><code>getIsoCountryCode(item: Node): String</code></h2>
+<p>Gets the ISO country code for the country of the address. # Freemarker functions for Article content items</p>
+<h2 id="getleaditem-node-string"><code>getLead(item: Node): String</code></h2>
+<p>Retrieves the lead text of the provided article.</p>
+<h2 id="getmaintextitem-node-string"><code>getMainText(item: Node): String</code></h2>
+<p>Retrieves the main text of the provided item. The return value is a HTML string. # Freemarker functions for Contact items</p>
+<dl>
+<dt>Import path</dt>
+<dd><code>/ccm-cms-types-contact.ftl</code>
+</dd>
+</dl>
+<h2 id="getaddressitem-node-node"><code>getAddress(item: Node): Node</code></h2>
+<p>Returns the address associated wit the provided contact item. The address can be processed further using the functions provided by the ccm-cms-types-address module.</p>
+<h2 id="getpersonitem-node-node"><code>getPerson(item: Node): Node</code></h2>
+<p>Returns the person associated with the provided contact. The returned person item can be processed further using functions provided by the ccm-cms module.</p>
+<h2 id="getcontactentriesitem-node-sequencenode"><code>getContactEntries(item: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the contact entries of the provided contact.</p>
+<h2 id="getcontactentryitem-node-keyid-string-node"><code>getContactEntry(item: Node, keyId: String): Node</code></h2>
+<p>Returns the contact entry with the provided <code>keyId</code> if the provided contact has a matching contact entry. If not <code>null</code> is returned.</p>
+<h2 id="getcontactentrylabelentry-node-string"><code>getContactEntryLabel(entry: Node): String</code></h2>
+<p>Returns the label of the provided contact entry.</p>
+<h2 id="getcontactentryvalueentry-node-string"><code>getContactEntryValue(entry: Node): String</code></h2>
+<p>Returns the value of the provided contact entry. # Freemarker functions for Article content items</p>
+<h2 id="getleaditem-node-string-1"><code>getLead(item: Node): String</code></h2>
+<p>Retrieves the lead text of the provided article.</p>
+<h2 id="getmaintextitem-node-string-1"><code>getMainText(item: Node): String</code></h2>
+<p>Retrieves the main text of the provided item. The return value is a HTML string. # Freemarker functions for Bookmark items</p>
+<h2 id="getdescriptionitem-node-string"><code>getDescription(item: Node): String</code></h2>
+<p>Gets the description of the bookmark.</p>
+<h2 id="getlinkitem-node-string"><code>getLink(item: Node): String</code></h2>
+<p>Gets the link for the bookmark's target.</p>
+<h1 id="freemarker-functions-for-contact-items">Freemarker functions for Contact items</h1>
+<dl>
+<dt>Import path</dt>
+<dd><code>/ccm-cms-types-contact.ftl</code>
+</dd>
+</dl>
+<h2 id="getaddressitem-node-node-1"><code>getAddress(item: Node): Node</code></h2>
+<p>Returns the address associated wit the provided contact item. The address can be processed further using the functions provided by the ccm-cms-types-address module.</p>
+<h2 id="getpersonitem-node-node-1"><code>getPerson(item: Node): Node</code></h2>
+<p>Returns the person associated with the provided contact. The returned person item can be processed further using functions provided by the ccm-cms module.</p>
+<h2 id="getcontactentriesitem-node-sequencenode-1"><code>getContactEntries(item: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the contact entries of the provided contact.</p>
+<h2 id="getcontactentryitem-node-keyid-string-node-1"><code>getContactEntry(item: Node, keyId: String): Node</code></h2>
+<p>Returns the contact entry with the provided <code>keyId</code> if the provided contact has a matching contact entry. If not <code>null</code> is returned.</p>
+<h2 id="getcontactentrylabelentry-node-string-1"><code>getContactEntryLabel(entry: Node): String</code></h2>
+<p>Returns the label of the provided contact entry.</p>
+<h2 id="getcontactentryvalueentry-node-string-1"><code>getContactEntryValue(entry: Node): String</code></h2>
+<p>Returns the value of the provided contact entry. # Freemarker functions for Event items</p>
+<dl>
+<dt>Import path</dt>
+<dd><code>/ccm-cms-types-event.ftl</code>
+</dd>
+</dl>
+<h2 id="getleaditem-node-string-2"><code>getLead(item: Node): String</code></h2>
+<p>Returns the lead text of the event.</p>
+<h2 id="getmaintextitem-node-string-2"><code>getMainText(item: Node): String</code></h2>
+<p>Returns the main text of the event.</p>
+<h2 id="getenddateitem-node-datetimenode"><code>getEndDate(item: Node): DateTimeNode</code></h2>
+<p>Returns the end date of the provided event item. To format the date the <code>formatDateTime</code> function provided by the ccm-cms module should be used.</p>
+<h2 id="getenddateyearitem-node-string"><code>getEndDateYear(item: Node): String</code></h2>
+<p>Returns the year part of the end date of the event.</p>
+<h2 id="getenddatemonthitem-node-string"><code>getEndDateMonth(item: Node): String</code></h2>
+<p>Returns the month part of the end date of the event.</p>
+<h2 id="getenddateshortmonthitem-node-string"><code>getEndDateShortMonth(item: Node): String</code></h2>
+<p>Returns the the short name of month part of the end date of the event.</p>
+<h2 id="getendtimeitem-node-string"><code>getEndTime(item: Node): String</code></h2>
+<p>Gets the end time of the event.</p>
+<h2 id="getendtimehouritem-node-string"><code>getEndTimeHour(item: Node): String</code></h2>
+<p>Gets the hour part of the end time of the event.</p>
+<h2 id="getendtimeminuteitem-node-string"><code>getEndTimeMinute(item: Node): String</code></h2>
+<p>Gets the minute part of the end time of the event.</p>
+<h2 id="getendtimeseconditem-node-string"><code>getEndTimeSecond(item: Node): String</code></h2>
+<p>Gets the second part of the end time of the event.</p>
+<h2 id="getstartdateitem-node-datetimenode"><code>getStartDate(item: Node): DateTimeNode</code></h2>
+<p>Returns the start date of the provided event item. To format the date the <code>formatDateTime</code> function provided by the ccm-cms module should be used.</p>
+<h2 id="getstartdateyearitem-node-string"><code>getStartDateYear(item: Node): String</code></h2>
+<p>Returns the year part of the start date of the event.</p>
+<h2 id="getstartdatemonthitem-node-string"><code>getStartDateMonth(item: Node): String</code></h2>
+<p>Returns the month part of the start date of the event.</p>
+<h2 id="getstartdateshortmonthitem-node-string"><code>getStartDateShortMonth(item: Node): String</code></h2>
+<p>Returns the the short name of month part of the start date of the event.</p>
+<h2 id="getstarttimeitem-node-string"><code>getStartTime(item: Node): String</code></h2>
+<p>Gets the start time of the event.</p>
+<h2 id="getstarttimehouritem-node-string"><code>getStartTimeHour(item: Node): String</code></h2>
+<p>Gets the hour part of the start time of the event.</p>
+<h2 id="getstarttimeminuteitem-node-string"><code>getStartTimeMinute(item: Node): String</code></h2>
+<p>Gets the minute part of the start time of the event.</p>
+<h2 id="getstarttimeseconditem-node-string"><code>getStartTimeSecond(item: Node): String</code></h2>
+<p>Gets the second part of the start time of the event.</p>
+<h2 id="getlocationitem-node-string"><code>getLocation(item: Node): String</code></h2>
+<p>Gets the location of the event.</p>
+<h2 id="getmaincontributoritem-node-string"><code>getMainContributor(item: Node): String</code></h2>
+<p>Gets the value of the <code>mainContributor</code> property of the event.</p>
+<h2 id="geteventtypeitem-node-string"><code>getEventType(item: Node): String</code></h2>
+<p>Returns the value of the <code>eventType</code> property of the event.</p>
+<h2 id="getcostitem-node-string"><code>getCost(item: Node): String</code></h2>
+<p>Returns the value of the <code>cost</code> property of the event.</p>
+<h2 id="getmaplinkitem-node-string"><code>getMapLink(item: Node): String</code></h2>
+<p>Returns the value of the <code>mapLink</code> property of the event.</p>
+<h2 id="geteventdateaddendumitem-node-string"><code>getEventDateAddendum(item: Node): String</code></h2>
+<p>Returns the value of the addendum property of the event. # Freemarker functions for ExternalLink items</p>
+<dl>
+<dt>Import path</dt>
+<dd><code>/ccm-cms-types-externallink.ftl</code>
+</dd>
+</dl>
+<h2 id="getdescriptionitem-node-string-1"><code>getDescription(item: Node): String</code></h2>
+<p>Gets the description of the external link item.</p>
+<h2 id="getcommentitem-node-string"><code>getComment(item: Node): String</code></h2>
+<p>Gets the value of the <code>comment</code> property of the link item.</p>
+<h2 id="istargetnewwindowitem-node-string"><code>isTargetNewWindow(item: Node): String</code></h2>
+<p>Returns <code>true</code> if the link should be opened in a new window/tab.</p>
+<h2 id="geturlitem-node-string"><code>getUrl(item: Node): String</code></h2>
+<p>Returns the URL of the external link. # Freemarker functions for File Storage Items</p>
+<dl>
+<dt>Import path</dt>
+<dd><code>/ccm-cms-types-filestorageitem.ftl</code>
+</dd>
+</dl>
+<h2 id="getdescriptionitem-node-string-2"><code>getDescription(item: Node): String</code></h2>
+<p>Gets the description of the file storage item.</p>
+<h2 id="getfileiditem-node-string"><code>getFileId(item: Node): String</code></h2>
+<p>Returns the ID for the file represented by the file storage item.</p>
+<h2 id="getfilenameitem-node-string"><code>getFileName(item: Node): String</code></h2>
+<p>Returns the name of the file represented by the file storage item.</p>
+<h2 id="getfilelinkitem-node-mode-stringdownload-usefilename-boolean-true-string"><code>getFileLink(item: Node, mode: String=&quot;download&quot;, useFileName: boolean = true): String</code></h2>
+<p>Returns the link for downloading or viewing the file. The optional parameter <code>mode</code> controls if the link for downloading or for viewing the file is generated. The supported values are <code>download</code> (default value) and <code>stream</code>. Unknown values are interpreted as <code>download</code>.</p>
+<p>The optional <code>useFileName</code> parameter controls if the name of the file (see <code>getFileName</code>) is included in the link. The default value is <code>true</code>. # Freemarker functions for Form items</p>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-cms-types-formitem.md</code>
+</dd>
+</dl>
+<h2 id="getdescriptionitem-node-string-3"><code>getDescription(item: Node): String</code></h2>
+<p>Gets the description of the form item.</p>
+<h2 id="getformactionitem-node-string"><code>getFormAction(item: Node): String</code></h2>
+<p>Gets the URL to which the form is send.</p>
+<h2 id="hashoneypotitem-node-boolean"><code>hasHoneypot(item: Node): boolean</code></h2>
+<p>Returns <code>true</code> if the form contains a honeypot field for catching bots.</p>
+<h2 id="gethoneypotnameitem-node-string"><code>getHoneypotName(item: Node): String</code></h2>
+<p>Gets the name of the honeypot field.</p>
+<h2 id="hasmintimecheckitem-node-boolean"><code>hasMinTimeCheck(item: Node): boolean</code></h2>
+<p>Returns <code>true</code> if a check of the time the user needs to fill out the form should be added to the form. Bots are normally extremly fast (faster than any human).</p>
+<h2 id="getmintimecheckvalueitem-node-string"><code>getMinTimeCheckValue(item: Node): String</code></h2>
+<p>The minium time for the min time check.</p>
+<h2 id="hasvisitedfielditem-node-boolean"><code>hasVisitedField(item: Node): boolean</code></h2>
+<p>Returns <code>true</code> if a visited field is part of the form.</p>
+<h2 id="getvisitedfielditem-node-string"><code>getVisitedField(item: Node): String</code></h2>
+<p>Gets the value of the visited field.</p>
+<h2 id="getvisitedfieldnameitem-node-string"><code>getVisitedFieldName(item: Node): String</code></h2>
+<p>Returns the name of the visited field.</p>
+<h2 id="getpagestatefieldnameitem-node-string"><code>getPageStateFieldName(item: Node): String</code></h2>
+<p>Gets the name to use for the (hidden) field holding the page state.</p>
+<h2 id="getpagestatefieldvalueitem-node-string"><code>getPageStateFieldValue(item: Node): String</code></h2>
+<p>Gets the value of the (hidden) field holding the page state.</p>
+<h2 id="getcomponentsitem-node-sequencenode"><code>getComponents(item: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the compnents of the form.</p>
+<h2 id="getcomponentnamecomponent-node-string"><code>getComponentName(component: Node): String</code></h2>
+<p>Returns the name of the provided component.</p>
+<h2 id="getcomponentdefaultvaluecomponent-node-string"><code>getComponentDefaultValue(component: Node): String</code></h2>
+<p>Returns the default value of the provided component.</p>
+<h2 id="getcomponentdescriptioncomponent-node-string"><code>getComponentDescription(component: Node): String</code></h2>
+<p>Returns the description of the provided component.</p>
+<h2 id="getcomponentparameternamecomponent-node-string"><code>getComponentParameterName(component: Node): String</code></h2>
+<p>Returns the parameter name of the provided component.</p>
+<h2 id="getcomponenttypecomponent-node-string"><code>getComponentType(component: Node): String</code></h2>
+<p>Returns the type of the provided component.</p>
+<h2 id="getformsectiontitleformsection-node-string"><code>getFormSectionTitle(formSection: Node): String</code></h2>
+<p>Gets the title of the provided form section.</p>
+<h2 id="getformsectioncomponentsformsection-node-string"><code>getFormSectionComponents(formSection: Node): String</code></h2>
+<p>Gets the components of the form section.</p>
+<h2 id="getlabelcomponentslabel-node-sequencenode"><code>getLabelComponents(label: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Gets the components of a label.</p>
+<h2 id="getbuttongroupcomponentsbuttongroup-node-sequencenode"><code>getButtonGroupComponents(buttonGroup: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Gets the components of a button group.</p>
+<h2 id="ismultipleselectselect-node-boolean"><code>isMultipleSelect(select: Node): boolean</code></h2>
+<p>Returns <code>true</code> if the provided select component allows multiple values.</p>
+<h2 id="isdatadrivenselectselect-node-boolean"><code>isDataDrivenSelect(select: Node): boolean</code></h2>
+<p>Returns <code>true</code> if the provided select component is a data driven select.</p>
+<h2 id="getdataoptionsselect-node-sequencenode"><code>getDataOptions(select: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Gets the options of a data driven select.</p>
+<h2 id="getdataoptionlabeloption-node-string"><code>getDataOptionLabel(option: Node): String</code></h2>
+<p>Gest the label of an option of an data driven select.</p>
+<h2 id="getdataoptionidoption-node-string"><code>getDataOptionId(option: Node): String</code></h2>
+<p>Gest the id of an option of an data driven select.</p>
+<h2 id="getdataoptioncompoentsoption-node-sequencenode"><code>getDataOptionCompoents(option: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Gest the components of an option of an data driven select.</p>
+<h2 id="hasotheroptionselect-node-boolean"><code>hasOtherOption(select: Node): boolean</code></h2>
+<p>Returns <code>true</code> if the provided select component has an <code>other</code> option.</p>
+<h2 id="getotheroptionlabelselect-node-string"><code>getOtherOptionLabel(select: Node): String</code></h2>
+<p>Returns the label for the <code>other</code> option.</p>
+<h2 id="getotheroptionvalueselect-node-string"><code>getOtherOptionValue(select: Node): String</code></h2>
+<p>Returns the value for the <code>other</code> option.</p>
+<h2 id="hasmaxlengthcomponent-node-boolean"><code>hasMaxLength(component: Node): boolean</code></h2>
+<p>Returns <code>true</code> if the provided component has a <code>maxLength</code> property.</p>
+<h2 id="getmaxlengthcomponent-node-string"><code>getMaxLength(component: Node): String</code></h2>
+<p>Gets the value of the <code>maxLength</code> property of the provided component.</p>
+<h2 id="hassizecomponent-node-boolean"><code>hasSize(component: Node): boolean</code></h2>
+<p>Returns <code>true</code> if the provided component has a <code>size</code> property.</p>
+<h2 id="getmaxsizecomponent-node-string"><code>getMaxSize(component: Node): String</code></h2>
+<p>Gets the value of the <code>size</code> property of the provided component.</p>
+<h2 id="getrequiredcomponent-node-string"><code>getRequired(component: Node): String</code></h2>
+<p>Determines of the provided component represents a mandantory field of the form.</p>
+<h2 id="getdatefielddayparamnamecomponent-node-string"><code>getDateFieldDayParamName(component: Node): String</code></h2>
+<p>Returns the name of the day param of a date input component.</p>
+<h2 id="getdatefieldmonthparamnamecomponent-node-string"><code>getDateFieldMonthParamName(component: Node): String</code></h2>
+<p>Returns the name of the month param of a date input component.</p>
+<h2 id="getdatefieldyearparamnamecomponent-node-string"><code>getDateFieldYearParamName(component: Node): String</code></h2>
+<p>Returns the name of the year param of a date input component.</p>
+<h2 id="getdatefielddefaultvaluedaycomponent-node-string"><code>getDateFieldDefaultValueDay(component: Node): String</code></h2>
+<p>Returns the default value for the day of the provided date input component.</p>
+<h2 id="getdatefielddefaultvaluemonthcomponent-node-string"><code>getDateFieldDefaultValueMonth(component: Node): String</code></h2>
+<p>Returns the default value for the month of the provided date input component.</p>
+<h2 id="getdatefielddefaultvalueyearcomponent-node-string"><code>getDateFieldDefaultValueYear(component: Node): String</code></h2>
+<p>Returns the default value for the year of the provided date input component.</p>
+<h2 id="getdatefieldmonthlistcomponent-node-sequencenode"><code>getDateFieldMonthList(component: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Gets the list of permitted months.</p>
+<h2 id="getdatefieldyearlistcomponent-node-sequencenode"><code>getDateFieldYearList(component: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Gets the list of permitted years.</p>
+<h2 id="getmonthlabelmonth-node-string"><code>getMonthLabel(month: Node): String</code></h2>
+<p>Gets the label for the provided month.</p>
+<h2 id="getyearlabelyear-node-string"><code>getYearLabel(year: Node): String</code></h2>
+<p>Gets the label for the provided year.</p>
+<h2 id="gettextarearowstextarea-node-string"><code>getTextAreaRows(textArea: Node): String</code></h2>
+<p>Gets the number of rows for the provided text area component.</p>
+<h2 id="gettextareacolstextarea-node-string"><code>getTextAreaCols(textArea: Node): String</code></h2>
+<p>Gets the number of cols for the provided text area component. # Freemarker functions for Image items</p>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-cms-types-image.ftl</code>
+</dd>
+</dl>
+<h2 id="getartistitem-node-string"><code>getArtist(item: Node): String</code></h2>
+<p>Returns the name of the artist how created the image.</p>
+<h2 id="getcopyrightitem-node-string"><code>getCopyright(item: Node): String</code></h2>
+<p>Returns the value of the <code>copyright</code> property of the image.</p>
+<h2 id="getdescriptionitem-node-string-4"><code>getDescription(item: Node): String</code></h2>
+<p>Returns the description of the image.</p>
+<h2 id="getlicenseitem-node-string"><code>getLicense(item: Node): String</code></h2>
+<p>Returns the license text for the image.</p>
+<h2 id="getmaterialitem-node-string"><code>getMaterial(item: Node): String</code></h2>
+<p>Gets the value of the <code>material</code> property of the image.</p>
+<h2 id="getpublishdateitem-node-string"><code>getPublishDate(item: Node): String</code></h2>
+<p>Gets the publish date of the image.</p>
+<h2 id="getwidthitem-node-string"><code>getWidth(item: Node): String</code></h2>
+<p>Gets the value of the <code>width</code> property of the image.</p>
+<h2 id="getheightitem-node-string"><code>getHeight(item: Node): String</code></h2>
+<p>Gets the value of the <code>height</code> property of the image.</p>
+<h2 id="getmaintextitem-node-htmlstring"><code>getMainText(item: Node): HTMLString</code></h2>
+<p>Gets the main text describing the image.</p>
+<h2 id="getoriginitem-node-string"><code>getOrigin(item: Node): String</code></h2>
+<p>Gets the value of the <code>origin</code> property of the image.</p>
+<h2 id="getoriginalsizeitem-node-string"><code>getOriginalSize(item: Node): String</code></h2>
+<p>Gets the original size of the image.</p>
+<h2 id="geturlitem-node-string-1">`getUrl(item: Node): String</h2>
+<p>Returns the URL of the image resource.</p>
+<h2 id="getcaptionitem-node-string"><code>getCaption(item: Node): String</code></h2>
+<p>Returns the caption of the image.</p>
+<h2 id="getimageiditem-node-string"><code>getImageId(item: Node): String</code></h2>
+<p>Gets the ID of the image resource.</p>
+<h2 id="getthumbnailiditem-node-string"><code>getThumbnailId(item: Node): String</code></h2>
+<p>Gets the ID of the thumbnail image.</p>
+<h2 id="getthumbnailwidthitem-node-string"><code>getThumbnailWidth(item: Node): String</code></h2>
+<p>Gets the width of the thumbnail.</p>
+<h2 id="getthumbnailheightitem-node-string"><code>getThumbnailHeight(item: Node): String</code></h2>
+<p>Gets the height of the thumbnail.</p>
+<h2 id="getsiteitem-node-string"><code>getSite(item: Node): String</code></h2>
+<p>Gets the value of the <code>site</code> property of the image.</p>
+<h2 id="getsourceitem-node-string"><code>getSource(item: Node): String</code></h2>
+<p>Gets the value of the <code>source</code> property of the image.</p>
+<h2 id="gettechniqueitem-node-string"><code>getTechnique(item: Node): String</code></h2>
+<p>Gets the value of the <code>technique</code> property of the image. # Freemarker functions for MultiPartArticles</p>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-cms-types-multiparticle.ftl</code>
+</dd>
+</dl>
+<h2 id="getsummaryitem-node-string"><code>getSummary(item: Node): String</code></h2>
+<p>Returns the summary of the provided MultiPartArticle item.</p>
+<h2 id="getsectionsitem-node-sequencenode"><code>getSections(item: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the currently displayed sections of the multipart article. The sections can be processed further by some of the other funtions provided by this library.</p>
+<h2 id="getsectiontitlesection-node-string"><code>getSectionTitle(section: Node): String</code></h2>
+<p>Returns title title of the provided section.</p>
+<h2 id="getsectiontitlesection-node-htmlstring"><code>getSectionTitle(section: Node): HtmlString</code></h2>
+<p>Gets the content of the provided section.</p>
+<h2 id="getsectionranksection-node-string"><code>getSectionRank(section: Node): String</code></h2>
+<p>Gets the value of the <code>rank</code> property of the provided section.</p>
+<h2 id="getpagenumberitem-node-string"><code>getPageNumber(item: Node): String</code></h2>
+<p>Gets the number of the page of the multipart article displayed.</p>
+<h2 id="getnumberofpagesitem-node-string"><code>getNumberOfPages(item: Node): String</code></h2>
+<p>Returns the number of pages of the provided multipart article.</p>
+<h2 id="haspreviouspageitem-node-boolean"><code>hasPreviousPage(item: Node): boolean</code></h2>
+<p>Returns <code>true</code> if the provided multipart article has previous pages.</p>
+<h2 id="haspreviouspageitem-node-boolean-1"><code>hasPreviousPage(item: Node): boolean</code></h2>
+<p>Returns <code>true</code> if the provided multipart article has more pages.</p>
+<h2 id="hasmultiplepagesitem-node-boolean"><code>hasMultiplePages(item: Node): boolean</code></h2>
+<p>Returns <code>true</code> if the provided multipart article has more than one page.</p>
+<h2 id="getlinktopreviouspageitem-node-string"><code>getLinkToPreviousPage(item: Node): String</code></h2>
+<p>Returns the link to the previous page if any.</p>
+<h2 id="getlinktonextpageitem-node-string"><code>getLinkToNextPage(item: Node): String</code></h2>
+<p>Returns the link to the next page if any.</p>
+<h2 id="getallsectionslinkitem-node-string"><code>getAllSectionsLink(item: Node): String</code></h2>
+<p>Returns the link for showing the complete multipart article on a single page. # Freemarker functions for generating the table of contents of a MultiPartArticle</p>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-cms-types-multiparticle-toc.ftl</code>
+</dd>
+</dl>
+<p>These functions can be used to generate the table of contents (toc) for a multi part article. An example:</p>
+<pre><code>... // Other imports
+&lt;#import &quot;/ccm-cms-types-multiparticle-toc.ftl&quot; as Toc&gt;
+
+... // Other things
+
+&lt;#list Toc.getSections(item)&gt;
+    &lt;div class=&quot;mpa-toc&quot;&gt;
+        &lt;h3&gt;${getLocalizedText(&quot;mpa.toc&quot;)}&lt;/h3&gt;
+        &lt;ul class=&quot;mpa-toc&quot;&gt;
+            &lt;#items as section&gt;
+                &lt;li&gt;
+                    &lt;a href=&quot;${Toc.getSectionLink(section)}&quot; 
+                    class=&quot;${Toc.isActiveSection(item, section)?then(&#39;active&#39;, &#39;&#39;)}&quot;&gt;
+                    ${Toc.getSectionTitle(section)}
+                    &lt;/a&gt;
+                &lt;/li&gt;
+            &lt;/#items&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+&lt;/#list&gt;</code></pre>
+<h2 id="getsectionsitem-node-sequencenode-1"><code>getSections(item: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the sections of the provided MultiPartArticle item. The sections can be further be processed using the other functions provided by this file.</p>
+<h2 id="getsectiontitlesection-node-string-1"><code>getSectionTitle(section: Node): String</code></h2>
+<p>Gets the title of the provided section.</p>
+<h2 id="getsectionlinksection-node-string"><code>getSectionLink(section: Node): String</code></h2>
+<p>Gets the link for displaying the provided section.</p>
+<h2 id="isactivesectionsection-node-string"><code>isActiveSection(section: Node): String</code></h2>
+<p>Returns <code>true</code> if the provided section is the active section. # Freemarker functions for News items</p>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-cms-types-newsitem.ftl</code>
+</dd>
+</dl>
+<h2 id="getleaditem-node-string-3"><code>getLead(item: Node): String</code></h2>
+<p>Returns the lead text of the provided news item.</p>
+<h2 id="getmaintextitem-node-htmlstring-1"><code>getMainText(item: Node): HtmlString</code></h2>
+<p>Returns the main text of the news item.</p>
+<h2 id="getnewsdateitem-node-node"><code>getNewsDate(item: Node): Node</code></h2>
+<p>Returns the date of the news. For formatting the date the <code>formatDateTime</code> function from the <code>utils.ftl</code> library can be used.</p>
+<h2 id="getnewsdateyearitem-node-string"><code>getNewsDateYear(item: Node): String</code></h2>
+<p>Gets the value of the <code>year</code> property of the news date.</p>
+<h2 id="getnewsdatemonthitem-node-string"><code>getNewsDateMonth(item: Node): String</code></h2>
+<p>Gets the value of the <code>month</code> property of the news date.</p>
+<h2 id="getnewsdatedayitem-node-string"><code>getNewsDateDay(item: Node): String</code></h2>
+<p>Gets the value of the <code>Day</code> property of the news date.</p>
+<h2 id="getnewsdatedaynameshortitem-node-string"><code>getNewsDateDayNameShort(item: Node): String</code></h2>
+<p>Gets the value of the <code>year</code> property of the news date as short day name.</p>
+<h2 id="newsdatehouritem-node-string"><code>newsDateHour(item: Node): String</code></h2>
+<p>Gets the value of the <code>hour</code> property of the news date.</p>
+<h2 id="newsdateminuteitem-node-string"><code>newsDateMinute(item: Node): String</code></h2>
+<p>Gets the value of the <code>minute</code> property of the news date.</p>
+<h2 id="newsdateseconditem-node-string"><code>newsDateSecond(item: Node): String</code></h2>
+<p>Gets the value of the <code>second</code> property of the news date.</p>
+<h2 id="newsdateisoitem-node-string"><code>newsDateIso(item: Node): String</code></h2>
+<p>Gets the date of the news as ISO date. # Freemarker functions for SiteProxy items</p>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-cms-types-siteproxy.ftl</code>
+</dd>
+</dl>
+<h2 id="getcontentitem-node"><code>getContent(item: Node): ?</code></h2>
+<p>Returns the content of the site proxy. The type of the return value depends on the external content the site proxy is showing. # Freemarker functions for retrieving data from the user banner component.</p>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-core/user-banner.ftl</code>
+</dd>
+</dl>
+<h3 id="getgreeting-string"><code>getGreeting(): String</code></h3>
+<p>Retrieves to the greeting value provided by the <em>UserBanner</em> component.</p>
+<h3 id="isloggedin-boolean"><code>isLoggedIn(): boolean</code></h3>
+<p>Return <code>true</code> if the current user is logged and <code>false</code> otherwise.</p>
+<h3 id="isnotloggedin-boolean"><code>isNotLoggedIn(): boolean</code></h3>
+<p>Return <code>true</code> if the current user is <em>not</em> logged and <code>false</code> otherwise.</p>
+<h3 id="getchangepasswordurl-string"><code>getChangePasswordUrl(): String</code></h3>
+<p>Returns the URL where a authenticated user can change his or her password.</p>
+<h3 id="getloginlink-string"><code>getLoginLink(): String</code></h3>
+<p>Returns the URL of the login page.</p>
+<h3 id="getlogoutlink-string"><code>getLogoutLink(): String</code></h3>
+<p>Returns the URL for logging out.</p>
+<h3 id="getscreenname-string"><code>getScreenName(): String</code></h3>
+<p>Returns the username of the current user. If the user is not authenticated the will return an empty string.</p>
+<h3 id="getusergivenname-string"><code>getUserGivenName(): String</code></h3>
+<p>Returns the given of the current user, if availabe. If the user is not authenticated the will return an empty string.</p>
+<h3 id="getuserfamilyname-string"><code>getUserFamilyName(): String</code></h3>
+<p>Returns the given of the current user, if availabe. If the user is not authenticated the will return an empty string.</p>
+<h1 id="freemarker-function-for-objectlists">Freemarker function for ObjectLists</h1>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-navigation/object-list.ftl</code>
+</dd>
+</dl>
+<p>Many functions provided by this library have a parameter <code>listId</code>. In most cases the value is <code>itemList</code>.</p>
+<h2 id="getitemslistid-string-sequencenode"><code>getItems(listId: String): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the items in the object list with the provided ID.</p>
+<h2 id="getobjectcountlistid-string-number"><code>getObjectCount(listId: String): number</code></h2>
+<p>Returns then number of objects in the object list with the provided ID.</p>
+<h2 id="getpagniatorbaseurllistid-string-string"><code>getPagniatorBaseUrl(listId: String): String</code></h2>
+<p>Gets the base URL of the list paginator.</p>
+<h2 id="getpaginatorbeginlistid-string-number"><code>getPaginatorBegin(listId: String): Number</code></h2>
+<p>Returns the index of the first item displayed.</p>
+<h2 id="getpaginatorendlistid-string-number"><code>getPaginatorEnd(listId: String): Number</code></h2>
+<p>Returns the index of the last item displayed.</p>
+<h2 id="getpagecountlistid-string-number"><code>getPageCount(listId: String): Number</code></h2>
+<p>Gets the number of pages of the object list with the provided ID.</p>
+<h2 id="getpagenumberlistid-string-number"><code>getPageNumber(listId: String): Number</code></h2>
+<p>Gets the number of page displayed.</p>
+<h2 id="getpageparamlistid-string-string"><code>getPageParam(listId: String): String</code></h2>
+<p>Gets the name of the page param for the object list with the provided ID.</p>
+<h2 id="getpagesizelistid-string-number"><code>getPageSize(listId: String): Number</code></h2>
+<p>Gets the number of objects per page for the object list with the provided ID.</p>
+<h2 id="getprevpagelinklistid-string-string"><code>getPrevPageLink(listId: String): String</code></h2>
+<p>Gets the link to the previous page of the object list with the provided ID.</p>
+<h2 id="getnextpagelinklistid-string-string"><code>getNextPageLink(listId: String): String</code></h2>
+<p>Gets the link to the next page of the object list with the provided ID.</p>
+<h2 id="getfirstpagelinklistid-string-string"><code>getFirstPageLink(listId: String): String</code></h2>
+<p>Gets the link to the first page of the object list with the provided ID.</p>
+<h2 id="getlastpagelinklistid-string-string"><code>getLastPageLink(listId: String): String</code></h2>
+<p>Gets the link to the last page of the object list with the provided ID.</p>
+<h2 id="getitemtitleitem-node-string"><code>getItemTitle(item: Node): String</code></h2>
+<p>Gets the title of a list item.</p>
+<h2 id="getitemleaditem-node-string"><code>getItemLead(item: Node): String</code></h2>
+<p>Gets the lead text of a list item.</p>
+<h2 id="getitempropertyitem-node-property-string-string"><code>getItemProperty(item: Node, property: String): String</code></h2>
+<p>A generic function the get the value of the property with the name provided the <code>property</code> parameter.</p>
+<h2 id="hasimageitem-node-boolean"><code>hasImage(item: Node): boolean</code></h2>
+<p>Determines if the provided list item has an image attachment.</p>
+<h2 id="getimageiditem-node-string-1"><code>getImageId(item: Node): String</code></h2>
+<p>Gets the ID of the image attachment of the provided list item.</p>
+<h2 id="getimageurlitem-node-string"><code>getImageUrl(item: Node): String</code></h2>
+<p>Gets the URL of the image attachment of the provided list item.</p>
+<h2 id="getimagecaptionitem-node-string"><code>getImageCaption(item: Node): String</code></h2>
+<p>Gets the caption of the image attachment of the provided list item.</p>
+<h2 id="getfilterslistid-string-sequencenode"><code>getFilters(listId: String): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the filters for the current list.</p>
+<h2 id="getfilterlabelfilter-node-string"><code>getFilterLabel(filter: Node): String</code></h2>
+<p>Gets the label of the provided filter.</p>
+<h2 id="getfiltertypefilter-node-string"><code>getFilterType(filter: Node): String</code></h2>
+<p>Gets the type of the provided filter.</p>
+<h2 id="getselectfilteroptionsfilter-node-sequencenode"><code>getSelectFilterOptions(filter: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the options of the select filter. If the provided filter is not a filter of the type <em>select</em> an empty sequence is returned.</p>
+<h2 id="getselectfilteroptionlabeloption-node-string"><code>getSelectFilterOptionLabel(option: Node): String</code></h2>
+<p>Returns the label of the provided filter.</p>
+<h2 id="getcategoryfiltersearchstringfilter-node-string"><code>getCategoryFilterSearchString(filter: Node): String</code></h2>
+<p>Returns the search string for the provided category filter.</p>
+<h2 id="getcategoryfilterseparatorfilter-node-string"><code>getCategoryFilterSeparator(filter: Node): String</code></h2>
+<p>Gets the separation character for the value of the provided category filter.</p>
+<h2 id="getcategoryfiltermultiplefilter-node-boolean"><code>getCategoryFilterMultiple(filter: Node): boolean</code></h2>
+<p>Determines if the provided category allows multiple selections.</p>
+<h2 id="getcategoryfiltercategoriesfilter-node-sequencenode"><code>getCategoryFilterCategories(filter: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the categories for the provided category filter.</p>
+<h2 id="getcategoryfiltercategorygroupsfilter-node-sequencenode"><code>getCategoryFilterCategoryGroups(filter: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the category groups of the provided category filter.</p>
+<h2 id="getcategorygrouplabelgroup-node-string"><code>getCategoryGroupLabel(group: Node): String</code></h2>
+<p>Returns the label of the provided category group.</p>
+<h2 id="getcategoryfiltercategorygroupscategoriesgroups-sequencenode-sequencenode"><code>getCategoryFilterCategoryGroupsCategories(groups: Sequence&lt;Node&gt;): Sequence&lt;Node&gt;</code></h2>
+<p>Gets the categories of all category groups.</p>
+<h2 id="getcategoryfiltercategoryidcategory-node-string"><code>getCategoryFilterCategoryId(category: Node): String</code></h2>
+<p>Gets the ID of the provided category of a category filter.</p>
+<h2 id="getcategoryfiltercategorylabelcategory-node-string"><code>getCategoryFilterCategoryLabel(category: Node): String</code></h2>
+<p>Gets the label of the provided category of a category filter.</p>
+<h1 id="freemarker-functions-for-portal-workspaces">Freemarker functions for Portal Workspaces</h1>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-portalworkspace.ftl</code>
+</dd>
+</dl>
+<h2 id="getportals-sequencenode"><code>getPortals(): Sequence&lt;Node&gt;</code></h2>
+<p>Returns all available portals.</p>
+<h2 id="isselectedportal-node-boolean"><code>isSelected(portal: Node): boolean</code></h2>
+<p>Determines if the provided portal is selected.</p>
+<h2 id="getportallinkportal-node-string"><code>getPortalLink(portal: Node): String</code></h2>
+<p>Gets the link for selecting the provided portal.</p>
+<h2 id="getportaltitleportal-node-string"><code>getPortalTitle(portal: Node): String</code></h2>
+<p>Returns the title of the provided portal.</p>
+<h2 id="getportaleditform-node"><code>getPortalEditForm(): Node</code></h2>
+<p>Returns the edit form for the selected portal.</p>
+<h2 id="getportallayoutform-node"><code>getPortalLayoutForm(): Node</code></h2>
+<p>Returns the form for editing the layout of the selected portal.</p>
+<h2 id="getaddpagelink-string"><code>getAddPageLink(): String</code></h2>
+<p>Returns the link for adding another portal.</p>
+<h2 id="getbasicpropertieslink-string"><code>getBasicPropertiesLink(): String</code></h2>
+<p>Gets the link for the basic properties of the selected portal.</p>
+<h2 id="getportletsfromcolumncolnumber-string-sequencenode"><code>getPortletsFromColumn(colNumber: String): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the portals in the column <code>colNumber</code>.</p>
+<h2 id="getworkspaceprimaryurl-string"><code>getWorkspacePrimaryUrl(): String</code></h2>
+<p>Returns the primary URL of the portal workspace.</p>
+<h2 id="getmoveportletleftlinkportlet-node-string"><code>getMovePortletLeftLink(portlet: Node): String</code></h2>
+<p>Returns the link for moving the provided portlet left.</p>
+<h2 id="getmoveportletrightlinkportlet-node-string"><code>getMovePortletRightLink(portlet: Node): String</code></h2>
+<p>Returns the link for moving the provided portlet right.</p>
+<h2 id="getmoveportletuplinkportlet-node-string"><code>getMovePortletUpLink(portlet: Node): String</code></h2>
+<p>Returns the link for moving the provided portlet up.</p>
+<h2 id="getmoveportletdownlinkportlet-node-string"><code>getMovePortletDownLink(portlet: Node): String</code></h2>
+<p>Returns the link for moving the provided portlet down.</p>
+<h2 id="getcustomizeportletlinkportlet-node-string"><code>getCustomizePortletLink(portlet: Node): String</code></h2>
+<p>Returns the link for customizing the portlet.</p>
+<h2 id="getdeleteportletlinkportlet-node-string"><code>getDeletePortletLink(portlet: Node): String</code></h2>
+<p>Returns the link for deleting the portlet. # Contributing to MathJax</p>
+<p>So you're interested in giving us a hand? That's awesome! We've put together some brief guidelines that should help you get started quickly and easily.</p>
+<p>There are lots and lots of ways to get involved, this document covers:</p>
+<ul>
+<li><a href="#raising-issues">raising issues</a>
+<ul>
+<li><a href="#bug-reports">bug reports</a></li>
+<li><a href="#feature-requests">feature requests</a></li>
+<li><a href="#change-requests">change requests</a></li>
+</ul></li>
+<li><a href="#working-on-MathJax-core">working on MathJax core</a>
+<ul>
+<li><a href="#submitting-pull-requests">submitting pull requests</a></li>
+</ul></li>
+<li><a href="#testing-and-quality-assurance">testing and quality assurance</a></li>
+<li><a href="#writing-documentation">writing documentation</a></li>
+<li><a href="#translation">translation</a></li>
+<li><a href="#conduct">Conduct</a></li>
+</ul>
+<h2 id="reporting-an-issue">Reporting An Issue</h2>
+<p>If you're about to raise an issue because you think you've found a problem with MathJax, or you'd like to make a request for a new feature in the codebase, or any other reason… please read this first.</p>
+<p>The GitHub issue tracker is the preferred channel for <a href="#bug-reports">bug reports</a>, <a href="#feature-requests">feature requests</a>, <a href="#change-requests">change requests</a> and <a href="#submitting-pull-requests">submitting pull requests</a>, but please respect the following restrictions:</p>
+<ul>
+<li><p>Please <strong>search for existing issues</strong>. Help us keep duplicate issues to a minimum by checking to see if someone has already reported your problem or requested your idea.</p></li>
+<li><p>Please <strong>do not</strong> use the issue tracker for personal support requests (use <a href="https://groups.google.com/forum/#!forum/mathjax-users">the MathJax User Group</a>.</p></li>
+<li><p>Please <strong>be civil</strong>. Keep the discussion on topic and respect the opinions of others. See also our <a href="#conduct">Conduct Guidelines</a></p></li>
+</ul>
+<h3 id="bug-reports">Bug Reports</h3>
+<p>A bug is a <em>demonstrable problem</em> that is caused by the code in the repository. Good bug reports are extremely helpful - thank you!</p>
+<p>Guidelines for bug reports:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Use the GitHub issue search</strong> — check if the issue has already been reported.</p></li>
+<li><p><strong>Check if the issue has been fixed</strong> — try to reproduce it using the latest <code>develop</code> or look for <a href="https://github.com/MathJax/MathJax/issues?&amp;page=1&amp;state=closed">closed issues in the current milestone</a>.</p></li>
+<li><p><strong>Isolate the problem</strong> — ideally create a <a href="http://css-tricks.com/6263-reduced-test-cases/">reduced test case</a> and a live example.</p></li>
+<li><p><strong>Include a screencast if relevant</strong> - Is your issue about a design or front end feature or bug? The most helpful thing in the world is if we can <em>see</em> what you're talking about. Use <a href="http://www.cockos.com/licecap/">LICEcap</a> to quickly and easily record a short screencast (24fps) and save it as an animated gif! Embed it directly into your GitHub issue. Kapow.</p></li>
+<li><p>Use the Bug Report template below or <a href="https://github.com/MathJax/MathJax/issues/new?title=Bug%3A&amp;body=%23%23%23%20Issue%20Summary%0A%0A%23%23%23%20Steps%20to%20Reproduce%0A%0A1.%20This%20is%20the%20first%20step%0A%0AThis%20is%20a%20bug%20because...%0A%0A%23%23%23%20Technical%20details%0A%0A*%20MathJax%20Version%3A%20master%20-%20latest%20commit%3A%20%20INSERT%20COMMIT%20REF%0A*%20Client%20OS%3A%20%0A*%20Browser%3A%20%0A*%20">click this link</a> to start creating a bug report with the template automatically.</p></li>
+</ol>
+<p>A good bug report shouldn't leave others needing to chase you up for more information. Be sure to include the details of your environment.</p>
+<p>Here is a <a href="https://github.com/mathjax/MathJax/issues/820">real example</a></p>
+<p>Template Example (<a href="https://github.com/MathJax/MathJax/issues/new?title=Bug%3A&amp;body=%23%23%23%20Issue%20Summary%0A%0A%23%23%23%20Steps%20to%20Reproduce%0A%0A1.%20This%20is%20the%20first%20step%0A%0AThis%20is%20a%20bug%20because...%0A%0A%23%23%23%20Technical%20details%0A%0A*%20MathJax%20Version%3A%20master%20-%20latest%20commit%3A%20%20INSERT%20COMMIT%20REF%0A*%20Client%20OS%3A%20%0A*%20Browser%3A%20%0A*%20">click to use</a>):</p>
+<pre><code>Short and descriptive example bug report title
+
+### Issue Summary
+
+A summary of the issue and the browser/OS environment in which it occurs. If
+suitable, include the steps required to reproduce the bug.
+
+### Steps to Reproduce
+
+1. This is the first step
+2. This is the second step
+3. Further steps, etc.
+
+Any other information you want to share that is relevant to the issue
+being reported. Especially, why do you consider this to be a bug? What
+do you expect to happen instead?
+
+### Technical details:
+
+* MathJax Version: 2.3 (latest commit: f3aaf3a2a3e964df2770dc4aaaa9c87ce5f47e2c)
+* Client OS: Mac OS X 10.8.4
+* Browser: Chrome 29.0.1547.57</code></pre>
+<h3 id="feature-requests">Feature Requests</h3>
+<p>Feature requests are welcome. Before you submit one be sure to have:</p>
+<ol style="list-style-type: decimal">
+<li>Read the <a href="https://github.com/mathjax/MathJax/wiki/Mathjax-roadmap">Roadmaps</a>, <strong>use the GitHub search</strong> and check the feature hasn't already been requested.</li>
+<li>Take a moment to think about whether your idea fits with the scope and aims of the project, or if it might better fit being a <a href="https://github.com/mathjax/MathJax-third-party-extensions">custom extension</a>.</li>
+<li>Remember, it's up to <em>you</em> to make a strong case to convince the project's leaders of the merits of this feature. Please provide as much detail and context as possible, this means explaining the use case and why it is likely to be common.</li>
+<li>Clearly indicate whether this is a feature request for MathJax core, input &amp; output jax, or extensions.</li>
+</ol>
+<h3 id="change-requests">Change Requests</h3>
+<p>Change requests cover both architectural and functional changes to how MathJax works. If you have an idea for a new or different dependency, a refactor, or an improvement to a feature, etc - please be sure to:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Use the GitHub search</strong> and check someone else didn't get there first</li>
+<li>Take a moment to think about the best way to make a case for, and explain what you're thinking. Are you sure this shouldn't really be a <a href="#bug-reports">bug report</a> or a <a href="#feature-requests">feature request</a>? Is it really one idea or is it many? What's the context? What problem are you solving? Why is what you are suggesting better than what's already there? Does it fit with the Roadmap?</li>
+</ol>
+<h3 id="submitting-pull-requests">Submitting Pull Requests</h3>
+<p>Pull requests are awesome. If you're looking to raise a PR for something which doesn't have an open issue, please think carefully about <a href="#raising-issues">raising an issue</a> which your PR can close, especially if you're fixing a bug. This makes it more likely that there will be enough information available for your PR to be properly tested and merged.</p>
+<h5 id="need-help">Need Help?</h5>
+<p>If you're not completely clear on how to submit / update / <em>do</em> Pull Requests, please check out our <a href="https://github.com/mathjax/MathJax/wiki/Source-control-policies">source control policies</a>. For more insights, chech the excellent in depth <a href="https://github.com/TryGhost/Ghost/wiki/Git-Workflow">Git Workflow guide</a> from Ghost, in particular</p>
+<ul>
+<li><a href="https://github.com/TryGhost/Ghost/wiki/Git-workflow#commit-messages">Ghost Workflow guide: commit messages</a></li>
+</ul>
+<h3 id="testing-and-quality-assurance">Testing and Quality Assurance</h3>
+<p>Never underestimate just how useful quality assurance is. If you're looking to get involved with the code base and don't know where to start, checking out and testing a pull request is one of the most useful things you could do.</p>
+<p>If you want to get involved with testing MathJax, there is a set of QA Documentation <a href="https://github.com/MathJax/MathJax-testing">in our testing framework</a>.</p>
+<p>Essentially though, <a href="#contribute-to-core">check out the latest develop branch</a>, take it for a spin, and if you find anything odd, please follow the <a href="#bug-reports">bug report guidelines</a> and let us know!</p>
+<h4 id="checking-out-a-pull-request">Checking out a Pull Request</h4>
+<p>These are some <a href="https://gist.github.com/piscisaureus/3342247">excellent instructions</a> on configuring your GitHub repository to allow you to checkout pull requests in the same way as branches: <a href="https://gist.github.com/piscisaureus/3342247" class="uri">https://gist.github.com/piscisaureus/3342247</a>.</p>
+<h3 id="documentation">Documentation</h3>
+<p>MathJax's main documentation can be found at <a href="http://docs.mathjax.org">docs.mathjax.org</a>.</p>
+<p>The documentation is generated using <a href="http://sphinx-doc.org/">Sphinx-doc</a> and hosted on <a href="http://readthedocs.org">Read the docs</a>. The source of the docs is hosted in the <a href="http://github.com/mathjax/mathjax-docs">MathJax-Docs GitHub repository</a>.</p>
+<p>You can clone the repo and submit pull requests following the <a href="#pull-requests">pull-request</a> guidelines.</p>
+<h3 id="translation">Translation</h3>
+<p>If you wish to add or update translations of MathJax, please do it on <a href="https://translatewiki.net/w/i.php?title=Special:Translate&amp;group=out-mathjax-0-all">TranslateWiki.net</a> (and while you're there you can help other open source projects, too!).</p>
+<p>For bug reports and other questions that don't fit on TranslateWiki.net, head over to the <a href="https://github.com/mathjax/MathJax-i18n">mathjax/mathjax-i18n</a> repository.</p>
+<h2 id="working-on-mathjax-core-core">Working on MathJax Core {core}</h2>
+<h3 id="key-branches-tags">Key Branches &amp; Tags</h3>
+<ul>
+<li><strong><a href="https://github.com/MathJax/MathJax/tree/develop">develop</a></strong> is the development branch. All work on the next release is here. Do <strong>NOT</strong> use this branch for a production site.</li>
+<li><strong><a href="https://github.com/MathJax/MathJax">master</a></strong> contains the latest release of MathJax. This branch may be used in production.</li>
+</ul>
+<h1 id="conduct">Conduct</h1>
+<p>We are committed to providing a friendly, safe and welcoming environment for all, regardless of gender, sexual orientation, disability, ethnicity, religion, or similar personal characteristic.</p>
+<p>Please be kind and courteous. There's no need to be mean or rude. Respect that people have differences of opinion and that every design or implementation choice carries a trade-off and numerous costs. There is seldom a right answer, merely an optimal answer given a set of values and circumstances.</p>
+<p>Please keep unstructured critique to a minimum. If you have solid ideas you want to experiment with, make a fork and see how it works.</p>
+<p>We will exclude you from interaction if you insult, demean or harass anyone. That is not welcome behaviour. We interpret the term &quot;harassment&quot; as including the definition in the <a href="http://citizencodeofconduct.org/">Citizen Code of Conduct</a>; if you have any lack of clarity about what might be included in that concept, please read their definition. In particular, we don't tolerate behavior that excludes people in socially marginalized groups.</p>
+<p>Private harassment is also unacceptable. No matter who you are, if you feel you have been or are being harassed or made uncomfortable by a community member, please contact one of the channel ops or any of the <a href="https://github.com/MathJax/MathJax">MathJax</a> core team immediately. Whether you're a regular contributor or a newcomer, we care about making this community a safe place for you and we've got your back.</p>
+<p>Likewise any spamming, trolling, flaming, baiting or other attention-stealing behaviour is not welcome.</p>
+<p>We also suggest to read <a href="http://blog.discourse.org/2013/03/the-universal-rules-of-civilized-discourse/">discourse's rules</a></p>
+<h3 id="references">References</h3>
+<ul>
+<li>We heavily borrowed from -- thanks to Mozilla and Ghost!</li>
+<li>https://github.com/TryGhost/Ghost/blob/master/CONTRIBUTING.md</li>
+<li>https://github.com/mozilla/rust/wiki/Note-development-policy</li>
+<li>https://github.com/jden/CONTRIBUTING.md/blob/master/CONTRIBUTING.md</li>
+<li>http://blog.discourse.org/2013/03/the-universal-rules-of-civilized-discourse/</li>
+</ul>
+<h1 id="mathjax">MathJax</h1>
+<h2 id="beautiful-math-in-all-browsers">Beautiful math in all browsers</h2>
+<p>MathJax is an open-source JavaScript display engine for LaTeX, MathML, and AsciiMath notation that works in all modern browsers. It was designed with the goal of consolidating the recent advances in web technologies into a single, definitive, math-on-the-web platform supporting the major browsers and operating systems. It requires no setup on the part of the user (no plugins to download or software to install), so the page author can write web documents that include mathematics and be confident that users will be able to view it naturally and easily. Simply include MathJax and some mathematics in a web page, and MathJax does the rest.</p>
+<p>Some of the main features of MathJax include:</p>
+<ul>
+<li><p>High-quality display of LaTeX, MathML, and AsciiMath notation in HTML pages</p></li>
+<li><p>Supported in most browsers with no plug-ins, extra fonts, or special setup for the reader</p></li>
+<li><p>Easy for authors, flexible for publishers, extensible for developers</p></li>
+<li><p>Supports math accessibility, cut-and-paste interoperability, and other advanced functionality</p></li>
+<li><p>Powerful API for integration with other web applications</p></li>
+</ul>
+<p>See <a href="http://www.mathjax.org/" class="uri">http://www.mathjax.org/</a> for additional details.</p>
+<h2 id="installation-and-usage">Installation and Usage</h2>
+<p>The MathJax installation and usage documentation is available in the <code>docs/html</code> directory of the MathJax distribution (see <code>docs/html/index.html</code> for the starting point). The documents are also available on the MathJax web site on line at <a href="http://www.mathjax.org/resources/docs/" class="uri">http://www.mathjax.org/resources/docs/</a>.</p>
+<h2 id="community">Community</h2>
+<p>The main MathJax website is <a href="http://www.mathjax.org" class="uri">http://www.mathjax.org</a>, and it includes announcements and other important information. MathJax is maintained and distributed on GitHub at <a href="http://github.com/mathjax/MathJax" class="uri">http://github.com/mathjax/MathJax</a>. A user forum for asking questions and getting assistance is hosted at Google, and the bug tracker is hosted at GitHub:</p>
+<p>Bug tracker: <a href="https://github.com/mathjax/MathJax/issues" class="uri">https://github.com/mathjax/MathJax/issues</a><br />
+MathJax-Users Group: <a href="http://groups.google.com/group/mathjax-users" class="uri">http://groups.google.com/group/mathjax-users</a></p>
+<p>Before reporting a bug, please check that it has not already been reported. Also, please use the bug tracker for reporting bugs rather than the help forum.</p>
+<h1 id="freemaker-functions-for-sql-member-lists">Freemaker functions for SQL member lists</h1>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-sci-member-navigation.ftl</code>
+</dd>
+</dl>
+<h2 id="getscimemberlistlistid-string-itemlist-node"><code>getSciMemberList(listId: String = &quot;itemList&quot;): Node</code></h2>
+<p>Gets the member list. Default is to use the list with the name <code>itemList</code>. The name can be overridden using the optional <code>listId</code> parameter.</p>
+<h2 id="getmemberslist-node-sequencenode"><code>getMembers(list: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the members in the provided list.</p>
+<h2 id="getsurnamefiltervaluelist-node-string"><code>getSurnameFilterValue(list: Node): String</code></h2>
+<p>Gets the value of the surname filter of the provided list.</p>
+<h2 id="getcountlist-node-string"><code>getCount(list: Node): String</code></h2>
+<p>Gets the number of items in the list.</p>
+<h2 id="getcurrentpagelist-node-string"><code>getCurrentPage(list: Node): String</code></h2>
+<p>Returns the number of the current page of the list.</p>
+<h2 id="getlimitlist-node-string"><code>getLimit(list: Node): String</code></h2>
+<p>Gets the maximum number of items per page.</p>
+<h2 id="getmaxpageslist-node-string"><code>getMaxPages(list: Node): String</code></h2>
+<p>Returns the number of pages.</p>
+<h2 id="getnextpagelinklist-node-string"><code>getNextPageLink(list: Node): String</code></h2>
+<p>Returns the link to the next page of the list.</p>
+<h2 id="getpreviouspagelinklist-node-string"><code>getPreviousPageLink(list: Node): String</code></h2>
+<p>Returns the link to the previous page of the list.</p>
+<h2 id="getoffsetlist-node-string"><code>getOffset(list: Node): String</code></h2>
+<p>Returns the index of the items shown.</p>
+<h2 id="getmemberitemiditem-node-string"><code>getMemberItemId(item: Node): String</code></h2>
+<p>Returns the ID of the provided member item.</p>
+<h2 id="getmemberitemnameitem-node-string"><code>getMemberItemName(item: Node): String</code></h2>
+<p>Returns the name of the provided member item.</p>
+<h2 id="getmemberitemtitleitem-node-string"><code>getMemberItemTitle(item: Node): String</code></h2>
+<p>Returns the value of the title property of the provided member item.</p>
+<h2 id="getmemberitemsurnameitem-node-string"><code>getMemberItemSurname(item: Node): String</code></h2>
+<p>Returns the value of the surname property of the provided member item.</p>
+<h2 id="getmemberitemgivennameitem-node-string"><code>getMemberItemGivenName(item: Node): String</code></h2>
+<p>Returns the value of the given name property of the provided member item.</p>
+<h2 id="getmemberitemtitlepreitem-node-string"><code>getMemberItemTitlePre(item: Node): String</code></h2>
+<p>Returns the value of the <code>titlePre</code> property of the provided member item.</p>
+<h2 id="getmemberitemtitlepostitem-node-string"><code>getMemberItemTitlePost(item: Node): String</code></h2>
+<p>Returns the value of the <code>titlePost</code> property of the provided member item.</p>
+<h2 id="getmemberitemcotactentriesitem-node-sequencenode"><code>getMemberItemCotactEntries(item: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Gets the contact entries of the provided member item.</p>
+<h2 id="getmemberitemcotactentryitem-node-key-string-node"><code>getMemberItemCotactEntry(item: Node, key: String): Node</code></h2>
+<p>Gets the contact entry with the provided key of the provided member item.</p>
+<h1 id="freemarker-functions-for-sql-project-lists">Freemarker functions for SQL project lists</h1>
+<dl>
+<dt>Import path</dt>
+<dd><code>/ccm-sci-project-navigation.ftl</code>
+</dd>
+</dl>
+<h2 id="getsciprojectlistlistid-string-itemlist-node"><code>getSciProjectList(listId: String = &quot;itemList&quot;): Node</code></h2>
+<p>Returns an project list. The list can be selected by the optional <code>listId</code> parameter. The default value for the parameter is <code>itemList</code>.</p>
+<h2 id="getprojectslist-node-sequencenode"><code>getProjects(list: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the projects in a project list.</p>
+<h2 id="gettitlefiltervaluelist-node-string"><code>getTitleFilterValue(list: Node): String</code></h2>
+<p>Gets the value of the title filter of the provided list.</p>
+<h2 id="getresearchfieldfiltervaluelist-node-string"><code>getResearchFieldFilterValue(list: Node): String</code></h2>
+<p>Returns the value of the research field filter of the provided list.</p>
+<h2 id="getcountlist-node-string-1"><code>getCount(list: Node): String</code></h2>
+<p>Returns the number of projects in the provided list.</p>
+<h2 id="getcurrentpagelist-node-string-1"><code>getCurrentPage(list: Node): String</code></h2>
+<p>Returns the number of the current page of the list.</p>
+<h2 id="getlimitlist-node-string-1"><code>getLimit(list: Node): String</code></h2>
+<p>Gets the maximum number of items per page.</p>
+<h2 id="getmaxpageslist-node-string-1"><code>getMaxPages(list: Node): String</code></h2>
+<p>Gets the number of page of the provided list.</p>
+<h2 id="getnextpagelinklist-node-string-1"><code>getNextPageLink(list: Node): String</code></h2>
+<p>Gets the link to the next page of the provided list.</p>
+<h2 id="getprevpagelinklist-node-string"><code>getPrevPageLink(list: Node): String</code></h2>
+<p>Gets the link to the previous page of the provided list.</p>
+<h2 id="getoffsetlist-node-string-1"><code>getOffset(list: Node): String</code></h2>
+<p>Gets the index of the first item on the current page.</p>
+<h2 id="getprojectitemiditem-node-string"><code>getProjectItemId(item: Node): String</code></h2>
+<p>Returns the ID of the provided project item.</p>
+<h2 id="getprojectitemnameitem-node-string"><code>getProjectItemName(item: Node): String</code></h2>
+<p>Returns the name of the provided project item.</p>
+<h2 id="getprojectitemtitleitem-node-string"><code>getProjectItemTitle(item: Node): String</code></h2>
+<p>Returns the value of the <code>title</code> property of the provided project item.</p>
+<h2 id="getprojectitemobjecttypeitem-node-string"><code>getProjectItemObjectType(item: Node): String</code></h2>
+<p>Returns the value of the object type of the provided project item.</p>
+<h2 id="getprojectitembeginitem-node-string"><code>getProjectItemBegin(item: Node): String</code></h2>
+<p>Returns the value of the <code>begin</code> property of the provided project item.</p>
+<h2 id="getprojectitembegindayitem-node-string"><code>getProjectItemBeginDay(item: Node): String</code></h2>
+<p>Returns the value of the <code>day</code> property of begin date of the provided project item.</p>
+<h2 id="getprojectitembeginmonthitem-node-string"><code>getProjectItemBeginMonth(item: Node): String</code></h2>
+<p>Returns the value of the <code>month</code> property of begin date of the provided project item.</p>
+<h2 id="getprojectitembeginyearitem-node-string"><code>getProjectItemBeginYear(item: Node): String</code></h2>
+<p>Returns the value of the <code>year</code> property of begin date of the provided project item.</p>
+<h2 id="getprojectitemenditem-node-string"><code>getProjectItemEnd(item: Node): String</code></h2>
+<p>Returns the value of the <code>end</code> property of the provided project item.</p>
+<h2 id="getprojectitemenddayitem-node-string"><code>getProjectItemEndDay(item: Node): String</code></h2>
+<p>Returns the value of the <code>day</code> property of end date of the provided project item.</p>
+<h2 id="getprojectitemendmonthitem-node-string"><code>getProjectItemEndMonth(item: Node): String</code></h2>
+<p>Returns the value of the <code>month</code> property of end date of the provided project item.</p>
+<h2 id="getprojectitemendyearitem-node-string"><code>getProjectItemEndYear(item: Node): String</code></h2>
+<p>Returns the value of the <code>year</code> property of end date of the provided project item.</p>
+<h2 id="getprojectitemshortdescitem-node-string"><code>getProjectItemShortDesc(item: Node): String</code></h2>
+<p>Returns the value of the <code>short-desc</code> property of the provided project item.</p>
+<h2 id="getprojectitemmembersitem-node-sequencenode"><code>getProjectItemMembers(item: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the members of the project.</p>
+<h2 id="getprojectmembersurnamemember-node-string"><code>getProjectMemberSurname(member: Node): String</code></h2>
+<p>Returns the surname of the provided member.</p>
+<h2 id="getprojectmembergivennamemember-node-string"><code>getProjectMemberGivenname(member: Node): String</code></h2>
+<p>Returns the given name of the provided member.</p>
+<h1 id="freemarker-functions-for-article-in-items">Freemarker functions for Article In items</h1>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-sci-publications/article.ftl</code>
+</dd>
+</dl>
+<p>This functions are for processing items of types <code>ArticleInCollectedVolume</code>, <code>ArticleInJournal</code> and <code>InProceedings</code>.</p>
+<h2 id="gethrefarticle-node-string"><code>getHref(article: Node): String</code></h2>
+<p>Generates the link to the detail view of the provided article item. # Freemarker functions for processing the authors of a publication item</p>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-sci-publications/authors.ftl</code>
+</dd>
+</dl>
+<h2 id="getlinkauthor-node-keyid-string-string">`getLink(author: Node, keyId: String): String</h2>
+<p>Gets the link to the homepage of the author from the contact entries of the author. The key of the contact entry to use is selected using the <code>keyId</code> parameter.</p>
+<h2 id="getidauthor-node-string"><code>getId(author: Node): String</code></h2>
+<p>Returns the ID of the author as a string usable as value of the <code>id</code> attribute of a HTML element. The returned string consists of the ID of the master version of the author item, and the name of the author, separated by an underscore.</p>
+<h2 id="getpositionauthor-node-string"><code>getPosition(author: Node): String</code></h2>
+<p>Returns the position of provided author item in the sequence of authors.</p>
+<h2 id="islastauthor-node-boolean">`isLast(author: Node): boolean</h2>
+<p>Determines if the provided author is the last author in the sequence of authors.</p>
+<h2 id="getsurnameauthor-node-string"><code>getSurname(author: Node): String</code></h2>
+<p>Gets the surname of the author.</p>
+<h2 id="getgivennameauthor-node-string"><code>getGivenName(author: Node): String</code></h2>
+<p>Gets the given name of the author.</p>
+<h2 id="iseditorauthor-node-boolean"><code>isEditor(author: Node): boolean</code></h2>
+<p>Determines if the provided author is an editor. # Freemarker functions for proccessing Collected Volume items</p>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-sci-publications/collected-volume.ftl</code>
+</dd>
+</dl>
+<h2 id="gethrefcollectedvolume-node-string"><code>getHref(collectedVolume: Node): String</code></h2>
+<p>Returns the link to the detail view of the provided collected volume item. # Freemarker functions for generating the exportLink links of an publication item</p>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-sci-publications/export-links.ftl</code>
+</dd>
+</dl>
+<h2 id="gethrefexportlink-node-string"><code>getHref(exportLink: Node): String</code></h2>
+<p>Returns the URL for for the provided export link.</p>
+<h2 id="getformatkeyexportlink-node-string"><code>getFormatKey(exportLink: Node): String</code></h2>
+<p>Gets the key of the format provided by the export link provided by the <code>exportLink</code> parameter.</p>
+<h2 id="getformatnameexportlink-node-string"><code>getFormatName(exportLink: Node): String</code></h2>
+<p>Gets the name of the format provided by the export link provided by the <code>exportLink</code> parameter. # Freemarker functions for Journal items</p>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-sci-publications/journal.ftl</code>
+</dd>
+</dl>
+<h2 id="getfirstyearjournal-node-string"><code>getFirstYear(journal: Node): String</code></h2>
+<p>Gets the value of the <code>firstYear</code> property of the provided journal.</p>
+<h2 id="gethrefjournal-node-string"><code>getHref(journal: Node): String</code></h2>
+<p>Returns the link to the detail view of the journal.</p>
+<h2 id="getissnjournal-node-string"><code>getIssn(journal: Node): String</code></h2>
+<p>Gets the ISSN of the journal.</p>
+<h2 id="getissnjournal-node-string-1"><code>getIssn(journal: Node): String</code></h2>
+<p>Gets the value of the <code>lastYear</code> property of the journal.</p>
+<h2 id="gettitlejournal-node-string"><code>getTitle(journal: Node): String</code></h2>
+<p>Returns the title of the journal. # Freemarker functions for processing library signatures</p>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-sci-publications/library-signatures.ftl</code>
+</dd>
+</dl>
+<p>A library signature object contains the library signature (usually an alpha numeric code) and additional information.</p>
+<h2 id="getlibrarysignature-node-string"><code>getLibrary(signature: Node): String</code></h2>
+<p>Returns the the library of the signature.</p>
+<h2 id="getsignaturesignature-node-string"><code>getSignature(signature: Node): String</code></h2>
+<p>Returns the signature itself.</p>
+<h2 id="getlibrarylinksignature-node-string"><code>getLibraryLink(signature: Node): String</code></h2>
+<p>Returns the link to the homepage of the library.</p>
+<h2 id="getmiscsignature-node-string"><code>getMisc(signature: Node): String</code></h2>
+<p>Returns the value of the <code>misc</code> property of the signature.</p>
+<h1 id="freemarker-functions-for-processing-orderer-objects">Freemarker functions for processing Orderer objects</h1>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-sci-publications/orderer.ftl</code>
+</dd>
+</dl>
+<h2 id="getnameorderer-node-string"><code>getName(orderer: Node): String</code></h2>
+<p>Gets the name of the orderer. # Freemarker functions of processing proceedings</p>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-sci-publications/proceedings.ftl</code>
+</dd>
+</dl>
+<h2 id="gethrefproceedings-node-string"><code>getHref(proceedings: Node): String</code></h2>
+<p>Gets the link to the detail view of the provided proceeedings item.</p>
+<h2 id="getpaperhrefpaper-node-string"><code>getPaperHref(paper: Node): String</code></h2>
+<p>Returns the link to the detail view of the provided paper. # Freemarker functions for native SQL based publication lists</p>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-sci-publications-navigation.ftl</code>
+</dd>
+</dl>
+<h2 id="getscipublicationslistlistid-string-itemlist-node"><code>getSciPublicationsList(listId: String = &quot;itemList&quot;): Node</code></h2>
+<p>Retrieves a publications list. The list to use can be selected using the optional <code>listId</code> parameter.</p>
+<h2 id="getpublicationslist-node-sequencenode"><code>getPublications(list: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the publications of the provided publication list.</p>
+<h2 id="gettitlefiltervaluelist-node-string-1"><code>getTitleFilterValue(list: Node): String</code></h2>
+<p>Returns the value of the title filter of the provided publication list.</p>
+<h2 id="getyearofpublicationfiltervaluelist-node-string"><code>getYearOfPublicationFilterValue(list: Node): String</code></h2>
+<p>Returns the value of the year of publication filter of the provided publication list.</p>
+<h2 id="getauthorsfiltervaluelist-node-string"><code>getAuthorsFilterValue(list: Node): String</code></h2>
+<p>Returns the value of the authors filter of the provided publication list.</p>
+<h2 id="getsortlist-node-string"><code>getSort(list: Node): String</code></h2>
+<p>Returns the property which is used to sort the list.</p>
+<h2 id="getcountlist-node-string-2"><code>getCount(list: Node): String</code></h2>
+<p>Returns the number of publications in the list.</p>
+<h2 id="getcurrentpagelist-node-string-2"><code>getCurrentPage(list: Node): String</code></h2>
+<p>Gets the number of the current page of the list.</p>
+<h2 id="getlimitlist-node-string-2"><code>getLimit(list: Node): String</code></h2>
+<p>Returns the maximum number of publications per page.</p>
+<h2 id="getmaxpageslist-node-string-2"><code>getMaxPages(list: Node): String</code></h2>
+<p>Returns the number of pages of the list.</p>
+<h2 id="getnextpagelinklist-node-string-2"><code>getNextPageLink(list: Node): String</code></h2>
+<p>Returns the link to the next page of the list.</p>
+<h2 id="getnextpagelinklist-node-string-3"><code>getNextPageLink(list: Node): String</code></h2>
+<p>Returns the link to the previous page of the list.</p>
+<h2 id="getoffsetlist-node-string-2"><code>getOffset(list: Node): String</code></h2>
+<p>Gets the index of the first publication of the current page.</p>
+<h2 id="getpublicationiditem-node-string">`getPublicationId(item: Node): String</h2>
+<p>Returns the ID of the provided publication item.</p>
+<h2 id="getpublicationobjecttypeitem-node-string"><code>getPublicationObjectType(item: Node): String</code></h2>
+<p>Returns the type of the provided publication item.</p>
+<h2 id="getpublicationtitleitem-node-string"><code>getPublicationTitle(item: Node): String</code></h2>
+<p>Returns the title of the provided publication item.</p>
+<h2 id="getpublicationyearitem-node-string"><code>getPublicationYear(item: Node): String</code></h2>
+<p>Gets the year of publication of the publication.</p>
+<h2 id="getpublicationauthorsitem-node-sequencenode"><code>getPublicationAuthors(item: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Gets the authors of the publication.</p>
+<h2 id="hasauthorsurnameauthor-node-boolean"><code>hasAuthorSurname(author: Node): boolean</code></h2>
+<p>Determines if the provided author has a surname.</p>
+<h2 id="getauthorsurnameauthor-node-string"><code>getAuthorSurname(author: Node): String</code></h2>
+<p>Gets the surname of the author.</p>
+<h2 id="hasauthorgivennameauthor-node-boolean"><code>hasAuthorGivenName(author: Node): boolean</code></h2>
+<p>Determines if the provided author has a given name.</p>
+<h2 id="getauthorgivennameauthor-node-string"><code>getAuthorGivenName(author: Node): String</code></h2>
+<p>Gets the given name of the author.</p>
+<h2 id="getpublicationplaceitem-node-string"><code>getPublicationPlace(item: Node): String</code></h2>
+<p>Gets the value of the place property of the publication.</p>
+<h2 id="getpublicationorganizationitem-node-node"><code>getPublicationOrganization(item: Node): Node</code></h2>
+<p>Getsh the organization assigned to a publication.</p>
+<h2 id="getpublicationorganizationnameitem-node-string"><code>getPublicationOrganizationName(item: Node): String</code></h2>
+<p>Gets the name of the organization.</p>
+<h2 id="getpublicationunpublishedplaceitem-node-string"><code>getPublicationUnpublishedPlace(item: Node): String</code></h2>
+<p>Gets the place of the publication of the type <code>UnPublished</code>.</p>
+<h2 id="getpublicationpublisheritem-node-string"><code>getPublicationPublisher(item: Node): String</code></h2>
+<p>Gets the publisher of the publication.</p>
+<h2 id="getpublisherplaceitem-node-string"><code>getPublisherPlace(item: Node): String</code></h2>
+<p>Gets the place of the publisher.</p>
+<h2 id="getpublishernameitem-node-string"><code>getPublisherName(item: Node): String</code></h2>
+<p>Gets the name of the publisher.</p>
+<h2 id="getpublicationjournalitem-node-node"><code>getPublicationJournal(item: Node): Node</code></h2>
+<p>Gets the journal to which the publication is assigned.</p>
+<h2 id="getjournalnamejournal-node-string"><code>getJournalName(journal: Node): String</code></h2>
+<p>Gets the name of the journal.</p>
+<h2 id="getpublicationissueitem-node-string"><code>getPublicationIssue(item: Node): String</code></h2>
+<p>Gets the issue in which the publication was published.</p>
+<h2 id="haspublicationvolumeofjournalitem-node-string"><code>hasPublicationVolumeOfJournal(item: Node): String</code></h2>
+<p>Determines if the publication has a value for the <code>volume</code> property.</p>
+<h2 id="getpublicationvolumeofjournalitem-node-string"><code>getPublicationVolumeOfJournal(item: Node): String</code></h2>
+<p>Returns the value of the <code>volume</code> property.</p>
+<h2 id="getpublicationpagesfromitem-node-string"><code>getPublicationPagesFrom(item: Node): String</code></h2>
+<p>Gets the value of the <code>pageFrom</code> property.</p>
+<h2 id="getpublicationpagestoitem-node-string"><code>getPublicationPagesTo(item: Node): String</code></h2>
+<p>Gets the value of the <code>pageTo</code> property.</p>
+<h2 id="getpublicationcollectedvolumeitem-node-node"><code>getPublicationCollectedVolume(item: Node): Node</code></h2>
+<p>Gets the collected volume to which the publication is assigned.</p>
+<h2 id="getcollectedvolumeauthorscollectedvolume-node-sequencenode"><code>getCollectedVolumeAuthors(collectedVolume: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the authors/editors of the collected volume.</p>
+<h2 id="getcollectedvolumetitlecollectedvolume-node-string"><code>getCollectedVolumeTitle(collectedVolume: Node): String</code></h2>
+<p>Returns the title of the collected volume.</p>
+<h2 id="getcollectedvolumepublishercollectedvolume-node-node"><code>getCollectedVolumePublisher(collectedVolume: Node): Node</code></h2>
+<p>Returns the publisher of the collected volume.</p>
+<h2 id="getcollectedvolumecollectedvolume-node-string"><code>getCollectedVolume(collectedVolume: Node): String</code></h2>
+<p>Gets the place of the collected volume.</p>
+<h2 id="hasproceedingsitem-node-boolean"><code>hasProceedings(item: Node): boolean</code></h2>
+<p>Determines if the publication has proceedings.</p>
+<h2 id="getproceedignsitem-node-sequencenode"><code>getProceedigns(item: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the proceedings the publication.</p>
+<h1 id="freemarker-functions-for-publication-items.">Freemarker functions for publication items.</h1>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-sci-publications/publications.ftl</code>
+</dd>
+</dl>
+<h2 id="getassignedtermsdomainsitem-node-domain-string-sequencenode"><code>getAssignedTermsDomains(item: Node, domain: String): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the categories from the category system with the name provided by the <code>domain</code> parameters which are assigned to the publication.</p>
+<h2 id="getauthorsitem-node-sequencenode"><code>getAuthors(item: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the authors of the publication.</p>
+<h2 id="getpublisheritem-node-sequencenode"><code>getPublisher(item: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the publisher of the publication.</p>
+<h2 id="getyearofpublicationitem-node-sequencenode"><code>getYearOfPublication(item: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the year of publication.</p>
+<h2 id="getnumberofpagesitem-node-string-1"><code>getNumberOfPages(item: Node): String</code></h2>
+<p>Gets the number of pages of the publication.</p>
+<h2 id="getnumberofvolumesitem-node-string"><code>getNumberOfVolumes(item: Node): String</code></h2>
+<p>Gets the number of volumes of the publication.</p>
+<h2 id="getvolumeitem-node-string"><code>getVolume(item: Node): String</code></h2>
+<p>Gets the value of the <code>volume</code> property of the publication.</p>
+<h2 id="geteditionitem-node-string"><code>getEdition(item: Node): String</code></h2>
+<p>Get the edition of the publication.</p>
+<h2 id="getisbnitem-node-string"><code>getIsbn(item: Node): String</code></h2>
+<p>Gets the ISBN of the publication.</p>
+<h2 id="getlanguageofpublicationitem-node-string"><code>getLanguageOfPublication(item: Node): String</code></h2>
+<p>Gets the language of the publication.</p>
+<h2 id="getseriesitem-node-node"><code>getSeries(item: Node): Node</code></h2>
+<p>Gets the series to which the publication is assigned.</p>
+<h2 id="isrevieweditem-node-boolean"><code>isReviewed(item: Node): boolean</code></h2>
+<p>Determines if the publication is reviewed.</p>
+<h2 id="getabstractitem-node-string"><code>getAbstract(item: Node): String</code></h2>
+<p>Returns the abstract of the publication.</p>
+<h2 id="getmiscitem-node-string"><code>getMisc(item: Node): String</code></h2>
+<p>Returns the value of the <code>misc</code> property of the publication.</p>
+<h2 id="getexportlinksitem-node-sequencenode"><code>getExportLinks(item: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the export links for the publication.</p>
+<h2 id="getplaceitem-node-string"><code>getPlace(item: Node): String</code></h2>
+<p>Returns the value of the <code>place</code> property of the publication.</p>
+<h2 id="getpagesfromitem-node-string"><code>getPagesFrom(item: Node): String</code></h2>
+<p>Returns the value of the <code>pagesFrom</code> property of the publication.</p>
+<h2 id="getpagestoitem-node-string"><code>getPagesTo(item: Node): String</code></h2>
+<p>Returns the value of the <code>pagesTo</code> property of the publication.</p>
+<h2 id="getnumberitem-node-string"><code>getNumber(item: Node): String</code></h2>
+<p>Returns the value of the <code>number</code> property of the publication.</p>
+<h2 id="getyearfirstpublisheditem-node-string"><code>getYearFirstPublished(item: Node): String</code></h2>
+<p>Returns the value of the <code>yearFirstPublished</code> property of the publication.</p>
+<h2 id="getlibrarysignaturesitem-node-sequencenode"><code>getLibrarySignatures(item: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the library signatures assigned to a publication.</p>
+<h2 id="getorganizationitem-node-node"><code>getOrganization(item: Node): Node</code></h2>
+<p>Gets the organization assigned to a publication.</p>
+<h2 id="getordereritem-node-node"><code>getOrderer(item: Node): Node</code></h2>
+<p>Gets the orderer assigned to a publication.</p>
+<h2 id="getissnitem-node-node"><code>getIssn(item: Node): Node</code></h2>
+<p>Gets the ISSN of a publication.</p>
+<h2 id="getlastaccesseditem-node-string"><code>getLastAccessed(item: Node): String</code></h2>
+<p>Gets the value of the <code>lastAccessed</code> property of a publication.</p>
+<h2 id="geturlitem-node-string-2"><code>getUrl(item: Node): String</code></h2>
+<p>Gets the value of the <code>url</code> property of a publication.</p>
+<h2 id="geturnitem-node-string"><code>getUrn(item: Node): String</code></h2>
+<p>Gets the value of the <code>urn</code> property of a publication.</p>
+<h2 id="getdoiitem-node-string"><code>getDoi(item: Node): String</code></h2>
+<p>Gets the value of the <code>doi</code> property of a publication.</p>
+<h2 id="getissueitem-node-string"><code>getIssue(item: Node): String</code></h2>
+<p>Gets the issue of a publication.</p>
+<h2 id="getjournalitem-node-node"><code>getJournal(item: Node): Node</code></h2>
+<p>Gets the journal to which a publication is assigned.</p>
+<h2 id="getcollectedvolumeitem-node-node"><code>getCollectedVolume(item: Node): Node</code></h2>
+<p>Gets the collected volume to which a publication is assigned.</p>
+<h2 id="getchapteritem-node-string"><code>getChapter(item: Node): String</code></h2>
+<p>Gets the value of the <code>chapter</code> property of a publication.</p>
+<h2 id="getnameofconferenceitem-node-string"><code>getNameOfConference(item: Node): String</code></h2>
+<p>Gets the name of the conference.</p>
+<h2 id="getplaceofconferenceitem-node-string"><code>getPlaceOfConference(item: Node): String</code></h2>
+<p>Gets the place of the conference.</p>
+<h2 id="getdatefromconferenceitem-node-datenode"><code>getDateFromConference(item: Node): DateNode</code></h2>
+<p>Gets the start date of the conference.</p>
+<h2 id="getdatetoconferenceitem-node-datenode"><code>getDateToConference(item: Node): DateNode</code></h2>
+<p>Gets the end date of the conference.</p>
+<h2 id="getproceedingsitem-node-node"><code>getProceedings(item: Node): Node</code></h2>
+<p>Gets the proceedings to which an publication is assigned.</p>
+<h2 id="getproceedingspapersitem-node-sequencenode"><code>getProceedingsPapers(item: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Gets the papers of a proceedings publication item.</p>
+<h2 id="getseriesvolumeitem-node-string"><code>getSeriesVolume(item: Node): String</code></h2>
+<p>Gets the volume of the series for a publication.</p>
+<h2 id="geteventitem-node-string"><code>getEvent(item: Node): String</code></h2>
+<p>Gets the value of the <code>event</code> property of a publication of the type <em>talk</em>.</p>
+<h2 id="getdateoftaskitem-node-datenode"><code>getDateOfTask(item: Node): DateNode</code></h2>
+<p>Gets the value of the <code>date</code> property of a publication of the type <em>talk</em>.</p>
+<h1 id="freemarker-functions-for-processing-publishers">Freemarker functions for processing Publishers</h1>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-sci-publications/publisher.ftl</code>
+</dd>
+</dl>
+<h2 id="getnamepublisher-node-string"><code>getName(publisher: Node): String</code></h2>
+<p>Gets the name of a publisher.</p>
+<h2 id="getplacepublisher-node-string"><code>getPlace(publisher: Node): String</code></h2>
+<p>Gets the place of a publisher. # Freemarker functions for Series</p>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-sci-publications/series.ftl</code>
+</dd>
+</dl>
+<h2 id="getfiltersseries-node-sequencenode"><code>getFilters(series: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the filters for list of publications of the series. The filters can be procesed by the functions provided for object list filters.</p>
+<h2 id="getlinkseries-node-string"><code>getLink(series: Node): String</code></h2>
+<p>Returns the link to the detail view of the series.</p>
+<h2 id="getnameseries-node-string"><code>getName(series: Node): String</code></h2>
+<p>Returns the name of a series.</p>
+<h2 id="getvolumeseries-node-string"><code>getVolume(series: Node): String</code></h2>
+<p>Gets the value of the <code>volume</code> property.</p>
+<h2 id="getvolumehrefvolume-node-string"><code>getVolumeHref(volume: Node): String</code></h2>
+<p>Gets a link to a volume of a series.</p>
+<h1 id="freemarker-functions-for-scidepartment-items">Freemarker functions for SciDepartment items</h1>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-sci-types-department.ftl</code>
+</dd>
+</dl>
+<h2 id="getdescriptiondata-node-htmlstring"><code>getDescription(data: Node): HtmlString</code></h2>
+<p>Returns the description of the department.</p>
+<h2 id="getshortdescriptiondata-node-string"><code>getShortDescription(data: Node): String</code></h2>
+<p>Returns the short description of the department.</p>
+<h2 id="getdepartmentheadsdata-node-sequencenode"><code>getDepartmentHeads(data: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Gets the heads of the department.</p>
+<h2 id="getdepartmentheadidhead-node-string"><code>getDepartmentHeadId(head: Node): String</code></h2>
+<p>Gets the ID of a head of a department.</p>
+<h2 id="getdepartmentheadlinkhead-node-string"><code>getDepartmentHeadLink(head: Node): String</code></h2>
+<p>Gets the link to the detail view of head of a department.</p>
+<h2 id="getdepartmentviceheadsdata-node-sequencenode"><code>getDepartmentViceHeads(data: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Gets the vice heads of the department.</p>
+<h2 id="getdepartmentviceheadidhead-node-string"><code>getDepartmentViceHeadId(head: Node): String</code></h2>
+<p>Gets the ID of a vice head of a department.</p>
+<h2 id="getdepartmentviceheadlinkhead-node-string"><code>getDepartmentViceHeadLink(head: Node): String</code></h2>
+<p>Gets the link to the detail view of vicehead of a department.</p>
+<h2 id="getdepartmentsecretariatsdata-node-sequencenode"><code>getDepartmentSecretariats(data: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Gets the secretariats of the department.</p>
+<h2 id="getdepartmentsecretariatidsec-node-string"><code>getDepartmentSecretariatId(sec: Node): String</code></h2>
+<p>Gets the ID of a secretariats of a department.</p>
+<h2 id="getdepartmentsecretariatlinksec-node-string"><code>getDepartmentSecretariatLink(sec: Node): String</code></h2>
+<p>Gets the link to the detail view of secretariats of a department.</p>
+<h2 id="getprojectsdata-node-sequencenode"><code>getProjects(data: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the list of projects assigned to the department.</p>
+<h2 id="getprojectidproject-node-string"><code>getProjectId(project: Node): String</code></h2>
+<p>Gets the id of a project.</p>
+<h2 id="getprojectlinkproject-node-string"><code>getProjectLink(project: Node): String</code></h2>
+<p>Returns the link to the detail view of a project.</p>
+<h1 id="freemarker-functions-for-scidepartment-items-1">Freemarker functions for SciDepartment items</h1>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-sci-types-institute.ftl</code>
+</dd>
+</dl>
+<h2 id="getdescriptiondata-node-htmlstring-1"><code>getDescription(data: Node): HtmlString</code></h2>
+<p>Returns the description of the institute.</p>
+<h2 id="getshortdescriptiondata-node-string-1"><code>getShortDescription(data: Node): String</code></h2>
+<p>Returns the short description of the institute.</p>
+<h2 id="getdepartmentsdata-node-sequencenode"><code>getDepartments(data: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the departments assigned to a institute.</p>
+<h2 id="getdepartmentoiddepartment-node-string"><code>getDepartmentOid(department: Node): String</code></h2>
+<p>Gets the OID of a department.</p>
+<h2 id="getdepartmenttitledepartment-node-string"><code>getDepartmentTitle(department: Node): String</code></h2>
+<p>Gets the title of a department.</p>
+<h2 id="getdepartmentlinkdepartment-node-string"><code>getDepartmentLink(department: Node): String</code></h2>
+<p>Returns the link to the detail view of a department. # Freemarker functions for SciProject items</p>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-sci-types-project.ftl</code>
+</dd>
+</dl>
+<h2 id="getbeginitem-node-datenode"><code>getBegin(item: Node): DateNode</code></h2>
+<p>Returns the begin date of the project. To format the date the <code>formatDateTime</code> function provided by <code>ccm-themedirector</code> should be used.</p>
+<h2 id="getenditem-node-datenode"><code>getEnd(item: Node): DateNode</code></h2>
+<p>Returns the end date of the project. To format the date the <code>formatDateTime</code> function provided by <code>ccm-themedirector</code> should be used.</p>
+<h2 id="getdescriptionitem-node-htmlstring"><code>getDescription(item: Node): HtmlString</code></h2>
+<p>Gets the description of the project.</p>
+<h2 id="getshortdescriptionitem-node-string"><code>getShortDescription(item: Node): String</code></h2>
+<p>Gets the short description of the project.</p>
+<h2 id="getsponsorsitem-node-sequencenode"><code>getSponsors(item: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the sponsors of the project.</p>
+<h2 id="getsponsornamesponsor-node-string"><code>getSponsorName(sponsor: Node): String</code></h2>
+<p>Returns the name of the sponsor.</p>
+<h2 id="hassponsorfundingcodesponsor-node-boolean"><code>hasSponsorFundingCode(sponsor: Node): boolean</code></h2>
+<p>Determines if the sponsor has assigned a funding code to the project.</p>
+<h2 id="getsponsorfundingcodesponsor-node-string"><code>getSponsorFundingCode(sponsor: Node): String</code></h2>
+<p>Returns the funding code of the project assigned by the sponsor.</p>
+<h2 id="getsponsorlinksponsor-node-string"><code>getSponsorLink(sponsor: Node): String</code></h2>
+<p>Gets the link to the homepage of the sponsor.</p>
+<h2 id="hasfundingitem-node-string"><code>hasFunding(item: Node): String</code></h2>
+<p>Determines if the project has a text describing the funding of the project.</p>
+<h2 id="getfundingitem-node-htmlstring"><code>getFunding(item: Node): HtmlString</code></h2>
+<p>Gets the text describing the funding of the project.</p>
+<h2 id="hasfundingvolumeitem-node-boolean"><code>hasFundingVolume(item: Node): boolean</code></h2>
+<p>Determines if the project has a value for the <code>fundingVolume</code> property.</p>
+<h2 id="getfundingvolumeitem-node-string"><code>getFundingVolume(item: Node): String</code></h2>
+<p>Returns the value of the <code>fundingVolume</code> property.</p>
+<h2 id="getmembersitem-node-sequencenode"><code>getMembers(item: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Returns the members of the project.</p>
+<h2 id="getmemberrolemember-node-string"><code>getMemberRole(member: Node): String</code></h2>
+<p>Gets the role of the member.</p>
+<h2 id="getmemberstatusmember-node-string"><code>getMemberStatus(member: Node): String</code></h2>
+<p>Gets the status of the member.</p>
+<h2 id="getmemberidmember-node-string"><code>getMemberId(member: Node): String</code></h2>
+<p>Gets the ID of the member.</p>
+<h2 id="getmemberlinkmember-node-string"><code>getMemberLink(member: Node): String</code></h2>
+<p>Gets a link to the detail view of the member.</p>
+<h2 id="getmembersurnamemember-node-string"><code>getMemberSurname(member: Node): String</code></h2>
+<p>Gets the surname of the member.</p>
+<h2 id="getmembergivennamemember-node-string"><code>getMemberGivenName(member: Node): String</code></h2>
+<p>Gets the given name of the member.</p>
+<h2 id="getmembertitlepremember-node-string"><code>getMemberTitlePre(member: Node): String</code></h2>
+<p>Gets the value of the <code>titlePre</code> property of the member.</p>
+<h2 id="getmembertitlepostmember-node-string"><code>getMemberTitlePost(member: Node): String</code></h2>
+<p>Gets the value of the <code>titlePost</code> property of the member.</p>
+<h2 id="getinvolvedorganizationsitem-node-sequencenode"><code>getInvolvedOrganizations(item: Node): Sequence&lt;Node&gt;</code></h2>
+<p>Gets the organizations involved in the project.</p>
+<h2 id="getinvolvedorganizationnameorga-node-string"><code>getInvolvedOrganizationName(orga: Node): String</code></h2>
+<p>Gets the name of the organization.</p>
+<h2 id="getinvolvedorganizationlinkorga-node-string"><code>getInvolvedOrganizationLink(orga: Node): String</code></h2>
+<p>Gets the link to the homepage of the organization. # Freemarker functions for subsites</p>
+<dl>
+<dt>Import Path</dt>
+<dd><code>/ccm-subsite.ftl</code>
+</dd>
+</dl>
+<h2 id="getsubsitename-string"><code>getSubsiteName(): String</code></h2>
+<p>Returns the name of the current subsite. # Freemarker functions for language related tasks.</p>
+<p>Import Path :<code>/ccm-themedirector/language.ftl</code></p>
+<h3 id="getavailablelanguages-sequencestring"><code>getAvailableLanguages(): Sequence&lt;String&gt;</code></h3>
+<p>Returns the available languages for the current document as sequence. This sequence can be used for creating links for selecting the language:</p>
+<pre><code>&lt;ul class=&quot;language-selector&quot;&gt;
+    &lt;#list Lang.getAvailableLanguages()?sort as lang&gt;
+        &lt;li class=&quot;${(lang==negotiatedLanguage)?then(&#39;selected&#39;, &#39;&#39;)}&quot;&gt;${lang}&lt;/li&gt;
+    &lt;/#list&gt;
+&lt;/ul&gt;</code></pre>
+<p>This example uses the <code>list</code> directive from Freemarker to iterate over the available languages returned by <code>getAvailableLanguages</code> The Freemarker build-in <code>?then</code> is used together with the <code>negotiatedLanguage</code> variable to check if the curent language is the selected language. If this is the case a CSS class is added to the HTML.</p>
+<h1 id="utility-functions">Utility functions</h1>
+<p>Import Path :<code>/ccm-themedirectory/utils.ftl</code></p>
+<h2 id="getpageapplication-string"><code>getPageApplication(): String</code></h2>
+<p>Return the application of the current page.</p>
+<h2 id="getpagetitle-string"><code>getPageTitle(): String</code></h2>
+<p>Return the title of the current page as provided by the <em>Category Menu</em> Component of the <em>ccm-navigation</em> module.</p>
+<h2 id="getsitehostname-string"><code>getSiteHostName(): String</code></h2>
+<p>Returns the host name of the CCM installation as provided by the <em>SiteBanner</em> component of the <em>ccm-core</em> module.</p>
+<h2 id="getsitename-string"><code>getSiteName(): String</code></h2>
+<p>Returns the host name of the CCM installation as provided by the <em>SiteBanner</em> component of the <em>ccm-core</em> module.</p>
+<h2 id="getbooleanattrvaluefromnode-node-attrname-string-boolean"><code>getBooleanAttrValue(fromNode: Node, attrName: String): boolean</code></h2>
+<p>A helper function which tries to convert the value of the attribute <code>attrName</code> of the node <code>fromNode</code> to a boolean. The following values are interpreted as true: <code>true</code>, <code>yes</code>. All other values are interpreted as <code>false</code>.</p>
+<h2 id="formatdatetimestyle-string-date-datevaluenode-string"><code>formatDateTime(style: String, date: DateValueNode): String</code></h2>
+<p>Formats the value of date/time value node according to the provided <code>style</code>. The is defined in the theme manifest in the <code>date-time-formats</code> section. It is possible to define different styles for different languages. The style definition in the theme manifest must be in the format expected by the Java <a href="https://docs.oracle.com/javase/8/docs/api/index.html?java/time/format/DateTimeFormatter.html">DateTimeFormatter</a> class.</p>
+<h3 id="example">Example</h3>
+<p>In the theme manifest in the following format is defined:</p>
+<pre><code>&quot;date-time-formats&quot;: [
+    ...
+    {
+        &quot;style&quot;: &quot;news&quot;,
+        &quot;lang&quot;: &quot;de&quot;,
+        &quot;format&quot;: &quot;dd.MM.YYYY&quot;
+    },
+    {
+        &quot;style&quot;: &quot;news&quot;,
+        &quot;lang&quot;: &quot;en&quot;,
+        &quot;format&quot;: &quot;MM/dd/YY&quot;
+    },
+    ...
+]</code></pre>
+<p>Each style must have a name. It is possible to have different patterns for a style for different languages. The pattern itself is provided by the <code>format</code> property. For a documentation of the pattern format please refer to the documentation of the Java <code>DateTimeFormatter</code>.</p>
+<p>The second parameter of these function is a date value, at the moment this is an XML node if several attributes providing the year, month etc. of the date. This value is usually provided by special function for the specific content type. A typical usage of the <code>formatDateTime</code> function looks like this:</p>
+<pre><code>&lt;span&gt;${Utils.formatDateTime(&quot;standard&quot;, News.getNewsDate(item))}&lt;/span&gt;</code></pre>
+<p>In this example the <code>getNewsDate</code> function was used to retrieve the date of a news.</p>
+<p><code>News.getNewsDate</code> gets the date of a news item. If the date of the news is 2019-04-01 the return value of the function for german is</p>
+<pre><code>01.04.2019</code></pre>
+<p>and for english:</p>
+<pre><code>4/1/19</code></pre>
