@@ -26,14 +26,66 @@ the XML structure changes.
 
 ## General structure of a Freemarker theme
 
-Freemarker themes have a different structure than the usual "old style" themes of LibreCCM. 
+Freemarker themes have a different structure than the usual "old style" themes 
+of LibreCCM. Each Freemaker based theme must have a theme manifest file
+called `theme.json` on the root of its directory structure. This file
+provides several informations for processing the theme and serves as a
+central configuration point. The file must have the following structure:
 
-ToDo
+    {
+        "name": "an-example-theme",
+        "templates": {
+            "applications": [
+                {
+                    "application-name": "someApp",
+                    "application-class": "somePageClass",
+                    "template": "/templates/someApp.html.ftl"
+                },
+                ...                
+            ],
+            "contentitems": [
+                {
+                    "view": "list",
+                    "contentType": "com.arsdigita.cms.contenttypes.Article",
+                    "template": "/templates/contentitems/list/article.html.ftl"
+                },
+                {
+                    "view": "details",
+                    "contentType": "com.arsdigita.cms.contenttypes.Article",
+                    "template": "/templates/contentitems/detail/article.html.ftl"
+                },
+                {
+                    "view": "details",                    
+                    "contentType": "com.arsdigita.cms.contenttypes.Article",
+                    "style": "fancy",
+                    "template": "/templates/contentitems/detail/article.html.ftl"
+                },
+                ...
+            ],
+            "default-application-template": "/templates/default-layout.html.ftl",
+            "default-contentitem-template": "/templates/contentitems/detail/default.html.ftl",
+        },
+        "data-time-formats": [
+            {
+                "style": "event",
+                "lang": "de",
+                "format": "dd. MMM. YYYY"
+            },
+            {
+                "style": "event",
+                "lang": "en",
+                "format": "MM/dd/YY"
+            },
+            ...
+        ]
+    }
+
+
 
 ## Predefined variables and functions
 
 Several variables and functions are predefined and available without 
-importing another file.
+importing another file. 
 
 ### Variables
 

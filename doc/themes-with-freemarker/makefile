@@ -1,4 +1,4 @@
-FILES = themes-with-freemarker.md 
+# FILES = themes-with-freemarker.md 
 FILES += ../../ccm-cms/doc/freemarker/ccm-cms.md
 FILES += ../../ccm-cms-assets-fileattachment/doc/freemarker/ccm-cms-assets-fileattachment.md
 FILES += ../../ccm-cms-assets-imagestep/doc/freemarker/ccm-cms-assets-imagestep.md
@@ -49,7 +49,12 @@ FILES += ../../ccm-themedirector/doc/freemarker/ccm-themedirector/utils.md
 all: html pdf
 
 html:
-	pandoc -t html -o themes-with-freemarker.html ${FILES}
+	pandoc -t markdown -o functions-reference.tmp.md ${FILES} --base-header-level=3
+	pandoc -t html -o themes-with-freemarker.html themes-with-freemarker.md functions-reference.tmp.md
+	rm functions-reference.tmp.md
 
 pdf:
-	pandoc -t latex -o themes-with-freemarker.pdf ${FILES}
+	pandoc -t markdown -o functions-reference.tmp.md ${FILES} --base-header-level=3
+	pandoc -t latex -o themes-with-freemarker.pdf themes-with-freemarker.md functions-reference.tmp.md
+	rm functions-reference.tmp.md
+
