@@ -3,8 +3,60 @@
 <p>Compared to XSL Freemarker is a lot easier to use, especially if you have worked with other template engines like Twig, Velocity etc before. In version 7 of the LibreCCM platform Freemarker will be become the primary template engine. XSL will still be supported, but we recommanded that you port your themes to Freemarker. Why Freemarker and not one of the other template engines? Freemarker is able to process XML in a <a href="https://freemarker.apache.org/docs/xgui.html">similar way than XSL</a>.</p>
 <p>Freemarker also allows it to define <a href="https://freemarker.apache.org/docs/dgui_misc_userdefdir.html">user defined directivies</a> and <a href="https://freemarker.apache.org/docs/ref_directive_function.html">functions</a>. To make it easier to create impressive themes we provide functions and macros for Freemarker we provide several functions and macros which hide the complexity of the XML data model created by CCM from the template author. It is recommanded not to access the XML data model directly. Instead the provided functions should be used. Otherwise your theme might brake when the XML structure changes.</p>
 <h2 id="general-structure-of-a-freemarker-theme">General structure of a Freemarker theme</h2>
-<p>Freemarker themes have a different structure than the usual &quot;old style&quot; themes of LibreCCM.</p>
-<p>ToDo</p>
+<p>Freemarker themes have a different structure than the usual &quot;old style&quot; themes of LibreCCM. Each Freemaker based theme must have a theme manifest file called <code>theme.json</code> on the root of its directory structure. This file provides several informations for processing the theme and serves as a central configuration point. The file must have the following structure:</p>
+<pre><code>{
+    &quot;name&quot;: &quot;an-example-theme&quot;,
+    &quot;templates&quot;: {
+        &quot;applications&quot;: [
+            {
+                &quot;application-name&quot;: &quot;someApp&quot;,
+                &quot;application-class&quot;: &quot;somePageClass&quot;,
+                &quot;template&quot;: &quot;/templates/someApp.html.ftl&quot;
+            },
+            ...                
+        ],
+        &quot;contentitems&quot;: [
+            {
+                &quot;view&quot;: &quot;list&quot;,
+                &quot;contentType&quot;: &quot;com.arsdigita.cms.contenttypes.Article&quot;,
+                &quot;template&quot;: &quot;/templates/contentitems/list/article.html.ftl&quot;
+            },
+            {
+                &quot;view&quot;: &quot;details&quot;,
+                &quot;contentType&quot;: &quot;com.arsdigita.cms.contenttypes.Article&quot;,
+                &quot;template&quot;: &quot;/templates/contentitems/detail/article.html.ftl&quot;
+            },
+            {
+                &quot;view&quot;: &quot;details&quot;,                    
+                &quot;contentType&quot;: &quot;com.arsdigita.cms.contenttypes.Article&quot;,
+                &quot;style&quot;: &quot;fancy&quot;,
+                &quot;template&quot;: &quot;/templates/contentitems/detail/article.html.ftl&quot;
+            },
+            ...
+        ],
+        &quot;default-application-template&quot;: &quot;/templates/default-layout.html.ftl&quot;,
+        &quot;default-contentitem-template&quot;: &quot;/templates/contentitems/detail/default.html.ftl&quot;,
+    },
+    &quot;data-time-formats&quot;: [
+        {
+            &quot;style&quot;: &quot;event&quot;,
+            &quot;lang&quot;: &quot;de&quot;,
+            &quot;format&quot;: &quot;dd. MMM. YYYY&quot;
+        },
+        {
+            &quot;style&quot;: &quot;event&quot;,
+            &quot;lang&quot;: &quot;en&quot;,
+            &quot;format&quot;: &quot;MM/dd/YY&quot;
+        },
+        ...
+    ]
+}</code></pre>
+<p>The <code>name</code> key defines the name of the theme which should be unique per installation. The <code>templates</code> contains several subkeys which define the templates to use.</p>
+<p>The objects in the array of the <code>applications</code> key specify which template is used for an application. To determine which template should be used the attributes <code>application</code> and and <code>class</code> of from the root element of the XML data model are used. The value of the <code>application</code> attribute is matched against the value for the <code>application-name</code> field, the value of the class attribute against the value of the <code>application-class</code> field.</p>
+<p>CCM will first try to find a a template definition which matches both the <code>class</code> and the <code>application</code>. If none is found a template definition which a matching <code>application-name</code> and an empty <code>application-class</code> will be looked up. If there is no match the template defined as <code>default-application-template</code> is used.</p>
+<p>There is one special value value for the <code>template</code> field: <code>XSL_FALLBACK.XSL</code>. If the <code>template</code> field is set to this value CCM will fallback to the old XSL themes.</p>
+<p>For content items the procedure is similar, only the names of the fields in the template definition differ. The <code>view</code> field is used internally to select either the detail or the list view. The <code>contentType</code> field is the content types of the content items. The third field <code>style</code> is optional and can be used to select different templates depending on the theme context. For more informations please refer to the documentation of the <code>contentItem</code> macro provided by the ccm-cms module.</p>
+<p>The <code>date-time-formats</code> section is used to define date-time formats to use with the <code>formatDateTime</code> function provided by <code>ccm-themedirector</code>.</p>
 <h2 id="predefined-variables-and-functions">Predefined variables and functions</h2>
 <p>Several variables and functions are predefined and available without importing another file.</p>
 <h3 id="variables">Variables</h3>
