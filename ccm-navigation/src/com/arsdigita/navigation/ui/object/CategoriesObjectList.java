@@ -33,24 +33,24 @@ public class CategoriesObjectList extends AbstractComponent {
         super();
         objectType = ContentItem.BASE_DATA_OBJECT_TYPE;
     }
-    
+
     public DataCollectionRenderer getRenderer() {
         return renderer;
     }
-    
+
     public String getObjectType() {
         return objectType;
     }
-    
+
     public void setObjectType(final String objectType) {
         this.objectType = objectType;
     }
-    
+
     public void setRenderer(final DataCollectionRenderer renderer) {
         this.renderer = renderer;
         renderer.setPageSize(100);
     }
-    
+
     @Override
     public void lock() {
         super.lock();
@@ -101,15 +101,11 @@ public class CategoriesObjectList extends AbstractComponent {
                 "parent.id",
                 "com.arsdigita.categorization.liveIndexItemsInCategory");
         moreChildren.set("categoryID", category.getID());
-        
+
         objects.addEqualsFilter(ContentItem.VERSION, ContentItem.LIVE);
-        
-        System.err.printf("Found %s objects%n", objects.size());
-        
+
         final Element listElem = renderer.generateXML(objects, 0);
         objListElem.addContent(listElem);
-        
-        
 
 //        final CategorizedCollection items = category
 //            .getObjects(ACSObject.BASE_DATA_OBJECT_TYPE);
