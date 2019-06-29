@@ -1,0 +1,19 @@
+{
+  "name": "ccm-cms-tinymce",
+  "version": "1.0.0",
+  "description": "TinyMCE for ccm-cms",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build-ccm-cms-tinymce.js"
+  },
+  "author": "Jens Pelzetter",
+  "license": "GPL-2.0",
+  "dependencies": {
+    "tinymce": "^5.0.9"
+  },
+  "devDependencies": {
+    "fs-extra": "^8.1.0",
+    "webpack": "^4.35.0",
+    "webpack-cli": "^3.3.5"
+  }
+}

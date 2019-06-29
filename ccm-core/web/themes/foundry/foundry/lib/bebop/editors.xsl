@@ -227,9 +227,23 @@
 
         <xsl:if test="@name=$first-match">
             
-            <script src="{./@editor_src}"></script>
-            <script src="{./bebop:config[@name='TinyMCE.Config']/@path}">
-            </script>
+            <xsl:choose>
+                <xsl:when test="./@editor_src = ./bebop:config[@name='TinyMCE.Config']/@path">
+                    <script src="{./@editor_src}"></script>
+                </xsl:when>
+                <xsl:when test="./@editor_src = ''">
+                    <script src="{./bebop:config[@name='TinyMCE.Config']/@path}">
+                    </script>
+                </xsl:when>
+                <xsl:when test="./bebop:config[@name='TinyMCE.Config']/@path = ''">
+                    <script src="{./@editor_src}"></script>
+                </xsl:when>
+                <xsl:otherwise>
+                    <script src="{./@editor_src}"></script>
+                    <script src="{./bebop:config[@name='TinyMCE.Config']/@path}">
+                    </script>
+                </xsl:otherwise>
+            </xsl:choose>
             
         </xsl:if>
         

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
+                 name="ccm-cms-tinymce"
+                 prettyName="TinyMCE for ccm-cms"
+                 version = "6.6.9"
+                 release="1"
+                 webapp="ROOT">
+
+   <ccm:dependencies>
+        <ccm:requires name="ccm-core" version="6.6.3" relation="ge"/>  
+        <ccm:requires name="ccm-cms" version="6.6.4" relation="ge"/>
+    </ccm:dependencies>
+
+    <ccm:contacts>
+        <ccm:contact uri="http://www.scientificcms.org" type="website"/>
+        <ccm:contact uri="mailto:info@scientificcms.org" type="support"/>
+    </ccm:contacts>
+    <ccm:description>
+        Integration of the TinyMCE editor for ccm-cms.
+    </ccm:description>
+
+    
+
+</ccm:application>
+
