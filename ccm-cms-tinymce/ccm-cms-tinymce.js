@@ -14,6 +14,8 @@ require("tinymce/plugins/template");
 require("tinymce/plugins/visualblocks");
 require("tinymce/plugins/wordcount");
 
+require("./plugins/ccm-cms-images/plugin.js");
+
 // Initialize the app
 tinymce.init({
     plugins: ["code", 
@@ -25,9 +27,10 @@ tinymce.init({
               "table", 
               "template", 
               "visualblocks", 
-              "wordcount"],
+              "wordcount",
+              "ccm-cms-images"],
     selector: ".tinymce",
     templates: [],
-    content_css: ["./editor.css"],
-    toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | numlist bullist | outdent indent"
+    content_css: ["/assets/tinymce/editor.css"],
+    toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | numlist bullist | outdent indent | ccm-cms-images"
 });
