@@ -1,4 +1,4 @@
-const ImageDialog = function (editor) {
+ const ImageDialog = function (editor) {
 
     function getImageData(editor) {
 
@@ -104,6 +104,32 @@ const ImageDialog = function (editor) {
                                     { text: "Zoom", value: "imageZoom" },
                                     { text: "Gallery", value: "imageGallery" }
                                 ]
+                            },
+                            {
+                                type: "checkbox",
+                                name: "caption",
+                                label: "Caption"
+                            },
+                            {
+                                type: "grid",
+                                columns: 2,
+                                label: "Dimension",
+                                items: [
+                                    {
+                                        type: "input",
+                                        name: "width",
+                                        label: "Width"
+                                    },
+                                    {
+                                        type: "input",
+                                        name: "height",
+                                        label: "Height"
+                                    }
+                                ]
+                            },
+                            {
+                                type: "htmlpanel",
+                                html: ""
                             }
                         ]
                     },
