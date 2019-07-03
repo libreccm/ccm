@@ -32,11 +32,81 @@ const ImageDialog = function (editor) {
                 type: "panel",
                 items: [
                     {
-                        type: "input",
-                        name: "file",
-                        label: "File",
-                        disabled: true
-                    }
+                        type: "bar",
+                        items: [
+                            {
+                                type: "input",
+                                name: "file",
+                                label: "File",
+                                disabled: true
+                            },
+                            {
+                                type: "button",
+                                name: "browse_images",
+                                text: "Browse images",
+                                onAction: function() {
+                                    let baseUrl = window.location.href;
+                                    let offset = baseUrl.lastIndexOf("/");
+                                    let destUrl = baseUrl.slice(0, offset + 1) + "image_select.jsp";
+                                    let selectWindow = window.open(
+                                        destUrl,
+                                        "_blank",
+                                        "scrollbars=yes,directories=no,toolbar=no,width=800,height=600,status=no,menubar=no"
+                                    );
+                                    window.openCcm = new Object();
+                                    window.openCcm.imageSet = (selectedImage) => {
+                                        win
+                                        .find("#file")
+                                        .value(selectedImage.src)
+                                        .fire("change");
+                                        win
+                                        .find("#width")
+                                        .value(selectedImage.width)
+                                        .fire("change");
+                                        win
+                                        .find("#height")
+                                        .value(selectedImage.height)
+                                        .fire("change");
+                                        image_name = selectedImage.name;
+                                        return true;
+                                    };
+                                }
+                            },
+                            {
+                                type: "input",
+                                name: "alternate",
+                                label: "Alternate"
+                            },
+                            {
+                                type: "input",
+                                name: "title",
+                                label: "Title"
+                            },
+                            {
+                                type: "selectbox",
+                                name: "alignment",
+                                label: "Alignment",
+                                size: 1,
+                                items: [
+                                    { text: "Not set", value: "" },
+                                    { text: "Left", value: "left" },
+                                    { text: "Center", value: "center" },
+                                    { text: "Right", value: "right" }
+                                ]
+                            },
+                            {
+                                type: "selectbox",
+                                name: "fancybox",
+                                label: "Fancybox",
+                                size: 1,
+                                items: [
+                                    { text: "None", value: "" },
+                                    { text: "Zoom", value: "imageZoom" },
+                                    { text: "Gallery", value: "imageGallery" }
+                                ]
+                            }
+                        ]
+                    },
                 ]
             },
             buttons: []
