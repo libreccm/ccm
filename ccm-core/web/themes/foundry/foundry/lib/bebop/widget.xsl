@@ -143,7 +143,7 @@
                 </input>
             </xsl:when>
             <xsl:otherwise>
-                <select id="@name">
+                <select id="{@name}">
                     <xsl:call-template name="foundry:process-datatree-attributes"/>
                     <xsl:apply-templates/>
                 </select>
