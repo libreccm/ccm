@@ -226,7 +226,8 @@ public class PublicPersonalProfileCreate extends PageCreate {
     }
 
     private String createProfileUrl(final GenericPerson owner) {
-        String profileUrl = owner.getSurname().toLowerCase();
+        
+        String profileUrl = GenericPerson.urlSave(owner.getSurname().toLowerCase());
         int counter = 1;
 
         final DataCollection profiles = SessionManager.getSession().
