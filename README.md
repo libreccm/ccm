@@ -15,8 +15,8 @@ and APLAWS+.
 
 We are currently migrating the system to Jakarta EE 8. As part of this migration
 the we spliting up the sources of the projects. The Jakarta EE 8 based sources
-can be found at in the [LibreCCM repository](../libreccm). The sources for 
-ScientificCMS can be found in the [ScientificCMS repository](../scientificcms).
+can be found at in the [LibreCCM repository](https://github.com/libreccm/libreccm). The sources for 
+ScientificCMS can be found in the [ScientificCMS repository](https://github.com/libreccm/scientificcms).
 
 This version of LibreCCM uses an Ant based build system. For instructions how 
 to set up this build system please refer to the [README](tools-ng/README) file 
