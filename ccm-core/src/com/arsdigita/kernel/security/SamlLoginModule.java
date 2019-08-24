@@ -55,14 +55,15 @@ public class SamlLoginModule implements LoginModule {
     @Override
     public boolean login() throws LoginException {
 
-        final HttpServletRequest request = getRequest();
-        final HttpServletResponse response = getResponse();
+        final HttpServletRequest httpRequest = getRequest();
+        final HttpServletResponse httpResponse = getResponse();
 
         final Auth auth;
         try {
-            auth = new Auth(request, response);
-        } catch (IOException | SettingsException | Error ex) {
-
+            auth = new Auth(OneLoginUtil.buildSettings(httpRequest),
+                            httpRequest,
+                            httpResponse);
+        } catch (SettingsException ex) {
             LOGGER.error("SAML Login failed.", ex);
             throw new LoginException("SAML Login failed. Configuration error?");
         }
@@ -86,6 +87,7 @@ public class SamlLoginModule implements LoginModule {
 
     @Override
     public boolean commit() throws LoginException {
+
         if (userId != null) {
             subject.getPrincipals().add(new PartyPrincipal(userId));
         }
@@ -99,6 +101,7 @@ public class SamlLoginModule implements LoginModule {
 
     @Override
     public boolean logout() throws LoginException {
+
         getRequest().getSession().invalidate();
         return true;
     }
