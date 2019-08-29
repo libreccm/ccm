@@ -87,6 +87,10 @@ public class SamlLoginModule implements LoginModule {
 
     @Override
     public boolean commit() throws LoginException {
+
+        if (userId != null) {
+            subject.getPrincipals().add(new PartyPrincipal(userId));
+        }
         return true;
     }
 
@@ -97,6 +101,11 @@ public class SamlLoginModule implements LoginModule {
 
     @Override
     public boolean logout() throws LoginException {
+
+        getRequest().getSession().invalidate();
+        return true;
+    }
+
     protected HttpServletRequest getRequest() throws LoginException {
 
         try {
