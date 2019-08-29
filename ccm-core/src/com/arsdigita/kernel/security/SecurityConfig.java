@@ -126,7 +126,9 @@ public class SecurityConfig extends AbstractConfig {
             "Register:com.arsdigita.kernel.security.UserIDLoginModule:requisite",
             "Register:com.arsdigita.kernel.security.CookieLoginModule:optional",
             "RegisterSSO:com.arsdigita.kernel.security.SimpleSSOLoginModule:requisite",
-            "RegisterSSO:com.arsdigita.kernel.security.CookieLoginModule:optional"
+            "RegisterSSO:com.arsdigita.kernel.security.CookieLoginModule:optional",
+            "RegisterSAML:com.arsdigita.kernel.security.SamlLoginModule:requisite",
+            "RegisterSAML:com.arsdigita.kernel.security.CookieLoginModule:optional"
         });
     private final Parameter m_adminEmail = new StringParameter(
         "waf.admin.contact_email", Parameter.OPTIONAL, null);
