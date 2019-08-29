@@ -62,7 +62,6 @@ public class SamlLoginModule implements LoginModule {
         try {
             auth = new Auth(request, response);
         } catch (IOException | SettingsException | Error ex) {
-
             LOGGER.error("SAML Login failed.", ex);
             throw new LoginException("SAML Login failed. Configuration error?");
         }
@@ -145,5 +144,4 @@ public class SamlLoginModule implements LoginModule {
             );
         }
     }
-
 }
