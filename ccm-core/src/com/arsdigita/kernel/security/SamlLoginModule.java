@@ -5,13 +5,24 @@
  */
 package com.arsdigita.kernel.security;
 
+import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.kernel.UserAuthentication;
+
+import com.onelogin.saml2.Auth;
+import com.onelogin.saml2.exception.Error;
+import com.onelogin.saml2.exception.SettingsException;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 import javax.security.auth.Subject;
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.callback.UnsupportedCallbackException;
+import javax.security.auth.login.FailedLoginException;
 import javax.security.auth.login.LoginException;
 import javax.security.auth.spi.LoginModule;
 import javax.servlet.http.HttpServletRequest;
@@ -23,10 +34,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class SamlLoginModule implements LoginModule {
 
+    private static final Logger LOGGER = Logger.getLogger(SamlLoginModule.class);
+
     private CallbackHandler callbackHandler;
     private HttpServletRequest request;
     private HttpServletResponse response;
     private Subject subject;
+    private BigDecimal userId;
 
     @Override
     public void initialize(final Subject subject,
@@ -40,22 +54,54 @@ public class SamlLoginModule implements LoginModule {
 
     @Override
     public boolean login() throws LoginException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        final HttpServletRequest request = getRequest();
+        final HttpServletResponse response = getResponse();
+
+        final Auth auth;
+        try {
+            auth = new Auth(request, response);
+        } catch (IOException | SettingsException | Error ex) {
+            LOGGER.error("SAML Login failed.", ex);
+            throw new LoginException("SAML Login failed. Configuration error?");
+        }
+
+        final List<String> errors = auth.getErrors();
+        if (!errors.isEmpty()) {
+            LOGGER.error(String.format("SAML Login errors: %s",
+                                       String.join(";\n", errors)));
+            throw new LoginException(String.format("SAML Login errors: %s",
+                                                   String.join(";\n", errors)));
+        }
+
+        if (!auth.isAuthenticated()) {
+            throw new LoginException("Not authenticated.");
+        }
+
+        userId = getUserId(auth.getNameId());
+
+        return true;
     }
 
     @Override
     public boolean commit() throws LoginException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        if (userId != null) {
+            subject.getPrincipals().add(new PartyPrincipal(userId));
+        }
+        return true;
     }
 
     @Override
     public boolean abort() throws LoginException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
     }
 
     @Override
     public boolean logout() throws LoginException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        getRequest().getSession().invalidate();
+        return true;
     }
 
     protected HttpServletRequest getRequest() throws LoginException {
@@ -86,4 +132,18 @@ public class SamlLoginModule implements LoginModule {
         }
     }
 
+    protected BigDecimal getUserId(final String ssoLogin) 
+        throws LoginException {
+        
+        try {
+            final UserAuthentication userAuth = UserAuthentication
+                .retrieveForSSOlogin(ssoLogin);
+            
+            return userAuth.getUser().getID();
+        } catch(DataObjectNotFoundException ex) {
+            throw new FailedLoginException(
+                String.format("SSO login %s not found", ssoLogin)
+            );
+        }
+    }
 }
