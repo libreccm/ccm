@@ -151,21 +151,21 @@ public class SecurityConfig extends AbstractConfig {
         "waf.onelogin.saml2.sp.entityid",
         Parameter.REQUIRED,
         "http://localhost:8080/ccm-saml/metadata");
-    private final Parameter m_oneLoginSaml2SpAssertationConsumerServiceUrl
-                                = new StringParameter(
-            "waf.onelogin.saml2.sp.assertion_consumer_service.url",
-            Parameter.REQUIRED,
-            "http://localhost:8080/ccm-saml/acs");
+//    private final Parameter m_oneLoginSaml2SpAssertationConsumerServiceUrl
+//                                = new StringParameter(
+//            "waf.onelogin.saml2.sp.assertion_consumer_service.url",
+//            Parameter.REQUIRED,
+//            "http://localhost:8080/ccm-saml/acs");
     private final Parameter m_oneLoginSaml2SpAssertationConsumerServiceBinding
                                 = new StringParameter(
             "waf.onelogin.saml2.sp.assertion_consumer_service.binding",
             Parameter.REQUIRED,
             "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST");
-    private final Parameter m_oneLoginSaml2SpSingleLogoutServiceUrl
-                                = new StringParameter(
-            "waf.onelogin.saml2.sp.single_logout_service.url",
-            Parameter.REQUIRED,
-            "http://localhost:8080/ccm-saml/sls");
+//    private final Parameter m_oneLoginSaml2SpSingleLogoutServiceUrl
+//                                = new StringParameter(
+//            "waf.onelogin.saml2.sp.single_logout_service.url",
+//            Parameter.REQUIRED,
+//            "http://localhost:8080/ccm-saml/sls");
     private final Parameter m_oneLoginSaml2SpSingleLogoutServiceBinding
                                 = new StringParameter(
             "waf.onelogin.saml2.sp.single_logout_service.binding",
@@ -232,11 +232,11 @@ public class SecurityConfig extends AbstractConfig {
         register(m_oneLoginSaml2IdpSingleSignOnServiceBinding);
         register(m_oneLoginSaml2IdpSingleSignOnServiceUrl);
         register(m_oneLoginSaml2SpAssertationConsumerServiceBinding);
-        register(m_oneLoginSaml2SpAssertationConsumerServiceUrl);
+//        register(m_oneLoginSaml2SpAssertationConsumerServiceUrl);
         register(m_oneLoginSaml2SpEntityId);
         register(m_oneLoginSaml2SpNameIdFormat);
         register(m_oneLoginSaml2SpSingleLogoutServiceBinding);
-        register(m_oneLoginSaml2SpSingleLogoutServiceUrl);
+//        register(m_oneLoginSaml2SpSingleLogoutServiceUrl);
         register(m_oneLoginSaml2Strict);
 
         loadInfo();
@@ -339,25 +339,25 @@ public class SecurityConfig extends AbstractConfig {
         return (Boolean) get(m_oneLoginSaml2Strict);
     }
 
-    public final Boolean getM_oneLoginSaml2Debug() {
+    public final Boolean getOneLoginSaml2Debug() {
         return (boolean) get(m_oneLoginSaml2Debug);
     }
 
-    public final String getM_oneLoginSaml2SpEntityId() {
+    public final String getOneLoginSaml2SpEntityId() {
         return (String) get(m_oneLoginSaml2SpEntityId);
     }
 
-    public final String getOneLoginSaml2SpAssertationConsumerServiceUrl() {
-        return (String) get(m_oneLoginSaml2SpAssertationConsumerServiceUrl);
-    }
+//    public final String getOneLoginSaml2SpAssertationConsumerServiceUrl() {
+//        return (String) get(m_oneLoginSaml2SpAssertationConsumerServiceUrl);
+//    }
 
     public final String getOneLoginSaml2SpAssertationConsumerServiceBinding() {
         return (String) get(m_oneLoginSaml2SpAssertationConsumerServiceBinding);
     }
 
-    public final String getOneLoginSaml2SpSingleLogoutServiceUrl() {
-        return (String) get(m_oneLoginSaml2SpSingleLogoutServiceUrl);
-    }
+//    public final String getOneLoginSaml2SpSingleLogoutServiceUrl() {
+//        return (String) get(m_oneLoginSaml2SpSingleLogoutServiceUrl);
+//    }
 
     public final String getOneLoginSaml2SpSingleLogoutServiceBinding() {
         return (String) get(m_oneLoginSaml2SpSingleLogoutServiceBinding);
