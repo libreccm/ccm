@@ -55,17 +55,6 @@ public class SamlLoginModule implements LoginModule {
     @Override
     public boolean login() throws LoginException {
 
-<<<<<<< HEAD
-        final HttpServletRequest httpRequest = getRequest();
-        final HttpServletResponse httpResponse = getResponse();
-
-        final Auth auth;
-        try {
-            auth = new Auth(OneLoginUtil.buildSettings(httpRequest),
-                            httpRequest,
-                            httpResponse);
-        } catch (SettingsException ex) {
-=======
         final HttpServletRequest request = getRequest();
         final HttpServletResponse response = getResponse();
 
@@ -73,7 +62,7 @@ public class SamlLoginModule implements LoginModule {
         try {
             auth = new Auth(request, response);
         } catch (IOException | SettingsException | Error ex) {
->>>>>>> SAML support for CCM
+
             LOGGER.error("SAML Login failed.", ex);
             throw new LoginException("SAML Login failed. Configuration error?");
         }
@@ -97,11 +86,6 @@ public class SamlLoginModule implements LoginModule {
 
     @Override
     public boolean commit() throws LoginException {
-<<<<<<< HEAD
-
-=======
-        
->>>>>>> SAML support for CCM
         if (userId != null) {
             subject.getPrincipals().add(new PartyPrincipal(userId));
         }
@@ -161,4 +145,5 @@ public class SamlLoginModule implements LoginModule {
             );
         }
     }
+
 }
