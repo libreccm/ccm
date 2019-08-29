@@ -18,6 +18,7 @@
  */
 package com.arsdigita.ui.login;
 
+import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ElementComponent;
 import com.arsdigita.bebop.Label;
@@ -31,6 +32,7 @@ import com.arsdigita.bebop.page.BebopApplicationServlet;
 import com.arsdigita.dispatcher.DispatcherConfig;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.security.SecurityConfig;
 import com.arsdigita.ui.UI;
 import com.arsdigita.web.ReturnSignal;
 import com.arsdigita.web.URL;
@@ -41,15 +43,16 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 /**
- * Login Application Servlet class, central entry point to create and process the Login application
- * UI.
+ * Login Application Servlet class, central entry point to create and process
+ * the Login application UI.
  *
- * It manages user registration page, new user page, user workspace, logout, and permissions admin
- * pages.
+ * It manages user registration page, new user page, user workspace, logout, and
+ * permissions admin pages.
  *
- * It just defines a mapping URL <-> various pages and uses the super class to actually server the
- * pages. Additionally is provides service methods to expose various properties, especially the
- * URL's of public subpages (e.g. logout) and initializes the creation of the UI.
+ * It just defines a mapping URL <-> various pages and uses the super class to
+ * actually server the pages. Additionally is provides service methods to expose
+ * various properties, especially the URL's of public subpages (e.g. logout) and
+ * initializes the creation of the UI.
  *
  * @author Peter Boy <pboy@barkhof.uni-bremen.de>
  * @version $Id: LoginServlet.java 2161 2012-03-15 00:16:13Z pboy $
@@ -65,49 +68,53 @@ public class LoginServlet extends BebopApplicationServlet {
     // Define various URLs to subpages of Login to manage administrative tasks.
     // ////////////////////////////////////////////////////////////////////////
     /**
-     * PathInfo into the Login application to access the (optional) newUser * page. Ends with "/"
-     * because it is a servlet/directory
+     * PathInfo into the Login application to access the (optional) newUser *
+     * page. Ends with "/" because it is a servlet/directory
      */
     public static final String EDIT_USER_PROFILE_PATH_INFO = "/edit-profile/";
 
     /**
-     * PathInfo into the Login application to access the (optional) newUser * page. Ends with "/"
-     * because it is a servlet/directory
+     * PathInfo into the Login application to access the (optional) newUser *
+     * page. Ends with "/" because it is a servlet/directory
      */
     public static final String NEW_USER_PATH_INFO = "/new-user/";
 
     /**
-     * PathInfo into the Login application to access the (optional) newUser * page. Ends with "/"
-     * because it is a servlet/directory
+     * PathInfo into the Login application to access the (optional) newUser *
+     * page. Ends with "/" because it is a servlet/directory
      */
-    public static final String CHANGE_USER_PASSWORD_PATH_INFO = "/change-password/";
+    public static final String CHANGE_USER_PASSWORD_PATH_INFO
+                               = "/change-password/";
 
     /**
-     * PathInfo into the Login application to access the (optional) newUser page. Ends with "/"
-     * because it is a servlet/directory
+     * PathInfo into the Login application to access the (optional) newUser
+     * page. Ends with "/" because it is a servlet/directory
      */
-    public static final String RECOVER_USER_PASSWORD_PATH_INFO = "/recover-password/";
+    public static final String RECOVER_USER_PASSWORD_PATH_INFO
+                               = "/recover-password/";
 
     /**
-     * PathInfo into the Login application to access the (optional) newUser page. Ends with "/"
-     * because it is a servlet/directory
+     * PathInfo into the Login application to access the (optional) newUser
+     * page. Ends with "/" because it is a servlet/directory
      */
-    public static final String EXPLAIN_PERSISTENT_COOKIES_PATH_INFO = "/explain-persistent-cookies/";
+    public static final String EXPLAIN_PERSISTENT_COOKIES_PATH_INFO
+                               = "/explain-persistent-cookies/";
 
     /**
-     * PathInfo into the Login application to access the (optional) newUser page. Ends with "/"
-     * because it is a servlet/directory
+     * PathInfo into the Login application to access the (optional) newUser
+     * page. Ends with "/" because it is a servlet/directory
      */
     public static final String LOGIN_EXPIRED_PATH_INFO = "/login-expired/";
 
     /**
-     * PathInfo into the Login application to access the (optional) newUser page. Ends with "/"
-     * because it is a servlet/directory
+     * PathInfo into the Login application to access the (optional) newUser
+     * page. Ends with "/" because it is a servlet/directory
      */
     public static final String LOGOUT_PATH_INFO = "/logout/";
 
     /**
-     * Base URL of the Login application for internal use, fetched from Login domain class.
+     * Base URL of the Login application for internal use, fetched from Login
+     * domain class.
      */
     private final static String s_loginURL = Login.LOGIN_PAGE_URL;
 
@@ -117,7 +124,8 @@ public class LoginServlet extends BebopApplicationServlet {
     public static final String APPLICATION_NAME = "login";
 
     /**
-     * User extension point used to create the pages to server and setup a URL - page mapping.
+     * User extension point used to create the pages to server and setup a URL -
+     * page mapping.
      *
      * @throws ServletException
      */
@@ -135,8 +143,7 @@ public class LoginServlet extends BebopApplicationServlet {
          * to a NewUserRegistrationForm or to skip.                           */
         put("/",
             buildSimplePage("login.userRegistrationForm.title",
-                            new UserLoginForm(Kernel.getSecurityConfig()
-            .isAutoRegistrationOn()),
+                            buildLogin(),
                             "login"));
         disableClientCaching("/");
 
@@ -159,8 +166,9 @@ public class LoginServlet extends BebopApplicationServlet {
         /* Create ExplainPersistentCookiesPage and add to the page map        */
         put(EXPLAIN_PERSISTENT_COOKIES_PATH_INFO,
             buildSimplePage("login.explainCookiesPage.title",
-                            new ElementComponent("subsite:explainPersistentCookies",
-                                                 SUBSITE_NS_URI),
+                            new ElementComponent(
+                                "subsite:explainPersistentCookies",
+                                SUBSITE_NS_URI),
                             "cookies"));
 
         /* Create ChangeUserPasswordPage and add to the page map              */
@@ -205,12 +213,12 @@ public class LoginServlet extends BebopApplicationServlet {
     }
 
     /**
-     * Check wether a custom base Page class (top-level container for all Bebop components and
-     * containersPages) is configured and return the appropriate Page. Here used (only) for
-     * UserInfo() workspace.
+     * Check wether a custom base Page class (top-level container for all Bebop
+     * components and containersPages) is configured and return the appropriate
+     * Page. Here used (only) for UserInfo() workspace.
      *
-     * @return Page to use for top-level container for all Bebop components and containersPage, null
-     *         to use default class
+     * @return Page to use for top-level container for all Bebop components and
+     *         containersPage, null to use default class
      */
     private static Page checkForPageSubClass() {
         //check to see if there is subclass of Page defined in Config
@@ -223,7 +231,8 @@ public class LoginServlet extends BebopApplicationServlet {
                 Class c = Class.forName(pageClass);
                 p = (Page) c.newInstance();
             } catch (Exception e) {
-                s_log.error("Unable to instantiate waf.dispatcher.default_page_class", e);
+                s_log.error(
+                    "Unable to instantiate waf.dispatcher.default_page_class", e);
             }
         }
         return p;
@@ -238,7 +247,8 @@ public class LoginServlet extends BebopApplicationServlet {
     private static Page buildSimplePage(String title, Component body, String id) {
 
         Page page = PageFactory.buildPage(APPLICATION_NAME,
-                                          new Label(LoginHelper.getMessage(title)),
+                                          new Label(LoginHelper
+                                              .getMessage(title)),
                                           id);
         page.add(body);
         page.lock();
@@ -246,7 +256,8 @@ public class LoginServlet extends BebopApplicationServlet {
     }
 
     /**
-     * Creates a page informing the user the login has expired. Provides links to login again, etc.
+     * Creates a page informing the user the login has expired. Provides links
+     * to login again, etc.
      *
      * @return Page (login expired info)
      */
@@ -256,11 +267,14 @@ public class LoginServlet extends BebopApplicationServlet {
             new Label(LoginHelper.getMessage("login.loginExpiredPage.title"))
         );
         page.add(new SimpleContainer() {
+
             { // constructor
-                add(new Label(LoginHelper.getMessage("login.loginExpiredPage.before")));
+                add(new Label(LoginHelper.getMessage(
+                    "login.loginExpiredPage.before")));
                 add(new DynamicLink("login.loginExpiredPage.link",
                                     Login.getLoginPageURL()));
-                add(new Label(LoginHelper.getMessage("login.loginExpiredPage.after")));
+                add(new Label(LoginHelper.getMessage(
+                    "login.loginExpiredPage.after")));
                 add(new ElementComponent("subsite:explainLoginExpired",
                                          SUBSITE_NS_URI));
             }
@@ -281,6 +295,7 @@ public class LoginServlet extends BebopApplicationServlet {
         );
         page.addActionListener(new UserLogoutListener());
         page.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent event) {
                 final PageState state = event.getPageState();
 
@@ -297,14 +312,37 @@ public class LoginServlet extends BebopApplicationServlet {
         return page;
     }
 
+    private Component buildLogin() {
+
+        final SecurityConfig securityConfig = SecurityConfig.getConfig();
+
+        if (SecurityConfig.getConfig().getEnableSaml()) {
+
+            final UserLoginForm userLoginForm = new UserLoginForm(
+                securityConfig.isAutoRegistrationOn());
+
+            final SamlLoginForm samlLoginForm = new SamlLoginForm();
+
+            final BoxPanel panel = new BoxPanel(BoxPanel.HORIZONTAL);
+            panel.add(samlLoginForm);
+            panel.add(userLoginForm);
+
+            return panel;
+        } else {
+            return new UserLoginForm(securityConfig.isAutoRegistrationOn());
+        }
+    }
+
     /**
-     * Provides an (absolute) URL to a user profile editig page. It is relative to document root
-     * without any constant prefix if there is one configured.
+     * Provides an (absolute) URL to a user profile editig page. It is relative
+     * to document root without any constant prefix if there is one configured.
      *
-     * XXX This implementation starts with a leading slash and ends with a slash. In previous
-     * configurations String urls began without a slash in order to be able to provide a full URL
-     * which also contains the context part. Since version 5.2 the context part is handled by (new)
-     * dispatcher. The leading slash it API change! It's impacts have to be checked. (2011-02)
+     * XXX This implementation starts with a leading slash and ends with a
+     * slash. In previous configurations String urls began without a slash in
+     * order to be able to provide a full URL which also contains the context
+     * part. Since version 5.2 the context part is handled by (new) dispatcher.
+     * The leading slash it API change! It's impacts have to be checked.
+     * (2011-02)
      *
      * @return url to EditUserProfile page as String
      */
@@ -317,14 +355,16 @@ public class LoginServlet extends BebopApplicationServlet {
     }
 
     /**
-     * Provides an (absolute URL) to an optional new user registration page (accessible only if
-     * activated). It is relative to document root without any constant prefix if there is one
-     * configured.
+     * Provides an (absolute URL) to an optional new user registration page
+     * (accessible only if activated). It is relative to document root without
+     * any constant prefix if there is one configured.
      *
-     * XXX This implementation starts with a leading slash and ends with a slash. In previous
-     * configurations String urls began without a slash in order to be able to provide a full URL
-     * which also contains the context part. Since version 5.2 the context part is handled by (new)
-     * dispatcher. The leading slash it API change! It's impacts have to be checked. (2011-02)
+     * XXX This implementation starts with a leading slash and ends with a
+     * slash. In previous configurations String urls began without a slash in
+     * order to be able to provide a full URL which also contains the context
+     * part. Since version 5.2 the context part is handled by (new) dispatcher.
+     * The leading slash it API change! It's impacts have to be checked.
+     * (2011-02)
      *
      * @return url to new user registration page as String
      */
@@ -333,13 +373,16 @@ public class LoginServlet extends BebopApplicationServlet {
     }
 
     /**
-     * Provides an absolute URL (leading slash) for a password recovery page. It is relative to
-     * document root without any constant prefix if there is one configured.
+     * Provides an absolute URL (leading slash) for a password recovery page. It
+     * is relative to document root without any constant prefix if there is one
+     * configured.
      *
-     * XXX This implementation starts with a leading slash and ends with a slash. In previous
-     * configurations String urls began without a slash in order to be able to provide a full URL
-     * which also contains the context part. Since version 5.2 the context part is handled by (new)
-     * dispatcher. The leading slash it API change! It's impacts have tp be checked. (2011-02)
+     * XXX This implementation starts with a leading slash and ends with a
+     * slash. In previous configurations String urls began without a slash in
+     * order to be able to provide a full URL which also contains the context
+     * part. Since version 5.2 the context part is handled by (new) dispatcher.
+     * The leading slash it API change! It's impacts have tp be checked.
+     * (2011-02)
      *
      * @return url String for new user registration page as String
      */
@@ -348,13 +391,16 @@ public class LoginServlet extends BebopApplicationServlet {
     }
 
     /**
-     * Provides an absolute URL (leading slash) for a cookie explanation page. It is relative to
-     * document root without any constant prefix if there is one configured.
+     * Provides an absolute URL (leading slash) for a cookie explanation page.
+     * It is relative to document root without any constant prefix if there is
+     * one configured.
      *
-     * XXX This implementation starts with a leading slash and ends with a slash. In previous
-     * configurations String urls began without a slash in order to be able to provide a full URL
-     * which also contains the context part. Since version 5.2 the context part is handled by (new)
-     * dispatcher. The leading slash it API change! It's impacts have tp be checked. (2011-02)
+     * XXX This implementation starts with a leading slash and ends with a
+     * slash. In previous configurations String urls began without a slash in
+     * order to be able to provide a full URL which also contains the context
+     * part. Since version 5.2 the context part is handled by (new) dispatcher.
+     * The leading slash it API change! It's impacts have tp be checked.
+     * (2011-02)
      *
      * @return url String for new user registration page as String
      */
@@ -363,13 +409,16 @@ public class LoginServlet extends BebopApplicationServlet {
     }
 
     /**
-     * Provides an absolute URL (leading slash) for a login expired info page. It is relative to
-     * document root without any constant prefix if there is one configured.
+     * Provides an absolute URL (leading slash) for a login expired info page.
+     * It is relative to document root without any constant prefix if there is
+     * one configured.
      *
-     * XXX This implementation starts with a leading slash and ends with a slash. In previous
-     * configurations String urls began without a slash in order to be able to provide a full URL
-     * which also contains the context part. Since version 5.2 the context part is handled by (new)
-     * dispatcher. The leading slash it API change! It's impacts have tp be checked. (2011-02)
+     * XXX This implementation starts with a leading slash and ends with a
+     * slash. In previous configurations String urls began without a slash in
+     * order to be able to provide a full URL which also contains the context
+     * part. Since version 5.2 the context part is handled by (new) dispatcher.
+     * The leading slash it API change! It's impacts have tp be checked.
+     * (2011-02)
      *
      * @return url String for new user registration page as String
      */
@@ -378,13 +427,16 @@ public class LoginServlet extends BebopApplicationServlet {
     }
 
     /**
-     * Provides an absolute URL (leading slash) for the system logout page. It is relative to
-     * document root without any constant prefix if there is one configured.
+     * Provides an absolute URL (leading slash) for the system logout page. It
+     * is relative to document root without any constant prefix if there is one
+     * configured.
      *
-     * XXX This implementation starts with a leading slash and ends with a slash. In previous
-     * configurations String urls began without a slash in order to be able to provide a full URL
-     * which also contains the context part. Since version 5.2 the context part is handled by (new)
-     * dispatcher. The leading slash it API change! It's impacts have tp be checked. (2011-02)
+     * XXX This implementation starts with a leading slash and ends with a
+     * slash. In previous configurations String urls began without a slash in
+     * order to be able to provide a full URL which also contains the context
+     * part. Since version 5.2 the context part is handled by (new) dispatcher.
+     * The leading slash it API change! It's impacts have tp be checked.
+     * (2011-02)
      *
      * @return URL for logout page as String
      */
