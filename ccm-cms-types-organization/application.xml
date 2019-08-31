@@ -2,7 +2,7 @@
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
 name="ccm-cms-types-organization"
 prettyName="Simple contenttype which exposed GenericOrganizationalUnit"
-version = "6.6.7"
+version = "6.7.1"
 release="1"
 webapp="ROOT">
 

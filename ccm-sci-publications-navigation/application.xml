@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
                  name="ccm-sci-publications-navigation"
-                 version="6.6.0"
+                 version="6.7.0"
                  release="1"
                  webapp="ROOT">
     

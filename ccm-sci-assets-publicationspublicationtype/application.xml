@@ -2,7 +2,7 @@
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
                  name="ccm-sci-assets-publicationspublicationtype"
                  prettyName="ScientificCMS Publications module providing an asset for describing different types of publication of a publication, e.g. ebook"
-                 version="6.6.5"
+                 version="6.7.1"
                  release="1"
                  webapp="ROOT">
     
