@@ -16,6 +16,16 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
+                    <label>webapps</label>
+                    <type>doc_root</type>
+                    <location>runtime/webapps</location>
+                </source-folder>
+                <source-folder>
+                    <label>WEB-INF</label>
+                    <type>web_inf</type>
+                    <location>runtime/webapps/WEB-INF</location>
+                </source-folder>
+                <source-folder>
                     <label>ccm-core (Source)</label>
                     <type>java</type>
                     <location>ccm-core/src</location>
@@ -693,16 +703,6 @@
                     <location>ccm-sci-types-project/src</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
-                <source-folder>
-                    <label>webapps</label>
-                    <type>doc_root</type>
-                    <location>runtime/webapps</location>
-                </source-folder>
-                <source-folder>
-                    <label>WEB-INF</label>
-                    <type>web_inf</type>
-                    <location>runtime/webapps/WEB-INF</location>
-                </source-folder>
             </folders>
             <ide-actions>
                 <action name="build">
@@ -1172,7 +1172,7 @@
                     </source-folder>
                     <source-folder style="packages">
                         <label>ccm-sci-publicationscvsexporter (Source)</label>
-                        <location>ccm-sci-publicationscsvexporter/src</location>
+                        <location>ccm-sci-publicationscvsexporter/src</location>
                     </source-folder>
                     <source-folder style="packages">
                         <label>ccm-sci-publicationscvsimporter (Source)</label>
@@ -1330,7 +1330,7 @@
                 <package-root>ccm-sci-types-institute/src</package-root>
                 <package-root>ccm-sci-types-member/src</package-root>
                 <package-root>ccm-sci-types-project/src</package-root>
-                <classpath mode="compile">ccm-core/lib/log4j-1.2-api-2.11.1.jar:ccm-core/lib/log4j-api-2.11.1.jar:ccm-core/lib/log4j-core-2.11.1.jar:ccm-core/lib/log4j-web-2.11.1.jar:ccm-core/lib/mail.jar:ccm-core/lib/jsoup.jar:ccm-core/lib/commons-beanutils.jar:ccm-core/lib/commons-cli-1.0.jar:ccm-core/lib/commons-collections-3.0.jar:ccm-core/lib/commons-codec-1.3.jar:ccm-core/lib/commons-fileupload-1.1.1.jar:ccm-core/lib/commons-io-1.3.1.jar:ccm-core/lib/commons-lang-2.1.jar:ccm-core/lib/commons-primitives-1.0.jar:ccm-core/lib/xercesImpl.jar:ccm-core/lib/jakarta-oro-2.0.8.jar:ccm-core/lib/Tidy.jar:ccm-core/lib/imgscalr-lib-4.3-SNAPSHOT.jar:ccm-core/lib/jdom.jar:ccm-core/lib/jdxslt.jar:ccm-core/lib/lucene-core-2.4.0.jar:ccm-core/lib/saxon9h2.jar:ccm-core/lib/poi-2.5-final-20040302.jar:ccm-core/lib/pdfbox-1.4.0.jar:ccm-core/lib/tm-extractors-0.4.jar:ccm-core/lib/bcprov-jdk16-144.jar:ccm-cms/lib/jai_codec.jar:ccm-cms/lib/jai_core.jar:ccm-cms/lib/mlibwrapper_jai.jar:ccm-ldn-search/lib/axis.jar:ccm-ldn-search/lib/jaxrpc.jar:ccm-ldn-search/lib/jobo.jar:ccm-ldn-terms/lib/commons-digester.jar:ccm-ldn-terms/lib/jena.jar:ccm-ldn-terms/lib/snowball.jar:ccm-ldn-terms/lib/weka-3.5.5.jar:ccm-ldn-terms/lib/xstream-1.3.1.jar:ccm-formbuilder-pdf/lib/fop.jar:ccm-sci-publications/lib/jbibtex-1.0.2.jar:ccm-themedirector/lib/jlessc-1.6.jar:tools-ng/devel/lib/ojdbc14.jar:tools-ng/devel/lib/servlet-api.jar:tools-ng/devel/lib/jsp-api.jar:tools-ng/devel/lib/portlet-2.0.jar:ccm-themedirector/lib/jlessc-1.5.jar</classpath>
+                <classpath mode="compile">ccm-core/lib/activation.jar:ccm-core/lib/aspectjrt-1.0.5.jar:ccm-core/lib/bcmail-jdk15-1.44.jar:ccm-core/lib/bcprov-jdk16-144.jar:ccm-core/lib/commons-beanutils.jar:ccm-core/lib/commons-cli-1.0.jar:ccm-core/lib/commons-codec-1.3.jar:ccm-core/lib/commons-collections-3.0.jar:ccm-core/lib/commons-fileupload-1.1.1.jar:ccm-core/lib/commons-httpclient-2.0.2.jar:ccm-core/lib/commons-io-1.3.1.jar:ccm-core/lib/commons-lang-2.1.jar:ccm-core/lib/commons-logging-1.1.1.jar:ccm-core/lib/commons-primitives-1.0.jar:ccm-core/lib/fontbox-1.4.0.jar:ccm-core/lib/i18n.jar:ccm-core/lib/imgscalr-lib-4.3-SNAPSHOT.jar:ccm-core/lib/jackson-annotations-2.4.5.jar:ccm-core/lib/jackson-core-2.4.5.jar:ccm-core/lib/jackson-databind-2.4.5.jar:ccm-core/lib/jackson-dataformat-xml-2.4.5.jar:ccm-core/lib/jackson-datatype-jdk8-2.4.5.jar:ccm-core/lib/jackson-module-jaxb-annotations-2.4.5.jar:ccm-core/lib/jakarta-oro-2.0.8.jar:ccm-core/lib/java-saml-2.4.0.jar:ccm-core/lib/jdom.jar:ccm-core/lib/jempbox-1.4.0.jar:ccm-core/lib/jsoup.jar:ccm-core/lib/log4j-1.2-api-2.11.1.jar:ccm-core/lib/log4j-api-2.11.1.jar:ccm-core/lib/log4j-core-2.11.1.jar:ccm-core/lib/log4j-web-2.11.1.jar:ccm-core/lib/lucene-core-2.4.0.jar:ccm-core/lib/mail.jar:ccm-core/lib/pdfbox-1.4.0.jar:ccm-core/lib/poi-2.5-final-20040302.jar:ccm-core/lib/postgresql-8.4-704.jdbc3.jar:ccm-core/lib/resolver.jar:ccm-core/lib/saxon9he.jar:ccm-core/lib/serializer.jar:ccm-core/lib/Tidy.jar:ccm-core/lib/tm-extractors-0.4.jar:ccm-core/lib/woodstox.jar:ccm-core/lib/xalan.jar:ccm-core/lib/xercesImpl.jar:ccm-core/lib/xml-apis.jar:ccm-cms/lib/jai_codec.jar:ccm-cms/lib/jai_core.jar:ccm-cms/lib/javax.servlet.jsp.jstl-1.2.1.jar:ccm-cms/lib/javax.servlet.jsp.jstl-api-1.2.1.jar:ccm-cms/lib/mlibwrapper_jai.jar:ccm-ldn-search/lib/axis.jar:ccm-ldn-search/lib/commons-discovery.jar:ccm-ldn-search/lib/jaxrpc.jar:ccm-ldn-search/lib/jobo.jar:ccm-ldn-search/lib/saaj.jar:ccm-ldn-search/lib/tt-bytecode.jar:ccm-ldn-search/lib/wsdl4j.jar:ccm-ldn-terms/lib/commons-collections.jar:ccm-ldn-terms/lib/commons-digester.jar:ccm-ldn-terms/lib/iri.jar:ccm-ldn-terms/lib/jena.jar:ccm-ldn-terms/lib/snowball.jar:ccm-ldn-terms/lib/weka-3.5.5.jar:ccm-ldn-terms/lib/xpp3-1.1.4c.jar:ccm-ldn-terms/lib/xstream-1.3.1.jar:ccm-formbuilder-pdf/lib/avalon-framework-cvs-20020806.jar:ccm-formbuilder-pdf/lib/batik.jar:ccm-formbuilder-pdf/lib/fop.jar:ccm-sci-publications/lib/jbibtex-1.0.2.jar:ccm-themedirector/lib/freemarker.jar:ccm-themedirector/lib/jlessc-1.6.jar:tools-ng/devel/lib/jsp-api.jar:tools-ng/devel/lib/ojdbc14.jar:tools-ng/devel/lib/portlet-2.0.jar:tools-ng/devel/lib/servlet-api.jar</classpath>
                 <source-level>1.8</source-level>
             </compilation-unit>
         </java-data>
@@ -1356,7 +1356,6 @@
             <web-module>
                 <doc-root>runtime/webapps</doc-root>
                 <classpath>tools-ng/devel/lib/servlet-api.jar:tools-ng/devel/lib/jsp-api</classpath>
-                <context-path/>
                 <j2ee-spec-level>1.5</j2ee-spec-level>
             </web-module>
         </web-data>
