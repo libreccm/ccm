@@ -30,8 +30,10 @@
       int maxItems = Navigation.getConfig().getIndexPageMaxItems();
     </jsp:scriptlet>
 
-    <define:page name="defaultItemPage" application="navigation"
-        title="Navigation" cache="true">
+    <define:page name="defaultItemPage" 
+                 application="navigation"
+                 title="Navigation" 
+                 cache="true">
 
         <define:component name="greetingItem"
                           classname="com.arsdigita.navigation.ui.GreetingItem"/>
