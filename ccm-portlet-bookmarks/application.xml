@@ -2,7 +2,7 @@
 
 <ccm:application name="ccm-portlet-bookmarks"
   prettyName="Bookmarks Portlet"
-  version="6.6.0"
+  version="6.7.0"
   release="1"
   webapp="ROOT"
   xmlns:ccm="http://ccm.redhat.com/ccm-project">

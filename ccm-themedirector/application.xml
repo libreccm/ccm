@@ -2,8 +2,8 @@
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
   name="ccm-themedirector"
   prettyName="Theme Director"
-  version="6.6.3"
-  release="2"
+  version="6.7.1"
+  release="1"
   webapp="ROOT">
   <ccm:dependencies>
     <ccm:requires name="ccm-core" version="6.6.0" relation="ge"/>

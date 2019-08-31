@@ -2,7 +2,7 @@
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
                  name="ccm-cms-tinymce"
                  prettyName="TinyMCE for ccm-cms"
-                 version = "6.6.9"
+                 version = "6.7.1"
                  release="1"
                  webapp="ROOT">
 

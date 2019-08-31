@@ -2,7 +2,7 @@
 
 <ccm:application name="ccm-faq"
   prettyName="Red Hat Enterprise FAQ"
-  version="6.6.0"
+  version="6.7.0"
   xmlns:ccm="http://ccm.redhat.com/ccm-project"
   webapp="ROOT"
   release="1">

@@ -2,7 +2,7 @@
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
   name="ccm-cms-types-simpleaddress"
   prettyName="Simple Address Red Hat CCM Content Type"
-  version="6.6.1"
+  version="6.7.1"
   release="1"
   webapp="ROOT">
   <ccm:dependencies>

@@ -2,7 +2,7 @@
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
                  name="ccm-sci-publications-dramaticarts"
                  prettyName="SciPublications Dramatic Arts"
-                 version="6.6.3"
+                 version="6.7.0"
                  release="1"
                  webapp="ROOT"> 
     <ccm:dependencies>

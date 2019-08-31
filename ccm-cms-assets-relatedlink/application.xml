@@ -2,7 +2,7 @@
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
   name="ccm-cms-assets-relatedlink"
   prettyName="Red Hat CMS Content Asset Related Link"
-  version="6.6.1"
+  version="6.7.1"
   release="1"
   webapp="ROOT">
   <ccm:dependencies>
