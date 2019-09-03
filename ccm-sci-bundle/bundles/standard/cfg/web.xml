@@ -14,7 +14,7 @@
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 
-   <display-name>Scientific CMS (standard bundle)</display-name> 
+  <display-name>Scientific CMS (standard bundle)</display-name> 
   <description>Content and Collaboration Management for Scientific Institutions</description>
 
   <!-- path and filename of the log4j2 user accessible config file
