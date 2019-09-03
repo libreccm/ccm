@@ -1,3 +1,11 @@
+<!--
+   A variation of the default item page ordering the object list decending by
+   publication date
+
+   ##Title: Default Rrecent Item Page
+   ##Descr: Index Page ordered with most recent items first
+   ##Path : /templates/ccm-navigation/navigation/def-recent.jsp
+-->
 <jsp:root 
   xmlns:jsp="http://java.sun.com/JSP/Page" 
   xmlns:define="/WEB-INF/bebop-define.tld"

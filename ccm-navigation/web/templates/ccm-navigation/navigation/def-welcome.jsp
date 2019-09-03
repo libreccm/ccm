@@ -1,10 +1,8 @@
 <!-- 
-   The JSP template for the welcome / start page using navigation 
+   Default JSP template for the welcome / start page using navigation 
 
    ##Title: Default Content Items Page 
-   ##Descr: Site start (landing) page created by navigationNavigation ordering 
-            items in ascending order, manually adjustable and adding News and 
-            Events lists
+   ##Descr: Adds to a standard item list (ascending order, manually adjustable) a news and an events list          
    ##Path : /templates/ccm-navigation/navigation/def-welcome.jsp
 -->
 <jsp:root 
