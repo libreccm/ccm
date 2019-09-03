@@ -1,11 +1,11 @@
 <!--
-   Template to generate a list of events
+   Template to generate a list of events, starting with the next event and orderd
+   by ascending start date
 
    ##Title: Events Page
-   ##Descr: Generates an event list ordering items in ??? order.
+   ##Descr: Generates an event list ordering items by start date from current date.
    ##Path : /templates/ccm-navigation/navigation/def-events.jsp
 -->
-
 <jsp:root 
   xmlns:jsp="http://java.sun.com/JSP/Page" 
   xmlns:define="/WEB-INF/bebop-define.tld"

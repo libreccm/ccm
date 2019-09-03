@@ -1,3 +1,12 @@
+<!--
+   Content item page (index page) provided by ccm-navigation package,
+   ordering the object list in a A to Z list and adding a A to Z 
+   paginator
+
+   ##Title: Default A-Z Items List 
+   ##Descr: List of items ordered by title and paginated as A-Z
+   ##Path : /templates/ccm-navigation/navigation/def-atoz.jsp
+-->
 <jsp:root 
   xmlns:jsp="http://java.sun.com/JSP/Page" 
   xmlns:define="/WEB-INF/bebop-define.tld"
