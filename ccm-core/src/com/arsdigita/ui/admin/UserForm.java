@@ -65,6 +65,7 @@ class UserForm extends Form implements FormValidationListener, AdminConstants {
     protected TextField m_url;
     protected TextField m_screenName;
     protected EmailList m_emailList;
+    protected TextField m_ssoLogin;
     private final PasswordValidationListener m_pwListener;
     private final NotEmptyValidationListener m_notNullListener;
     private final SecurityConfig securityConfig = SecurityConfig.getConfig();
@@ -77,31 +78,30 @@ class UserForm extends Form implements FormValidationListener, AdminConstants {
 
         addValidationListener(this);
 
-
         // Bug #163373 add length checking for first/last names.  We
         // do this with both maximum length parameters in the user/add
         // form and with validation of the value that come in for
         // processing.
-
         int max = 60;
 
         m_firstName = new TextField(
-                new StringParameter(USER_FORM_INPUT_FIRST_NAME));
+            new StringParameter(USER_FORM_INPUT_FIRST_NAME));
         m_firstName.setMaxLength(max);
         m_firstName.setSize(20);
         m_firstName.addValidationListener(new NotEmptyValidationListener());
         m_firstName.addValidationListener(
-                new StringLengthValidationListener(max));
+            new StringLengthValidationListener(max));
 
         add(USER_FORM_LABEL_FIRST_NAME);
         add(m_firstName);
 
         m_lastName = new TextField(
-                new StringParameter(USER_FORM_INPUT_LAST_NAME));
+            new StringParameter(USER_FORM_INPUT_LAST_NAME));
         m_lastName.setMaxLength(max);
         m_lastName.setSize(25);
         m_lastName.addValidationListener(new NotEmptyValidationListener());
-        m_lastName.addValidationListener(new StringLengthValidationListener(max));
+        m_lastName
+            .addValidationListener(new StringLengthValidationListener(max));
 
         add(USER_FORM_LABEL_LAST_NAME);
         add(m_lastName);
@@ -113,14 +113,14 @@ class UserForm extends Form implements FormValidationListener, AdminConstants {
 
         // Password confirmation
         m_confirmPassword = new Password(new StringParameter(
-                USER_FORM_INPUT_PASSWORD_CONFIRMATION));
+            USER_FORM_INPUT_PASSWORD_CONFIRMATION));
 
         add(USER_FORM_LABEL_PASSWORD_CONFIRMATION);
         add(m_confirmPassword);
 
         // Password question
-        m_question =
-        new TextField(new StringParameter(USER_FORM_INPUT_QUESTION));
+        m_question
+        = new TextField(new StringParameter(USER_FORM_INPUT_QUESTION));
         m_question.setSize(50);
 
         if (securityConfig.getEnableQuestion()) {
@@ -139,7 +139,7 @@ class UserForm extends Form implements FormValidationListener, AdminConstants {
 
         // Primary email address
         m_primaryEmail = new TextField(new EmailParameter(
-                USER_FORM_INPUT_PRIMARY_EMAIL));
+            USER_FORM_INPUT_PRIMARY_EMAIL));
         m_primaryEmail.addValidationListener(new NotEmptyValidationListener());
         m_primaryEmail.setSize(50);
         add(USER_FORM_LABEL_PRIMARY_EMAIL);
@@ -151,20 +151,25 @@ class UserForm extends Form implements FormValidationListener, AdminConstants {
         add(m_emailList);
 
         m_additionalEmail = new TextField(new EmailParameter(
-                USER_FORM_INPUT_ADDITIONAL_EMAIL));
+            USER_FORM_INPUT_ADDITIONAL_EMAIL));
         m_additionalEmail.setSize(50);
         add(USER_FORM_LABEL_ADDITIONAL_EMAIL);
         add(m_additionalEmail);
 
         // Screen name
         m_screenName = new TextField(new StringParameter(
-                USER_FORM_INPUT_SCREEN_NAME));
+            USER_FORM_INPUT_SCREEN_NAME));
         if (Kernel.getConfig().screenNameIsPrimaryIdentifier()) {
             m_screenName.addValidationListener(new NotEmptyValidationListener());
         }
         add(USER_FORM_LABEL_SCREEN_NAME);
         add(m_screenName);
 
+        m_ssoLogin = new TextField(new StringParameter(USER_FORM_INPUT_SSO));
+        m_ssoLogin.setSize(50);
+        add(USER_FORM_LABEL_SSO);
+        add(m_ssoLogin);
+        
         // URL
         m_url = new TextField(new URLParameter(USER_FORM_INPUT_URL));
         m_url.setSize(50);
@@ -179,14 +184,14 @@ class UserForm extends Form implements FormValidationListener, AdminConstants {
     }
 
     /**
-     * Validate the form. Verifies that the password and
-     * password-confirm fields match.  If not it adds an error to the
-     * password-confirm field.  Also verifies that primary email
-     * address and screen name are unique amoung all users.
+     * Validate the form. Verifies that the password and password-confirm fields
+     * match. If not it adds an error to the password-confirm field. Also
+     * verifies that primary email address and screen name are unique amoung all
+     * users.
      */
     @Override
     public void validate(FormSectionEvent event)
-            throws FormProcessException {
+        throws FormProcessException {
         PageState ps = event.getPageState();
         FormData data = event.getFormData();
         HttpServletRequest req = ps.getRequest();
@@ -200,22 +205,22 @@ class UserForm extends Form implements FormValidationListener, AdminConstants {
         if (userID == null) {
 
             m_pwListener.validate(
-                    new ParameterEvent(event.getSource(),
-                                       data.getParameter(
-                    USER_FORM_INPUT_PASSWORD)));
+                new ParameterEvent(event.getSource(),
+                                   data.getParameter(
+                                       USER_FORM_INPUT_PASSWORD)));
             m_notNullListener.validate(
-                    new ParameterEvent(event.getSource(),
-                                       data.getParameter(
-                    USER_FORM_INPUT_PASSWORD_CONFIRMATION)));
+                new ParameterEvent(event.getSource(),
+                                   data.getParameter(
+                                       USER_FORM_INPUT_PASSWORD_CONFIRMATION)));
             String password = (String) m_password.getValue(ps);
             String confirm = (String) m_confirmPassword.getValue(ps);
 
             if (!StringUtils.emptyString(password) && !StringUtils.emptyString(
-                    confirm)) {
+                confirm)) {
                 if (!password.equals(confirm)) {
                     data.addError(USER_FORM_INPUT_PASSWORD_CONFIRMATION,
                                   (String) USER_FORM_ERROR_PASSWORD_NOT_MATCH.
-                            localize(req));
+                                      localize(req));
                 }
             }
         }
@@ -229,16 +234,16 @@ class UserForm extends Form implements FormValidationListener, AdminConstants {
                 if (answer == null || answer.trim().length() == 0) {
                     data.addError(USER_FORM_INPUT_ANSWER,
                                   (String) USER_FORM_ERROR_ANSWER_NULL.localize(
-                            req));
+                                      req));
                 }
             } else {
                 // Check for edit form
                 if (answer != null && answer.length() > 0 && answer.trim().
-                        length()
-                                                             == 0) {
+                    length()
+                                                                 == 0) {
                     data.addError(USER_FORM_INPUT_ANSWER,
                                   (String) USER_FORM_ERROR_ANSWER_NULL.localize(
-                            req));
+                                      req));
                 }
             }
         }
@@ -247,7 +252,7 @@ class UserForm extends Form implements FormValidationListener, AdminConstants {
          * Verify that primary email and screen name are unique
          */
         DataQuery query = SessionManager.getSession().retrieveQuery(
-                "com.arsdigita.kernel.RetrieveUsers");
+            "com.arsdigita.kernel.RetrieveUsers");
         query.setParameter("excludeGroupId", new BigDecimal(0));
 
         String email = null;
@@ -258,7 +263,7 @@ class UserForm extends Form implements FormValidationListener, AdminConstants {
         String screenName = (String) m_screenName.getValue(ps);
 
         Filter filter = query.addFilter(
-                "primaryEmail = :email or screenName = :sn");
+            "primaryEmail = :email or screenName = :sn");
         filter.set("email", email);
         filter.set("sn", screenName);
 
@@ -268,21 +273,21 @@ class UserForm extends Form implements FormValidationListener, AdminConstants {
         }
 
         /**
-         * If this query returns with any rows we have a duplicate
-         * screen name, email address, or both.  Check the results and
-         * produce appropriate error messages.
+         * If this query returns with any rows we have a duplicate screen name,
+         * email address, or both. Check the results and produce appropriate
+         * error messages.
          */
         while (query.next()) {
             if (screenName != null && screenName.equals(query.get("screenName"))) {
                 data.addError(USER_FORM_INPUT_SCREEN_NAME,
                               (String) USER_FORM_ERROR_SCREEN_NAME_NOT_UNIQUE.
-                        localize(req));
+                                  localize(req));
             }
 
             if (email != null && email.equals(query.get("primaryEmail"))) {
                 data.addError(USER_FORM_INPUT_PRIMARY_EMAIL,
                               (String) USER_FORM_ERROR_PRIMARY_EMAIL_NOT_UNIQUE.
-                        localize(req));
+                                  localize(req));
 
             }
         }
@@ -319,4 +324,5 @@ class UserForm extends Form implements FormValidationListener, AdminConstants {
             m_answer.setVisible(state, isVisible);
         }
     }
+
 }

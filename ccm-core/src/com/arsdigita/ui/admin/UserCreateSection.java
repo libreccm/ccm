@@ -118,6 +118,8 @@ class UserCreateSection extends UserForm implements AdminConstants, Resettable {
             // Save user authentication credentials.
             final UserAuthentication auth = UserAuthentication.createForUser(user);
 
+            auth.setSSOlogin((String) m_ssoLogin.getValue(state));
+            
             auth.setPassword((String) m_password.getValue(state));
             if (securityConfig.getEnableQuestion()) {
                 auth.setPasswordQuestion((String) m_question.getValue(state));

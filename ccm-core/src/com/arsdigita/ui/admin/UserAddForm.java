@@ -125,6 +125,8 @@ class UserAddForm extends UserForm
             auth.setPasswordAnswer((String) m_answer.getValue(state));
         }
         auth.save();
+        
+        auth.setSSOlogin((String) m_ssoLogin.getValue(state));
 
         // Switch to browse tab.
         m_adminPanel.setTab(USER_TAB_BROWSE_INDEX, state);

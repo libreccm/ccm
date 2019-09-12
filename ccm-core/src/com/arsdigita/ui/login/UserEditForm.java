@@ -37,40 +37,42 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.Hidden;
 import com.arsdigita.bebop.parameters.URLParameter;
 import com.arsdigita.util.UncheckedWrapperException;
+import com.arsdigita.kernel.UserAuthentication;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 /**
- * Edits a user.  If returnURL is passed in to the form, then redirects to
- * that URL; otherwise redirects to the user workspace.
+ * Edits a user. If returnURL is passed in to the form, then redirects to that
+ * URL; otherwise redirects to the user workspace.
  *
  *
  * @author Sameer Ajmani
  *
  * @version $Id: UserEditForm.java 738 2005-09-01 12:36:52Z sskracic $
  *
- **/
+ *
+ */
 public class UserEditForm extends UserForm
-    implements FormProcessListener
-{
+    implements FormProcessListener {
 
-    private static final Logger s_log =
-        Logger.getLogger(UserEditForm.class);
+    private static final Logger s_log = Logger.getLogger(UserEditForm.class);
 
-    private UserAuthenticationListener m_listener =
-        new UserAuthenticationListener();
+    private UserAuthenticationListener m_listener
+                                       = new UserAuthenticationListener();
     private Hidden m_returnURL;
     private RequestLocal m_user = new RequestLocal() {
-            public Object initialValue(PageState ps) {
-                User result;
-                try {
-                    result = User.retrieve(m_listener.getUser(ps).getOID());
-                } catch (DataObjectNotFoundException e) {
-                    result = null;
-                }
-                return result;
+
+        public Object initialValue(PageState ps) {
+            User result;
+            try {
+                result = User.retrieve(m_listener.getUser(ps).getOID());
+            } catch (DataObjectNotFoundException e) {
+                result = null;
             }
-        };
+            return result;
+        }
+
+    };
 
     public UserEditForm() {
         super("user-edit", new ColumnPanel(2), false);
@@ -78,8 +80,8 @@ public class UserEditForm extends UserForm
         addProcessListener(this);
 
         // export return URL
-        m_returnURL = new Hidden(new URLParameter
-                                 (LoginHelper.RETURN_URL_PARAM_NAME));
+        m_returnURL = new Hidden(new URLParameter(
+            LoginHelper.RETURN_URL_PARAM_NAME));
         m_returnURL.setPassIn(true);
         add(m_returnURL);
     }
@@ -96,7 +98,7 @@ public class UserEditForm extends UserForm
 
     public void process(FormSectionEvent event)
         throws FormProcessException {
-        FormData  data  = event.getFormData();
+        FormData data = event.getFormData();
         PageState state = event.getPageState();
 
         User user;
@@ -120,15 +122,13 @@ public class UserEditForm extends UserForm
         //    user.addEmailAddress
         //        (new EmailAddress(additional.getAddress()));
         //}
-
         // Bug #166274: Unexpected behavior when editing
         // primary email.
         //
         // Check to see if the primary email address has
-        // changed, and if so set it to the new value and
+        // changed, and if so set  it to the new value and
         // delete the association with the old.  If it
         // hasn't change don't do anything.
-
         EmailAddress oaddr = user.getPrimaryEmail();
         EmailAddress naddr = new EmailAddress(data.get(FORM_EMAIL).toString());
         if (!oaddr.equals(naddr)) {
@@ -139,8 +139,11 @@ public class UserEditForm extends UserForm
 
         user.save();
 
-        // redirect to workspace or return URL, if specified
+        final UserAuthentication auth = UserAuthentication.retrieveForUser(user);
+        auth.setSSOlogin((String) m_ssoLogin.getValue(state));
+        auth.save();
 
+        // redirect to workspace or return URL, if specified
         final HttpServletRequest req = state.getRequest();
 
 //      final String path = LegacyInitializer.getFullURL
@@ -151,4 +154,5 @@ public class UserEditForm extends UserForm
 
         throw new ReturnSignal(req, fallback);
     }
+
 }

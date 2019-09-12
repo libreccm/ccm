@@ -75,6 +75,7 @@ public abstract class UserForm extends Form
     protected TextField m_question;
     protected TextField m_answer;
     protected TextField m_url;
+    protected TextField m_ssoLogin;
 
     protected Label m_securitySectionHeader = new Label(LoginHelper
             .getMessage("login.userNewForm.securitySectionHeader"), false);

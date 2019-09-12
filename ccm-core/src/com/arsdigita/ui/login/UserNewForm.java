@@ -144,6 +144,7 @@ public class UserNewForm extends UserForm
         final String answer = (String)m_answer.getValue(state);
         final String firstName = (String)m_firstName.getValue(state);
         final String lastName = (String)m_lastName.getValue(state);
+        final String ssoLogin = (String) m_ssoLogin.getValue(state);
         String sn = null;
         if (!Kernel.getConfig().emailIsPrimaryIdentifier()) {
             sn = (String)m_screenName.getValue(state);
@@ -183,6 +184,7 @@ public class UserNewForm extends UserForm
                     auth.setPassword(password);
                     auth.setPasswordQuestion(question);
                     auth.setPasswordAnswer(answer);
+                    auth.setSSOlogin(ssoLogin);
                     auth.save();
                 } catch (PersistenceException e) {
                     // problem with creating new User or retrieving

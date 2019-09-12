@@ -25,6 +25,7 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.kernel.EmailAddress;
 import com.arsdigita.kernel.PersonName;
+import com.arsdigita.kernel.UserAuthentication;
 import com.arsdigita.kernel.User;
 import javax.mail.internet.InternetAddress;
 import org.apache.log4j.Logger;
@@ -81,6 +82,9 @@ class UserEditForm extends UserForm
         }
 
         m_screenName.setValue(state, user.getScreenName());
+        
+        final UserAuthentication auth = UserAuthentication.retrieveForUser(user);
+        m_ssoLogin.setValue(state, auth.getSSOlogin());
 
         USER_FORM_LABEL_ADDITIONAL_EMAIL_LIST.setVisible(state, true);
         m_emailList.setVisible(state, true);
@@ -139,6 +143,10 @@ class UserEditForm extends UserForm
 
         user.save();
 
+        final UserAuthentication auth = UserAuthentication.retrieveForUser(user);
+        auth.setSSOlogin((String) m_ssoLogin.getValue(state));
+        auth.save();
+        
         m_browsePane.displayUserInfoPanel(state);
     }
 }
