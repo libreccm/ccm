@@ -66,6 +66,7 @@ public class CategoriesObjectList extends AbstractComponent {
 
         final Category category = getCategory();
         final CategoryCollection subCategories = category.getChildren();
+        subCategories.sort(true);
 
         while (subCategories.next()) {
             generateCategoryListXml(listRootElem, subCategories.getCategory());
