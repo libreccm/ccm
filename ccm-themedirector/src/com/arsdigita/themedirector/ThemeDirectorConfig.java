@@ -98,7 +98,7 @@ public class ThemeDirectorConfig extends AbstractConfig {
     private final Parameter m_fileExtParam = new StringParameter(
         "themedirector.file_extensions",
         Parameter.REQUIRED,
-        "bmp css eot gif jpeg jpg js less otf png svg ttf woff woff2 xml xsl");
+        "bmp css eot ftl gif jpeg jpg js less otf png scss svg ttf woff woff2 xml xsl");
 
     /**
      * Specifies the less file(s) used as entry point(s) for compiling a managed

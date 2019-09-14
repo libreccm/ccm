@@ -2114,7 +2114,7 @@ public class Category extends ACSObject {
 
     private static DataCollection getRootCategoriesAssoc(ACSObject acsObj) {
         if (acsObj == null) {
-            throw new NullPointerException("acsObj");
+            throw new NullPointerException("provided acsObj is null");
         }
 
         DataCollection dc = SessionManager.getSession().retrieve(

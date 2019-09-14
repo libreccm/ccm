@@ -51,11 +51,16 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 /**
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
 public class FreeMarkerPresentationManager implements PresentationManager {
+
+    private static final Logger LOGGER = Logger
+        .getLogger(FreeMarkerPresentationManager.class);
 
     @Override
     public void servePage(final Document document,
@@ -72,7 +77,8 @@ public class FreeMarkerPresentationManager implements PresentationManager {
 
         final Node root = w3cDocument.getDocumentElement();
 
-        final String currentSiteName = Web.getConfig().getSiteName();
+        // final String currentSiteName = Web.getConfig().getSiteName();
+        final String currentSiteName = request.getServerName();
         Site subSite;
         try {
             subSite = Site.findByHostname(currentSiteName);
@@ -120,6 +126,11 @@ public class FreeMarkerPresentationManager implements PresentationManager {
         final InputStream manifestInputStream = servletContext
             .getResourceAsStream(themeManifestPath);
         if (manifestInputStream == null) {
+            LOGGER.error(String.format("No theme manifest found at path \"%s\". "
+                + "Falling back to \"%s\". Used sitename \"%s\".",
+                themeManifestPath,
+                PageTransformer.class.getName(),
+                currentSiteName));
             final PageTransformer pageTransformer = new PageTransformer();
             pageTransformer.servePage(document, request, response);
             return;

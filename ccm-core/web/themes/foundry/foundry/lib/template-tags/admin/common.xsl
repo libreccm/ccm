@@ -77,7 +77,11 @@
             </xsl:when>
             
             <xsl:when test="$data-tree/bebop:form">
-                <xsl:apply-templates select="$data-tree/bebop:form"/>
+                <xsl:apply-templates select="$data-tree/bebop:form" />
+            </xsl:when>
+
+            <xsl:when test="$data-tree/bebop:boxPanel">
+                <xsl:apply-templates select="$data-tree/bebop:boxPanel" />
             </xsl:when>
       
             <xsl:otherwise>

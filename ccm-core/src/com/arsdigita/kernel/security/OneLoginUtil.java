@@ -42,7 +42,7 @@ public final class OneLoginUtil {
         settings.put("onelogin.saml2.sp.entityid",
                      securityConfig.getOneLoginSaml2SpEntityId());
         settings.put("onelogin.saml2.sp.assertation.consumer_service.url",
-                     URL.there(request, LoginServlet.APPLICATION_NAME));
+                     URL.there(request, "/" + LoginServlet.APPLICATION_NAME));
         settings.put(
             "onelogin.saml2.sp.assertation_consumer_service.binding",
             securityConfig.getOneLoginSaml2SpAssertationConsumerServiceBinding());
