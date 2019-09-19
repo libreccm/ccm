@@ -16,12 +16,14 @@
 </#function>
 
 <#function getShortDescription data>
-    <#if (data["./instituteShortDescription"]?size > 0)>
+    <#if (data["./departmentShortDescription"]?size > 0)>
         <#return data["./departmentShortDescription"]>
     <#elseif (data["./shortDescription"]?size > 0)>
         <#return data["./shortDescription"]>
     <#elseif (data["./shortDesc"]?size > 0)>
         <#return data["./shortDesc"]>
+    <#elseif (data["./nav:attribute[@name='departmentShortDescription']"]?size > 0)>
+        <#return data["./nav:attribute[@name='departmentShortDescription']"]>
     </#if>
 </#function>
 
