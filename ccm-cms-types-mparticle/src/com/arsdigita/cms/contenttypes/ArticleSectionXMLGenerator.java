@@ -35,7 +35,8 @@ import javax.servlet.ServletException;
 /**
  *
  * @author Jens Pelzetter
- * @version $Id$
+ * @version $Id: ArticleSectionXMLGenerator.java 3268 2015-02-25 08:31:00Z jensp
+ * $
  */
 public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
 
@@ -48,11 +49,12 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
     public void generateXML(final ContentItem item,
                             final Element element,
                             final PageState state) {
-        final Element content = element.newChildElement("cms:articleSectionPanel",
-                                                        CMS.CMS_XML_NS);
+        final Element content = element.newChildElement(
+            "cms:articleSectionPanel",
+            CMS.CMS_XML_NS);
 
-        generateToc(item, content);
-        
+        generateToc(item, content, state);
+
         final XMLGenerator xmlGenerator = getXMLGenerator(state, item);
 
         final ArticleSection sections[] = getSections(item, state);
@@ -64,7 +66,8 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
         if (number.wantAllSections()) {
             content.addAttribute("pageNumber", "all");
         } else {
-            content.addAttribute("pageNumber", number.getPageNumber().toString());
+            content
+                .addAttribute("pageNumber", number.getPageNumber().toString());
         }
     }
 
@@ -91,26 +94,33 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
         return number;
     }
 
-    protected void generateToc(final ContentItem item, final Element parent) {
+    protected void generateToc(
+        final ContentItem item, final Element parent, final PageState state
+    ) {
         if (!(item instanceof MultiPartArticle)) {
             throw new IllegalArgumentException("Item is not a MultiPartArticle");
         }
-        
+
         final Element tocElem = parent.newChildElement("toc");
-        
+
         final MultiPartArticle mparticle = (MultiPartArticle) item;
         final ArticleSectionCollection sections = mparticle.getSections();
+        final PageNumber currentPage = getPageNumber(state);
         int sectionNr = 1;
         int pageNr = 1;
         ArticleSection section;
         Element sectionElem;
-        while(sections.next()) {
+        while (sections.next()) {
             section = sections.getArticleSection();
             sectionElem = tocElem.newChildElement("section");
             sectionElem.setCDATASection(section.getTitle());
-            sectionElem.addAttribute("link", String.format("?page=%d#section-%d",
-                                                           pageNr,
-                                                           sectionNr));
+            final String link;
+            if (currentPage.getPageNumber() == pageNr) {
+                link = String.format("#section-%d", pageNr);
+            } else {
+                link = String.format("?page=%d#section-%d", pageNr, sectionNr);
+            }
+            sectionElem.addAttribute("link", link);
             sectionElem.addAttribute("rank", section.getRank().toString());
             sectionNr++;
             if (section.isPageBreak()) {
@@ -118,12 +128,12 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
             }
         }
     }
-    
+
     protected void generateSectionXML(final PageState state,
                                       final Element parent,
                                       final ContentItem section,
                                       final XMLGenerator xmlGenerator) {
-        CMSExcursion excursion = new CMSExcursion() {
+        final CMSExcursion excursion = new CMSExcursion() {
 
             public void excurse() {
                 setContentItem(section);
@@ -187,7 +197,8 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
 
                     return new ArticleSection[]{};
                 }
-                ArticleSection section = (ArticleSection) sections.getArticleSection();
+                ArticleSection section = (ArticleSection) sections
+                    .getArticleSection();
 
                 if (section.isPageBreak()) {
                     current++;
@@ -216,15 +227,16 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
     }
 
     /**
-     * Try to get the section from the context if there isn't (eg if we are looking at an index item
-     * on a category), guess the section from the item
+     * Try to get the section from the context if there isn't (eg if we are
+     * looking at an index item on a category), guess the section from the item
      *
      * @param state
      * @param item
      *
      * @return
      */
-    protected XMLGenerator getXMLGenerator(final PageState state, final ContentItem item) {
+    protected XMLGenerator getXMLGenerator(final PageState state,
+                                           final ContentItem item) {
         ContentSection section = null;
         try {
             section = CMS.getContext().getContentSection();
@@ -265,6 +277,7 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
         }
 
     }
+
     // A parameter which is either an Integer number indicating
     // the position in the list of sections, or the string 'all'
     /*private class PageParameter extends ParameterModel {
@@ -298,5 +311,4 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
      return PageNumber.class;
      }
      }*/
-
 }
