@@ -116,7 +116,7 @@ public class ArticleSectionXMLGenerator implements ExtraXMLGenerator {
             sectionElem.setCDATASection(section.getTitle());
             final String link;
             if (currentPage.getPageNumber() == pageNr) {
-                link = String.format("#section-%d", pageNr);
+                link = String.format("#section-%d", sectionNr);
             } else {
                 link = String.format("?page=%d#section-%d", pageNr, sectionNr);
             }
