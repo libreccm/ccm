@@ -63,6 +63,10 @@
     <#return ContentItem.generateContentItemLink(sec)>
 </#function>
 
+<#function getMembers data>
+    <#return data["./member"]>
+</#function>
+
 <#function getProjects data>
     <#return data["."]>
 </#function>
