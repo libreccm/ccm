@@ -7,7 +7,7 @@
 
 <#function getRelatedLinks item linkListName="NONE">
 
-    <#return item["./links[./linkListName='${linkListName}']"]>
+    <#return item["./links[./linkListName='${linkListName}']"]?sort_by("linkOrder")>
 </#function>
 
 <#function getLinkType link>
@@ -25,7 +25,7 @@
 </#function>
 
 <#function getLinkDescription link>
-    <#return link["./linkDescription"]>
+    <#return link["./linkDescription"].@@text>
 </#function>
 
 <#function getLinkOrder link>

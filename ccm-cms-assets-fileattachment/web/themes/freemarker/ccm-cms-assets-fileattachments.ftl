@@ -6,7 +6,7 @@
 >
 
 <#function getFileAttachments item>
-    <#return item["./fileAttachments"]>
+    <#return item["./fileAttachments"]?sort_by("fileOrder")>
 </#function>
 
 <#function getFileType file>

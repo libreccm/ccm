@@ -25,6 +25,10 @@
     <#return item["./contacts/contact[./@contactType='${contactType}']/contactentries[./keyId='${entry}']/value"]>
 </#function>
 
+<#function getContact item contactType="commonContact">
+    <#return item["./contacts/contact[@contactType='${contactType}']"]>
+</#function>
+
 <#function getContactEntries item contactType="commonContact">
     <#return item["./contacts/contact[@contactType='${contactType}']/contactentries"]>
 </#function>

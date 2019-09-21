@@ -18,14 +18,14 @@
 </#function>
 
 <#function getContactEntry item keyId>
-    <#return item["./contactentries[keyId=${keyId}]"]>
+    <#return item["./contactentries[keyId='${keyId}']"]>
 </#function>
 
 <#function getContactEntryLabel entry>
-    <#return item["./key"]>
+    <#return entry["./key"]>
 </#function>
 
 <#function getContactEntryValue entry>
-    <#return item["./value"]>
+    <#return entry["./value"]>
 </#function>
 

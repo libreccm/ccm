@@ -68,7 +68,7 @@
 </#function>
 
 <#function getProjects data>
-    <#return data["."]>
+    <#return data["./project"]>
 </#function>
 
 <#function getProjectId project>

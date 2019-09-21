@@ -96,7 +96,7 @@
 </#function>
 
 <#function getItemLink item>
-    <#return item["./nav:path"]>
+    <#return item["./nav:path"].@@text>
 </#function>
 
 <#function getItemLead item>
