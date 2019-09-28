@@ -95,6 +95,8 @@ public class UserLoginForm
     private Password m_password;
     private boolean m_autoRegistrationOn;
     private final SecurityConfig securityConfig = SecurityConfig.getConfig();
+    
+    private boolean ssoSuccessful = false;
 
     /**
      * Default constructor delegates to a constructor which creates a LoginForm
@@ -230,6 +232,7 @@ public class UserLoginForm
             try {
                 Web.getUserContext().loginSSO();
                 s_log.info("loginSSO ok, now processing redirect_url");
+                ssoSuccessful = true;
                 process(event);
                 return;
             } catch (LoginException le) {
@@ -326,7 +329,8 @@ public class UserLoginForm
             throw new ReturnSignal(req, url);
         }
         //Cancel:
-        if (m_saveCancelSection.getCancelButton().isSelected(state)) {
+        if (m_saveCancelSection.getCancelButton().isSelected(state)
+            || ssoSuccessful) {
 
             //redirect the user to the place they came from.
             try {
@@ -339,6 +343,7 @@ public class UserLoginForm
                                                                          path),
                                              true);
                 }
+                ssoSuccessful = false;
                 throw new ReturnSignal(req, refererURI);
             } catch (URISyntaxException e) {
                 e.printStackTrace();

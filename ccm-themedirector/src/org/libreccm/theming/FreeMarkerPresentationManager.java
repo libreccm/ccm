@@ -72,7 +72,7 @@ public class FreeMarkerPresentationManager implements PresentationManager {
             pageTransformer.servePage(document, request, response);
             return;
         }
-        
+
         final org.w3c.dom.Document w3cDocument = document.getInternalDocument();
 
         final Node root = w3cDocument.getDocumentElement();
@@ -126,8 +126,9 @@ public class FreeMarkerPresentationManager implements PresentationManager {
         final InputStream manifestInputStream = servletContext
             .getResourceAsStream(themeManifestPath);
         if (manifestInputStream == null) {
-            LOGGER.error(String.format("No theme manifest found at path \"%s\". "
-                + "Falling back to \"%s\". Used sitename \"%s\".",
+            LOGGER.error(String.format(
+                "No theme manifest found at path \"%s\". "
+                    + "Falling back to \"%s\". Used sitename \"%s\".",
                 themeManifestPath,
                 PageTransformer.class.getName(),
                 currentSiteName));
@@ -239,6 +240,10 @@ public class FreeMarkerPresentationManager implements PresentationManager {
             new FormatDateTime(manifest.getDateFormats(),
                                new Locale(selectedLocale.getLanguage())));
 
+        configuration.setSharedVariable(
+            "sortAttachmentList", new SortAttachmentList()
+        );
+
         data.put("serverName", request.getServerName());
         data.put("serverPort", request.getServerPort());
         data.put("userAgent", request.getHeader("user-Agent"));
@@ -253,7 +258,7 @@ public class FreeMarkerPresentationManager implements PresentationManager {
         response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
         response.setContentType("text/html");
 
-        try (PrintWriter writer = response.getWriter()) {
+        try ( PrintWriter writer = response.getWriter()) {
 
             template.process(data, writer);
 
@@ -442,7 +447,6 @@ public class FreeMarkerPresentationManager implements PresentationManager {
             final String key = ((TemplateScalarModel) list
                                 .get(0))
                 .getAsString();
-            
 
             ResourceBundle.clearCache();
             final ResourceBundle bundle = ResourceBundle.getBundle(bundleName,
@@ -600,6 +604,28 @@ public class FreeMarkerPresentationManager implements PresentationManager {
                 .findAny();
 
             return format;
+        }
+
+    }
+
+    private class SortAttachmentList implements TemplateMethodModelEx {
+
+        public SortAttachmentList() {
+            super();
+        }
+
+        @Override
+        public Object exec(final List list) throws TemplateModelException {
+
+            if (list.isEmpty() || list.size() != 2) {
+                throw new IllegalArgumentException(
+                    "SortAttachmentList requires the following parameters: "
+                        + "list: list to sort, "
+                        + "attribute: Attribute to use for sorting"
+                );
+            }
+
+            return list.get(0);
         }
 
     }
