@@ -20,11 +20,12 @@ import freemarker.cache.TemplateLoader;
 import freemarker.cache.WebappTemplateLoader;
 import freemarker.ext.dom.NodeModel;
 import freemarker.template.Configuration;
-import freemarker.template.SimpleNumber;
+import freemarker.template.SimpleScalar;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateMethodModelEx;
 import freemarker.template.TemplateModelException;
+import freemarker.template.TemplateModelListSequence;
 import freemarker.template.TemplateNumberModel;
 import freemarker.template.TemplateScalarModel;
 import org.libreccm.theming.manifest.DateFormat;
@@ -52,6 +53,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+
+import java.util.Comparator;
 
 /**
  *
@@ -617,6 +620,7 @@ public class FreeMarkerPresentationManager implements PresentationManager {
         @Override
         public Object exec(final List list) throws TemplateModelException {
 
+            // list.get(0).get(0).get("fileOrder").getNode().getTextContent()
             if (list.isEmpty() || list.size() != 2) {
                 throw new IllegalArgumentException(
                     "SortAttachmentList requires the following parameters: "
@@ -625,7 +629,63 @@ public class FreeMarkerPresentationManager implements PresentationManager {
                 );
             }
 
+            if (!(list.get(0) instanceof TemplateModelListSequence)) {
+                throw new IllegalArgumentException(
+                    String.format(
+                        "The first argument of SortAttachmentList must be a "
+                            + "Sequence."
+                    )
+                );
+            }
+
+            if (!(list.get(1) instanceof SimpleScalar)) {
+                throw new IllegalArgumentException(
+                    String.format(
+                        "The second argument of SortAttachmentList must be a "
+                            + "string."
+                    )
+                );
+            }
+
+            final List<NodeModel> attachmentList
+                                      = (List<NodeModel>) ((TemplateModelListSequence) list
+                                                           .get(0))
+                    .getWrappedObject();
+            final String sortBy = ((SimpleScalar) list.get(1)).getAsString();
+
+            attachmentList.sort(new AttachmentListComparator(sortBy));
             return list.get(0);
+        }
+
+    }
+
+    private class AttachmentListComparator implements Comparator<NodeModel> {
+
+        private final String sortBy;
+
+        public AttachmentListComparator(final String sortBy) {
+            this.sortBy = sortBy;
+        }
+
+        @Override
+        public int compare(
+            final NodeModel attachment1, final NodeModel attachment2
+        ) {
+            try {
+                final String value1 = ((NodeModel) attachment1.get(sortBy))
+                    .getNode().getTextContent();
+                final String value2 = ((NodeModel) attachment2.get(sortBy))
+                    .getNode().getTextContent();
+
+                final int order1 = Integer.parseInt(value1);
+                final int order2 = Integer.parseInt(value2);
+
+                return Integer.compare(order1, order2);
+
+            } catch (TemplateModelException ex) {
+                throw new UncheckedWrapperException(ex);
+            }
+
         }
 
     }
