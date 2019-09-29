@@ -7,10 +7,19 @@
 
 <#function getRelatedLinks item linkListName="NONE">
 
-    <#return item["./links[./linkListName='${linkListName}']"]?sort_by("linkOrder")>
+    <#return item["./links[./linkListName='${linkListName}']"]?map(
+        link -> {
+            "linkType": _getLinkType(link),
+            "title": link["./linkTitle"].@@text,
+            "description": link["./linkDescription"].@@text, 
+            "linkOrder": link["./linkOrder"]?number,
+            "targetUri": _getTargetUri(link)
+        })?sort_by("linkOrder")>
+
+    <#--  <#return item["./links[./linkListName='${linkListName}']"]?sort_by("linkOrder")>  -->
 </#function>
 
-<#function getLinkType link>
+<#function _getLinkType link>
     <#if (link["./targetType"].@@text == "externalLink" && link["./targetURI"] == "caption")>
         <#return "caption">
     <#elseif (link["./targetType"].@@text == "internalLink")>
@@ -20,7 +29,7 @@
     </#if>
 </#function>
 
-<#function getLinkTitle link>
+<#--  <#function getLinkTitle link>
     <#return link["./linkTitle"].@@text>
 </#function>
 
@@ -30,10 +39,12 @@
 
 <#function getLinkOrder link>
     <#return link["./linkOrder"].@@text>
-</#function>
+</#function>  -->
 
-<#function getInternalLinkParameters link>
-    <#if (link["./targetURI"]?size > 0)>
+<#function _getInternalLinkParameters link>
+    <#if (_getLinkType(link) == "caption")>
+        <#return "">
+    <#elseif (link["./targetURI"]?size > 0)>
         <#assign targetUri=link["./targetURI"].@@text>
         <#if (targetUri@starts_with("&?"))>
             <#return "&${targetUri[3]}">
@@ -45,8 +56,10 @@
     </#if>
 </#function>
 
-<#function getTargetUri link>
-    <#if (getLinkType(link) == "internalLink")>
+<#function _getTargetUri link>
+    <#if (_getLinkType(link) == "caption")>
+        <#return "">
+    <#elseif (_getLinkType(link) == "internalLink")>
         <#return "${contextPrefix}/redirect/?oid=${link['./targetItem/@oid']}${getInternalLinkParameters(link)}">
     <#else>
         <#return link["./targetURI"].@@text>

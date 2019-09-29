@@ -6,10 +6,29 @@
 >
 
 <#function getFileAttachments item>
-    <#return item["./fileAttachments"]?sort_by("fileOrder")>
+
+    <#return item["./fileAttachments"]?map(
+        file -> { 
+            "fileType": _getFileType(file), 
+            "mimeType": file["./mimeType/mimeType"].@@text, 
+            "mimeTypeLabel": file["./mimeType/label"].@@text, 
+            "fileSize": file["./length"].@@text?number, 
+            "fileExtension": file["./mimeType/fileExtension"],
+            "fileId": file["./id"].@@text, 
+            "fileName": file["./name"].@@text, 
+            "description": file["./description"].@@text, 
+            "fileUrl": dispatcherPrefix + '/cms-service/stream/asset/' + file["./name"].@@text + '?asset_id=' + file["./id"], 
+            "fileOrder": file["./fileOrder"]?number
+        })?sort_by("fileOrder")>
+
+    <#--  <#return item["./fileAttachments"]?sort_by("fileOrder")>  -->
 </#function>
 
-<#function getFileType file>
+<#--  <#function getFileType file>
+    <#return file.fileType>
+</#function>  -->
+
+<#function _getFileType file>
     <#if (file["./mimeType/mimeType"].@@text == "text/plain") && file["./mimeType/label"].@@text == "caption">
         <#return "caption">
     <#else>
@@ -17,16 +36,16 @@
     </#if>
 </#function>
 
-<#function getMimeType file>
-    <#return file["./mimeType/mimeType"]>    
+<#--  <#function getMimeType file>
+    <#return file["./mimeType/mimeType"]>
 </#function>
 
 <#function getMimeTypeLabel file>
-    <#return file["./mimeType/label"]>    
+    <#return file["./mimeType/label"]>
 </#function>
 
 <#function getMimeTypeFileExtension file>
-    <#return file["./mimeType/fileExtension"]>    
+    <#return file["./mimeType/fileExtension"]>
 </#function>
 
 <#function getFileSize file unit="byte">
@@ -57,7 +76,7 @@
 
 <#function getFileUrl file>
     <#return dispatcherPrefix + '/cms-service/stream/asset/' + getFileName(file) + '?asset_id=' + getFileId(file)>
-</#function>
+</#function>  -->
 
 
 

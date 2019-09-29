@@ -6,9 +6,14 @@
 >
 
 <#function getNotes item>
-    <#return item["./ca_notes"]>
+    <#--  <#return item["./ca_notes"]>  -->
+    <#return item["./ca_notes"]?map(
+        note -> {
+            "content": note["./content"],
+            "rank": note["./rank"]?number
+        })?sort_by("rank")>
 </#function>
 
-<#function getContent note>
+<#--  <#function getContent note>
     <#return note["./content"]>
-</#function>
+</#function>  -->

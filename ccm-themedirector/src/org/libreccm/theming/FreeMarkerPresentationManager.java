@@ -620,7 +620,6 @@ public class FreeMarkerPresentationManager implements PresentationManager {
         @Override
         public Object exec(final List list) throws TemplateModelException {
 
-            // list.get(0).get(0).get("fileOrder").getNode().getTextContent()
             if (list.isEmpty() || list.size() != 2) {
                 throw new IllegalArgumentException(
                     "SortAttachmentList requires the following parameters: "
@@ -629,11 +628,16 @@ public class FreeMarkerPresentationManager implements PresentationManager {
                 );
             }
 
+            if (list.get(0) == null) {
+                return null;
+            }
+
             if (!(list.get(0) instanceof TemplateModelListSequence)) {
                 throw new IllegalArgumentException(
                     String.format(
                         "The first argument of SortAttachmentList must be a "
-                            + "Sequence."
+                            + "Sequence but is a %s...",
+                        list.get(0).getClass().getName()
                     )
                 );
             }
