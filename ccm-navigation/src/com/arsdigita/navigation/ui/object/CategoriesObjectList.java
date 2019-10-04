@@ -104,6 +104,8 @@ public class CategoriesObjectList extends AbstractComponent {
         moreChildren.set("categoryID", category.getID());
 
         objects.addEqualsFilter(ContentItem.VERSION, ContentItem.LIVE);
+        
+        objects.addOrder("parent.categories.link.sortKey");
 
         final Element listElem = renderer.generateXML(objects, 0);
         objListElem.addContent(listElem);
