@@ -121,7 +121,7 @@ public class PublicPersonalProfileXmlUtil {
             } else {
                 navHome.addAttribute("isSelected", "false");
             }
-            navHome.addAttribute("sortKey", "");
+            navHome.addAttribute("sortKey", "0");
 
             final Element navHierarchyHome = navHierarchyRoot
                 .newChildElement("nav:category",
@@ -134,7 +134,7 @@ public class PublicPersonalProfileXmlUtil {
             } else {
                 navHierarchyHome.addAttribute("isSelected", "false");
             }
-            navHierarchyHome.addAttribute("sortKey", "");
+            navHierarchyHome.addAttribute("sortKey", "0");
 
             /*String homeLabel = homeLabels.get(GlobalizationHelper.
              getNegotiatedLocale().getLanguage());*/
@@ -257,17 +257,20 @@ public class PublicPersonalProfileXmlUtil {
 
         Collections.sort(navLinks);
 
+        int sortKey = 1;
         for (NavLink navLink : navLinks) {
 
             navElem = navList.newChildElement("nav:category",
                                               "http://ccm.redhat.com/navigation");
             navElem.addAttribute("AbstractTree", "AbstractTree");
+            navElem.addAttribute("id", navLink.getKey());
             navElem.addAttribute("description", "");
 
             navHierarchyElem = navHierarchyRoot
                 .newChildElement("nav:category",
                                  "http://ccm.redhat.com/navigation");
             navHierarchyElem.addAttribute("AbstractTree", "AbstractTree");
+            navHierarchyElem.addAttribute("id", navLink.getKey());
             navHierarchyElem.addAttribute("depth", "0");
             navHierarchyElem.addAttribute("description", "");
 
@@ -300,8 +303,8 @@ public class PublicPersonalProfileXmlUtil {
             } else {
                 navElem.addAttribute("isSelected", "false");
             }
-            navElem.addAttribute("sortKey", "");
-            navHierarchyElem.addAttribute("sortKey", "");
+            navElem.addAttribute("sortKey", Integer.toString(sortKey));
+            navHierarchyElem.addAttribute("sortKey", Integer.toString(sortKey));
             if (navLink.getTarget() == null) {
                 navElem.addAttribute("title", navLink.getKey());
                 navHierarchyElem.addAttribute("title", navLink.getKey());
@@ -346,7 +349,7 @@ public class PublicPersonalProfileXmlUtil {
 
             navElem.addAttribute("navItem", navLink.getKey());
             navHierarchyElem.addAttribute("navItem", navLink.getKey());
-
+            sortKey++;
         }
     }
 
