@@ -91,7 +91,7 @@
     <#else>
         <#return model["/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@baseURL"].@@text + "?">
     </#if>
-<#function>
+</#function>
 
 <#function getPublicationsPaginatorPageCount profile>
     <#return model["/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@pageCount"].@@text>
@@ -126,7 +126,7 @@
 </#function>
 
 <#function getPublicationsPaginatonFirstPageLink profile>
-    <#return getPublicationsPaginatorBaseUrl(profile) + getPublicationsPaginatorPageParam(profile) + "=1)>
+    <#return getPublicationsPaginatorBaseUrl(profile) + getPublicationsPaginatorPageParam(profile) + "=1">
 </#function>
 
 <#function getPublicationsPaginatorNextPageLink profile>
@@ -134,7 +134,7 @@
 </#function>
 
 <#function getPublicationsPaginatorLastPageLink profile>
-    <#return getPublicationsPaginatorBaseUrl(profile) + getPublicationsPaginatorPageParam(profile) + "=" + getPublicationsPaginatorPageCount(profile))>
+    <#return getPublicationsPaginatorBaseUrl(profile) + getPublicationsPaginatorPageParam(profile) + "=" + getPublicationsPaginatorPageCount(profile)>
 </#function>
 
 <#function getAvailableProjectGroups data>
@@ -143,7 +143,7 @@
 
 <#function getProjectGroupId group>
     <#return group["./@name"]>
-<#function>
+</#function>
 
 <#function getProjectGroupLink group>
     <#if (data["ppp:profile/personalPublications/publications/@all"] == "all")>
@@ -171,7 +171,7 @@
     <#else>
         <#return model["/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@baseURL"].@@text + "?">
     </#if>
-<#function>
+</#function>
 
 <#function getProjectsPaginatorPageCount profile>
     <#return model["/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@pageCount"].@@text>
@@ -206,7 +206,7 @@
 </#function>
 
 <#function getProjectsPaginatonFirstPageLink profile>
-    <#return getProjectsPaginatorBaseUrl(profile) + getProjectsPaginatorPageParam(profile) + "=1)>
+    <#return getProjectsPaginatorBaseUrl(profile) + getProjectsPaginatorPageParam(profile) + "=1">
 </#function>
 
 <#function getProjectsPaginatorNextPageLink profile>
@@ -214,7 +214,7 @@
 </#function>
 
 <#function getProjectsPaginatorLastPageLink profile>
-    <#return getProjectsPaginatorBaseUrl(profile) + getProjectsPaginatorPageParam(profile) + "=" + getProjectsPaginatorPageCount(profile))>
+    <#return getProjectsPaginatorBaseUrl(profile) + getProjectsPaginatorPageParam(profile) + "=" + getProjectsPaginatorPageCount(profile)>
 </#function>
 
 

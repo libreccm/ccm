@@ -60,7 +60,7 @@
     <#if (_getLinkType(link) == "caption")>
         <#return "">
     <#elseif (_getLinkType(link) == "internalLink")>
-        <#return "${contextPrefix}/redirect/?oid=${link['./targetItem/@oid']}${getInternalLinkParameters(link)}">
+        <#return "${contextPrefix}/redirect/?oid=${link['./targetItem/@oid']}${_getInternalLinkParameters(link)}">
     <#else>
         <#return link["./targetURI"].@@text>
     </#if>

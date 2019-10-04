@@ -11,15 +11,13 @@
         image -> {
             "imageId": image["./image/id"].@@text,
             "name": image["./image/name"].@@text,
-            "caption": image["./caption"].@@text,
-            "sortKey": image["./sortKey"]@number,
-            "width": image["./width"]@number,
-            "height": image["./width"]@number,
-            "imageUrl: dispatcherPrefix + "/cms-service/stream/image/?image_id=" + image["./image/id"].@@text
+            "caption": image["./caption"].@@text, 
+            "sortKey": image["./sortKey"].@@text?number,
+            "width": image["./image/width"].@@text,
+            "height": image["./image/height"].@@text,
+            "imageUrl": dispatcherPrefix + "/cms-service/stream/image/?image_id=" + image["./image/id"].@@text
         }
     )?sort_by("sortKey")>
-
-    <#--  <#return item["./imageAttachments"]>  -->
 </#function>
 
 <#--  <#function getImageId image>
