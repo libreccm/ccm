@@ -150,8 +150,18 @@ public class FreeMarkerPresentationManager implements PresentationManager {
         final NamedNodeMap pageAttrs = root.getAttributes();
         final Node applicationNameAttr = pageAttrs.getNamedItem("application");
         final Node applicationClassAttr = pageAttrs.getNamedItem("class");
-        final String applicationName = applicationNameAttr.getNodeValue();
-        final String applicationClass = applicationClassAttr.getNodeValue();
+        final String applicationName;
+        if (applicationNameAttr == null) {
+            applicationName = "none";
+        } else {
+            applicationName = applicationNameAttr.getNodeValue();
+        }
+        final String applicationClass;
+        if (applicationClassAttr == null) {
+            applicationClass = "none";
+        } else {
+            applicationClass = applicationClassAttr.getNodeValue();
+        }
 
         final Optional<ApplicationTemplate> applicationTemplate
                                                 = findApplicationTemplate(
