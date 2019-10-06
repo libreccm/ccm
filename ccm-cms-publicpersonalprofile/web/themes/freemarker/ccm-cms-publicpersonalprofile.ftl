@@ -2,11 +2,16 @@
 "bebop":"http://www.arsdigita.com/bebop/1.0",
 "cms":"http://www.arsdigita.com/cms/1.0",
 "nav":"http://ccm.redhat.com/navigation",
+"ppp":"http://www.arsdigita.com/PublicPersonalProfile/1.0",
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
+<#function getProfileOwnerFullName model>
+    <#return model["./ppp:profile/ppp:ownerName"]>
+</#function>
+
 <#function getProfileOwner data>
-    <#return data["./profileOwner"]>
+    <#return data["./profileOwner/owner"]>
 </#function>
 
 <#function getProfileOwnerSurname owner>
@@ -25,20 +30,20 @@
     <#return owner["./titlePost"]>
 </#function>
 
-<#function getProfilePosition>
+<#function getProfilePosition data>
     <#return data["./position"]>
 </#function>
 
-<#function getProfileInterests>
+<#function getProfileInterests data>
     <#return data["./interests"]>
 </#function>
 
-<#function getProfileMisc>
+<#function getProfileMisc data>
     <#return data["./misc"]>
 </#function>
 
 <#function getProfileOwnerContact owner>
-    <#return owner["./contact"]>
+    <#return owner["./contacts/contact"]>
 </#function>
 
 <#function getProfileImage data>
@@ -46,6 +51,17 @@
         <#return data["./ppp:profile/ppp:profileImage/imageAttachments[1]/*"]>
     <#elseif (data["./nav:greetingdata/cms:data/profileOwner/owner/imageAttachments"]?size > 0)>
         <#return data["./nav:greetingdata/cms:data/profileOwner/owner/imageAttachments[1]/*"]>
+    </#if>
+</#function>
+
+<#function getProfileImageUrl data>
+
+    <#if (data["./ppp:profile/ppp:profileImage"]?size > 0)>
+        <#assign imageId=data["./ppp:profile/ppp:profileImage/imageAttachments[1]/image/id"]>
+        <#return dispatcherPrefix + '/cms-service/stream/image/?image_id=' + imageId>
+    <#elseif (data["./nav:greetingdata/cms:data/profileOwner/owner/imageAttachments"]?size > 0)>
+        <#assign imageId=data["./nav:greetingdata/cms:data/profileOwner/owner/imageAttachments[1]/image/id"]>
+        <#return dispatcherPrefix + '/cms-service/stream/image/?image_id=' + imageId>
     </#if>
 </#function>
 

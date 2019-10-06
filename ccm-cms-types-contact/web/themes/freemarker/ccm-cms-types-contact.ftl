@@ -6,7 +6,7 @@
 >
 
 <#function getAddress item>
-    <#return item["./address/address"]>
+    <#return item["./address"]>
 </#function>
 
 <#function getPerson item>
@@ -22,6 +22,10 @@
 </#function>
 
 <#function getContactEntryLabel entry>
+    <#return entry["./key"]>
+</#function>
+
+<#function getContactEntryKey entry>
     <#return entry["./key"]>
 </#function>
 
