@@ -82,7 +82,7 @@
 </#function>
 
 <#function getPublicationGroupLink group>
-    <#if (data["ppp:profile/personalPublications/publications/@all"] == "all")>
+    <#if (model["ppp:profile/personalPublications/publications/@all"] == "all")>
         <#return "#" + group["./@name"]>
     <#else>
         <#return "?group=" + group["./@name"]>

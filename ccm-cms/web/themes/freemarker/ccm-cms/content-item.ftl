@@ -60,7 +60,7 @@
         <#return getLocalizedText('layout.page.title.search')>
     <#elseif (model["/bebop:page/@application"] == 'login')>
         <#return getLocalizedText('layout.page.title.login')>
-    <#elseif (model["/bebop:page/@id"] == 'sitemapPage')>
+    <#elseif ((model["/bebop:page/@id"]?size > 0) && (model["/bebop:page/@id"] == 'sitemapPage'))>
         <#return getLocalizedText('layout.page.title.sitemap')>
     <#elseif (model["/bebop:page/@application"] == 'PublicPersonalProfile' && model["/bebop:page/nav:greetingItem"]?size > 0)>
         <#return model["/bebop:page/nav:greetingItem/cms:item/title"].@@text>
