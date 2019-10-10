@@ -74,7 +74,7 @@
 </#function>
 
 <#function getPersonalPublicationsAvailablePublicationGroups data>
-    <#return data["./ppp:profile/personalPublications/availablePublicationGroups"]>
+    <#return data["./ppp:profile/personalPublications/availablePublicationGroups/availablePublicationGroup"]>
 </#function>
 
 <#function getPublicationGroupId group>
@@ -82,7 +82,8 @@
 </#function>
 
 <#function getPublicationGroupLink group>
-    <#if (model["ppp:profile/personalPublications/publications/@all"] == "all")>
+    <#if (model["ppp:profile/personalPublications/publications/@all"]?size > 0
+          && model["ppp:profile/personalPublications/publications/@all"] == "all")>
         <#return "#" + group["./@name"]>
     <#else>
         <#return "?group=" + group["./@name"]>
@@ -98,43 +99,43 @@
 </#function>
 
 <#function hasPublicationsPaginator profile>
-    <#return (model["/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator"]?size > 0)>
+    <#return (model["/bebop:page/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator"]?size > 0)>
 </#function>
 
 <#function getPublicationsPaginatorBaseUrl profile>
-    <#if (model["/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@baseURL"]?contains("?"))>
-        <#return model["/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@baseURL"].@@text + "&">
+    <#if (model["/bebop:page/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@baseURL"]?contains("?"))>
+        <#return model["/bebop:page/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@baseURL"] + "&">
     <#else>
-        <#return model["/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@baseURL"].@@text + "?">
+        <#return model["/bebop:page/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@baseURL"] + "?">
     </#if>
 </#function>
 
 <#function getPublicationsPaginatorPageCount profile>
-    <#return model["/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@pageCount"].@@text>
+    <#return model["/bebop:page/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@pageCount"]?number>
 </#function>
 
 <#function getPublicationsPaginatorPageNumber profile>
-    <#return model["/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@pageNumber"].@@text>
+    <#return model["/bebop:page/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@pageNumber"]?number>
 </#function>
 
 <#function getPublicationsPaginatorPageParam profile>
-    <#return model["/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@pageParam"].@@text>
+    <#return model["/bebop:page/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@pageParam"]>
 </#function>
 
 <#function getPublicationsPaginatorPageSize profile>
-    <#return model["/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@pageSize"].@@text>
+    <#return model["/bebop:page/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@pageSize"]?number>
 </#function>
 
 <#function getPublicationsPaginatorObjectBegin profile>
-    <#return model["/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@objectBegin"].@@text>
+    <#return model["/bebop:page/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@objectBegin"]?number>
 </#function>
 
 <#function getPublicationsPaginatorObjectCount profile>
-    <#return model["/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@objectCount"].@@text>
+    <#return model["/bebop:page/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@objectCount"]?number>
 </#function>
 
 <#function getPublicationsPaginatorObjectEnd profile>
-    <#return model["/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@objectEnd"].@@text>
+    <#return model["/bebop:page/ppp:profile/personalPublications/publications/publicationGroup/nav:paginator/@objectEnd"]?number>
 </#function>
 
 <#function getPublicationsPaginatorPrevPageLink profile>
@@ -178,43 +179,43 @@
 </#function>
 
 <#function hasProjectsPaginator profile>
-    <#return (model["/ppp:profile/personalProjects/projects/projectGroup/nav:paginator"]?size > 0)>
+    <#return (model["/bebop:page/ppp:profile/personalProjects/projects/projectGroup/nav:paginator"]?size > 0)>
 </#function>
 
 <#function getProjectsPaginatorBaseUrl profile>
-    <#if (model["/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@baseURL"]?contains("?"))>
-        <#return model["/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@baseURL"].@@text + "&">
+    <#if (model["/bebop:page/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@baseURL"]?contains("?"))>
+        <#return model["/bebop:page/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@baseURL"] + "&">
     <#else>
-        <#return model["/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@baseURL"].@@text + "?">
+        <#return model["/bebop:page/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@baseURL"] + "?">
     </#if>
 </#function>
 
 <#function getProjectsPaginatorPageCount profile>
-    <#return model["/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@pageCount"].@@text>
+    <#return model["/bebop:page/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@pageCount"]?number>
 </#function>
 
 <#function getProjectsPaginatorPageNumber profile>
-    <#return model["/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@pageNumber"].@@text>
+    <#return model["/bebop:page/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@pageNumber"]?number>
 </#function>
 
 <#function getProjectsPaginatorPageParam profile>
-    <#return model["/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@pageParam"].@@text>
+    <#return model["/bebop:page/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@pageParam"]>
 </#function>
 
 <#function getProjectsPaginatorPageSize profile>
-    <#return model["/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@pageSize"].@@text>
+    <#return model["/bebop:page/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@pageSize"]?number>
 </#function>
 
 <#function getProjectsPaginatorObjectBegin profile>
-    <#return model["/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@objectBegin"].@@text>
+    <#return model["/bebop:page/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@objectBegin"]?number>
 </#function>
 
 <#function getProjectsPaginatorObjectCount profile>
-    <#return model["/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@objectCount"].@@text>
+    <#return model["/bebop:page/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@objectCount"]?number>
 </#function>
 
 <#function getProjectsPaginatorObjectEnd profile>
-    <#return model["/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@objectEnd"].@@text>
+    <#return model["/bebop:page/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@objectEnd"]?number>
 </#function>
 
 <#function getProjectsPaginatorPrevPageLink profile>

@@ -5,7 +5,7 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
-<#import ../ccm-cms/content-item.ftl as ContentItem>
+<#import "../ccm-cms/content-item.ftl" as ContentItem>
 
 <#function getFirstYear(journal)>
     <#return journal["./firstYear"]>

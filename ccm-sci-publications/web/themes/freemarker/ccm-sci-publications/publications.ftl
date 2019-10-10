@@ -6,7 +6,7 @@
 >
 
 <#function getAssignedTermsDomains item domain>
-    <#return item["./terms:assignedTerms/terms:term[@domain='${domain}']]>
+    <#return item["./terms:assignedTerms/terms:term[@domain='${domain}']"]>
 </#function>
 
 <#function getAuthors item>
@@ -66,7 +66,7 @@
 </#function>
 
 <#function getPlace item>
-    <#return item["./place"]>
+    <#return item["./place"].@@text>
 </#function>
 
 <#function getPagesFrom item>
@@ -94,7 +94,7 @@
 </#function>
 
 <#function getOrderer item>
-    <#return item["./orderer]>
+    <#return item["./orderer"]>
 </#function>
 
 <#function getIssn item>

@@ -5,7 +5,7 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
-<#import ../ccm-cms/content-item.ftl as ContentItem>
+<#import "../ccm-cms/content-item.ftl" as ContentItem>
 
 <#function getFilters series>
     <#return series["./filters/filter"]>
@@ -20,7 +20,7 @@
 </#function>
 
 <#function getVolume series>
-    <#return series["./volume"]>
+    <#return series["./@volume"]>
 </#function>
 
 <#function getVolumeHref volume>
