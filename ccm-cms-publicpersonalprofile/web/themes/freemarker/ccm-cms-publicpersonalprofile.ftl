@@ -163,7 +163,8 @@
 </#function>
 
 <#function getProjectGroupLink group>
-    <#if (data["ppp:profile/personalPublications/publications/@all"] == "all")>
+    <#if (model["/bebop:page/ppp:profile/personalPublications/publications/@all"]?size > 0
+          && model["/bebop:page/ppp:profile/personalPublications/publications/@all"] == "all")>
         <#return "#" + group["./@name"]>
     <#else>
         <#return "?group=" + group["./@name"]>
@@ -175,16 +176,16 @@
 </#function>
 
 <#function getProjectsOfGroup data>
-    <#return data["./ppp:profile/personalProjects/projects/projectGroup/project"]>
+    <#return data["./project"]>
 </#function>
 
 <#function hasProjectsPaginator profile>
-    <#return (model["/bebop:page/ppp:profile/personalProjects/projects/projectGroup/nav:paginator"]?size > 0)>
+    <#return (model["./bebop:page/ppp:profile/personalProjects/projects/projectGroup/nav:paginator"]?size > 0)>
 </#function>
 
 <#function getProjectsPaginatorBaseUrl profile>
     <#if (model["/bebop:page/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@baseURL"]?contains("?"))>
-        <#return model["/bebop:page/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@baseURL"] + "&">
+        <#return model["/bebop:page/bebop:page/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@baseURL"] + "&">
     <#else>
         <#return model["/bebop:page/ppp:profile/personalProjects/projects/projectGroup/nav:paginator/@baseURL"] + "?">
     </#if>
