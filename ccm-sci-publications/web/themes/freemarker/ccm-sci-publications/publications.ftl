@@ -50,7 +50,11 @@
 </#function>
 
 <#function isReviewed item>
-    <#return item["./reviewed"] == "true">
+    <#if (item["./reviewed"]?size > 0)>
+        <#return item["./reviewed"] == "true">
+    <#else>
+        <#return false>
+    </#if>
 </#function>
 
 <#function getAbstract item>
@@ -61,8 +65,8 @@
     <#return item["./misc"]>
 </#function>
 
-<#function getExportLinks item>
-    <#return item["./publicationExportLink"]>
+<#function hasPlace item>
+    <#return (item["./place"]?size > 0)>
 </#function>
 
 <#function getPlace item>
@@ -157,7 +161,7 @@
     <#return item["./articles/article"]>
 </#function>
 
-<#function getProceedigingsPapers item>
+<#function getProceedingsPapers item>
     <#return item["./papers/paper"]>
 </#function>
 

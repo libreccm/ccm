@@ -14,6 +14,16 @@
     for the provided view and style. The paramters view and style are
     optional. If not provided the default value "detail" is used for 
     the view parameter.
+
+    @param {node} item The data model of the content item itself. There are 
+    several functions for extracting this provided by other modules.
+
+    @param {string} view View type to use. Either `detail` or `list`. Default 
+    value is `detail`.
+
+    @param {string} style Style to use. Styles allow it to use different 
+    templates for `detail` or `list` views depending on the context were the 
+    content item is displayed.
 -->
 <#macro contentItem item view="detail" style="">
 

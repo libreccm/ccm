@@ -82,7 +82,7 @@
 </#function>
 
 <#function getPublicationObjectType item>
-    <#return item["./object-type"].@@text>
+    <#return item["./@object-type"]>
 </#function>
 
 <#function getPublicationTitle item>

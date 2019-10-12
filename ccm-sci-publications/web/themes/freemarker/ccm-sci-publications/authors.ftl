@@ -9,6 +9,10 @@
     <#return author["./contacts/contact/contactentries[./keyId = '${keyId}']/value"]>
 </#function>
 
+<#function hasLink author keyId>
+    <#return (author["./contacts/contact/contactentries[./keyId = '${keyId}']"]?size > 0)>
+</#function>
+
 <#function getId author>
     <#return author["./masterVersion/id"] + "_" + author["./@name"]> 
 </#function>
@@ -21,8 +25,16 @@
     <#return author["./last()"]>
 </#function>
 
+<#function hasSurname author>
+    <#return (author["./surname"]?size > 0)>
+</#function>
+
 <#function getSurname author>
     <#return author["./surname"]>
+</#function>
+
+<#function hasGivenName author>
+    <#return (author["./givenname"]?size > 0)>
 </#function>
 
 <#function getGivenName author>

@@ -5,6 +5,14 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
+<#function getExportLinks item>
+    <#return item["./publicationExportLink"]>
+</#function>
+
+<#function hasExportLinks item>
+    <#return (item["./publicationExportLink"]?size > 0)>
+</#function>
+
 <#function getHref exportLink>
     <#return "${dispatcherPrefix}/scipublications/export/?format=${exportLink['./formatKey']}&publication=${exportLink['./publicationId']}">
 </#function>

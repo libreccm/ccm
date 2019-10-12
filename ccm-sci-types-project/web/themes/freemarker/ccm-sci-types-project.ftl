@@ -18,18 +18,20 @@
 <#function getEnd item>
     <#if (item["./projectEnd"]?size > 0)>
         <#return item["./projectEnd"]>
-    <#elseif (item["./lifeSpan/end"])>
+    <#elseif (item["./lifeSpan/end"]?size > 0)>
         <#return item["./lifeSpan/end"]>
-    <#elseif (item["./nav:attribute[@name = 'projectEnd']"])>
+    <#elseif (item["./nav:attribute[@name = 'projectEnd']"]?size > 0)>
         <#return item["./nav:attribute[@name = 'projectEnd']"]>
     </#if>
 </#function>
 
 <#function getDescription item>
-    <#if (item["./projectDesc"])>
+    <#if (item["./projectDesc"]?size > 0)>
         <#return item["./projectDesc"]>
-    <#elseif (item["./description"])>
+    <#elseif (item["./description"]?size > 0)>
         <#return item["./description"]>
+    <#elseif (item["./projectDescription"]?size > 0)>
+        <#return item["./projectDescription"]>
     </#if>
 </#function>
 

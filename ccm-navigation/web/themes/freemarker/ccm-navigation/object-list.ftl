@@ -96,7 +96,11 @@
 </#function>
 
 <#function getItemLink item>
-    <#return item["./nav:path"].@@text>
+    <#if (item["./nav:path"]?size > 0)>
+        <#return item["./nav:path"].@@text>
+    <#else>
+        <#return "/redirect/?oid=" + item["./@oid"]>
+    </#if>
 </#function>
 
 <#function getItemLead item>
