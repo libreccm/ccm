@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.text.MessageFormat;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -36,6 +35,42 @@ import com.arsdigita.kernel.UserAuthentication;
 import java.math.BigDecimal;
 
 /**
+ * A simple login module for LDAP.
+ *
+ * Currently not tested with LDAPS schema.
+ *
+ * The module uses the SSO login name for finding the user in the LDAP 
+ * repository. If no user with the an SSO name matching the provided user name
+ * is found the methods of the login module will return false which means that
+ * the module should be ignored.
+ * 
+ * To use the module has to be added to the list of {@code LoginModule}s in the
+ * {@link SecurityConfig}. An example configuration (line breaks for easier
+ * reading, remove them for the properties file):
+ *
+ * <pre>
+ * waf.login_config=Request:com.arsdigita.kernel.security.AdminLoginModule:sufficient,
+ * Request:com.arsdigita.kernel.security.RecoveryLoginModule:sufficient,
+ * Request:com.arsdigita.kernel.security.CookieLoginModule:requisite,
+ * Register:com.arsdigita.kernel.security.JndiLoginModule:sufficient,
+ * Register:com.arsdigita.kernel.security.LocalLoginModule:requisite,
+ * Register:com.arsdigita.kernel.security.UserIDLoginModule:requisite,
+ * Register:com.arsdigita.kernel.security.CookieLoginModule:optional
+ * </pre>
+ *
+ * Additionally three more settings have to be configured in the the security
+ * configuration:
+ *
+ * <pre>
+ * waf.ldap.connectionUrl=ldap://jp-fedora-server
+ * waf.ldap.userBase=ou=users,dc=example,dc=org
+ * waf.ldap.userSearch=(mail=%s)
+ * </pre>
+ *
+ * The {@code connectionUrl} is the URL of the LDAP server to use.
+ * {@code userBase} is the tree part in which the users are stored. 
+ * {@code userSearch} defines an LDAP filter for searching the user. 
+ * {@link String#format} is used to fill in the username.
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
  */
@@ -116,7 +151,7 @@ public class JndiLoginModule extends PasswordLoginModule implements LoginModule 
         final String connectionUrl = securityConfig.getLdapConnectionUrl();
         final String userBase = securityConfig.getLdapUserBase();
         final String userSearch = securityConfig.getLdapUserSearch();
-        
+
         final Hashtable<String, Object> env = new Hashtable<>();
         env.put(Context.INITIAL_CONTEXT_FACTORY,
                 "com.sun.jndi.ldap.LdapCtxFactory");
