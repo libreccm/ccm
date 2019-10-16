@@ -30,6 +30,7 @@ import javax.security.auth.login.FailedLoginException;
 import javax.security.auth.login.LoginException;
 import javax.security.auth.spi.LoginModule;
 
+import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.UserAuthentication;
 
 import java.math.BigDecimal;
@@ -47,8 +48,8 @@ public class JndiLoginModule extends PasswordLoginModule implements LoginModule 
     private Map<String, ?> sharedState;
     private Map<String, ?> options;
 
-    private String username;
-    
+    private UserAuthentication userAuthentication;
+
     @Override
     @SuppressWarnings({"unchecked", "rawtypes"})
     public void initialize(final Subject subject,
@@ -63,50 +64,69 @@ public class JndiLoginModule extends PasswordLoginModule implements LoginModule 
     }
 
     @Override
+    public boolean login() throws LoginException {
+
+        try {
+            userAuthentication = UserAuthentication
+                .retrieveForSSOlogin(getUsername());
+        } catch (DataObjectNotFoundException ex) {
+            return false;
+        }
+        final boolean result = super.login();
+        return result;
+    }
+
+    @Override
     public boolean commit() throws LoginException {
         LOGGER.debug("Commit");
-        
-        final UserAuthentication auth = UserAuthentication
-            .retrieveForSSOlogin(username);
-        final BigDecimal userId = auth.getUser().getID();
+
+        if (userAuthentication == null) {
+            return false;
+        }
+
+        final BigDecimal userId = userAuthentication.getUser().getID();
         subject.getPrincipals().add(new PartyPrincipal(userId));
-        
+
         return true;
     }
 
     @Override
     public boolean abort() throws LoginException {
         LOGGER.debug("Aborting");
+        if (userAuthentication == null) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public boolean logout() throws LoginException {
         LOGGER.debug("Logout");
+        if (userAuthentication == null) {
+            return false;
+        }
         return true;
     }
 
     @Override
     protected void checkPassword(final String username, final char[] password)
         throws LoginException {
-        
-        this.username = username;
 
+        final SecurityConfig securityConfig = SecurityConfig.getConfig();
+        final String connectionUrl = securityConfig.getLdapConnectionUrl();
+        final String userBase = securityConfig.getLdapUserBase();
+        final String userSearch = securityConfig.getLdapUserSearch();
+        
         final Hashtable<String, Object> env = new Hashtable<>();
         env.put(Context.INITIAL_CONTEXT_FACTORY,
                 "com.sun.jndi.ldap.LdapCtxFactory");
-        env.put(Context.PROVIDER_URL, options.get("connectionURL"));
+        env.put(Context.PROVIDER_URL, connectionUrl);
         env.put(Context.SECURITY_AUTHENTICATION, "none");
 
         try {
             final DirContext context = new InitialDirContext(env);
 
-            final String userBase = (String) options.get("userBase");
-            final MessageFormat userSearchFormat = new MessageFormat(
-                (String) options.get("userSearch")
-            );
-            final String filter = userSearchFormat
-                .format(new String[]{username});
+            final String filter = String.format(userSearch, username);
             final SearchControls searchControls = new SearchControls();
             final NamingEnumeration<SearchResult> results = context.search(
                 userBase, filter, searchControls
@@ -148,14 +168,14 @@ public class JndiLoginModule extends PasswordLoginModule implements LoginModule 
                     throw new KernelLoginException(ex);
                 }
             }
-            
+
             final String userDn = name.toString();
             context.addToEnvironment(Context.SECURITY_PRINCIPAL, userDn);
             context.addToEnvironment(Context.SECURITY_CREDENTIALS, password);
-            
+
             try {
                 context.getAttributes("", null);
-            } catch(AuthenticationException ex) {
+            } catch (AuthenticationException ex) {
                 LOGGER.info("LDAP login failed.");
                 throw new FailedLoginException(
                     "Bad username / password for LDAP"

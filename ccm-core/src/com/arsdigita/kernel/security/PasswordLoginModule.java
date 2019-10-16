@@ -100,7 +100,7 @@ public abstract class PasswordLoginModule implements LoginModule {
      *
      * @throws LoginException if an error occurs.
      */
-    private String getUsername() throws LoginException {
+    protected String getUsername() throws LoginException {
         // get name from shared data
         // TODO: only if *Pass option set
         String username = (String)m_shared.get(NAME_KEY);
@@ -129,7 +129,7 @@ public abstract class PasswordLoginModule implements LoginModule {
      *
      * @throws LoginException if an error occurs.
      */
-    private char[] getPassword() throws LoginException {
+    protected char[] getPassword() throws LoginException {
         // get password from shared data
         // TODO: only if *Pass option set
         char[] password = (char[])m_shared.get(PASSWORD_KEY);

@@ -141,6 +141,18 @@ public class SecurityConfig extends AbstractConfig {
     private final Parameter m_enableQuestion = new BooleanParameter(
         "waf.user_question.enable", Parameter.REQUIRED, Boolean.FALSE);
 
+    private final Parameter m_ldapConnectionUrl = new StringParameter(
+        "waf.ldap.connectionUrl", Parameter.REQUIRED, "localhost"
+    );
+    
+    private final Parameter m_ldapUserBase = new StringParameter(
+        "waf.ldap.userBase", Parameter.REQUIRED, "ou=users,dc=example,dc=org"
+    );
+    
+    private final Parameter m_ldapUserSearch = new StringParameter(
+        "waf.ldap.userSearch", Parameter.REQUIRED, "(mail=%s)"
+    );
+    
     private final Parameter m_enableSaml = new BooleanParameter(
         "waf.enable_saml", Parameter.REQUIRED, Boolean.FALSE);
     private final Parameter m_oneLoginSaml2Strict = new BooleanParameter(
@@ -222,6 +234,10 @@ public class SecurityConfig extends AbstractConfig {
         register(m_userBanOn);
         register(m_enableQuestion);
 
+        register(m_ldapConnectionUrl);
+        register(m_ldapUserBase);
+        register(m_ldapUserSearch);
+        
         register(m_enableSaml);
 
         register(m_oneLoginSaml2Debug);
@@ -331,6 +347,18 @@ public class SecurityConfig extends AbstractConfig {
         return ((Boolean) get(m_autoRegistrationOn)).booleanValue();
     }
 
+    public final String getLdapConnectionUrl() {
+        return (String) get(m_ldapConnectionUrl);
+    }
+    
+    public final String getLdapUserBase() {
+        return (String) get(m_ldapUserBase);
+    }
+    
+    public final String getLdapUserSearch() {
+        return (String) get(m_ldapUserSearch);
+    }
+    
     public final boolean getEnableSaml() {
         return (Boolean) get(m_enableSaml);
     }
