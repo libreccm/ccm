@@ -101,12 +101,23 @@ public class JndiLoginModule extends PasswordLoginModule implements LoginModule 
     @Override
     public boolean login() throws LoginException {
 
+        final String username = getUsername();
         try {
             userAuthentication = UserAuthentication
-                .retrieveForSSOlogin(getUsername());
+                .retrieveForSSOlogin(username);
         } catch (DataObjectNotFoundException ex) {
+            LOGGER.info(
+                String.format("No user with SSOName \"%s\" in database.",
+                              username
+                )
+            );
             throw new FailedLoginException("User not found in LDAP.");
         }
+        LOGGER.info(
+            String.format(
+                "User with SSO name \"%s\" found trying to login via LDAP...",
+                username)
+        );
         final boolean result = super.login();
         return result;
     }
@@ -166,6 +177,12 @@ public class JndiLoginModule extends PasswordLoginModule implements LoginModule 
             );
 
             if (!results.hasMore()) {
+                LOGGER.info(
+                    String.format(
+                        "No user with matching \"%s\" found in LDAP.",
+                        filter
+                    )
+                );
                 throw new FailedLoginException("Bad Username / password");
             }
 
@@ -209,7 +226,12 @@ public class JndiLoginModule extends PasswordLoginModule implements LoginModule 
             try {
                 context.getAttributes("", null);
             } catch (AuthenticationException ex) {
-                LOGGER.info("LDAP login failed.");
+                LOGGER.info(
+                    String.format(
+                        "LDAP login for user with SSO name \"%s\" failed.",
+                        username
+                    )
+                );
                 throw new FailedLoginException(
                     "Bad username / password for LDAP"
                 );
