@@ -39,11 +39,11 @@ import java.math.BigDecimal;
  *
  * Currently not tested with LDAPS schema.
  *
- * The module uses the SSO login name for finding the user in the LDAP 
+ * The module uses the SSO login name for finding the user in the LDAP
  * repository. If no user with the an SSO name matching the provided user name
  * is found the methods of the login module will return false which means that
  * the module should be ignored.
- * 
+ *
  * To use the module has to be added to the list of {@code LoginModule}s in the
  * {@link SecurityConfig}. An example configuration (line breaks for easier
  * reading, remove them for the properties file):
@@ -68,8 +68,8 @@ import java.math.BigDecimal;
  * </pre>
  *
  * The {@code connectionUrl} is the URL of the LDAP server to use.
- * {@code userBase} is the tree part in which the users are stored. 
- * {@code userSearch} defines an LDAP filter for searching the user. 
+ * {@code userBase} is the tree part in which the users are stored.
+ * {@code userSearch} defines an LDAP filter for searching the user.
  * {@link String#format} is used to fill in the username.
  *
  * @author <a href="mailto:jens.pelzetter@googlemail.com">Jens Pelzetter</a>
@@ -105,7 +105,7 @@ public class JndiLoginModule extends PasswordLoginModule implements LoginModule 
             userAuthentication = UserAuthentication
                 .retrieveForSSOlogin(getUsername());
         } catch (DataObjectNotFoundException ex) {
-            return false;
+            throw new FailedLoginException("User not found in LDAP.");
         }
         final boolean result = super.login();
         return result;
@@ -115,12 +115,10 @@ public class JndiLoginModule extends PasswordLoginModule implements LoginModule 
     public boolean commit() throws LoginException {
         LOGGER.debug("Commit");
 
-        if (userAuthentication == null) {
-            return false;
+        if (userAuthentication != null) {
+            final BigDecimal userId = userAuthentication.getUser().getID();
+            subject.getPrincipals().add(new PartyPrincipal(userId));
         }
-
-        final BigDecimal userId = userAuthentication.getUser().getID();
-        subject.getPrincipals().add(new PartyPrincipal(userId));
 
         return true;
     }
@@ -128,18 +126,18 @@ public class JndiLoginModule extends PasswordLoginModule implements LoginModule 
     @Override
     public boolean abort() throws LoginException {
         LOGGER.debug("Aborting");
-        if (userAuthentication == null) {
-            return false;
-        }
+//        if (userAuthentication == null) {
+//            return false;
+//        }
         return true;
     }
 
     @Override
     public boolean logout() throws LoginException {
         LOGGER.debug("Logout");
-        if (userAuthentication == null) {
-            return false;
-        }
+//        if (userAuthentication == null) {
+//            return false;
+//        }
         return true;
     }
 
