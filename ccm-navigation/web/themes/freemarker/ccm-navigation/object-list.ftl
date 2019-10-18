@@ -92,7 +92,7 @@
 </#function>
 
 <#function getItemTitle item>
-    <#return item["/nav:attribute[@name='title']"]>
+    <#return item["./nav:attribute[@name='title']"]>
 </#function>
 
 <#function getItemLink item>
@@ -103,12 +103,20 @@
     </#if>
 </#function>
 
+<#function hasItemLead item>
+    <#return (item["./nav:attribute[@name='lead']"]?size > 0)>
+</#function>
+
 <#function getItemLead item>
     <#return item["./nav:attribute[@name='lead']"]>
 </#function>
 
+<#function hasItemProperty item property>
+    <#return (item["./nav:attribute[@name='${property}']"]?size > 0)>
+</#function>
+
 <#function getItemProperty item property>
-    <#return item["./nav:atttribute[@name='${property}']"]>
+    <#return item["./nav:attribute[@name='${property}']"]>
 </#function>
 
 <#function hasImage item>
