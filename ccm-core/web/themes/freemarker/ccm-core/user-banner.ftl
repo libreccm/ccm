@@ -10,11 +10,11 @@
 </#function>
 
 <#function isLoggedIn>
-    <#return (model["./ui:userBanner/@screenName"]?size > 0)
+    <#return (model["./ui:userBanner/@screenName"]?size > 0)>
 </#function>
 
 <#function isNotLoggedIn>
-    <#return (model["./ui:userBanner/@screenName"]?size == 0)
+    <#return (model["./ui:userBanner/@screenName"]?size == 0)>
 </#function>
 
 <#function getChangePasswordUrl>
@@ -22,21 +22,21 @@
 </#function>
 
 <#function getLoginLink>
-    <#return model["./ui:userBanner/@loginExcursionURL">
+    <#return model["./ui:userBanner/@loginExcursionURL"]>
 </#function>
 
 <#function getLogoutLink>
-    <#return model["./ui:userBanner/@logoutURL">
+    <#return model["./ui:userBanner/@logoutURL"]>
 </#function>
 
 <#function getScreenName>
-    <#return model["./ui:userBanner/@screenName">
+    <#return model["./ui:userBanner/@screenName"]>
 </#function>
 
 <#function getUserGivenName>
-    <#return model["./ui:userBanner/@givenName">
+    <#return model["./ui:userBanner/@givenName"]>
 </#function>
 
 <#function getUserFamilyName>
-    <#return model["./ui:userBanner/@familyName">
+    <#return model["./ui:userBanner/@familyName"]>
 </#function>
