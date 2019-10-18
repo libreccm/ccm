@@ -17,6 +17,13 @@
 </#function>
 
 <#--
+    Checks if the provided item has a lead property.
+-->
+<#function hasLead item>
+    <#return (item["./lead"]?size > 0 || item["./nav:attribute[@name='lead']"]?size > 0)>
+</#function>
+
+<#--
     Gets the main text the the provided article.
 -->
 <#function getMainText item>
