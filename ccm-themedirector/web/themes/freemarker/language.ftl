@@ -6,7 +6,8 @@
 >
 
 <#---
-    Retrieves the languages in which the content of the current page is available.
+    Retrieves the languages in which the content of the current page is 
+    available.
 
     @return A sequence of the available languages (as ISO language codes)
 #-->
