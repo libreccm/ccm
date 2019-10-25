@@ -9,19 +9,19 @@
     <#return model["/bebop:page/cms:contentPanel/cms:item"]>
 </#function>
 
-<#--
+<#---
     Includes the template for the type of the provided content item 
     for the provided view and style. The paramters view and style are
     optional. If not provided the default value "detail" is used for 
     the view parameter.
 
-    @param {node} item The data model of the content item itself. There are 
+    @param item The data model of the content item itself. There are 
     several functions for extracting this provided by other modules.
 
-    @param {string} view View type to use. Either `detail` or `list`. Default 
+    @param view View type to use. Either `detail` or `list`. Default 
     value is `detail`.
 
-    @param {string} style Style to use. Styles allow it to use different 
+    @param style Style to use. Styles allow it to use different 
     templates for `detail` or `list` views depending on the context were the 
     content item is displayed.
 -->
@@ -44,6 +44,11 @@
     
 </#macro>
 
+<#---
+    Retrieve the title of a content item.
+
+    @param item The content item.
+#-->
 <#function getItemTitle item>
     <#if (item["./title"]?size > 0)>
         <#return item["./title"]>
@@ -54,6 +59,18 @@
     </#if>
 </#function>
 
+<#---
+    Get the title of the current page. This function tries several possible 
+    sources for the title of the current page and uses to first source found.
+
+    The possible sources are:
+
+    * The title of the primary content item. For items of the types
+      Glossary Item and FAQ Item special titles are used.
+    * If the title `AtoZ` is provided by Bebop the localized text 
+      `layout.page.title.atoz` used.
+    * If the title `Search` is provided by Bebop
+-->
 <#function getPageTitle useCategoryMenu='categoryMenu' useRootIndexItemTitle=false>
 
     <#if (model["/bebop:page//cms:contentPanel"]?size > 0)>
