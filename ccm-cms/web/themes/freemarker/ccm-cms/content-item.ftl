@@ -5,11 +5,24 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
+<#--filedoc
+    This library provides functions and macros for processing the data of 
+    content items.
+-->
+
+<#--doc
+    Gets the current content item, or more exactly the model of the current
+    content item from the model. This function only works on cms pages and
+    not on navigation pages. For navigation pages use the functions
+    provided by ccm-navigation for extracting the index item.
+
+    @return The model of the current content item.
+-->
 <#function getContentItem>
     <#return model["/bebop:page/cms:contentPanel/cms:item"]>
 </#function>
 
-<#---
+<#--doc
     Includes the template for the type of the provided content item 
     for the provided view and style. The paramters view and style are
     optional. If not provided the default value "detail" is used for 
@@ -44,11 +57,13 @@
     
 </#macro>
 
-<#---
+<#--doc
     Retrieve the title of a content item.
 
     @param item The content item.
-#-->
+
+    @return The title of the content item.
+-->
 <#function getItemTitle item>
     <#if (item["./title"]?size > 0)>
         <#return item["./title"]>
@@ -59,7 +74,7 @@
     </#if>
 </#function>
 
-<#---
+<#--doc
     Get the title of the current page. This function tries several possible 
     sources for the title of the current page and uses to first source found.
 
@@ -70,6 +85,14 @@
     * If the title `AtoZ` is provided by Bebop the localized text 
       `layout.page.title.atoz` used.
     * If the title `Search` is provided by Bebop
+
+    @param useCategoryMenu The name of the category menu to use for retrieving 
+    the page title.
+
+    @param useRootIndexItemTitle Wether to use the title of the index item of 
+    the root category as page title.
+
+    @return The title of the current page.
 -->
 <#function getPageTitle useCategoryMenu='categoryMenu' useRootIndexItemTitle=false>
 
@@ -109,6 +132,16 @@
 
 </#function>
 
+<#--doc 
+    Retrieves the summary/lead text of an content item. The function
+    will check several possible sources.
+
+    @param item The item from which the the summary is read.
+
+    @return The value of the `summary` or `lead` property or the provided 
+    content item. If the content item does not have a such a property an 
+    empty string is returned.
+-->
 <#function getItemSummary item>
     <#if (item["./nav:attribute[./@name='lead']"]?size > 0)>
         <#return item["./nav:attribute[./@name='lead']"]>
@@ -123,6 +156,17 @@
     </#if>    
 </#function>
 
+<#--doc
+    Retrieve the value the `pageDescription` property of a conten item. 
+    If the provided content item does not have a `pageDescription` property
+    an empty string is returned.
+
+    @param item The content item from which the description is read.
+
+    @return The value of the `pageDescription` property of the provided content
+    item. If the provided content item does not have such a property an 
+    empty string is returned.
+-->
 <#function getPageDescription item>
     <#if (item["./pageDescription"]?size > 0)>
         <#return item["./pageDescription"]>
@@ -133,10 +177,27 @@
     </#if>
 </#function>
 
+<#--doc
+    Generated a link to a content using the OID of the content item.
+
+    @param oid The OID of the content.
+
+    @return A link to the content item identified by the provided OID.
+-->
 <#function generateContentItemLink oid>
     <#return "${contextPrefix}/redirect/?oid=${oid}">
 </#function>
 
+<#--doc
+    Generates the the edit link for the provided content item. The link
+    is generated using the `editLink` property which is only present in the 
+    model if the current user is permitted to edit the item.
+
+    @param item The item for which the edit link is generated.
+
+    @return An edit link for the item. If the provided item does not have an
+    `editLink` property an empty string is returned.
+-->
 <#function getEditLink item>
     <#if (item["./editLink"]?size > 0)>
         <#return "${contentTextPrefix}/ccm" + item["./editLink"]>
