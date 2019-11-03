@@ -5,6 +5,13 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
+<#--filedoc
+    Functions for retrieving informations about subsites.
+-->
+
+<#--doc
+    Gets the name of the current sub site.
+-->
 <#function getSubsiteName>
     <#return model["//ui:siteBanner[@bebop:classname='com.arsdigita.subsite.ui.SubSiteBanner']/@sitename)]"]>
 </#function>
