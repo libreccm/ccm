@@ -5,7 +5,7 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
-<#---
+<#--doc
     Retrieves the languages in which the content of the current page is 
     available.
 

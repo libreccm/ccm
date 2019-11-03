@@ -5,7 +5,7 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
-<#---
+<#--doc
     Gets the application of the page served from the model.
 
     @return The current application.
@@ -14,7 +14,7 @@
     <#return model["/bebop:page/@application"]>
 </#function>
 
-<#---
+<#--doc
     Get the title of the current page.
 
     This will only work of the current page is a navigation page with a category 
@@ -26,15 +26,19 @@
     <#return model["//nav:categoryMenu/nav:category/@title"]>
 </#function>
 
-<#---
+<#--doc
     Get the hostname from the sitebanner data.
+
+    @return The host name of the site.
 -->
 <#function getSiteHostName>
     <#return model["/bebop:page/ui:siteBanner/@hostname"]>
 </#function>
 
-<#---
+<#--doc
     Get the name of the site from the sitebanner data.
+
+    @return The name of the site.
 -->
 <#function getSiteName>
     <#return model["/bebop:page/ui:siteBanner/@sitename"]>
@@ -44,6 +48,12 @@
     Internal function. Not for public use.
     Internal function for coverting several string values like `yes`, `true`, 
     `no` etc. to a boolean value. 
+
+    @param fromNode An XML node
+
+    @param The attribute to convert to boolean.
+
+    @return A boolean representation of the value of the attribute.
 -->
 <#function getBooleanAttrValue fromNode attrName>
     <#assign path='@' + attrName>
@@ -55,7 +65,7 @@
     </#if>
 </#function>
 
-<#---
+<#--doc
     A wrapper for the `_formatDateTime` function which adds missing numbers.
     `_formatDateTime` uses Java APIs for formatting which don't work well with
     incomplete dates. This function takes a date from the data model and checks
@@ -64,7 +74,10 @@
     component.
 
     @param style The date format style from the theme manifest to use.
+
     @param date the date to format.
+
+    @return The formatted date.
 -->
 <#function formatDateTime style date>
     <#assign year   = (date["./@year"]?size > 0)?then(date["./@year"]?number, 0)>
