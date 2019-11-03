@@ -5,8 +5,16 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
-<#--
+<#--filedoc
+    Functions for processing article items.
+-->
+
+<#--doc
     Gets the lead text of the provided article.
+
+    @param item The article item to use.
+
+    @return The lead text of the article.
 -->
 <#function getLead item>
     <#if (item["./lead"]?size > 0)> 
@@ -16,15 +24,23 @@
     </#if>
 </#function>
 
-<#--
+<#--doc
     Checks if the provided item has a lead property.
+
+    @param item The article item to use.
+
+    @return `true` If the provided article has a lead text, `false` otherwise.
 -->
 <#function hasLead item>
     <#return (item["./lead"]?size > 0 || item["./nav:attribute[@name='lead']"]?size > 0)>
 </#function>
 
-<#--
+<#--doc
     Gets the main text the the provided article.
+
+    @param item The article item to use.
+
+    @return The main text of the article.
 -->
 <#function getMainText item>
     <#if (item["./textAsset"]?size > 0)>
