@@ -5,6 +5,25 @@
 "ui": "http://www.arsdigita.com/ui/1.0"}
 >
 
+<#--filedoc
+    Provides functions for processing the image attachemnts of a content item.
+-->
+
+<#--doc
+    Creates a sorted sequence of hashes (see Freemarker docuementation) for the 
+    image attachments of a content item.
+
+    @param item The model of the content item to use.
+
+    @return A sequence of hashes. The following keys are available in each hash:
+    * `imageId`: The ID of the image.
+    * `name`: The name of the image file.
+    * `caption`: The caption of the image.
+    * `sortKey`: The sort key of the image.
+    * `width`: The orginal width of the image.
+    * `height`: The height width of the image.
+    * `imageUrl`: The URL of the image.
+-->
 <#function getImageAttachments item>
 
     <#return item["./imageAttachments"]?map(
