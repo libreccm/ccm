@@ -10,7 +10,6 @@ import com.arsdigita.cms.contenttypes.Proceedings;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.UnPublished;
 import com.arsdigita.cms.contenttypes.WorkingPaper;
-import com.arsdigita.globalization.Globalization;
 import com.arsdigita.globalization.GlobalizationHelper;
 import com.arsdigita.navigation.Navigation;
 import com.arsdigita.navigation.ui.AbstractComponent;
@@ -24,6 +23,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -90,6 +90,47 @@ public class PublicationList extends AbstractComponent {
                                           + "WHERE parent_id IN (SELECT object_id FROM cat_object_category_map WHERE category_id = ?) AND language = ? AND version = 'live' %s"
                                       + "%s "
                                           + "LIMIT ? OFFSET ?";
+
+    private final static String PUBLICATION_QUERY_TEMPLATE
+                                    = "SELECT cms_items.item_id, name, version, language, object_type, "
+                                      + "master_id, parent_id, title, cms_pages.description, "
+                                      + "year, abstract, misc, reviewed, authors, firstPublished, lang, "
+                                      + "isbn, ct_publication_with_publisher.volume, number_of_volumes, _number_of_pages, ct_publication_with_publisher.edition, "
+                                      + "nameofconference, place_of_conference, date_from_of_conference, date_to_of_conference, "
+                                      + "ct_article_in_collected_volume.pages_from AS collvol_pages_from, ct_article_in_collected_volume.pages_to AS collvol_pages_to, chapter, "
+                                      + "ct_article_in_journal.pages_from AS journal_pages_from, ct_article_in_journal.pages_to AS journal_pages_to, ct_article_in_journal.volume AS journal_volume, issue, publication_date, "
+                                      + "ct_expertise.place AS expertise_place, ct_expertise.number_of_pages AS expertise_number_of_pages, "
+                                      + "ct_inproceedings.pages_from AS inproceedings_pages_from, ct_inproceedings.pages_to AS inproceedings_pages_to, "
+                                      + "ct_internet_article.place AS internet_article_place, "
+                                      + "ct_internet_article.number AS internet_article_number, "
+                                      + "ct_internet_article.number_of_pages AS internet_article_number_of_pages, "
+                                      + "ct_internet_article.edition AS internet_article_edition, "
+                                      + "ct_internet_article.issn AS internet_article_issn, "
+                                      + "ct_internet_article.last_accessed AS internet_article_last_accessed, "
+                                      + "ct_internet_article.publicationdate AS internet_article_publication_date, "
+                                      + "ct_internet_article.url AS internet_article_url, "
+                                      + "ct_internet_article.urn AS internet_article_urn, "
+                                      + "ct_internet_article.doi AS internet_article_doi, "
+                                      + "ct_unpublished.place AS unpublished_place, "
+                                      + "ct_unpublished.number AS unpublished_number, "
+                                      + "ct_unpublished.number_of_pages AS unpublished_number_of_pages, "
+                                      + "ct_grey_literature.pagesfrom AS grey_literature_pages_from, "
+                                      + "ct_grey_literature.pagesto AS grey_literature_pages_to "
+                                      + "FROM cms_items "
+                                          + "JOIN cms_pages ON cms_items.item_id = cms_pages.item_id "
+                                      + "JOIN content_types ON cms_items.type_id = content_types.type_id "
+                                      + "JOIN ct_publications ON cms_items.item_id = ct_publications.publication_id "
+                                      + "LEFT JOIN ct_publication_with_publisher ON ct_publications.publication_id = ct_publication_with_publisher.publication_with_publisher_id "
+                                      + "LEFT JOIN ct_proceedings ON ct_publications.publication_id = ct_proceedings.proceedings_id "
+                                      + "LEFT JOIN ct_article_in_collected_volume ON ct_publications.publication_id = ct_article_in_collected_volume.article_id "
+                                      + "LEFT JOIN ct_article_in_journal ON ct_publications.publication_id = ct_article_in_journal.article_in_journal_id "
+                                      + "LEFT JOIN ct_expertise ON ct_publications.publication_id = ct_expertise.expertise_id "
+                                      + "LEFT JOIN ct_inproceedings ON ct_publications.publication_id = ct_inproceedings.inproceedings_id "
+                                      + "LEFT JOIN ct_internet_article ON ct_publications.publication_id = ct_internet_article.internet_article_id "
+                                      + "LEFT JOIN ct_unpublished ON ct_publications.publication_id = ct_unpublished.unpublished_id "
+                                      + "LEFT JOIN ct_grey_literature ON ct_unpublished.unpublished_id = ct_grey_literature.grey_literature_id "
+                                      + "WHERE ct_publications.publication_id = ?";
+
     /**
      * Template for the query for counting the publications assigned to the
      * category.
@@ -284,6 +325,16 @@ public class PublicationList extends AbstractComponent {
     @Override
     public Element generateXML(final HttpServletRequest request,
                                final HttpServletResponse response) {
+        if (request.getParameter("publicationId") == null) {
+            return generateListXml(request, response);
+        } else {
+            return generatePublicationXml(request, response);
+        }
+    }
+
+    private Element generateListXml(
+        final HttpServletRequest request, final HttpServletResponse response
+    ) {
 
         final Connection connection = SessionManager
             .getSession()
@@ -552,6 +603,46 @@ public class PublicationList extends AbstractComponent {
 
             return listElem;
 
+        } catch (SQLException ex) {
+            throw new UncheckedWrapperException(ex);
+        }
+    }
+
+    private Element generatePublicationXml(
+        final HttpServletRequest request, final HttpServletResponse response
+    ) {
+        final Connection connection = SessionManager
+            .getSession()
+            .getConnection();
+
+        final Integer publicationId = Integer.parseInt(
+            request.getParameter("publicationId")
+        );
+
+        final PreparedStatement publicationQueryStatement;
+        try {
+            publicationQueryStatement = connection.prepareStatement(
+                PUBLICATION_QUERY_TEMPLATE
+            );
+            publicationQueryStatement.setInt(1, publicationId);
+        } catch (SQLException ex) {
+            throw new UncheckedWrapperException(ex);
+        }
+
+        try (final ResultSet queryResult = publicationQueryStatement
+            .executeQuery()) {
+            final boolean hasResult = queryResult.next();
+            if (!hasResult) {
+                response.setStatus(404);
+                return null;
+            }
+
+            final Element publicationElem = Navigation.newElement("publication");
+//            final Element titleElem = publicationElem.newChildElement("title");
+//            titleElem.setText(queryResult.getString("title"));
+            generateResultEntry(queryResult, publicationElem);
+
+            return publicationElem;
         } catch (SQLException ex) {
             throw new UncheckedWrapperException(ex);
         }
