@@ -20,6 +20,25 @@
 </#function>
 
 <#--doc
+    Checks if the current page is showing a single publication (retrieved via 
+    NativeSQL queries). 
+
+    @return `true` if the model contains a single publication `false` otherwise.
+-->
+<#function hasPublication>
+    <#return (model["/bebop:page/nav:publication"]?size > 0)>
+</#function>
+
+<#--doc
+    Retrieve a single publication from the model.
+    
+    @return The model of the publication.
+-->
+<#function getPublication>
+    <#return model["/bebop:page/nav:publication/publication"]>
+</#function>
+
+<#--doc
     Get the publications from a publication list
 
     @param list The list to use.
