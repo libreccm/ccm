@@ -289,6 +289,10 @@
     <#return author["./@givenname"]>
 </#function>
 
+<#function isAuthorEditor author>
+    <#return (author["./@editor"] == "true")>
+</#function>
+
 <#--doc
     Gets the place of the publication.
 
@@ -530,4 +534,20 @@
 -->
 <#function getProceedings item>
     <#return item["./proceedings"]>
+</#function>
+
+<#function hasYearFirstPublished item>
+    <#return (item["./yearFirstPublished"]?size > 0)>
+</#function>
+
+<#function getYearFristPublished item>
+    <#return item["./yearFirstPublished"]>
+</#function>
+
+<#function hasPublicationAbstract item>
+    <#return (item["./abstract"]?size > 0)>
+</#function>
+
+<#function getPublicationAbstract item>
+    <#return item["./abstract"]>
 </#function>
