@@ -9,7 +9,7 @@
   "author": "Jens Pelzetter",
   "license": "GPL-2.0",
   "dependencies": {
-    "tinymce": "^5.0.9"
+    "tinymce": "^5.2.2"
   },
   "devDependencies": {
     "fs-extra": "^8.1.0",
